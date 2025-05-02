@@ -1,4 +1,8 @@
-import { forwardRef, useState } from 'react';
+import {
+  createSignal,
+  splitProps,
+  Show,
+} from 'solid-js';
 import { useDebouncedCallback } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { useResizeObserver } from '../use-resize-observer';
@@ -7,40 +11,41 @@ import {
   ScrollAreaScrollbarVisibleProps,
 } from './ScrollAreaScrollbarVisible';
 
-export interface ScrollAreaScrollbarAutoProps extends ScrollAreaScrollbarVisibleProps {
+export interface ScrollAreaScrollbarAutoProps
+  extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;
 }
 
-export const ScrollAreaScrollbarAuto = forwardRef<HTMLDivElement, ScrollAreaScrollbarAutoProps>(
-  (props, ref) => {
-    const context = useScrollAreaContext();
-    const { forceMount, ...scrollbarProps } = props;
-    const [visible, setVisible] = useState(false);
-    const isHorizontal = props.orientation === 'horizontal';
+export function ScrollAreaScrollbarAuto(props: ScrollAreaScrollbarAutoProps) {
+  const [local, others] = splitProps(props, [
+    'forceMount',
+    'ref',
+    'orientation'
+  ]);
+  const ctx = useScrollAreaContext();
+  const [visible, setVisible] = createSignal(false);
+  const isHorizontal = () => local.orientation === 'horizontal';
 
-    const handleResize = useDebouncedCallback(() => {
-      if (context.viewport) {
-        const isOverflowX = context.viewport.offsetWidth < context.viewport.scrollWidth;
-        const isOverflowY = context.viewport.offsetHeight < context.viewport.scrollHeight;
-        setVisible(isHorizontal ? isOverflowX : isOverflowY);
-      }
-    }, 10);
-
-    useResizeObserver(context.viewport, handleResize);
-    useResizeObserver(context.content, handleResize);
-
-    if (forceMount || visible) {
-      return (
-        <ScrollAreaScrollbarVisible
-          data-state={visible ? 'visible' : 'hidden'}
-          {...scrollbarProps}
-          ref={ref}
-        />
-      );
+  const handleResize = useDebouncedCallback(() => {
+    if (ctx.viewport) {
+      const overflowX = ctx.viewport.offsetWidth < ctx.viewport.scrollWidth;
+      const overflowY = ctx.viewport.offsetHeight < ctx.viewport.scrollHeight;
+      setVisible(isHorizontal() ? overflowX : overflowY);
     }
+  }, 10);
 
-    return null;
-  }
-);
+  useResizeObserver(() => ctx.viewport, handleResize);
+  useResizeObserver(() => ctx.content, handleResize);
+
+  return (
+    <Show when={local.forceMount || visible()} fallback={null}>
+      <ScrollAreaScrollbarVisible
+        data-state={visible() ? 'visible' : 'hidden'}
+        {...others}
+        ref={local.ref}
+      />
+    </Show>
+  );
+}
 
 ScrollAreaScrollbarAuto.displayName = '@mantine/core/ScrollAreaScrollbarAuto';

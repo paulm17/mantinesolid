@@ -1,53 +1,60 @@
-import { forwardRef, useEffect, useState } from 'react';
+import {
+  createSignal,
+  createEffect,
+  onCleanup,
+  splitProps,
+  Show,
+} from 'solid-js';
 import { useScrollAreaContext } from '../ScrollArea.context';
-import { ScrollAreaScrollbarAuto, ScrollAreaScrollbarAutoProps } from './ScrollAreaScrollbarAuto';
+import {
+  ScrollAreaScrollbarAuto,
+  ScrollAreaScrollbarAutoProps,
+} from './ScrollAreaScrollbarAuto';
 
-interface ScrollAreaScrollbarHoverProps extends ScrollAreaScrollbarAutoProps {
+export interface ScrollAreaScrollbarHoverProps
+  extends ScrollAreaScrollbarAutoProps {
   forceMount?: true;
 }
 
-export const ScrollAreaScrollbarHover = forwardRef<HTMLDivElement, ScrollAreaScrollbarHoverProps>(
-  (props, ref) => {
-    const { forceMount, ...scrollbarProps } = props;
-    const context = useScrollAreaContext();
-    const [visible, setVisible] = useState(false);
+export function ScrollAreaScrollbarHover(props: ScrollAreaScrollbarHoverProps) {
+  const [local, others] = splitProps(props, ['forceMount', 'ref', 'orientation']);
+  const ctx = useScrollAreaContext();
+  const [visible, setVisible] = createSignal(false);
 
-    useEffect(() => {
-      const { scrollArea } = context;
-      let hideTimer = 0;
-      if (scrollArea) {
-        const handlePointerEnter = () => {
-          window.clearTimeout(hideTimer);
-          setVisible(true);
-        };
-        const handlePointerLeave = () => {
-          hideTimer = window.setTimeout(() => setVisible(false), context.scrollHideDelay);
-        };
-        scrollArea.addEventListener('pointerenter', handlePointerEnter);
-        scrollArea.addEventListener('pointerleave', handlePointerLeave);
+  createEffect(() => {
+    const el = ctx.scrollArea;
+    if (!el) return;
 
-        return () => {
-          window.clearTimeout(hideTimer);
-          scrollArea.removeEventListener('pointerenter', handlePointerEnter);
-          scrollArea.removeEventListener('pointerleave', handlePointerLeave);
-        };
-      }
+    let hideTimer: number;
 
-      return undefined;
-    }, [context.scrollArea, context.scrollHideDelay]);
+    const onEnter = () => {
+      window.clearTimeout(hideTimer);
+      setVisible(true);
+    };
 
-    if (forceMount || visible) {
-      return (
-        <ScrollAreaScrollbarAuto
-          data-state={visible ? 'visible' : 'hidden'}
-          {...scrollbarProps}
-          ref={ref}
-        />
-      );
-    }
+    const onLeave = () => {
+      hideTimer = window.setTimeout(() => setVisible(false), ctx.scrollHideDelay);
+    };
 
-    return null;
-  }
-);
+    el.addEventListener('pointerenter', onEnter);
+    el.addEventListener('pointerleave', onLeave);
+
+    onCleanup(() => {
+      window.clearTimeout(hideTimer);
+      el.removeEventListener('pointerenter', onEnter);
+      el.removeEventListener('pointerleave', onLeave);
+    });
+  });
+
+  return (
+    <Show when={local.forceMount || visible()} fallback={null}>
+      <ScrollAreaScrollbarAuto
+        data-state={visible() ? 'visible' : 'hidden'}
+        {...others}
+        ref={local.ref}
+      />
+    </Show>
+  );
+}
 
 ScrollAreaScrollbarHover.displayName = '@mantine/core/ScrollAreaScrollbarHover';

@@ -52,10 +52,9 @@ export function Thumb(props: JSX.HTMLAttributes<HTMLDivElement> & { ref?: any })
       style={{ width: 'var(--sa-thumb-width)', height: 'var(--sa-thumb-height)', ...(typeof local.style === 'object' && local.style !== null ? local.style : {})  }}
       onPointerDown={
         composeEventHandlers(
-          // cast BoundEventHandlerUnion → (e: PointerEvent & …)=>void
           local.onPointerDown as (e: PointerEvent & { currentTarget: HTMLDivElement; target: Element }) => void,
           (event) => {
-            const rect = event.currentTarget.getBoundingClientRect();  // :contentReference[oaicite:4]{index=4}
+            const rect = event.currentTarget.getBoundingClientRect();
             scrollbarContext.onThumbPointerDown({
               x: event.clientX - rect.left,
               y: event.clientY - rect.top,

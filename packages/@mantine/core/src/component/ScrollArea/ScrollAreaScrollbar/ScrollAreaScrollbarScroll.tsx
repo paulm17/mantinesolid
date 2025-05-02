@@ -1,4 +1,10 @@
-import { forwardRef, useEffect, useState } from 'react';
+import {
+  createSignal,
+  createEffect,
+  onCleanup,
+  splitProps,
+  Show,
+} from 'solid-js';
 import { useDebouncedCallback } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { composeEventHandlers } from '../utils';
@@ -7,61 +13,49 @@ import {
   ScrollAreaScrollbarVisibleProps,
 } from './ScrollAreaScrollbarVisible';
 
-interface ScrollAreaScrollbarScrollProps extends ScrollAreaScrollbarVisibleProps {
+export interface ScrollAreaScrollbarScrollProps
+  extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;
 }
 
-export const ScrollAreaScrollbarScroll = forwardRef<HTMLDivElement, ScrollAreaScrollbarScrollProps>(
-  (props, red) => {
-    const { forceMount, ...scrollbarProps } = props;
-    const context = useScrollAreaContext();
-    const isHorizontal = props.orientation === 'horizontal';
-    const [state, setState] = useState<'hidden' | 'idle' | 'interacting' | 'scrolling'>('hidden');
-    const debounceScrollEnd = useDebouncedCallback(() => setState('idle'), 100);
+export function ScrollAreaScrollbarScroll(props: ScrollAreaScrollbarScrollProps) {
+  const [local, others] = splitProps(props, ['forceMount', 'ref', 'orientation']);
+  const ctx = useScrollAreaContext();
+  const [state, setState] = createSignal<'hidden' | 'idle' | 'interacting' | 'scrolling'>('hidden');
+  const debounceScrollEnd = useDebouncedCallback(() => setState('idle'), 100);
 
-    useEffect(() => {
-      if (state === 'idle') {
-        const hideTimer = window.setTimeout(() => setState('hidden'), context.scrollHideDelay);
-        return () => window.clearTimeout(hideTimer);
-      }
-
-      return undefined;
-    }, [state, context.scrollHideDelay]);
-
-    useEffect(() => {
-      const { viewport } = context;
-      const scrollDirection = isHorizontal ? 'scrollLeft' : 'scrollTop';
-
-      if (viewport) {
-        let prevScrollPos = viewport[scrollDirection];
-        const handleScroll = () => {
-          const scrollPos = viewport[scrollDirection];
-          const hasScrollInDirectionChanged = prevScrollPos !== scrollPos;
-          if (hasScrollInDirectionChanged) {
-            setState('scrolling');
-            debounceScrollEnd();
-          }
-          prevScrollPos = scrollPos;
-        };
-        viewport.addEventListener('scroll', handleScroll);
-        return () => viewport.removeEventListener('scroll', handleScroll);
-      }
-
-      return undefined;
-    }, [context.viewport, isHorizontal, debounceScrollEnd]);
-
-    if (forceMount || state !== 'hidden') {
-      return (
-        <ScrollAreaScrollbarVisible
-          data-state={state === 'hidden' ? 'hidden' : 'visible'}
-          {...scrollbarProps}
-          ref={red}
-          onPointerEnter={composeEventHandlers(props.onPointerEnter, () => setState('interacting'))}
-          onPointerLeave={composeEventHandlers(props.onPointerLeave, () => setState('idle'))}
-        />
-      );
+  createEffect(() => {
+    if (state() === 'idle') {
+      const hideTimer = window.setTimeout(() => setState('hidden'), ctx.scrollHideDelay);
+      onCleanup(() => window.clearTimeout(hideTimer));
     }
+  });
 
-    return null;
-  }
-);
+  createEffect(() => {
+    const el = ctx.viewport;
+    if (!el) return;
+    let prev = el[local.orientation === 'horizontal' ? 'scrollLeft' : 'scrollTop'];
+    const handleScroll = () => {
+      const pos = el[local.orientation === 'horizontal' ? 'scrollLeft' : 'scrollTop'];
+      if (pos !== prev) {
+        setState('scrolling');
+        debounceScrollEnd();
+        prev = pos;
+      }
+    };
+    el.addEventListener('scroll', handleScroll);
+    onCleanup(() => el.removeEventListener('scroll', handleScroll));
+  });
+
+  return (
+    <Show when={local.forceMount || state() !== 'hidden'} fallback={null}>
+      <ScrollAreaScrollbarVisible
+        data-state={state() === 'hidden' ? 'hidden' : 'visible'}
+        {...others}
+        ref={local.ref}
+        onPointerEnter={composeEventHandlers(props.onPointerEnter, () => setState('interacting'))}
+        onPointerLeave={composeEventHandlers(props.onPointerLeave, () => setState('idle'))}
+      />
+    </Show>
+  );
+}

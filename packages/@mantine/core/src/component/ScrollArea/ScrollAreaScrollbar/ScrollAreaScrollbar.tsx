@@ -1,4 +1,5 @@
-import { forwardRef, useEffect } from 'react';
+import { createEffect, onCleanup, splitProps } from 'solid-js';
+import { PossibleRef, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAuto } from './ScrollAreaScrollbarAuto';
 import { ScrollAreaScrollbarHover } from './ScrollAreaScrollbarHover';
@@ -8,34 +9,45 @@ import {
   ScrollAreaScrollbarVisibleProps,
 } from './ScrollAreaScrollbarVisible';
 
-interface ScrollAreaScrollbarProps extends ScrollAreaScrollbarVisibleProps {
+export interface ScrollAreaScrollbarProps extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;
 }
 
-export const ScrollAreaScrollbar = forwardRef<HTMLDivElement, ScrollAreaScrollbarProps>(
-  (props, forwardedRef) => {
-    const { forceMount, ...scrollbarProps } = props;
-    const context = useScrollAreaContext();
-    const { onScrollbarXEnabledChange, onScrollbarYEnabledChange } = context;
-    const isHorizontal = props.orientation === 'horizontal';
+export function ScrollAreaScrollbar(props: ScrollAreaScrollbarProps) {
+  const [local, others] = splitProps(props, [
+    'forceMount',
+    'ref',
+    'orientation'
+  ]);
 
-    useEffect(() => {
-      isHorizontal ? onScrollbarXEnabledChange(true) : onScrollbarYEnabledChange(true);
-      return () => {
-        isHorizontal ? onScrollbarXEnabledChange(false) : onScrollbarYEnabledChange(false);
-      };
-    }, [isHorizontal, onScrollbarXEnabledChange, onScrollbarYEnabledChange]);
+  const ctx = useScrollAreaContext();
+  const isHorizontal = () => local.orientation === 'horizontal';
 
-    return context.type === 'hover' ? (
-      <ScrollAreaScrollbarHover {...scrollbarProps} ref={forwardedRef} forceMount={forceMount} />
-    ) : context.type === 'scroll' ? (
-      <ScrollAreaScrollbarScroll {...scrollbarProps} ref={forwardedRef} forceMount={forceMount} />
-    ) : context.type === 'auto' ? (
-      <ScrollAreaScrollbarAuto {...scrollbarProps} ref={forwardedRef} forceMount={forceMount} />
-    ) : context.type === 'always' ? (
-      <ScrollAreaScrollbarVisible {...scrollbarProps} ref={forwardedRef} />
-    ) : null;
-  }
-);
+  createEffect(() => {
+    if (isHorizontal()) ctx.onScrollbarXEnabledChange(true);
+    else ctx.onScrollbarYEnabledChange(true);
+
+    onCleanup(() => {
+      if (isHorizontal()) ctx.onScrollbarXEnabledChange(false);
+      else ctx.onScrollbarYEnabledChange(false);
+    });
+  });
+
+  const rootRef = useMergedRef(local.ref as PossibleRef<HTMLDivElement>, (el) => {
+    if (el) {
+      isHorizontal() ? ctx.onScrollbarXEnabledChange(true) : ctx.onScrollbarYEnabledChange(true);
+    }
+  });
+
+  return ctx.type === 'hover' ? (
+    <ScrollAreaScrollbarHover {...others} ref={rootRef} forceMount={local.forceMount} />
+  ) : ctx.type === 'scroll' ? (
+    <ScrollAreaScrollbarScroll {...others} ref={rootRef} forceMount={local.forceMount} />
+  ) : ctx.type === 'auto' ? (
+    <ScrollAreaScrollbarAuto {...others} ref={rootRef} forceMount={local.forceMount} />
+  ) : ctx.type === 'always' ? (
+    <ScrollAreaScrollbarVisible {...others} ref={rootRef} />
+  ) : null;
+}
 
 ScrollAreaScrollbar.displayName = '@mantine/core/ScrollAreaScrollbar';

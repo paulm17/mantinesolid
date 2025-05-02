@@ -11,17 +11,13 @@ export interface ScrollAreaViewportProps
 export function ScrollAreaViewport(props: ScrollAreaViewportProps) {
   const ctx = useScrollAreaContext();                            // Solid context API :contentReference[oaicite:6]{index=6}
 
-  // keep reactive props intact
   const [local, others] = splitProps(props, ["style", "children", "ref"]);
 
-  // exactly the API you want:
-  // “const rootRef = useMergedRef(ref, ctx.onViewportChange);”
   const rootRef = useMergedRef(
     local.ref as PossibleRef<HTMLDivElement>,
     (el) => ctx.onViewportChange(el)
   );
 
-  // cleanup on unmount
   onCleanup(() => ctx.onViewportChange(null));
 
   return (

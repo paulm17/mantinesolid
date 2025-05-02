@@ -1,10 +1,13 @@
-type EventHandler<Event> = ((event?: Event) => void) | undefined;
+import type { JSX } from "solid-js";
 
-export function createEventHandler<Event>(
-  parentEventHandler: EventHandler<Event>,
-  eventHandler: EventHandler<Event>
-) {
-  return (event?: Event) => {
+type EventHandler<Elem extends Element, Evt extends Event> =
+  JSX.EventHandler<Elem, Evt>;
+
+export function createEventHandler<Elem extends Element, Evt extends Event>(
+  parentEventHandler?: EventHandler<Elem, Evt>,
+  eventHandler?: EventHandler<Elem, Evt>
+): EventHandler<Elem, Evt> {
+  return (event) => {
     parentEventHandler?.(event);
     eventHandler?.(event);
   };
