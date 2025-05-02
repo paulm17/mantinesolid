@@ -1,0 +1,73 @@
+import { JSX } from 'solid-js/jsx-runtime';
+import {
+  MantineColor,
+  MantineTheme,
+  polymorphicFactory,
+  PolymorphicFactory,
+  useProps,
+} from '../../core';
+import { Mark } from '../Mark';
+import { Text, TextProps, TextStylesNames, TextVariant } from '../Text';
+import { highlighter } from './highlighter/highlighter';
+import { For, splitProps } from 'solid-js';
+
+export interface HighlightProps extends Omit<TextProps, 'color'> {
+  /** Substring or an array of substrings to highlight in `children` */
+  highlight: string | string[];
+
+  /** Key of `theme.colors` or any valid CSS color, passed to `Mark` component `color` prop, `yellow` by default */
+  color?: MantineColor | string;
+
+  /** Styles applied to `mark` elements */
+  highlightStyles?: JSX.CSSProperties | ((theme: MantineTheme) => JSX.CSSProperties);
+
+  /** String parts of which must be highlighted */
+  children: string;
+}
+
+export type HighlightFactory = PolymorphicFactory<{
+  props: HighlightProps;
+  defaultRef: HTMLDivElement;
+  defaultComponent: 'div';
+  stylesNames: TextStylesNames;
+  variant: TextVariant;
+}>;
+
+const defaultProps: Partial<HighlightProps> = {};
+
+export const Highlight = polymorphicFactory<HighlightFactory>((_props, ref) => {
+  const props = useProps('Highlight', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'unstyled',
+    'children',
+    'highlight',
+    'highlightStyles',
+    'color'
+  ]);
+
+  const highlightChunks = highlighter(local.children, local.highlight);
+
+  return (
+    <Text unstyled={local.unstyled} ref={ref} {...others} __staticSelector="Highlight">
+      <For each={highlightChunks}>
+        {(item, i) =>
+          item.highlighted ? (
+            <Mark
+              unstyled={local.unstyled}
+              color={local.color}
+              style={local.highlightStyles}
+              data-highlight={item.chunk}
+            >
+              {item.chunk}
+            </Mark>
+          ) : (
+            <span>{item.chunk}</span>
+          )
+        }
+      </For>
+    </Text>
+  );
+});
+
+Highlight.classes = Text.classes;
+Highlight.displayName = '@mantine/core/Highlight';

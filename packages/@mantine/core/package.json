@@ -1,0 +1,57 @@
+{
+  "name": "@mantine/core",
+  "version": "8.0.0-alpha.3",
+  "description": "SolidJS components library focused on usability, accessibility and developer experience",
+  "homepage": "https://mantine.dev/",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "components",
+    "design",
+    "frontend",
+    "library",
+    "next",
+    "nextjs",
+    "solidjs",
+    "ui",
+    "ui-kit"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./cjs/index.cjs",
+  "module": "./esm/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./cjs/index.cjs"
+      }
+    },
+    "./styles.css": "./styles.css",
+    "./styles.layer.css": "./styles.layer.css",
+    "./styles/*": "./styles/*"
+  },
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "packages/@mantine/core"
+  },
+  "peerDependencies": {
+    "@mantine/hooks": "workspace:*"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "floating-ui-solid": "workspace:*",
+    "solid-textarea-autosize": "^0.0.5",
+    "type-fest": "^4.27.0"
+  },
+  "devDependencies": {
+    "@mantine/hooks": "workspace:*"
+  }
+}
