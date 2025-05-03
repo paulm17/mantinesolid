@@ -2,6 +2,7 @@ import cx from 'clsx';
 import { polymorphicFactory, PolymorphicFactory, useProps } from '../../core';
 import { Text, TextCssVariables, TextProps, TextStylesNames, TextVariant } from '../Text';
 import classes from './Anchor.module.css';
+import { splitProps } from 'solid-js';
 
 export type AnchorStylesNames = TextStylesNames;
 export type AnchorVariant = TextVariant;
@@ -27,21 +28,22 @@ const defaultProps: Partial<AnchorProps> = {
 
 export const Anchor = polymorphicFactory<AnchorFactory>((_props, ref) => {
   const props = useProps('Anchor', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'underline',
+    'className',
+    'unstyled',
+    'mod'
+  ]);
 
-  const { underline, className, unstyled, mod, ...others } = useProps(
-    'Anchor',
-    defaultProps,
-    props
-  );
   return (
     <Text
       component="a"
       ref={ref}
-      className={cx({ [classes.root]: !unstyled }, className)}
+      className={cx({ [classes.root]: !local.unstyled }, local.className)}
       {...others}
-      mod={[{ underline }, mod]}
+      mod={[{ underline: local.underline }, local.mod]}
       __staticSelector="Anchor"
-      unstyled={unstyled}
+      unstyled={local.unstyled}
     />
   );
 });

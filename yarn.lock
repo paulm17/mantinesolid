@@ -4852,6 +4852,7 @@ __metadata:
   resolution: "@mantine/core@workspace:packages/@mantine/core"
   dependencies:
     "@mantine/hooks": "workspace:*"
+    "@solid-primitives/refs": "npm:^1.1.1"
     clsx: "npm:^2.1.1"
     floating-ui-solid: "workspace:*"
     solid-textarea-autosize: "npm:^0.0.5"

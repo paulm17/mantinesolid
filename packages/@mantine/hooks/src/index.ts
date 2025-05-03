@@ -2,7 +2,7 @@ export * from './utils/index.js';
 
 // export { useCallbackRef } from './use-callback-ref/use-callback-ref';
 export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback';
-// export { useClickOutside } from './use-click-outside/use-click-outside';
+export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
 // export { useCounter } from './use-counter/use-counter';
@@ -12,7 +12,7 @@ export { useColorScheme } from './use-color-scheme/use-color-scheme';
 // export { useDocumentVisibility } from './use-document-visibility/use-document-visibility';
 // export { useFocusReturn } from './use-focus-return/use-focus-return';
 // export { useDidUpdate } from './use-did-update/use-did-update';
-// export { useFocusTrap } from './use-focus-trap/use-focus-trap';
+export { useFocusTrap } from './use-focus-trap/use-focus-trap';
 // export { useForceUpdate } from './use-force-update/use-force-update';
 export { useId } from './use-id/use-id';
 // export { useIdle } from './use-idle/use-idle';
@@ -25,7 +25,7 @@ export { useId } from './use-id/use-id';
 //   readSessionStorageValue,
 // } from './use-session-storage/use-session-storage';
 export { useMediaQuery } from './use-media-query/use-media-query';
-export { useMergedRef, type PossibleRef } from './use-merged-ref/use-merged-ref';
+export { useMergedRef, assignRef, type PossibleRef } from './use-merged-ref/use-merged-ref';
 // export { useMouse } from './use-mouse/use-mouse';
 // export { useMove, clampUseMovePosition } from './use-move/use-move';
 // export { usePagination } from './use-pagination/use-pagination';
@@ -33,10 +33,10 @@ export { useMergedRef, type PossibleRef } from './use-merged-ref/use-merged-ref'
 // export { usePageLeave } from './use-page-leave/use-page-leave';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 // export { useScrollIntoView } from './use-scroll-into-view/use-scroll-into-view';
-// export { useResizeObserver, useElementSize } from './use-resize-observer/use-resize-observer';
+export { useResizeObserver, useElementSize } from './use-resize-observer/use-resize-observer';
 // export { useShallowEffect } from './use-shallow-effect/use-shallow-effect';
 // export { useToggle } from './use-toggle/use-toggle';
-// export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
+export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 // export { useViewportSize } from './use-viewport-size/use-viewport-size';
 // export { useWindowEvent } from './use-window-event/use-window-event';
 // export { useWindowScroll } from './use-window-scroll/use-window-scroll';
@@ -72,7 +72,7 @@ export { useTimeout } from './use-timeout/use-timeout';
 // export { useIsFirstRender } from './use-is-first-render/use-is-first-render';
 // export { useOrientation } from './use-orientation/use-orientation';
 // export { useFetch } from './use-fetch/use-fetch';
-// export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move';
+export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move';
 // export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 // export { useFileDialog } from './use-file-dialog/use-file-dialog';
 

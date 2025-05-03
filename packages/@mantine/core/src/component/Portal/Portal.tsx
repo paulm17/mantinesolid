@@ -44,8 +44,15 @@ function getTargetNode(props: Omit<PortalProps, "children">) {
 }
 
 export function Portal(p: PortalProps): JSX.Element | null {
-  const props = mergeProps(defaultProps, p);                                 // reactive defaults :contentReference[oaicite:2]{index=2}
-  const [local, others] = splitProps(props, ["children", "target", "reuseTargetNode", "class", "style", "id"]); // reactive split :contentReference[oaicite:3]{index=3}
+  const props = mergeProps(defaultProps, p);
+  const [local, others] = splitProps(props, [
+    "children",
+    "target",
+    "reuseTargetNode",
+    "class",
+    "style",
+    "id"
+  ]);
 
   const [mounted, setMounted] = createSignal(false);
   const [node, setNode] = createSignal<HTMLElement>();

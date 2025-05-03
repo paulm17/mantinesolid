@@ -4,6 +4,17 @@ import { mergeRefs, type Ref } from "@solid-primitives/refs";    // mergeRefs ch
 /** A ref callback or signal-style ref used by Solid primitives */
 export type PossibleRef<T> = Ref<T> | undefined;
 
+export function assignRef<T>(
+  ref: ((el: T) => void) | { current?: T } | undefined,
+  value: T
+) {
+  if (typeof ref === "function") {
+    ref(value);
+  } else if (ref && typeof ref === "object") {
+    (ref as any).current = value;
+  }
+}
+
 /**
  * Exactly the same API shape as Mantine’s React hook:
  *   useMergedRef(ref1, ref2, …)
