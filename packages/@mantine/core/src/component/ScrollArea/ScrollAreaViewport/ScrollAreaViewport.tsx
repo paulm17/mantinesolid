@@ -1,15 +1,14 @@
-// ScrollAreaViewport.tsx
-import { splitProps, onCleanup, JSX } from "solid-js";           // splitProps & onCleanup utilities :contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}
+import { splitProps, onCleanup, JSX } from "solid-js";
+import { useMergedRef, PossibleRef } from "@mantine/hooks";
 import { Box, BoxProps } from "../../../core";
 import { useScrollAreaContext } from "../ScrollArea.context";
-import { useMergedRef, PossibleRef } from "@mantine/hooks";    // our drop‑in hook
 
 export interface ScrollAreaViewportProps
   extends BoxProps,
     Omit<JSX.HTMLAttributes<HTMLDivElement>, "style"> {}
 
 export function ScrollAreaViewport(props: ScrollAreaViewportProps) {
-  const ctx = useScrollAreaContext();                            // Solid context API :contentReference[oaicite:6]{index=6}
+  const ctx = useScrollAreaContext();
 
   const [local, others] = splitProps(props, ["style", "children", "ref"]);
 

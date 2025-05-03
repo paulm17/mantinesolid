@@ -54,7 +54,7 @@ export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useDisclosure } from './use-disclosure/use-disclosure';
 // export { useFocusWithin } from './use-focus-within/use-focus-within';
 // export { useNetwork } from './use-network/use-network';
-// export { useTimeout } from './use-timeout/use-timeout';
+export { useTimeout } from './use-timeout/use-timeout';
 // export { useTextSelection } from './use-text-selection/use-text-selection';
 // export { usePrevious } from './use-previous/use-previous';
 // export { useFavicon } from './use-favicon/use-favicon';

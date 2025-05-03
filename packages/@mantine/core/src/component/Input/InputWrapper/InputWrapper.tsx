@@ -69,7 +69,7 @@ export interface __InputWrapperProps {
   /** Props passed down to the `Input.Error` component */
   errorProps?: Record<string, any>;
 
-  /** Input container component, `React.Fragment` by default */
+  /** Input container component, `JSX.Element` by default */
   inputContainer?: (children: JSX.Element) => JSX.Element;
 
   /** Controls order of the elements, `['label', 'description', 'input', 'error']` by default */

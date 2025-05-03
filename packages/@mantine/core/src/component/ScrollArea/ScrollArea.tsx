@@ -1,5 +1,5 @@
 import { createEffect, createSignal, JSX, onCleanup, splitProps } from 'solid-js';
-import { useMergeRefs } from 'floating-ui/solid';
+import { PossibleRef, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -61,7 +61,7 @@ export interface ScrollAreaProps
   viewportRef?: HTMLDivElement;
 
   /** Props passed down to the viewport element */
-  viewportProps?: JSX.HTMLAttributes<'div'>;
+  viewportProps?: JSX.HTMLAttributes<HTMLDivElement>;
 
   /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
   onScrollPositionChange?: (position: { x: number; y: number }) => void;
@@ -145,7 +145,11 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   });
 
   const localViewportRef = null as HTMLDivElement | null;
-  const combinedViewportRef = useMergeRefs([local.viewportRef, localViewportRef]);
+  const combinedViewportRef = useMergedRef(local.viewportRef as PossibleRef<HTMLDivElement>, (el) => {
+    if (el) {
+      localViewportRef;
+    }
+  });
 
   createEffect(() => {
     if (!localViewportRef) {
@@ -175,7 +179,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       type={local.type === 'never' ? 'always' : local.type}
       scrollHideDelay={local.scrollHideDelay}
       ref={ref}
-      scrollbars={scrollbars}
+      scrollbars={local.scrollbars}
       {...getStyles('root')}
       {...others}
     >

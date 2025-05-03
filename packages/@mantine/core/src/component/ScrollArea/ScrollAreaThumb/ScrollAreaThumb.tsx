@@ -1,10 +1,12 @@
-import { createEffect, onMount, onCleanup, useContext, JSX, splitProps } from 'solid-js';
+import { onMount, onCleanup, JSX, splitProps, Show } from 'solid-js';
 import { useDebouncedCallback, useMergedRef } from '@mantine/hooks';    // your Solid version
 import { useScrollAreaContext } from '../ScrollArea.context';       // assume rewritten as Solid context
 import { useScrollbarContext } from '../ScrollAreaScrollbar/Scrollbar.context';
 import { addUnlinkedScrollListener, composeEventHandlers } from '../utils';
 
-export function Thumb(props: JSX.HTMLAttributes<HTMLDivElement> & { ref?: any }) {
+interface ThumbProps extends JSX.HTMLAttributes<HTMLDivElement> {}
+
+export function Thumb(props: ThumbProps) {
   const [local, others] = splitProps(props, [
     "style", "onPointerDown", "onPointerUp", "ref"
   ]);
@@ -13,17 +15,14 @@ export function Thumb(props: JSX.HTMLAttributes<HTMLDivElement> & { ref?: any })
   const scrollbarContext = useScrollbarContext();
   const { onThumbPositionChange, hasThumb, onThumbChange, onThumbPointerDown, onThumbPointerUp } = scrollbarContext;
 
-  // merge forwarded ref with context’s onThumbChange
   const composedRef = useMergedRef(local.ref, (el: HTMLDivElement) => onThumbChange(el));
 
-  // debounced cleanup of unlinked listener
   const removeListenerRef: { current?: () => void } = {};
   const debounceScrollEnd = useDebouncedCallback(() => {
     removeListenerRef.current?.();
     removeListenerRef.current = undefined;
   }, 100);
 
-  // run once on mount: attach scroll listener
   onMount(() => {
     const viewport = scrollAreaContext.viewport;
     if (!viewport) return;
@@ -71,3 +70,24 @@ export function Thumb(props: JSX.HTMLAttributes<HTMLDivElement> & { ref?: any })
     />
   );
 }
+
+interface ScrollAreaThumbProps extends ThumbProps {
+  forceMount?: true;
+  ref?: HTMLDivElement;
+}
+
+export function ScrollAreaThumb(props: ScrollAreaThumbProps) {
+  const [local, thumbProps] = splitProps(props, [
+    'forceMount',
+    'ref'
+  ]);
+  const scrollbarContext = useScrollbarContext();
+
+  return (
+    <Show when={local.forceMount || scrollbarContext.hasThumb}>
+      <Thumb ref={local.ref} {...thumbProps} />
+    </Show>
+  );
+}
+
+ScrollAreaThumb.displayName = '@mantine/core/ScrollAreaThumb';

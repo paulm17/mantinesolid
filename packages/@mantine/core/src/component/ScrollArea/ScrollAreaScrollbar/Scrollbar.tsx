@@ -1,10 +1,12 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
-import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
+import { JSX, createSignal, createEffect, onCleanup, onMount, splitProps } from 'solid-js';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
-import { useResizeObserver } from '../use-resize-observer';
+import { useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { composeEventHandlers } from '../utils';
-import { ScrollbarContextValue, ScrollbarProvider } from './Scrollbar.context';
+import {
+  ScrollbarContextValue,
+  ScrollbarProvider,
+} from './Scrollbar.context';
 
 export interface ScrollbarPrivateProps {
   sizes: Sizes;
@@ -18,101 +20,107 @@ export interface ScrollbarPrivateProps {
   onResize: () => void;
 }
 
-interface ScrollbarProps
-  extends ScrollbarPrivateProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onResize'> {}
+export function Scrollbar(props: ScrollbarPrivateProps & JSX.HTMLAttributes<HTMLDivElement>) {
+  const [local, scrollbarProps] = splitProps(props, [
+    'sizes',
+    'hasThumb',
+    'onThumbChange',
+    'onThumbPointerUp',
+    'onThumbPointerDown',
+    'onThumbPositionChange',
+    'onDragScroll',
+    'onWheelScroll',
+    'onResize',
+    'ref',
+  ]);
 
-export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forwardedRef) => {
-  const {
-    sizes,
-    hasThumb,
-    onThumbChange,
-    onThumbPointerUp,
-    onThumbPointerDown,
-    onThumbPositionChange,
-    onDragScroll,
-    onWheelScroll,
-    onResize,
-    ...scrollbarProps
-  } = props;
   const context = useScrollAreaContext();
-  const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
-  const composeRefs = useMergedRef(forwardedRef, (node) => setScrollbar(node));
-  const rectRef = useRef<DOMRect | null>(null);
-  const prevWebkitUserSelectRef = useRef<string>('');
-  const { viewport } = context;
-  const maxScrollPos = sizes.content - sizes.viewport;
-  const handleWheelScroll = useCallbackRef(onWheelScroll);
-  const handleThumbPositionChange = useCallbackRef(onThumbPositionChange);
-  const handleResize = useDebouncedCallback(onResize, 10);
+  const [scrollbar, setScrollbar] = createSignal<HTMLDivElement |  null>(null);
+  const composeRefs = useMergedRef(local.ref, (node: HTMLDivElement) => setScrollbar(node));
+  let rect: DOMRect | null = null;
+  let prevWebkitUserSelect = '';
 
-  const handleDragScroll = (event: React.PointerEvent<HTMLElement>) => {
-    if (rectRef.current) {
-      const x = event.clientX - rectRef.current.left;
-      const y = event.clientY - rectRef.current.top;
-      onDragScroll({ x, y });
+  const maxScrollPos = () => local.sizes.content - local.sizes.viewport;
+
+  // debounced resize
+  const handleResize = useDebouncedCallback(local.onResize, 10);
+
+  // wheel handling on document
+  const wheelListener = (e: WheelEvent) => {
+    const target = e.target as HTMLElement;
+    if (scrollbar()?.contains(target)) {
+      local.onWheelScroll(e, maxScrollPos());
     }
   };
+  onMount(() => {
+    document.addEventListener('wheel', wheelListener, { passive: false } as AddEventListenerOptions);
+  });
+  onCleanup(() => {
+    document.removeEventListener('wheel', wheelListener, { passive: false } as AddEventListenerOptions);
+  });
 
-  useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      const element = event.target as HTMLElement;
-      const isScrollbarWheel = scrollbar?.contains(element);
-      if (isScrollbarWheel) {
-        handleWheelScroll(event, maxScrollPos);
-      }
-    };
-    document.addEventListener('wheel', handleWheel, { passive: false });
-    return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
-  }, [viewport, scrollbar, maxScrollPos, handleWheelScroll]);
+  // update thumb position when sizes change
+  createEffect(() => local.onThumbPositionChange());
 
-  useEffect(handleThumbPositionChange, [sizes, handleThumbPositionChange]);
-
-  useResizeObserver(scrollbar, handleResize);
-  useResizeObserver(context.content, handleResize);
+  // resize observer
+  onMount(() => {
+    const obs = new ResizeObserver(handleResize);
+    if (scrollbar()) obs.observe(scrollbar()!);
+    if (context.content) obs.observe(context.content);
+    onCleanup(() => obs.disconnect());
+  });
 
   return (
     <ScrollbarProvider
       value={{
-        scrollbar,
-        hasThumb,
-        onThumbChange: useCallbackRef(onThumbChange),
-        onThumbPointerUp: useCallbackRef(onThumbPointerUp),
-        onThumbPositionChange: handleThumbPositionChange,
-        onThumbPointerDown: useCallbackRef(onThumbPointerDown),
+        scrollbar: scrollbar(),
+        hasThumb: local.hasThumb,
+        onThumbChange: local.onThumbChange,
+        onThumbPointerUp: local.onThumbPointerUp,
+        onThumbPositionChange: local.onThumbPositionChange,
+        onThumbPointerDown: local.onThumbPointerDown,
       }}
     >
       <div
         {...scrollbarProps}
         ref={composeRefs}
         data-mantine-scrollbar
-        style={{ position: 'absolute', ...scrollbarProps.style }}
-        onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
-          event.preventDefault();
-
-          const mainPointer = 0;
-          if (event.button === mainPointer) {
-            const element = event.target as HTMLElement;
-            element.setPointerCapture(event.pointerId);
-            rectRef.current = scrollbar!.getBoundingClientRect();
-            prevWebkitUserSelectRef.current = document.body.style.webkitUserSelect;
+        style={{
+          position: 'absolute',
+          ...(typeof scrollbarProps.style === 'object' && scrollbarProps.style !== null ? scrollbarProps.style : {})
+        }}
+        onPointerDown={composeEventHandlers(local.onThumbPointerDown, (e: PointerEvent) => {
+          e.preventDefault();
+          if (e.button === 0) {
+            const el = e.currentTarget as HTMLElement;
+            el.setPointerCapture(e.pointerId);
+            rect = scrollbar()!.getBoundingClientRect();
+            prevWebkitUserSelect = document.body.style.webkitUserSelect;
             document.body.style.webkitUserSelect = 'none';
-            handleDragScroll(event);
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            local.onDragScroll({ x, y });
           }
         })}
-        onPointerMove={composeEventHandlers(props.onPointerMove, handleDragScroll)}
-        onPointerUp={composeEventHandlers(props.onPointerUp, (event) => {
-          const element = event.target as HTMLElement;
-          if (element.hasPointerCapture(event.pointerId)) {
-            event.preventDefault();
-            element.releasePointerCapture(event.pointerId);
+        onPointerMove={composeEventHandlers(local.onThumbPositionChange, (e: PointerEvent) => {
+          if (rect) {
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            local.onDragScroll({ x, y });
+          }
+        })}
+        onPointerUp={composeEventHandlers(local.onThumbPointerUp, (e: PointerEvent) => {
+          const el = e.currentTarget as HTMLElement;
+          if (el.hasPointerCapture(e.pointerId)) {
+            e.preventDefault();
+            el.releasePointerCapture(e.pointerId);
           }
         })}
         onLostPointerCapture={() => {
-          document.body.style.webkitUserSelect = prevWebkitUserSelectRef.current;
-          rectRef.current = null;
+          document.body.style.webkitUserSelect = prevWebkitUserSelect;
+          rect = null;
         }}
       />
     </ScrollbarProvider>
   );
-});
+}

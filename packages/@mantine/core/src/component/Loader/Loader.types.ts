@@ -1,8 +1,11 @@
-export interface SvgLoaderProps extends React.ComponentPropsWithoutRef<any> {}
+import { JSX } from "solid-js/jsx-runtime";
 
-export type MantineLoaderComponent = React.ForwardRefExoticComponent<
-  React.HTMLAttributes<any> & React.RefAttributes<any>
->;
+export interface SvgLoaderProps extends JSX.HTMLAttributes<any> {}
+
+export interface MantineLoaderComponent {
+  (props: JSX.HTMLAttributes<any> & { ref?: any }): JSX.Element;
+  displayName?: string;
+}
 
 export type MantineLoadersRecord = Partial<
   Record<'bars' | 'dots' | 'oval' | (string & {}), MantineLoaderComponent>

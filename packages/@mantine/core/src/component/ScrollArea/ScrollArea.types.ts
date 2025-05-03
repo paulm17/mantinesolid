@@ -24,4 +24,4 @@ export interface ScrollAreaScrollbarAxisPrivateProps {
 
 export interface ScrollAreaScrollbarAxisProps
   extends ScrollAreaScrollbarAxisPrivateProps,
-    JSX.HTMLAttributes<'div'> {}
+    JSX.HTMLAttributes<HTMLDivElement> {}
