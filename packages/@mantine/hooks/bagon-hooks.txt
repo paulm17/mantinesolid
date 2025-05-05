@@ -1,4 +1,5 @@
 Hooks copied over:
 
 use-click-outside
+use-counter
 use-resize-observer

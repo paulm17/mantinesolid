@@ -5,12 +5,10 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import { generateScopedName } from 'hash-css-selector';
 import { RollupOptions } from 'rollup';
-// import banner from 'rollup-plugin-banner2';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 import { getPackagesList } from '../../packages/get-packages-list';
 import { getPath } from '../../utils/get-path';
-// import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 
 export function createPackageConfig(packagePath: string): RollupOptions {
@@ -43,13 +41,6 @@ export function createPackageConfig(packagePath: string): RollupOptions {
       extract: true,
       modules: { generateScopedName },
     }),
-    // banner((chunk) => {
-    //   if (!ROLLUP_EXCLUDE_USE_CLIENT.includes(chunk.fileName)) {
-    //     return "'use client';\n";
-    //   }
-
-    //   return undefined;
-    // }),
   ];
 
   return {

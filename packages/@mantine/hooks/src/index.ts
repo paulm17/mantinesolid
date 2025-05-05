@@ -5,7 +5,7 @@ export { useDebouncedCallback } from './use-debounced-callback/use-debounced-cal
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
-// export { useCounter } from './use-counter/use-counter';
+export { useCounter } from './use-counter/use-counter';
 // export { useDebouncedState } from './use-debounced-state/use-debounced-state';
 // export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 // export { useDocumentTitle } from './use-document-title/use-document-title';
@@ -59,7 +59,7 @@ export { useTimeout } from './use-timeout/use-timeout';
 // export { usePrevious } from './use-previous/use-previous';
 // export { useFavicon } from './use-favicon/use-favicon';
 // export { useHeadroom } from './use-headroom/use-headroom';
-// export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
+export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
 // export { useInViewport } from './use-in-viewport/use-in-viewport';
 // export { useMutationObserver } from './use-mutation-observer/use-mutation-observer';
 // export { useMounted } from './use-mounted/use-mounted';
@@ -73,7 +73,7 @@ export { useTimeout } from './use-timeout/use-timeout';
 // export { useOrientation } from './use-orientation/use-orientation';
 // export { useFetch } from './use-fetch/use-fetch';
 export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move';
-// export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
+export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 // export { useFileDialog } from './use-file-dialog/use-file-dialog';
 
 // export type { UseMovePosition } from './use-move/use-move';
@@ -84,8 +84,8 @@ export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radia
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 // export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
 // export type { UseFetchOptions } from './use-fetch/use-fetch';
-// export type {
-//   UseScrollSpyOptions,
-//   UseScrollSpyHeadingData,
-//   UseScrollSpyReturnType,
-// } from './use-scroll-spy/use-scroll-spy';
+export type {
+  UseScrollSpyOptions,
+  UseScrollSpyHeadingData,
+  UseScrollSpyReturnType,
+} from './use-scroll-spy/use-scroll-spy';
