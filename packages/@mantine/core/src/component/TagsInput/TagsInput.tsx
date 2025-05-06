@@ -341,7 +341,6 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
   const values = _value().map((item, index) => (
     <Pill
-      key={`${item}-${index}`}
       withRemoveButton={!local.readOnly}
       onRemove={() => {
         const next_value = _value().slice();
@@ -453,7 +452,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                     combobox.closeDropdown();
                   }}
                   onPaste={handlePaste}
-                  value={_searchValue}
+                  value={_searchValue()}
                   onChange={(event: any) => handleSearchChange(event.currentTarget.value)}
                   required={local.required && _value.length === 0}
                   disabled={local.disabled}

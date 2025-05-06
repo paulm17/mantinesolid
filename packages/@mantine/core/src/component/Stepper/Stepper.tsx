@@ -23,11 +23,13 @@ import {
   useStyles,
 } from '../../core';
 import { StepperProvider } from './Stepper.context';
-import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
-import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
+import { StepperCompleted } from './StepperCompleted/StepperCompleted';
+import { StepperStep } from './StepperStep/StepperStep';
 import classes from './Stepper.module.css';
+import { children, Component, createMemo, JSX, splitProps } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
-export type StepFragmentComponent = React.FC<{ step: number }>;
+export type StepFragmentComponent = Component<{ step: number }>;
 
 export type StepperStylesNames =
   | 'root'
@@ -60,7 +62,7 @@ export interface StepperProps
     StylesApiProps<StepperFactory>,
     ElementProps<'div'> {
   /** <Stepper.Step /> components */
-  children: React.ReactNode;
+  children: JSX.Element;
 
   /** Called when step is clicked */
   onStepClick?: (stepIndex: number) => void;
@@ -69,13 +71,13 @@ export interface StepperProps
   active: number;
 
   /** Step icon, default value is step index + 1 */
-  icon?: React.ReactNode | StepFragmentComponent;
+  icon?: JSX.Element | StepFragmentComponent;
 
   /** Step icon displayed when step is completed, check icon by default */
-  completedIcon?: React.ReactNode | StepFragmentComponent;
+  completedIcon?: JSX.Element | StepFragmentComponent;
 
   /** Step icon displayed when step is in progress, default value is step index + 1 */
-  progressIcon?: React.ReactNode | StepFragmentComponent;
+  progressIcon?: JSX.Element | StepFragmentComponent;
 
   /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps, `theme.primaryColor` by default */
   color?: MantineColor;
@@ -145,123 +147,119 @@ const varsResolver = createVarsResolver<StepperFactory>(
 
 export const Stepper = factory<StepperFactory>((_props, ref) => {
   const props = useProps('Stepper', defaultProps, _props);
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    unstyled,
-    vars,
-    children,
-    onStepClick,
-    active,
-    icon,
-    completedIcon,
-    progressIcon,
-    color,
-    iconSize,
-    contentPadding,
-    orientation,
-    iconPosition,
-    size,
-    radius,
-    allowNextStepsSelect,
-    wrap,
-    autoContrast,
-    ...others
-  } = props;
+  const [local, others] = splitProps(props, [
+    'classNames',
+    'className',
+    'style',
+    'styles',
+    'unstyled',
+    'vars',
+    'children',
+    'onStepClick',
+    'active',
+    'icon',
+    'completedIcon',
+    'progressIcon',
+    'color',
+    'iconSize',
+    'contentPadding',
+    'orientation',
+    'iconPosition',
+    'size',
+    'radius',
+    'allowNextStepsSelect',
+    'wrap',
+    'autoContrast',
+    'ref',
+  ]);
 
   const getStyles = useStyles<StepperFactory>({
     name: 'Stepper',
     classes,
     props,
-    className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-    vars,
+    className: local.className,
+    style: local.style,
+    classNames: local.classNames,
+    styles: local.styles,
+    unstyled: local.unstyled,
+    vars: local.vars,
     varsResolver,
   });
 
-  const convertedChildren = Children.toArray(children) as React.ReactElement[];
-  const _children = convertedChildren.filter(
-    (child) => child.type !== StepperCompleted
-  ) as React.ReactElement<StepperStepProps>[];
-  const completedStep = convertedChildren.find(
-    (item) => item.type === StepperCompleted
-  ) as React.ReactElement<StepperCompletedProps>;
+  const resolved = children(() => props.children);
+  const arr = resolved.toArray();
 
-  const items = _children.reduce<React.ReactElement<StepperStepProps>[]>(
-    (acc, item: React.ReactElement<StepperStepProps>, index) => {
+  const stepsArr = arr.filter(c => (c as any).type !== StepperCompleted) as unknown as Array<{ props: { children?: JSX.Element } }>;
+  const completedItem = (arr.find(c => (c as any).type === StepperCompleted)
+    || null) as { props: { children?: JSX.Element } } | null;
+
+  const items = createMemo(() =>
+    stepsArr.flatMap((child: any, idx: number) => {
       const state =
-        active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
+        local.active === idx
+          ? "stepProgress"
+          : local.active > idx
+          ? "stepCompleted"
+          : "stepInactive";
 
-      const shouldAllowSelect = () => {
-        if (typeof onStepClick !== 'function') {
-          return false;
-        }
+      const allowSelect =
+        typeof local.onStepClick === "function" &&
+        (child.props.allowStepSelect ??
+          (state === "stepCompleted" || local.allowNextStepsSelect));
 
-        if (typeof item.props.allowStepSelect === 'boolean') {
-          return item.props.allowStepSelect;
-        }
-
-        return state === 'stepCompleted' || allowNextStepsSelect;
-      };
-
-      const isStepSelectionEnabled = shouldAllowSelect();
-
-      acc.push(
-        cloneElement(item, {
-          icon: item.props.icon || icon || index + 1,
-          key: index,
-          step: index,
-          state,
-          onClick: () => isStepSelectionEnabled && onStepClick?.(index),
-          allowStepClick: isStepSelectionEnabled,
-          completedIcon: item.props.completedIcon || completedIcon,
-          progressIcon: item.props.progressIcon || progressIcon,
-          color: item.props.color || color,
-          iconSize,
-          iconPosition: item.props.iconPosition || iconPosition,
-          orientation,
-        })
+      // re‑render step with new props (no cloneElement)
+      const stepNode = (
+        <Dynamic
+          component={StepperStep}
+          icon={child.props.icon ?? local.icon ?? idx + 1}
+          completedIcon={child.props.completedIcon ?? local.completedIcon}
+          progressIcon={child.props.progressIcon ?? local.progressIcon}
+          color={child.props.color ?? local.color}
+          iconSize={local.iconSize}
+          orientation={local.orientation}
+          iconPosition={child.props.iconPosition ?? local.iconPosition}
+          state={state}
+          step={idx}
+          allowStepClick={allowSelect}
+          onClick={() => allowSelect && local.onStepClick?.(idx)}
+          {...child.props}
+        />
       );
 
-      if (orientation === 'horizontal' && index !== _children.length - 1) {
-        acc.push(
+      const sep =
+        local.orientation === "horizontal" && idx < stepsArr.length - 1 ? (
           <div
-            {...getStyles('separator')}
-            data-active={index < active || undefined}
-            data-orientation={orientation}
-            key={`separator-${index}`}
+            {...getStyles("separator")}
+            data-active={idx < local.active ? "" : undefined}
+            data-orientation={local.orientation}
           />
-        );
-      }
+        ) : null;
 
-      return acc;
-    },
-    []
+      return [stepNode, sep];
+    })
   );
 
-  const stepContent = _children[active]?.props?.children;
-  const completedContent = completedStep?.props?.children;
-  const content = active > _children.length - 1 ? completedContent : stepContent;
+  const content = createMemo(() => {
+    if (local.active > stepsArr.length - 1) {
+      return completedItem?.props.children;
+    }
+    return stepsArr[local.active]?.props.children;
+  });
 
   return (
-    <StepperProvider value={{ getStyles, orientation, iconPosition }}>
-      <Box {...getStyles('root')} ref={ref} size={size} {...others}>
+    <StepperProvider value={{ getStyles, orientation: local.orientation, iconPosition: local.iconPosition }}>
+      <Box {...getStyles('root')} ref={ref} size={local.size} {...others}>
         <Box
           {...getStyles('steps')}
           mod={{
-            orientation,
-            'icon-position': iconPosition,
-            wrap: wrap && orientation !== 'vertical',
+            orientation: local.orientation,
+            'icon-position': local.iconPosition,
+            wrap: local.wrap && local.orientation !== 'vertical',
           }}
         >
-          {items}
+          {items()}
         </Box>
-        {content && <div {...getStyles('content')}>{content}</div>}
+        {content && <div {...getStyles('content')}>{content()}</div>}
       </Box>
     </StepperProvider>
   );

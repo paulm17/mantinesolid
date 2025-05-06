@@ -2,4 +2,5 @@ Hooks copied over:
 
 use-click-outside
 use-counter
+use-move
 use-resize-observer

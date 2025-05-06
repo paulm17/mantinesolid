@@ -67,7 +67,7 @@ const _Box = (
     component?: any;
     className?: string;
     renderRoot?: any;
-    ref?: HTMLDivElement;
+    ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
     children?: any;
   }
 ) => {

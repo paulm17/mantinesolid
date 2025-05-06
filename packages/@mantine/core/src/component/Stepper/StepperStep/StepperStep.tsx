@@ -1,3 +1,4 @@
+import { JSX, splitProps } from 'solid-js';
 import {
   BoxProps,
   CompoundStylesApiProps,
@@ -18,7 +19,7 @@ import { useStepperContext } from '../Stepper.context';
 import classes from '../Stepper.module.css';
 
 const getStepFragment = (
-  Fragment: StepFragmentComponent | React.ReactNode,
+  Fragment: StepFragmentComponent | JSX.Element,
   step: number | undefined
 ) => {
   if (typeof Fragment === 'function') {
@@ -56,19 +57,19 @@ export interface StepperStepProps
   withIcon?: boolean;
 
   /** Step icon, defaults to step index + 1 when rendered within Stepper */
-  icon?: React.ReactNode | StepFragmentComponent;
+  icon?: JSX.Element | StepFragmentComponent;
 
   /** Step icon displayed when step is completed */
-  completedIcon?: React.ReactNode | StepFragmentComponent;
+  completedIcon?: JSX.Element | StepFragmentComponent;
 
   /** Step icon displayed when step is in progress */
-  progressIcon?: React.ReactNode | StepFragmentComponent;
+  progressIcon?: JSX.Element | StepFragmentComponent;
 
   /** Step label, render after icon */
-  label?: React.ReactNode | StepFragmentComponent;
+  label?: JSX.Element | StepFragmentComponent;
 
   /** Step description */
-  description?: React.ReactNode | StepFragmentComponent;
+  description?: JSX.Element | StepFragmentComponent;
 
   /** Icon wrapper size */
   iconSize?: string | number;
@@ -105,109 +106,110 @@ const defaultProps: Partial<StepperStepProps> = {
   iconPosition: 'left',
 };
 
-export const StepperStep = factory<StepperStepFactory>((props, ref) => {
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    vars,
-    step,
-    state,
-    color,
-    icon,
-    completedIcon,
-    progressIcon,
-    label,
-    description,
-    withIcon,
-    iconSize,
-    loading,
-    allowStepClick,
-    allowStepSelect,
-    iconPosition,
-    orientation,
-    mod,
-    ...others
-  } = useProps('StepperStep', defaultProps, props);
+export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
+  const props = useProps('StepperStep', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'classNames',
+    'className',
+    'style',
+    'styles',
+    'vars',
+    'step',
+    'state',
+    'color',
+    'icon',
+    'completedIcon',
+    'progressIcon',
+    'label',
+    'description',
+    'withIcon',
+    'iconSize',
+    'loading',
+    'allowStepClick',
+    'allowStepSelect',
+    'iconPosition',
+    'orientation',
+    'mod',
+    'ref'
+  ]);
 
   const ctx = useStepperContext();
   const theme = useMantineTheme();
-  const stylesApi = { classNames, styles };
+  const stylesApi = { classNames: local.classNames, styles: local.styles };
 
-  const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
+  const _icon = local.state === 'stepCompleted' ? null : local.state === 'stepProgress' ? local.progressIcon : local.icon;
   const dataAttributes = {
-    'data-progress': state === 'stepProgress' || undefined,
-    'data-completed': state === 'stepCompleted' || undefined,
+    'data-progress': local.state === 'stepProgress' || undefined,
+    'data-completed': local.state === 'stepCompleted' || undefined,
   };
 
   return (
     <UnstyledButton
-      {...ctx.getStyles('step', { className, style, variant: ctx.orientation, ...stylesApi })}
+      {...ctx.getStyles('step', { className: local.className, style: local.style, variant: ctx.orientation, ...stylesApi })}
       mod={[
-        { 'icon-position': iconPosition || ctx.iconPosition, 'allow-click': allowStepClick },
-        mod,
+        { 'icon-position': local.iconPosition || ctx.iconPosition, 'allow-click': local.allowStepClick },
+        local.mod,
       ]}
       ref={ref}
       {...dataAttributes}
       {...others}
-      __vars={{ '--step-color': color ? getThemeColor(color, theme) : undefined }}
-      tabIndex={allowStepClick ? 0 : -1}
+      __vars={{ '--step-color': local.color ? getThemeColor(local.color, theme) : undefined }}
+      tabIndex={local.allowStepClick ? 0 : -1}
     >
-      {withIcon && (
+      {local.withIcon && (
         <span {...ctx.getStyles('stepWrapper', stylesApi)}>
           <span {...ctx.getStyles('stepIcon', stylesApi)} {...dataAttributes}>
-            <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
+            <Transition mounted={local.state === 'stepCompleted'} transition="pop" duration={200}>
               {(transitionStyles) => (
                 <span
                   {...ctx.getStyles('stepCompletedIcon', { style: transitionStyles, ...stylesApi })}
                 >
-                  {loading ? (
+                  {local.loading ? (
                     <Loader
                       color="var(--mantine-color-white)"
                       size="calc(var(--stepper-icon-size) / 2)"
                       {...ctx.getStyles('stepLoader', stylesApi)}
                     />
                   ) : (
-                    getStepFragment(completedIcon, step) || <CheckIcon size="60%" />
+                    getStepFragment(local.completedIcon, local.step) || <CheckIcon size="60%" />
                   )}
                 </span>
               )}
             </Transition>
 
-            {state !== 'stepCompleted' ? (
-              loading ? (
+            {local.state !== 'stepCompleted' ? (
+              local.loading ? (
                 <Loader
                   {...ctx.getStyles('stepLoader', stylesApi)}
                   size="calc(var(--stepper-icon-size) / 2)"
-                  color={color}
+                  color={local.color}
                 />
               ) : (
-                getStepFragment(_icon || icon, step)
+                getStepFragment(_icon || local.icon, local.step)
               )
             ) : null}
           </span>
-          {orientation === 'vertical' && (
+          {local.orientation === 'vertical' && (
             <span
               {...ctx.getStyles('verticalSeparator', stylesApi)}
-              data-active={state === 'stepCompleted' || undefined}
+              data-active={local.state === 'stepCompleted' || undefined}
             />
           )}
         </span>
       )}
 
-      {(label || description) && (
+      {(local.label || local.description) && (
         <span
           {...ctx.getStyles('stepBody', stylesApi)}
           data-orientation={ctx.orientation}
-          data-icon-position={iconPosition || ctx.iconPosition}
+          data-icon-position={local.iconPosition || ctx.iconPosition}
         >
-          {label && (
-            <span {...ctx.getStyles('stepLabel', stylesApi)}>{getStepFragment(label, step)}</span>
+          {local.label && (
+            <span {...ctx.getStyles('stepLabel', stylesApi)}>{getStepFragment(local.label, local.step)}</span>
           )}
-          {description && (
+          {local.description && (
             <span {...ctx.getStyles('stepDescription', stylesApi)}>
-              {getStepFragment(description, step)}
+              {getStepFragment(local.description, local.step)}
             </span>
           )}
         </span>

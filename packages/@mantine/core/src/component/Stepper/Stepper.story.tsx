@@ -11,7 +11,7 @@ export function Usage() {
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <Stepper active={active} onStepClick={setActive} color="lime.3" autoContrast>
         <Stepper.Step label="First step" description="Create an account">
           Step 1 content: Create an account

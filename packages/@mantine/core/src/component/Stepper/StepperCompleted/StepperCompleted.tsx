@@ -1,7 +1,9 @@
+import { Component, JSX } from "solid-js";
+
 export interface StepperCompletedProps {
   /** Label content */
-  children: React.ReactNode;
+  children: JSX.Element;
 }
 
-export const StepperCompleted: React.FC<StepperCompletedProps> = () => null;
-StepperCompleted.displayName = '@mantine/core/StepperCompleted';
+export const StepperCompleted: Component<StepperCompletedProps> = () => null;
+(StepperCompleted as any).displayName = '@mantine/core/StepperCompleted';
