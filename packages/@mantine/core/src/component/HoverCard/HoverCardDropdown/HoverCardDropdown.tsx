@@ -1,7 +1,3 @@
-// import { createEventHandler, useProps } from '../../../core';
-// import { Popover, PopoverDropdownProps } from '../../Popover';
-// import { useHoverCardContext } from '../HoverCard.context';
-
 import { JSX, splitProps } from 'solid-js';
 import { createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
@@ -21,21 +17,15 @@ export function HoverCardDropdown(_props: HoverCardDropdownProps) {
 
   // split off the bits we need locally; `others` will contain the rest
   const [local, others] = splitProps(props, [
-    'children',
     'onMouseEnter',
     'onMouseLeave',
+    'children',
   ]);
 
   const ctx = useHoverCardContext();
 
-  const handleMouseEnter = createEventHandler(
-    local.onMouseEnter as JSX.EventHandler<HTMLDivElement, MouseEvent>,
-    ctx.openDropdown
-  );
-  const handleMouseLeave = createEventHandler(
-    local.onMouseLeave as JSX.EventHandler<HTMLDivElement, MouseEvent>,
-    ctx.closeDropdown
-  );
+  const handleMouseEnter = createEventHandler<any>(local.onMouseEnter, ctx.openDropdown);
+  const handleMouseLeave = createEventHandler<any>(local.onMouseLeave!, ctx.closeDropdown);
 
   return (
     <Popover.Dropdown

@@ -1,9 +1,11 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Box, GetStylesApi, getThemeColor, MantineColor, useMantineTheme } from '../../../core';
 import { Tooltip } from '../../Tooltip';
 import type { RingProgressFactory } from '../RingProgress';
 import { getCurveProps } from './get-curve-props';
+import { splitProps } from 'solid-js';
 
-interface CurveProps extends React.ComponentPropsWithRef<'circle'> {
+interface CurveProps extends JSX.HTMLAttributes<SVGCircleElement> {
   value?: number;
   size: number;
   offset: number;
@@ -12,36 +14,35 @@ interface CurveProps extends React.ComponentPropsWithRef<'circle'> {
   lineRoundCaps: boolean | undefined;
   root?: boolean;
   color?: MantineColor;
-  tooltip?: React.ReactNode;
+  tooltip?: JSX.Element;
   getStyles: GetStylesApi<RingProgressFactory>;
 }
 
-export function Curve({
-  size,
-  value,
-  offset,
-  sum,
-  thickness,
-  root,
-  color,
-  lineRoundCaps,
-  tooltip,
-  getStyles,
-  display,
-  ...others
-}: CurveProps) {
+export function Curve(props: CurveProps) {
+  const [local, others] = splitProps(props, [
+    'size',
+    'value',
+    'offset',
+    'sum',
+    'thickness',
+    'root',
+    'color',
+    'lineRoundCaps',
+    'tooltip',
+    'getStyles',
+  ]);
   const theme = useMantineTheme();
 
   return (
-    <Tooltip.Floating disabled={!tooltip} label={tooltip}>
+    <Tooltip.Floating disabled={!local.tooltip} label={local.tooltip}>
       <Box
         component="circle"
         {...others}
-        {...getStyles('curve')}
-        __vars={{ '--curve-color': color ? getThemeColor(color, theme) : undefined }}
+        {...local.getStyles('curve')}
+        __vars={{ '--curve-color': local.color ? getThemeColor(local.color, theme) : undefined }}
         fill="none"
-        strokeLinecap={lineRoundCaps ? 'round' : 'butt'}
-        {...getCurveProps({ sum, size, thickness, value, offset, root })}
+        stroke-linecap={local.lineRoundCaps ? 'round' : 'butt'}
+        {...getCurveProps({ sum: local.sum, size: local.size, thickness: local.thickness, value: local.value, offset: local.offset, root: local.root })}
       />
     </Tooltip.Floating>
   );

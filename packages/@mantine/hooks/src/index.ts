@@ -28,7 +28,7 @@ export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef, assignRef, type PossibleRef } from './use-merged-ref/use-merged-ref';
 // export { useMouse } from './use-mouse/use-mouse';
 // export { useMove, clampUseMovePosition } from './use-move/use-move';
-// export { usePagination } from './use-pagination/use-pagination';
+export { usePagination } from './use-pagination/use-pagination';
 // export { useQueue } from './use-queue/use-queue';
 // export { usePageLeave } from './use-page-leave/use-page-leave';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';

@@ -21,7 +21,7 @@ function getClampedThickness(thickness: number, size: number) {
   return Math.min(thickness || 12, (size || 120) / 4);
 }
 
-interface RingProgressSection extends JSX.HTMLAttributes<'circle'> {
+interface RingProgressSection extends JSX.HTMLAttributes<SVGCircleElement> {
   value: number;
   color: MantineColor;
   tooltip?: JSX.Element;
@@ -123,7 +123,6 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
   }).map(({ data, sum, root, lineRoundCaps, offset }, index) => (
     <Curve
       {...data}
-      // key={index}
       size={local.size!}
       thickness={clampedThickness}
       sum={sum}

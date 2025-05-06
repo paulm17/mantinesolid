@@ -187,7 +187,6 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
 
   const _label = local.label && (
     <InputLabel
-      // key="label"
       labelElement={local.labelElement}
       id={labelId}
       for={inputId}
@@ -201,7 +200,6 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
 
   const _description = hasDescription && (
     <InputDescription
-      // key="description"
       {...local.descriptionProps}
       {...sharedProps}
       size={local.descriptionProps?.size || sharedProps.size}
@@ -218,7 +216,6 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
       {...local.errorProps}
       {...sharedProps}
       size={local.errorProps?.size || sharedProps.size}
-      // key="error"
       id={local.errorProps?.id || errorId}
     >
       {local.error}

@@ -29,16 +29,8 @@ export function HoverCardTarget(_props: HoverCardTargetProps) {
 
   const ctx = useHoverCardContext();
 
-  const onMouseEnter = createEventHandler(
-    // @ts-ignore children.props may not be typed, but guard above ensures it's an element
-    (local.children.props as any).onMouseEnter,
-    ctx.openDropdown
-  );
-  const onMouseLeave = createEventHandler(
-    // @ts-ignore children.props may not be typed, but guard above ensures it's an element
-    (local.children.props as any).onMouseLeave,
-    ctx.closeDropdown
-  );
+  const onMouseEnter = createEventHandler((local.children.props as any).onMouseEnter, ctx.openDropdown);
+  const onMouseLeave = createEventHandler((local.children.props as any).onMouseLeave, ctx.closeDropdown);
 
   const eventListeners = { onMouseEnter, onMouseLeave };
 

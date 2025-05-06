@@ -45,7 +45,7 @@ function getTargetNode(props: Omit<PortalProps, "children">) {
 
 export function Portal(p: PortalProps): JSX.Element | null {
   const props = mergeProps(defaultProps, p);
-  const [local, others] = splitProps(props, [
+  const [local, _] = splitProps(props, [
     "children",
     "target",
     "reuseTargetNode",

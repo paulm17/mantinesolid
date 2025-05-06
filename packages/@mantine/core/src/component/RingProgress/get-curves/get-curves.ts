@@ -1,12 +1,13 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import type { MantineColor } from '../../../core';
 
-interface CurveData extends React.ComponentPropsWithRef<'circle'> {
+interface CurveData extends JSX.HTMLAttributes<SVGCircleElement> {
   value: number;
   color: MantineColor;
-  tooltip?: React.ReactNode;
+  tooltip?: JSX.Element;
 }
 
-interface RootCurveData extends React.ComponentPropsWithRef<'circle'> {
+interface RootCurveData extends JSX.HTMLAttributes<SVGCircleElement> {
   color?: MantineColor;
 }
 
