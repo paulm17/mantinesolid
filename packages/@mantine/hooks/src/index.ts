@@ -38,7 +38,7 @@ export { useResizeObserver, useElementSize } from './use-resize-observer/use-res
 // export { useToggle } from './use-toggle/use-toggle';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 // export { useViewportSize } from './use-viewport-size/use-viewport-size';
-// export { useWindowEvent } from './use-window-event/use-window-event';
+export { useWindowEvent } from './use-window-event/use-window-event';
 // export { useWindowScroll } from './use-window-scroll/use-window-scroll';
 // export { useIntersection } from './use-intersection/use-intersection';
 // export { useHash } from './use-hash/use-hash';

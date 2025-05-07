@@ -49,6 +49,8 @@
     "@solid-primitives/refs": "^1.1.1",
     "clsx": "^2.1.1",
     "floating-ui-solid": "workspace:*",
+    "solid-number-formt": "workspace:*",
+    "solid-remove-scroll": "workspace:*",
     "solid-textarea-autosize": "^0.0.5",
     "type-fest": "^4.27.0"
   },

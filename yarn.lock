@@ -3796,6 +3796,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@corvu/utils@npm:~0.4.1":
+  version: 0.4.2
+  resolution: "@corvu/utils@npm:0.4.2"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.6.11"
+  peerDependencies:
+    solid-js: ^1.8
+  checksum: 10c0/00895468ec0fe0707d1afcd4f88e776fad02e488f9f936aa0db15dd0957ac97a3d61209dc6d42dbb3ce558f7c26303efd0d4376873153908e9a592c0d073213f
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:0.8.1, @cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -5351,6 +5362,25 @@ __metadata:
   dependencies:
     "@floating-ui/utils": "npm:^0.2.9"
   checksum: 10c0/77debdfc26bc36c6f5ae1f26ab3c15468215738b3f5682af4e1915602fa21ba33ad210273f31c9d2da1c531409929e1afb1138b1608c6b54a0f5853ee84c340d
+  languageName: node
+  linkType: hard
+
+"@floating-ui/core@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@floating-ui/core@npm:1.7.0"
+  dependencies:
+    "@floating-ui/utils": "npm:^0.2.9"
+  checksum: 10c0/f7e66a650ad8c73765edb39a7530d81fa990c08c172f03b6129030234d32bccd4401c29ded9c8a4e4135e9beac349c5608d94962fa08c2a2ae2dab7a6530550c
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:^1.6.11":
+  version: 1.7.0
+  resolution: "@floating-ui/dom@npm:1.7.0"
+  dependencies:
+    "@floating-ui/core": "npm:^1.7.0"
+    "@floating-ui/utils": "npm:^0.2.9"
+  checksum: 10c0/49a7f0fbef82ba2c2f0bde7bb4812b276ae431b59e6a81427283a55cfb36c0af9cc459cbeb0bb1a5cc3efca1a332f584e123e7b1a8f0a9c94a21989b09b8c060
   languageName: node
   linkType: hard
 
@@ -25323,6 +25353,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"solid-prevent-scroll@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "solid-prevent-scroll@npm:0.1.10"
+  dependencies:
+    "@corvu/utils": "npm:~0.4.1"
+  peerDependencies:
+    solid-js: ^1.8
+  checksum: 10c0/ec5915193eff30a23120765c4c020fe5176bece9ab9d097923cc50e54d1acdab70e87cf450f8fb8bbb87ad196df94151fa910afc40fda98aeefafe97775dd7e6
+  languageName: node
+  linkType: hard
+
 "solid-refresh@npm:^0.6.3":
   version: 0.6.3
   resolution: "solid-refresh@npm:0.6.3"
@@ -25335,6 +25376,33 @@ __metadata:
   checksum: 10c0/04f474704fe60e28835ece852bb6a5ce60106d1d360c2d9ed0f5740751b60672705591b5ae57a35202fd6c13c8cf4eb0e17897e954317e204c2e2bda46b8bb17
   languageName: node
   linkType: hard
+
+"solid-remove-scroll@workspace:packages/libs/solid-remove-scroll":
+  version: 0.0.0-use.local
+  resolution: "solid-remove-scroll@workspace:packages/libs/solid-remove-scroll"
+  dependencies:
+    "@biomejs/biome": "npm:^1.9.4"
+    "@eslint/js": "npm:^9.23.0"
+    "@solidjs/testing-library": "npm:^0.8.10"
+    "@testing-library/jest-dom": "npm:^6.6.3"
+    "@testing-library/user-event": "npm:^14.6.1"
+    eslint: "npm:^9.23.0"
+    eslint-plugin-solid: "npm:^0.14.5"
+    globals: "npm:^16.0.0"
+    jsdom: "npm:^26.0.0"
+    rollup: "npm:^4.37.0"
+    rollup-preset-solid: "npm:^3.0.0"
+    solid-prevent-scroll: "npm:^0.1.10"
+    tslib: "npm:^2.8.1"
+    typescript: "npm:^5.8.2"
+    typescript-eslint: "npm:^8.28.0"
+    vite-plugin-eslint: "npm:^1.8.1"
+    vite-plugin-solid: "npm:^2.11.6"
+    vitest: "npm:^3.0.9"
+  peerDependencies:
+    solid-js: ^1.9.6
+  languageName: unknown
+  linkType: soft
 
 "solid-textarea-autosize@npm:^0.0.5":
   version: 0.0.5
