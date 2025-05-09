@@ -1,3 +1,5 @@
+import { splitProps, JSX } from 'solid-js';
+import { Ref } from '@solid-primitives/refs';
 import { useElementSize, useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -13,9 +15,6 @@ import {
 } from '../../core';
 import { Anchor } from '../Anchor';
 import classes from './Spoiler.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { Ref } from '@solid-primitives/refs';
-import { splitProps } from 'solid-js';
 
 export type SpoilerStylesNames = 'root' | 'control' | 'content';
 export type SpoilerCssVariables = {
@@ -88,8 +87,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     'transitionDuration',
     'id',
     'expanded',
-    'onExpandedChange',
-    'ref'
+    'onExpandedChange'
   ]);
 
   const getStyles = useStyles<SpoilerFactory>({

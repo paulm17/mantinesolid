@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -19,8 +20,6 @@ import {
 import { getPositionVariables } from './get-position-variables/get-position-variables';
 import { IndicatorPosition } from './Indicator.types';
 import classes from './Indicator.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type IndicatorPositionVariables =
   | '--indicator-top'
@@ -134,8 +133,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     'processing',
     'zIndex',
     'autoContrast',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<IndicatorFactory>({

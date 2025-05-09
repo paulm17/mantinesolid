@@ -35,8 +35,7 @@ export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) =
     'styles',
     'variant',
     'vars',
-    'size',
-    'ref'
+    'size'
   ]);
 
   const ctx = useInputContext();

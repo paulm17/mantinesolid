@@ -34,8 +34,7 @@ export const VisuallyHidden = factory<VisuallyHiddenFactory>((_props, ref) => {
     'style',
     'styles',
     'unstyled',
-    'vars',
-    'ref'
+    'vars'
   ]);
 
   const getStyles = useStyles<VisuallyHiddenFactory>({

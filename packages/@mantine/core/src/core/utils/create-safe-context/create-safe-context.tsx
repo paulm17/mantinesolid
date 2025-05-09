@@ -1,4 +1,4 @@
-import { createContext, JSXElement, useContext } from 'solid-js';
+import { createContext, JSX, useContext } from 'solid-js';
 
 export function createSafeContext<ContextValue>(errorMessage: string) {
   const Context = createContext<ContextValue | null>(null);
@@ -13,7 +13,7 @@ export function createSafeContext<ContextValue>(errorMessage: string) {
     return ctx;
   };
 
-  const Provider = ({ children, value }: { value: ContextValue; children: JSXElement }) => (
+  const Provider = ({ children, value }: { value: ContextValue; children: JSX.Element }) => (
     <Context.Provider value={value}>{children}</Context.Provider>
   );
 

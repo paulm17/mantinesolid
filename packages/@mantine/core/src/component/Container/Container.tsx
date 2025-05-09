@@ -55,8 +55,7 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'fluid',
-    'mod',
-    'ref',
+    'mod'
   ]);
 
   const getStyles = useStyles<ContainerFactory>({

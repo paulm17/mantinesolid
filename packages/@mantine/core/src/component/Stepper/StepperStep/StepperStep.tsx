@@ -129,8 +129,7 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     'allowStepSelect',
     'iconPosition',
     'orientation',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = useStepperContext();

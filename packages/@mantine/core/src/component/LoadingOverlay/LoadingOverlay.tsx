@@ -74,8 +74,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
     'loaderProps',
     'overlayProps',
     'visible',
-    'zIndex',
-    'ref'
+    'zIndex'
   ]);
 
   const theme = useMantineTheme();

@@ -1,6 +1,7 @@
 import { IconStarFilled } from '@tabler/icons-solidjs';
 import { Group } from '../Group';
 import { Badge } from './Badge';
+import { For } from 'solid-js';
 
 export default { title: 'Badge' };
 
@@ -74,13 +75,7 @@ export function Round() {
 }
 
 export function AutoContrast() {
-  const buttons = Array(10)
-    .fill(0)
-    .map((_, index) => (
-      <Badge key={index} color={`blue.${index}`} autoContrast>
-        Badge
-      </Badge>
-    ));
+  const buttons = Array.from({ length: 10 }, (_, i) => `blue.${i}`);
 
   return (
     <div
@@ -92,7 +87,13 @@ export function AutoContrast() {
         'padding': '40px',
       }}
     >
-      {buttons}
+      <For each={buttons}>
+        {(_, index) => (
+          <Badge color={`blue.${index()}`} autoContrast>
+            $$
+          </Badge>
+        )}
+      </For>
     </div>
   );
 }
@@ -160,13 +161,17 @@ export function ColorsIndex() {
 }
 
 export function Sizes() {
-  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <Badge size={size} key={size}>
-      Badge {size}
-    </Badge>
-  ));
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-  return <div style={{ 'padding': '40px', display: 'flex', 'gap': '40px' }}>{sizes}</div>;
+  return <div style={{ 'padding': '40px', display: 'flex', 'gap': '40px' }}>
+    <For each={sizes}>
+      {(size) => (
+        <Badge size={size}>
+          Badge {size}
+        </Badge>
+      )}
+    </For>
+  </div>;
 }
 
 export function DotWithRightSection() {

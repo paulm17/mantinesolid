@@ -10,7 +10,7 @@ export const Oval: MantineLoaderComponent = (props: any) => {
   return (
     <Box
       component="span"
-      className={cx(classes.dotsLoader, local.className)}
+      className={cx(classes.ovalLoader, local.className)}
       ref={local.ref}
       {...others}
     />

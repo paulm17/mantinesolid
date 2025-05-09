@@ -96,8 +96,7 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
     'total',
     'gap',
     'hideWithOnePage',
-    'withPages',
-    'ref'
+    'withPages'
   ]);
 
   if (local.total <= 0 || (local.hideWithOnePage && local.total === 1)) {

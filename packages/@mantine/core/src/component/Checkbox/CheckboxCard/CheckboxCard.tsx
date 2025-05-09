@@ -77,8 +77,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((props, ref) => {
       'value',
       'onClick',
       'defaultChecked',
-      'onChange',
-      'ref'
+      'onChange'
     ]
   );
 

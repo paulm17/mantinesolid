@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -18,7 +18,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './Blockquote.module.css';
-import { splitProps } from 'solid-js';
 
 export type BlockquoteStylesNames = 'root' | 'icon' | 'cite';
 export type BlockquoteCssVariables = {
@@ -92,8 +91,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
     'children',
     'icon',
     'iconSize',
-    'cite',
-    'ref'
+    'cite'
   ]);
 
   const getStyles = useStyles<BlockquoteFactory>({

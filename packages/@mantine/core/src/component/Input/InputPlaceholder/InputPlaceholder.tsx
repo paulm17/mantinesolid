@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -10,7 +10,6 @@ import {
   useStyles,
 } from '../../../core';
 import classes from '../Input.module.css';
-import { splitProps } from 'solid-js';
 
 export type InputPlaceholderStylesNames = 'placeholder';
 
@@ -44,8 +43,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     '__staticSelector',
     'variant',
     'error',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<InputPlaceholderFactory>({

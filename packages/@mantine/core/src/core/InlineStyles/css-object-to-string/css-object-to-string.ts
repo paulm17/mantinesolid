@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { camelToKebabCase, keys } from '../../utils';
 
 export function cssObjectToString(css: JSX.CSSProperties) {

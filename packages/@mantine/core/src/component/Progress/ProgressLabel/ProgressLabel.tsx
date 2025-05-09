@@ -34,8 +34,7 @@ export const ProgressLabel = factory<ProgressLabelFactory>((_props, ref) => {
     'className',
     'style',
     'styles',
-    'vars',
-    'ref'
+    'vars'
   ]);
 
   const ctx = useProgressContext();

@@ -57,8 +57,7 @@ export const Progress = factory<ProgressFactory>((_props, ref) => {
     'color',
     'striped',
     'animated',
-    'aria-label',
-    'ref'
+    'aria-label'
   ]);
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<ProgressFactory>({

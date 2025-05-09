@@ -36,5 +36,5 @@ export const FocusTrap: Component<FocusTrapProps> = (props) => {
 export function FocusTrapInitialFocus(
   props: JSX.HTMLAttributes<HTMLSpanElement>
 ) {
-  return <VisuallyHidden tabIndex={-1} data-autofocus {...props} />;
+  return <VisuallyHidden tabIndex={-1} data-autofocus {...props as any} />;
 }

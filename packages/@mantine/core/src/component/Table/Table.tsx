@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -27,8 +28,6 @@ import { TableProvider } from './Table.context';
 import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer } from './TableScrollContainer';
 import classes from './Table.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type TableVariant = 'default' | 'vertical';
 
@@ -196,8 +195,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
     'stickyHeader',
     'stickyHeaderOffset',
     'mod',
-    'tabularNums',
-    'ref',
+    'tabularNums'
   ]);
 
   const getStyles = useStyles<TableFactory>({

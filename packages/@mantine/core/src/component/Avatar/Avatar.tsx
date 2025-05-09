@@ -1,3 +1,4 @@
+import { createEffect, createSignal, splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -20,8 +21,6 @@ import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';
 import classes from './Avatar.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { createEffect, createSignal, splitProps } from 'solid-js';
 
 export type AvatarStylesNames = 'root' | 'placeholder' | 'image';
 export type AvatarVariant =

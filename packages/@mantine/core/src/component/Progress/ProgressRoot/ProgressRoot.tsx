@@ -70,8 +70,7 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'autoContrast',
-    'transitionDuration',
-    'ref',
+    'transitionDuration'
   ]);
 
   const getStyles = useStyles<ProgressRootFactory>({

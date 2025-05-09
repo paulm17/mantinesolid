@@ -50,8 +50,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
     'disabled',
     'id',
     'pointer',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = usePillsInputContext();
@@ -71,7 +70,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
 
   const _disabled = local.disabled || ctx?.disabled;
 
-  const mergedRef = useMergedRef(local.ref as PossibleRef<HTMLInputElement>, (el) => {
+  const mergedRef = useMergedRef(ref as PossibleRef<HTMLInputElement>, (el) => {
     if (el) {
       ctx?.fieldRef;
     }

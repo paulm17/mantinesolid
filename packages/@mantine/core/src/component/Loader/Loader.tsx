@@ -1,3 +1,4 @@
+import { JSX, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -17,8 +18,6 @@ import { Bars } from './loaders/Bars';
 import { Dots } from './loaders/Dots';
 import { Oval } from './loaders/Oval';
 import classes from './Loader.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type LoaderStylesNames = 'root';
 export type LoaderCssVariables = {
@@ -28,7 +27,7 @@ export type LoaderCssVariables = {
 export interface LoaderProps
   extends BoxProps,
     StylesApiProps<LoaderFactory>,
-    Omit<JSX.SvgSVGAttributes<SVGSVGElement>, keyof BoxProps> {
+    Omit<JSX.SvgSVGAttributes<SVGSVGElement>, 'ref' | keyof BoxProps> {
   /** Controls `width` and `height` of the loader. `Loader` has predefined `xs`-`xl` values. Numbers are converted to rem. Default value is `'md'` */
   size?: MantineSize | (string & {}) | number;
 
@@ -43,11 +42,14 @@ export interface LoaderProps
 
   /** Overrides default loader with given content */
   children?: JSX.Element;
+
+  /** Reference to the loader element */
+  ref?: HTMLSpanElement;
 }
 
 export type LoaderFactory = Factory<{
   props: LoaderProps;
-  ref: HTMLSpanElement;
+  ref: HTMLSpanElement | SVGSVGElement;
   stylesNames: LoaderStylesNames;
   vars: LoaderCssVariables;
   staticComponents: {
@@ -87,8 +89,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
     'type',
     'vars',
     'loaders',
-    'variant',
-    'ref'
+    'variant'
   ]);
 
   const getStyles = useStyles<LoaderFactory>({
@@ -106,7 +107,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
 
   if (local.children) {
     return (
-      <Box {...getStyles('root')} ref={ref as any} {...(others as any)}>
+      <Box {...getStyles('root')} ref={ref} {...(others as any)}>
         {local.children}
       </Box>
     );

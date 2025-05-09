@@ -140,8 +140,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     'allowRangeSelection',
     'expandOnSpace',
     'levelOffset',
-    'checkOnSpace',
-    'ref',
+    'checkOnSpace'
   ]);
 
   const defaultController = useTree();

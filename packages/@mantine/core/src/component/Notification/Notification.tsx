@@ -110,8 +110,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     'vars',
     'mod',
     'loaderProps',
-    'role',
-    'ref'
+    'role'
   ]);
 
   const getStyles = useStyles<NotificationFactory>({

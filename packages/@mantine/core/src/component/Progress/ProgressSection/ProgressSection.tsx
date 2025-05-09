@@ -62,8 +62,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((_props, ref) => 
     'color',
     'striped',
     'animated',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = useProgressContext();

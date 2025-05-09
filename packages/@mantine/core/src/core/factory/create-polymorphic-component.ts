@@ -25,13 +25,10 @@ export type InheritedProps<C extends ElementType, P = {}> = ExtendedProps<PropsO
 export type PolymorphicRef<C extends ElementType> = C extends Component<any> ? { ref?: any } : {};
 
 // Final polymorphic props: inherited, ref, plus optional renderRoot
-export type PolymorphicComponentProps<C extends ElementType, P = {}> = InheritedProps<
-  C,
-  P & ComponentProp<C>
-> &
-  PolymorphicRef<C> & {
-    renderRoot?: (props: any) => any;
-  };
+export type PolymorphicComponentProps<
+  C extends ElementType,
+  Props = {}
+> = InheritedProps<C, Props & { component?: C; ref?: PolymorphicRef<C> }>;
 
 // Factory that casts raw component to a properly typed polymorphic component
 export function createPolymorphicComponent<

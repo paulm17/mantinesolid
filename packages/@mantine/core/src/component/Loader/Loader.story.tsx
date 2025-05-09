@@ -49,8 +49,9 @@ export function Colors() {
   );
 }
 
+// @ts-ignore
 const RingLoader: MantineLoaderComponent = (props: any) => {
-  const [local, others] = splitProps(props, ['style']);
+  const [_, others] = splitProps(props, ['style']);
 
   <svg
     {...others}

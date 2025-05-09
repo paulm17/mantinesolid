@@ -16,6 +16,7 @@ import {
   MantineColor,
   MantineRadius,
   MantineSize,
+  MantineStyleProp,
   parseThemeColor,
   StylesApiProps,
   useProps,
@@ -58,7 +59,7 @@ export interface RadioProps
   icon?: Component<RadioIconProps>;
 
   /** Props passed down to the root element */
-  wrapperProps?: JSX.HTMLAttributes<'div'> & DataAttributes;
+  wrapperProps?: JSX.HTMLAttributes<HTMLDivElement> & DataAttributes;
 
   /** Position of the label relative to the input, `'right'` by default */
   labelPosition?: 'left' | 'right';
@@ -73,7 +74,7 @@ export interface RadioProps
   radius?: MantineRadius;
 
   /** Assigns ref of the root element */
-  rootRef?: HTMLDivElement;
+  rootRef?: HTMLDivElement | ((el: HTMLDivElement) => void) | undefined;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;
@@ -147,8 +148,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     'rootRef',
     'iconColor',
     'onChange',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const Icon = props.icon ?? RadioIcon;
@@ -205,7 +205,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       ref={local.rootRef}
       mod={local.mod}
       {...styleProps}
-      {...local.wrapperProps}
+      {...local.wrapperProps as any}
     >
       <Box {...getStyles('inner')} mod={{ 'label-position': local.labelPosition }}>
         <Box

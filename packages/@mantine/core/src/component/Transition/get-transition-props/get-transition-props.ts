@@ -1,5 +1,6 @@
 import type { SetRequired } from 'type-fest';
 import type { TransitionOverride } from '../Transition';
+import { mergeProps } from 'solid-js';
 
 type MinimalTransitionOverride = SetRequired<TransitionOverride, 'duration' | 'transition'>;
 
@@ -12,5 +13,5 @@ export function getTransitionProps(
   transitionProps: TransitionOverride | undefined,
   componentTransition: TransitionOverride | undefined
 ): MinimalTransitionOverride {
-  return { ...defaultTransition, ...componentTransition, ...transitionProps };
+  return mergeProps ({ ...defaultTransition, ...componentTransition, ...transitionProps });
 }

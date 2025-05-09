@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { createEffect, createSignal, splitProps } from 'solid-js';
 import {
   Box,

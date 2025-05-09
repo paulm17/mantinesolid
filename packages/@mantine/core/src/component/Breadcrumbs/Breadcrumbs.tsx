@@ -1,5 +1,4 @@
-import { children, splitProps } from 'solid-js';
-import { JSX } from 'solid-js/jsx-runtime';
+import { children, splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -63,8 +62,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
     'vars',
     'children',
     'separator',
-    'separatorMargin',
-    'ref'
+    'separatorMargin'
   ]);
 
   const getStyles = useStyles<BreadcrumbsFactory>({

@@ -1,3 +1,4 @@
+import { JSX, splitProps } from 'solid-js';
 import { normalizeRadialValue, PossibleRef, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -13,8 +14,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './AngleSlider.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type AngleSliderStylesNames = 'root' | 'thumb' | 'label' | 'marks' | 'mark';
 export type AngleSliderCssVariables = {
@@ -120,8 +119,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     'aria-label',
     'tabIndex',
     'onScrubStart',
-    'onScrubEnd',
-    'ref'
+    'onScrubEnd'
   ]);
 
   const [_value, setValue] = useUncontrolled({
@@ -199,7 +197,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     />
   ));
 
-  const mergedRef = useMergedRef(local.ref as PossibleRef<HTMLDivElement>, (el) => {
+  const mergedRef = useMergedRef(ref as PossibleRef<HTMLDivElement>, (el) => {
     if (el) {
       rootRef;
     }

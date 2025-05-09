@@ -49,8 +49,7 @@ export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
     'styles',
     'unstyled',
     'vars',
-    'ratio',
-    'ref'
+    'ratio'
   ]);
 
   const getStyles = useStyles<AspectRatioFactory>({

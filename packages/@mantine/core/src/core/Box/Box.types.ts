@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import type { MantineTheme } from '../MantineProvider';
 
 export interface CSSProperties extends JSX.CSSProperties {

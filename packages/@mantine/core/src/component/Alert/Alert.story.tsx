@@ -1,4 +1,4 @@
-import { IconPhoto } from '@tabler/icons-react';
+import { IconPhoto } from '@tabler/icons-solidjs';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
 
@@ -8,7 +8,7 @@ export function Variants() {
   return (
     <div style={{ 'max-width': '500px', margin: 'auto', padding: '40px', background: 'rgba(0, 0, 0, 0.1)' }}>
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke='1.5' />}
         title="Bummer!"
         color="red"
         variant="light"
@@ -18,7 +18,7 @@ export function Variants() {
         lost forever!
       </Alert>
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke='1.5' />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -29,7 +29,7 @@ export function Variants() {
         lost forever!
       </Alert>
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke='1.5' />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -39,9 +39,8 @@ export function Variants() {
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
-
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke='1.5' />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -51,9 +50,8 @@ export function Variants() {
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
-
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke='1.5' />}
         withCloseButton
         title="Bummer!"
         color="red"
@@ -63,9 +61,8 @@ export function Variants() {
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
-
       <Alert
-        icon={<IconPhoto stroke={1.5} />}
+        icon={<IconPhoto stroke='1.5' />}
         withCloseButton
         title="Bummer!"
         color="red"

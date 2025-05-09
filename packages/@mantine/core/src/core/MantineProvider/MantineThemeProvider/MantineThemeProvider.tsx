@@ -1,4 +1,4 @@
-import { createContext, createMemo, JSXElement, useContext, onMount } from 'solid-js';
+import { createContext, createMemo, JSX, useContext } from 'solid-js';
 import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme';
 import { MantineTheme, MantineThemeOverride } from '../theme.types';
@@ -27,12 +27,11 @@ export interface MantineThemeProviderProps {
   theme?: MantineThemeOverride;
 
   /** Your application or part of the application that requires different theme */
-  children?: JSXElement;
+  children?: JSX.Element;
 }
 
 // Don't destructure props, otherwise they lose their reactivity
 export function MantineThemeProvider(props: MantineThemeProviderProps) {
-  console.log("MantineThemeProvider");
   const { theme, inherit = true } = props;
 
   const parentTheme = useSafeMantineTheme();

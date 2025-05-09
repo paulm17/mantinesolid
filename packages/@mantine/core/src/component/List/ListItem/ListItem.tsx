@@ -43,8 +43,7 @@ export const ListItem = factory<ListItemFactory>((_props, ref) => {
     'vars',
     'icon',
     'children',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = useListContext();

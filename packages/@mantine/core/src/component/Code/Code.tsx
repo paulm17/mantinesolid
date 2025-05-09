@@ -54,8 +54,7 @@ export const Code = factory<CodeFactory>((_props, ref) => {
     'color',
     'block',
     'variant',
-    'mod',
-    'ref',
+    'mod'
   ]);
 
   const getStyles = useStyles<CodeFactory>({

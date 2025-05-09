@@ -1,3 +1,4 @@
+import { For } from 'solid-js';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-solidjs';
 import { DEFAULT_THEME, MantineThemeProvider, rem } from '../../core';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
@@ -5,27 +6,25 @@ import { ActionIcon, ActionIconProps } from './ActionIcon';
 export default { title: 'ActionIcon' };
 
 function Colors({ index, ...others }: ActionIconProps & { index?: number }) {
-  const colors = Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <ActionIcon
-      color={`${color}${typeof index === 'number' ? `.${index}` : ''}`}
-      key={color}
-      {...others}
-      size="lg"
-    >
-      $$
-    </ActionIcon>
-  ));
-  return <div style={{ display: 'flex', 'gap': '20px', 'padding': '40px' }}>{colors}</div>;
+  const colors = Object.keys(DEFAULT_THEME.colors);
+
+  return <div style={{ display: 'flex', 'gap': '20px', 'padding': '40px' }}>
+    <For each={colors}>
+      {(color, index) => (
+        <ActionIcon
+          color={`${color}${typeof index === 'number' ? `.${index}` : ''}`}
+          {...others}
+          size="lg"
+        >
+          $$
+        </ActionIcon>
+      )}
+      </For>
+  </div>;
 }
 
 export function AutoContrast() {
-  const buttons = Array(10)
-    .fill(0)
-    .map((_, index) => (
-      <ActionIcon key={index} color={`red.${index}`} autoContrast>
-        $$
-      </ActionIcon>
-    ));
+  const buttons = Array.from({ length: 10 }, (_, i) => `red.${i}`);
 
   return (
     <div
@@ -37,7 +36,13 @@ export function AutoContrast() {
         'padding': '40px',
       }}
     >
-      {buttons}
+      <For each={buttons}>
+        {(_, index) => (
+          <ActionIcon color={`red.${index()}`} autoContrast>
+            $$
+          </ActionIcon>
+        )}
+      </For>
     </div>
   );
 }

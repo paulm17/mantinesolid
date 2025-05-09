@@ -345,7 +345,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     dir
   );
 
-  let containerRef = container(ref);
+  let containerRef = container(ref as any);
 
   function handleThumbMouseDown(index: number) {
     thumbIndex = index;
@@ -354,15 +354,15 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const handleTrackMouseDownCapture = (
     event: MouseEvent | TouchEvent
   ) => {
-    containerRef.focus();
-    const rect = containerRef.getBoundingClientRect();
+    containerRef?.focus();
+    const rect = containerRef?.getBoundingClientRect();
     const changePosition = getClientPosition(event);
     const changeValue = getChangeValue({
-      value: changePosition - rect.left,
+      value: changePosition - rect!.left,
       max: local.max!,
       min: local.min!,
       step: local.step!,
-      containerWidth: rect.width,
+      containerWidth: rect!.width,
     });
 
     const nearestHandle =

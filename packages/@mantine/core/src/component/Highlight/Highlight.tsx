@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { For, splitProps, JSX } from 'solid-js';
 import {
   MantineColor,
   MantineTheme,
@@ -9,7 +9,6 @@ import {
 import { Mark } from '../Mark';
 import { Text, TextProps, TextStylesNames, TextVariant } from '../Text';
 import { highlighter } from './highlighter/highlighter';
-import { For, splitProps } from 'solid-js';
 
 export interface HighlightProps extends Omit<TextProps, 'color'> {
   /** Substring or an array of substrings to highlight in `children` */

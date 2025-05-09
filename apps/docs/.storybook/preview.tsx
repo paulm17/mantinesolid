@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Preview } from 'storybook-solidjs';
 import { MantineProvider } from "@mantine/core";
 // import { theme } from './theme';
@@ -23,3 +22,17 @@ const preview: Preview = {
 };
 
 export default preview;
+
+// const preview: Preview = {
+//   parameters: {
+//     controls: {
+//       matchers: {
+//         color: /(background|color)$/i,
+//         date: /Date$/i,
+//       },
+//     },
+//   },
+// };
+
+// export default preview;
+

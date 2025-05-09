@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -13,7 +13,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './Stack.module.css';
-import { splitProps } from 'solid-js';
 
 export type StackStylesNames = 'root';
 export type StackCssVariables = {
@@ -64,8 +63,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     'align',
     'justify',
     'gap',
-    'variant',
-    'ref'
+    'variant'
   ]);
 
   const getStyles = useStyles<StackFactory>({

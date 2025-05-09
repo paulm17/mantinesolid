@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -11,7 +11,6 @@ import {
   useStyles,
 } from '../../../core';
 import classes from '../Button.module.css';
-import { splitProps } from 'solid-js';
 
 export type ButtonGroupStylesNames = 'group';
 export type ButtonGroupCssVariables = {

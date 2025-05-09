@@ -1,7 +1,7 @@
 import cx from 'clsx';
-import { createMemo, Show, splitProps } from 'solid-js';
+import { createMemo, Show, splitProps, JSX } from 'solid-js';
+import { Ref } from "@solid-primitives/refs";
 import { Dynamic } from 'solid-js/web';
-import { JSX } from 'solid-js/jsx-runtime';
 import { createPolymorphicComponent } from '../factory';
 import { InlineStyles } from '../InlineStyles';
 import { MantineBreakpoint, useMantineSxTransform, useMantineTheme } from '../MantineProvider';
@@ -62,12 +62,12 @@ export interface BoxComponentProps extends BoxProps {
   size?: string | number;
 }
 
-const _Box = (
+const _Box = <T extends HTMLElement = HTMLDivElement>(
   props: BoxComponentProps & {
     component?: any;
     className?: string;
     renderRoot?: any;
-    ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
+    ref?: Ref<T>;
     children?: any;
   }
 ) => {
@@ -92,6 +92,7 @@ const _Box = (
   const theme = useMantineTheme();
   const Element = local.component || 'div';
   const { styleProps, rest } = extractStyleProps(others);
+
   const useSxTransform = useMantineSxTransform();
   const transformedSx = createMemo(() => useSxTransform?.()?.(styleProps.sx));
   const responsiveClassName = useRandomClassName();

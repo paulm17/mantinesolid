@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   BoxProps,
   DataAttributes,
@@ -7,7 +7,6 @@ import {
   StylesApiProps,
 } from '../../core';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
-import { splitProps } from 'solid-js';
 
 export interface InputBaseProps
   extends BoxProps,
@@ -17,7 +16,7 @@ export interface InputBaseProps
   __stylesApiProps?: Record<string, any>;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
-  wrapperProps?: JSX.HTMLAttributes<'div'> & DataAttributes;
+  wrapperProps?: JSX.HTMLAttributes<HTMLDivElement> & DataAttributes;
 
   /** Determines whether the input can have multiple lines, for example when `component="textarea"`, `false` by default */
   multiline?: boolean;

@@ -24,8 +24,7 @@ export const Space = factory<SpaceFactory>((_props, ref) => {
     'w',
     'h',
     'miw',
-    'mih',
-    'ref'
+    'mih'
   ]);
 
   return <Box ref={ref} {...others} w={local.w} miw={local.miw ?? local.w} h={local.h} mih={local.mih ?? local.h} />;

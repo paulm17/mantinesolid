@@ -23,8 +23,7 @@ import { CheckIcon } from '../Checkbox';
 import { useChipGroupContext } from './ChipGroup.context';
 import { ChipGroup } from './ChipGroup/ChipGroup';
 import classes from './Chip.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { createSignal, splitProps } from 'solid-js';
+import { createSignal, splitProps, JSX } from 'solid-js';
 
 export type ChipStylesNames = 'root' | 'input' | 'iconWrapper' | 'checkIcon' | 'label';
 export type ChipVariant = 'outline' | 'filled' | 'light';
@@ -152,8 +151,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     'icon',
     'rootRef',
     'autoContrast',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<ChipFactory>({

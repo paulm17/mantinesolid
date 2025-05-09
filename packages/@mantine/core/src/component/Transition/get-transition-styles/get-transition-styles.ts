@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX, mergeProps } from 'solid-js';
 import { MantineTransition, transitions } from '../transitions';
 
 const transitionStatuses = {
@@ -33,18 +33,20 @@ export function getTransitionStyles({
       return {};
     }
 
-    return {
-      'transition-property': transitions[transition].transitionProperty,
-      ...shared,
-      ...transitions[transition].common,
-      ...transitions[transition][transitionStatuses[state]],
-    };
+    return mergeProps(
+      {
+        'transition-property': transitions[transition].transitionProperty,
+       ...shared,
+      },
+      transitions[transition].common,
+      transitions[transition][transitionStatuses[state]]
+    );
   }
 
-  return {
+  return mergeProps({
     'transition-property': transition.transitionProperty,
     ...shared,
     ...transition.common,
     ...transition[transitionStatuses[state]],
-  };
+  });
 }

@@ -59,8 +59,7 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
     'size',
     '__staticSelector',
     '__inheritStyles',
-    'variant',
-    'ref'
+    'variant'
   ]);
   const _getStyles = useStyles<InputErrorFactory>({
     name: ['InputWrapper', local.__staticSelector],

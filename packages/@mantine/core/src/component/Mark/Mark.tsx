@@ -52,8 +52,7 @@ export const Mark = factory<MarkFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'color',
-    'variant',
-    'ref'
+    'variant'
   ]);
 
   const getStyles = useStyles<MarkFactory>({

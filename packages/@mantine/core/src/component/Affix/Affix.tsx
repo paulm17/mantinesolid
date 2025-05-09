@@ -82,7 +82,6 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
     'zIndex',
     'withinPortal',
     'position',
-    'ref'
   ]);
 
   const getStyles = useStyles<AffixFactory>({

@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { splitProps, JSX, Ref } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -12,7 +12,6 @@ import {
 } from '../../core';
 import { Input } from '../Input';
 import classes from './InlineInput.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
 
 export const InlineInputClasses = classes;
 
@@ -39,6 +38,7 @@ export interface InlineInputProps
   labelPosition?: 'left' | 'right';
   bodyElement?: any;
   labelElement?: any;
+  ref?: any;
 }
 
 export type InlineInputFactory = Factory<{

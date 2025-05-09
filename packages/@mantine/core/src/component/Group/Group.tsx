@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -14,7 +14,6 @@ import {
 } from '../../core';
 import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children';
 import classes from './Group.module.css';
-import { splitProps } from 'solid-js';
 
 export type GroupStylesNames = 'root';
 export type GroupCssVariables = {
@@ -98,8 +97,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
     'vars',
     'variant',
     '__size',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const filteredChildren = filterFalsyChildren(local.children);

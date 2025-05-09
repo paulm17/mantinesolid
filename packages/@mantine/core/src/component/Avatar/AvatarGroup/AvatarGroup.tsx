@@ -52,8 +52,7 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
     'styles',
     'unstyled',
     'vars',
-    'spacing',
-    'ref'
+    'spacing'
   ]);
 
   const getStyles = useStyles<AvatarGroupFactory>({

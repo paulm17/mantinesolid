@@ -1,10 +1,9 @@
+import { splitProps, JSX } from 'solid-js';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { RadioGroupProvider } from '../RadioGroup.context';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
 
@@ -53,8 +52,7 @@ export const RadioGroup = factory<RadioGroupFactory>((_props, ref) => {
     'wrapperProps',
     'children',
     'name',
-    'readOnly',
-    'ref'
+    'readOnly'
   ]);
 
   const _name = useId(local.name);

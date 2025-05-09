@@ -33,8 +33,7 @@ export const TypographyStylesProvider = factory<TypographyStylesProviderFactory>
     'className',
     'style',
     'styles',
-    'unstyled',
-    'ref'
+    'unstyled'
   ]);
 
   const getStyles = useStyles<TypographyStylesProviderFactory>({

@@ -123,8 +123,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     'scrollbars',
     'onBottomReached',
     'onTopReached',
-    'overscrollBehavior',
-    'ref',
+    'overscrollBehavior'
   ]);
 
   const [scrollbarHovered, setScrollbarHovered] = createSignal(false);

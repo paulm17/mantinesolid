@@ -67,8 +67,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     'parent',
     'transitionDuration',
     'mod',
-    'displayAfterTransitionEnd',
-    'ref'
+    'displayAfterTransitionEnd'
   ]);
 
   const getStyles = useStyles<FloatingIndicatorFactory>({
@@ -92,7 +91,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     displayAfterTransitionEnd: local.displayAfterTransitionEnd,
   });
 
-  const mergedRef = useMergedRef(local.ref as PossibleRef<HTMLDivElement>, (el) => {
+  const mergedRef = useMergedRef(ref as PossibleRef<HTMLDivElement>, (el) => {
     if (el) {
       innerRef;
     }

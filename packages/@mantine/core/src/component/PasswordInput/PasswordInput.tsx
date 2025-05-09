@@ -108,8 +108,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     'leftSectionProps',
     'leftSectionPointerEvents',
     'withErrorStyles',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const uuid = useId(local.id);
@@ -156,17 +155,17 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       variant={local.visibilityToggleButtonProps?.variant ?? 'subtle'}
       color="gray"
       unstyled={local.unstyled}
-      onTouchEnd={(event) => {
+      onTouchEnd={(event: any) => {
         event.preventDefault();
         local.visibilityToggleButtonProps?.onTouchEnd?.(event);
         toggleVisibility();
       }}
-      onMouseDown={(event) => {
+      onMouseDown={(event: any) => {
         event.preventDefault();
         local.visibilityToggleButtonProps?.onMouseDown?.(event);
         toggleVisibility();
       }}
-      onKeyDown={(event) => {
+      onKeyDown={(event: any) => {
         local.visibilityToggleButtonProps?.onKeyDown?.(event);
         if (event.key === ' ') {
           event.preventDefault();
@@ -200,7 +199,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       mod={local.mod}
       {...getStyles('root')}
       {...styleProps}
-      {...local.wrapperProps}
+      {...local.wrapperProps as any}
     >
       <Input<'div'>
         component="div"

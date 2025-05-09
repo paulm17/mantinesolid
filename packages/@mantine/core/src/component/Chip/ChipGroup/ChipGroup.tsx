@@ -1,7 +1,6 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { createMemo, createSignal, splitProps, JSX } from 'solid-js';
 import { useProps } from '../../../core';
 import { ChipGroupProvider } from '../ChipGroup.context';
-import { createMemo, createSignal, splitProps } from 'solid-js';
 
 export interface ChipGroupProps<T extends boolean = false> {
   /** Determines whether it is allowed to select multiple values, `false` by default */

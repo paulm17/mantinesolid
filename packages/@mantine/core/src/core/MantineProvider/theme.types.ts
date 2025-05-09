@@ -1,6 +1,6 @@
+import { JSX } from 'solid-js';
 import type { PartialDeep } from 'type-fest';
 import { VariantColorsResolver } from './color-functions';
-import { JSX } from 'solid-js/jsx-runtime';
 
 export interface MantineTheme {
   /** Controls focus ring styles. Supports the following options:

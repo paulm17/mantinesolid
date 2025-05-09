@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -13,7 +13,6 @@ import {
 } from '../../core';
 import { getTitleSize } from './get-title-size';
 import classes from './Title.module.css';
-import { splitProps } from 'solid-js';
 
 export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
 export type TitleSize = `h${TitleOrder}` | JSX.CSSProperties['font-size'] | MantineFontSize;
@@ -78,8 +77,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     'variant',
     'lineClamp',
     'textWrap',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<TitleFactory>({

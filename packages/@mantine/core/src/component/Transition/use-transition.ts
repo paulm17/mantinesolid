@@ -1,4 +1,4 @@
-import { createSignal, createEffect, onCleanup } from 'solid-js';
+import { createSignal, createEffect, onCleanup, splitProps, mergeProps } from 'solid-js';
 import { useReducedMotion } from '@mantine/hooks';
 import { useMantineTheme } from '../../core';
 
@@ -14,7 +14,7 @@ interface UseTransition {
   duration: number;
   exitDuration: number;
   timingFunction: string;
-  mounted: boolean;
+  mounted: () => boolean;
   onEnter?: () => void;
   onExit?: () => void;
   onEntered?: () => void;
@@ -24,22 +24,35 @@ interface UseTransition {
 }
 
 export function useTransition(props: UseTransition) {
+  const [local] = splitProps(props, [
+    'duration',
+    'exitDuration',
+    'timingFunction',
+    'mounted',
+    'onEnter',
+    'onExit',
+    'onEntered',
+    'onExited',
+    'enterDelay',
+    'exitDelay'
+  ]);
+
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
-  const [transitionDuration, setTransitionDuration] = createSignal(reduceMotion ? 0 : props.duration);
-  const [transitionStatus, setStatus] = createSignal<TransitionStatus>(props.mounted ? 'entered' : 'exited');
+  const [transitionDuration, setTransitionDuration] = createSignal(reduceMotion ? 0 : local.duration);
+  const [transitionStatus, setStatus] = createSignal<TransitionStatus>(local.mounted() ? 'entered' : 'exited');
   let transitionTimeoutRef = -1;
   let delayTimeoutRef = -1;
   let rafRef = -1;
 
   const handleStateChange = (shouldMount: boolean) => {
-    const preHandler = shouldMount ? props.onEnter : props.onExit;
-    const handler = shouldMount ? props.onEntered : props.onExited;
+    const preHandler = shouldMount ? local.onEnter : local.onExit;
+    const handler = shouldMount ? local.onEntered : local.onExited;
 
     window.clearTimeout(transitionTimeoutRef);
 
-    const newTransitionDuration = reduceMotion ? 0 : shouldMount ? props.duration : props.exitDuration;
+    const newTransitionDuration = reduceMotion ? 0 : shouldMount ? local.duration : local.exitDuration;
     setTransitionDuration(newTransitionDuration);
 
     if (newTransitionDuration === 0) {
@@ -66,7 +79,7 @@ export function useTransition(props: UseTransition) {
 
   const handleTransitionWithDelay = (shouldMount: boolean) => {
     window.clearTimeout(delayTimeoutRef);
-    const delay = shouldMount ? props.enterDelay : props.exitDelay;
+    const delay = shouldMount ? local.enterDelay : local.exitDelay;
 
     if (typeof delay !== 'number') {
       handleStateChange(shouldMount);
@@ -77,14 +90,14 @@ export function useTransition(props: UseTransition) {
       () => {
         handleStateChange(shouldMount);
       },
-      shouldMount ? props.enterDelay : props.exitDelay
+      shouldMount ? local.enterDelay : local.exitDelay
     );
   };
 
   let isFirstRun = true;
   createEffect(() => {
     // Access the mounted value to create dependency
-    const isMounted = props.mounted;
+    const isMounted = local.mounted();
 
     if (isFirstRun) {
       isFirstRun = false;
@@ -96,12 +109,13 @@ export function useTransition(props: UseTransition) {
 
   onCleanup(() => {
     window.clearTimeout(transitionTimeoutRef);
+    // window.clearTimeout(delayTimeoutRef);
     cancelAnimationFrame(rafRef);
   });
 
-  return {
+  return mergeProps({
     transitionDuration,
     transitionStatus,
-    transitionTimingFunction: props.timingFunction || 'ease',
-  };
+    transitionTimingFunction: local.timingFunction || 'ease',
+  });
 }

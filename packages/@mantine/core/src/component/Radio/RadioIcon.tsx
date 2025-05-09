@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { rem } from '../../core';
 
 export interface RadioIconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {

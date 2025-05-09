@@ -1,5 +1,4 @@
-import { splitProps } from 'solid-js';
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -151,8 +150,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     'id',
     'required',
     '__stylesApiProps',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<InputWrapperFactory>({

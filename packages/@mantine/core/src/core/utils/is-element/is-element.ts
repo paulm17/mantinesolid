@@ -1,6 +1,6 @@
-import { JSXElement } from 'solid-js';
+import { JSX } from 'solid-js';
 
-export function isElement(value: any): value is JSXElement {
+export function isElement(value: any): value is JSX.Element {
   if (Array.isArray(value) || value === null) {
     return false;
   }

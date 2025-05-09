@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -15,7 +15,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './Overlay.module.css';
-import { splitProps } from 'solid-js';
 
 export type OverlayStylesNames = 'root';
 export type OverlayCssVariables = {

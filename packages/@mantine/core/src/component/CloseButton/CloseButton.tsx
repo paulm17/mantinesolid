@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -15,8 +16,6 @@ import {
 import { UnstyledButton } from '../UnstyledButton';
 import { CloseIcon } from './CloseIcon';
 import classes from './CloseButton.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type CloseButtonVariant = 'subtle' | 'transparent';
 export type CloseButtonStylesNames = 'root';

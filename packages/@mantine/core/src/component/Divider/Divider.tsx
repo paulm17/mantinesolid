@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -15,7 +15,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './Divider.module.css';
-import { splitProps } from 'solid-js';
 
 export type DividerStylesNames = 'root' | 'label';
 export type DividerVariant = 'solid' | 'dashed' | 'dotted';
@@ -76,8 +75,7 @@ export const Divider = factory<DividerFactory>((_props, ref) => {
     'orientation',
     'label',
     'labelPosition',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<DividerFactory>({
@@ -96,7 +94,7 @@ export const Divider = factory<DividerFactory>((_props, ref) => {
   return (
     <Box
       ref={ref}
-      mod={[{ orientation, 'with-label': !!local.label }, local.mod]}
+      mod={[{ orientation: local.orientation, 'with-label': !!local.label }, local.mod]}
       {...getStyles('root')}
       {...others}
       role="separator"

@@ -1,3 +1,4 @@
+import { Ref, splitProps, JSX } from 'solid-js';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -22,8 +23,6 @@ import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../Inli
 import { useSwitchGroupContext } from './SwitchGroup.context';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { Ref, splitProps } from 'solid-js';
 
 export type SwitchStylesNames =
   | 'root'
@@ -212,7 +211,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       ref={local.rootRef}
       mod={local.mod}
       {...styleProps}
-      {...local.wrapperProps}
+      {...local.wrapperProps as any}
     >
       <input
         {...rest}

@@ -91,8 +91,7 @@ export const List = factory<ListFactory>((_props, ref) => {
     'spacing',
     'center',
     'listStyleType',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const getStyles = useStyles<ListFactory>({

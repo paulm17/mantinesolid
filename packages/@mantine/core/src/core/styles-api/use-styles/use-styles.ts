@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
 import {

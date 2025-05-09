@@ -1,25 +1,26 @@
-import { dirname, join } from 'path';
-// import type { StorybookConfig } from 'storybook-solidjs';
+import type { StorybookConfig } from 'storybook-solidjs-vite';
+import { join, dirname } from 'path';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 /**
  * This function is used to resolve the absolute path of a package.
  * It is needed in projects that use Yarn PnP or are set up within a monorepo.
  */
-function getAbsolutePath(value: string) {
+function getAbsolutePath(value: string): string {
   return dirname(require.resolve(join(value, 'package.json')));
 }
-const config = {
-  stories: [
-    '../../../packages/@mantine/core/src/component/**/*.story.tsx',
-  ],
+const config: StorybookConfig = {
+  stories: ['../../../packages/@mantine/core/src/component/**/*.story.tsx'],
   addons: [
-    getAbsolutePath('@storybook/addon-onboarding'),
+    getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-interactions'),
   ],
   framework: {
-    name: getAbsolutePath('@storybook/html-vite'),
+    name: getAbsolutePath('storybook-solidjs-vite') as unknown as 'storybook-solidjs-vite',
     options: {},
   },
 };

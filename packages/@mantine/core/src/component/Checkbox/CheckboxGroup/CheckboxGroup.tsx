@@ -1,9 +1,8 @@
+import { createEffect, createSignal, splitProps, JSX } from 'solid-js';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
-import { JSX } from 'solid-js/jsx-runtime';
-import { createEffect, createSignal, splitProps } from 'solid-js';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 

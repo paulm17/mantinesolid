@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -22,8 +23,6 @@ import { UnstyledButton } from '../UnstyledButton';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import { ButtonGroupSection } from './ButtonGroupSection/ButtonGroupSection';
 import classes from './Button.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type ButtonStylesNames = 'root' | 'inner' | 'loader' | 'section' | 'label';
 export type ButtonVariant =

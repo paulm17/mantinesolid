@@ -61,8 +61,7 @@ export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'size',
-    'disabled',
-    'ref'
+    'disabled'
   ]);
 
   const pillsInputCtx = usePillsInputContext();

@@ -2,7 +2,7 @@ import './baseline.css';
 import './global.css';
 import './default-css-variables.css';
 
-import { JSXElement } from 'solid-js';
+import { JSX } from 'solid-js';
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext, MantineStylesTransform } from './Mantine.context';
 import { MantineClasses } from './MantineClasses';
@@ -56,14 +56,13 @@ export interface MantineProviderProps {
   stylesTransform?: MantineStylesTransform;
 
   /** Your application */
-  children?: JSXElement;
+  children?: JSX.Element;
 
   /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
   env?: 'default' | 'test';
 }
 
 export function MantineProvider(props: MantineProviderProps) {
-  console.log("MantineProvider");
   const getRootElement = () => document.documentElement;
   const cssVariablesSelector = ':root';
   const deduplicateCssVariables = true;
@@ -117,7 +116,7 @@ export interface HeadlessMantineProviderProps {
   theme?: MantineThemeOverride;
 
   /** Your application */
-  children?: JSXElement;
+  children?: JSX.Element;
 }
 
 export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {

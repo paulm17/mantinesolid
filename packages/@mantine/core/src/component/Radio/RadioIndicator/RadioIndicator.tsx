@@ -116,8 +116,7 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
     'checked',
     'mod',
     'variant',
-    'disabled',
-    'ref'
+    'disabled'
   ]);
 
   const Icon = local.icon!;

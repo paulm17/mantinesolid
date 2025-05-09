@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -29,12 +30,10 @@ import {
   InputWrapperStylesNames,
 } from './InputWrapper/InputWrapper';
 import classes from './Input.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export interface __BaseInputProps extends __InputWrapperProps, Omit<__InputProps, 'wrapperProps'> {
   /** Props passed down to the root element */
-  wrapperProps?: JSX.HTMLAttributes<'div'> & DataAttributes;
+  wrapperProps?: JSX.HTMLAttributes<HTMLDivElement> & DataAttributes;
 }
 
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
@@ -276,7 +275,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
             data-position="left"
             {...getStyles('section', {
               className: local.leftSectionProps?.class,
-              style: local.leftSectionProps?.style,
+              style: local.leftSectionProps?.style as any,
             })}
           >
             {local.leftSection}
@@ -301,7 +300,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
             data-position="right"
             {...getStyles('section', {
               className: local.rightSectionProps?.class,
-              style: local.rightSectionProps?.style,
+              style: local.rightSectionProps?.style as any,
             })}
           >
             {_rightSection}

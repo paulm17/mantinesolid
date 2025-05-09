@@ -406,9 +406,9 @@ export const PinInput = factory<PinInputFactory>((_props, ref) => {
               __staticSelector="PinInput"
               id={`${uuid}-${index() + 1}`}
               inputMode={local.inputMode || (local.type === 'number' ? 'numeric' : 'text')}
-              onChange={(event) => handleChange(event, index())}
-              onKeyDown={(event) => handleKeyDown(event, index())}
-              onFocus={(event) => handleFocus(event, index())}
+              onChange={(event: Event) => handleChange(event, index())}
+              onKeyDown={(event: KeyboardEvent) => handleKeyDown(event, index())}
+              onFocus={(event: Event) => handleFocus(event, index())}
               onBlur={handleBlur}
               onPaste={handlePaste}
               type={typeof local.inputType === "string" ? local.inputType : (local.mask?"password": local.type==="number"?"tel":"text")}

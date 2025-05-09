@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import TextareaAutosize from 'solid-textarea-autosize';
 import {
   BoxProps,
@@ -10,8 +11,6 @@ import {
 } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export interface TextareaProps
   extends BoxProps,
@@ -48,8 +47,7 @@ export const Textarea = factory<TextareaFactory>((_props, ref) => {
     'maxRows',
     'minRows',
     '__staticSelector',
-    'resize',
-    'ref'
+    'resize'
   ]);
 
   const shouldAutosize = local.autosize && getEnv() !== 'test';

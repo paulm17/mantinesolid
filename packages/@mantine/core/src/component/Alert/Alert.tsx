@@ -1,3 +1,4 @@
+import { JSX, splitProps } from 'solid-js';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -15,8 +16,6 @@ import {
 } from '../../core';
 import { CloseButton } from '../CloseButton';
 import classes from './Alert.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type AlertStylesNames =
   | 'root'
@@ -111,7 +110,6 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     'closeButtonLabel',
     'variant',
     'autoContrast',
-    'ref'
   ]);
 
   const getStyles = useStyles<AlertFactory>({

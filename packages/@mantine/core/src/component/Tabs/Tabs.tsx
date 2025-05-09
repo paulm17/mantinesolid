@@ -148,8 +148,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     'style',
     'vars',
     'autoContrast',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const uid = useId(local.id);

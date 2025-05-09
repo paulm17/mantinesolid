@@ -1,3 +1,4 @@
+import { children, splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -20,8 +21,6 @@ import {
 import { TimelineProvider } from './Timeline.context';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 import classes from './Timeline.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { children, splitProps } from 'solid-js';
 
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;
 export type TimelineCssVariables = {
@@ -108,8 +107,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     'lineWidth',
     'reverseActive',
     'mod',
-    'autoContrast',
-    'ref'
+    'autoContrast'
   ]);
 
   const getStyles = useStyles<TimelineFactory>({

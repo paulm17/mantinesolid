@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'solid-js';
 
 const AvatarGroupContext = createContext<true | null>(null);
 export const AvatarGroupProvider = AvatarGroupContext.Provider;

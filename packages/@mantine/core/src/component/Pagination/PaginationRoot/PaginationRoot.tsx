@@ -136,8 +136,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     'onFirstPage',
     'onLastPage',
     'getItemProps',
-    'autoContrast',
-    'ref'
+    'autoContrast'
   ]);
 
   const getStyles = useStyles<PaginationRootFactory>({

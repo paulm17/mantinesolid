@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import { clamp } from '@mantine/hooks';
 import {
   Box,
@@ -14,8 +15,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './SemiCircleProgress.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type SemiCircleProgressStylesNames =
   | 'root'
@@ -144,8 +143,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
     'emptySegmentColor',
     'transitionDuration',
     'label',
-    'labelPosition',
-    'ref',
+    'labelPosition'
   ]);
 
   const getStyles = useStyles<SemiCircleProgressFactory>({
@@ -167,7 +165,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
   const semiCirclePercentage = clamp(local.value, 0, 100) * (circumference / 100);
 
   return (
-    <Box ref={local.ref} size={local.size} {...getStyles('root')} {...others}>
+    <Box ref={ref} size={local.size} {...getStyles('root')} {...others}>
       {local.label && (
         <p {...getStyles('label')} data-position={local.labelPosition} data-orientation={orientation}>
           {local.label}

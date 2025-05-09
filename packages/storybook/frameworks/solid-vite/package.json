@@ -1,0 +1,81 @@
+{
+  "name": "storybook-solidjs-vite",
+  "version": "1.0.0-beta.7",
+  "description": "Storybook for SolidJS and Vite: Develop SolidJS in isolation with Hot Reloading.",
+  "keywords": [
+    "storybook"
+  ],
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/frameworks/solid-vite",
+  "bugs": {
+    "url": "https://github.com/storybookjs/solidjs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/solidjs.git",
+    "directory": "frameworks/solid-vite"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "node": "./dist/index.js",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./preset": {
+      "types": "./dist/preset.d.ts",
+      "require": "./dist/preset.js",
+      "import": "./dist/preset.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "template/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "prepack": "yarn build --optimized --reset",
+    "build": "npx jiti ../../scripts/prepare/build.ts",
+    "check": "npx jiti ../../scripts/prepare/check.ts"
+  },
+  "dependencies": {
+    "@storybook/builder-vite": "next",
+    "@storybook/types": "next",
+    "magic-string": "^0.30.11",
+    "storybook-solidjs": "workspace:*"
+  },
+  "devDependencies": {
+    "solid-js": "~1.9.0",
+    "storybook": "next",
+    "vite": "^4.0.0 || ^5.0.0 || ^6.0.0"
+  },
+  "peerDependencies": {
+    "solid-js": "~1.9.0",
+    "storybook": "*",
+    "vite": "^4.0.0 || ^5.0.0 || ^6.0.0",
+    "vite-plugin-solid": "^2.10.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bundler": {
+    "entries": [
+      "./src/index.ts",
+      "./src/preset.ts"
+    ],
+    "platform": "node"
+  }
+}

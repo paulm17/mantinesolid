@@ -45,8 +45,7 @@ export const Kbd = factory<KbdFactory>((_props, ref) => {
     'style',
     'styles',
     'unstyled',
-    'vars',
-    'ref'
+    'vars'
   ]);
 
   const getStyles = useStyles<KbdFactory>({

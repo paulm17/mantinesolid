@@ -46,8 +46,7 @@ export const PaginationControl = factory<PaginationControlFactory>((_props, ref)
     'active',
     'disabled',
     'withPadding',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = usePaginationContext();

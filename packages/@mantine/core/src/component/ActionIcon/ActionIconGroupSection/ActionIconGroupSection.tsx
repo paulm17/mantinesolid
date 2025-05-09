@@ -94,8 +94,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     'variant',
     'gradient',
     'radius',
-    'autoContrast',
-    'ref'
+    'autoContrast'
   ]);
 
   const getStyles = useStyles<ActionIconGroupSectionFactory>({

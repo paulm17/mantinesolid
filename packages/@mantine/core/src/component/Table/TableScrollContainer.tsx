@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -13,7 +13,6 @@ import {
 } from '../../core';
 import { ScrollArea } from '../ScrollArea';
 import classes from './Table.module.css';
-import { splitProps } from 'solid-js';
 
 export type TableScrollContainerStylesNames = 'scrollContainer' | 'scrollContainerInner';
 export type TableScrollContainerCssVariables = {
@@ -66,8 +65,7 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
     'children',
     'minWidth',
     'maxHeight',
-    'type',
-    'ref'
+    'type'
   ]);
 
   const getStyles = useStyles<TableScrollContainerFactory>({

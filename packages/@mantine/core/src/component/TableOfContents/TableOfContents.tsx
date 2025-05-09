@@ -85,7 +85,7 @@ export interface TableOfContentsProps
   radius?: MantineRadius;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */
-  reinitializeRef?: React.RefObject<() => void>;
+  reinitializeRef?: () => void;
 }
 
 export type TableOfContentsFactory = Factory<{
@@ -141,8 +141,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     'depthOffset',
     'variant',
     'radius',
-    'reinitializeRef',
-    'ref'
+    'reinitializeRef'
   ]);
 
   const getStyles = useStyles<TableOfContentsFactory>({

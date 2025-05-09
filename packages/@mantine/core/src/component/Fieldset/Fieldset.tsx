@@ -1,4 +1,3 @@
-import { JSX } from 'solid-js/jsx-runtime';
 import {
   Box,
   BoxProps,
@@ -13,7 +12,7 @@ import {
   useStyles,
 } from '../../core';
 import classes from './Fieldset.module.css';
-import { splitProps } from 'solid-js';
+import { splitProps, JSX } from 'solid-js';
 
 export type FieldsetStylesNames = 'root' | 'legend';
 export type FieldsetVariant = 'default' | 'filled' | 'unstyled';
@@ -61,8 +60,7 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
     'vars',
     'legend',
     'variant',
-    'children',
-    'ref'
+    'children'
   ]);
 
   const getStyles = useStyles<FieldsetFactory>({

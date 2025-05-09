@@ -22,7 +22,7 @@ export function TableDataRenderer({ data }: TableDataRendererProps) {
         <TableThead>
           <TableTr>
             {data.head.map((item, index) => (
-              <TableTh key={index}>{item}</TableTh>
+              <TableTh>{item}</TableTh>
             ))}
           </TableTr>
         </TableThead>
@@ -31,9 +31,9 @@ export function TableDataRenderer({ data }: TableDataRendererProps) {
       {data.body && (
         <TableTbody>
           {data.body.map((row, rowIndex) => (
-            <TableTr key={rowIndex}>
+            <TableTr>
               {row.map((item, index) => (
-                <TableTd key={index}>{item}</TableTd>
+                <TableTd>{item}</TableTd>
               ))}
             </TableTr>
           ))}
@@ -44,7 +44,7 @@ export function TableDataRenderer({ data }: TableDataRendererProps) {
         <TableTfoot>
           <TableTr>
             {data.foot.map((item, index) => (
-              <TableTh key={index}>{item}</TableTh>
+              <TableTh>{item}</TableTh>
             ))}
           </TableTr>
         </TableTfoot>

@@ -107,8 +107,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     'component',
     'resetRef',
     'classNames',
-    'styles',
-    'ref'
+    'styles'
   ]);
 
   let resetFn: (() => void) | undefined;

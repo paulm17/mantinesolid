@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import type {
   MantineBreakpoint,
   MantineColor,
@@ -76,7 +76,6 @@ export interface MantineStyleProps {
   td?: StyleProp<JSX.CSSProperties['text-decoration']>;
 
   /** Width, theme key: theme.spacing */
-  // w?: StyleProp<JSX.CSSProperties['width']>;
   w?: StyleProp<JSX.CSSProperties['width'] | number>;
   /** MinWidth, theme key: theme.spacing*/
   miw?: StyleProp<JSX.CSSProperties['min-width'] | number>;

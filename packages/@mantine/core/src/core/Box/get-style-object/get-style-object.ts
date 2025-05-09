@@ -1,6 +1,6 @@
+import { JSX } from 'solid-js';
 import type { MantineTheme } from '../../MantineProvider';
 import type { MantineStyleProp } from '../Box.types';
-import { JSX } from 'solid-js/jsx-runtime';
 
 export function getStyleObject(
   style: MantineStyleProp | undefined,

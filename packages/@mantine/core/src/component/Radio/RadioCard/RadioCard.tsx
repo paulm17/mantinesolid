@@ -74,8 +74,7 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
     'value',
     'onClick',
     'name',
-    'onKeyDown',
-    'ref'
+    'onKeyDown'
   ]);
 
   const getStyles = useStyles<RadioCardFactory>({
@@ -145,7 +144,10 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
         role="radio"
         aria-checked={_checked}
         name={_name}
-        onClick={(event) => {
+        onClick={(event: MouseEvent & {
+          currentTarget: HTMLButtonElement;
+          target: Element;
+        }) => {
           typeof local.onClick === "function" &&  local.onClick?.(event);
           ctx?.onChange(local.value || '');
         }}

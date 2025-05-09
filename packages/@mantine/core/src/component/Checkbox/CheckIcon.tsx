@@ -1,6 +1,5 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX, splitProps } from 'solid-js';
 import { rem } from '../../core';
-import { splitProps } from 'solid-js';
 
 export interface CheckboxIconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
   indeterminate: boolean | undefined;

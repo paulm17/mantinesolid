@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -17,7 +17,6 @@ import {
   useStyles,
 } from '../../core';
 import classes from './ThemeIcon.module.css';
-import { splitProps } from 'solid-js';
 
 export type ThemeIconStylesNames = 'root';
 export type ThemeIconVariant =
@@ -97,8 +96,7 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
     'styles',
     'unstyled',
     'vars',
-    'autoContrast',
-    'ref'
+    'autoContrast'
   ]);
 
   const getStyles = useStyles<ThemeIconFactory>({

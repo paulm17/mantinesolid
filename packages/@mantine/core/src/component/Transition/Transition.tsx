@@ -1,47 +1,29 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX, splitProps, Show } from 'solid-js';
+import { Transition as SolidTransition } from 'solid-transition-group';
 import { useMantineEnv } from '../../core';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
-import { MantineTransition } from './transitions';
-import { useTransition } from './use-transition';
+import type { MantineTransition } from './transitions';
 
 export interface TransitionProps {
-  /** If set element will not be unmounted from the DOM when it is hidden, `display: none` styles will be applied instead */
+  /** If set element will not be unmounted when hidden */
   keepMounted?: boolean;
-
   /** Transition name or object */
   transition?: MantineTransition;
-
-  /** Transition duration in ms, `250` by default */
+  /** Enter transition duration in ms */
   duration?: number;
-
-  /** Exit transition duration in ms, `250` by default */
+  /** Exit transition duration in ms */
   exitDuration?: number;
-
-  /** Transition timing function, `theme.transitionTimingFunction` by default */
+  /** CSS timing function */
   timingFunction?: string;
-
-  /** Determines whether component should be mounted to the DOM */
+  /** Controls mount state */
   mounted: boolean;
-
-  /** Render function with transition styles argument */
+  /** Render prop receiving CSS styles */
   children: (styles: JSX.CSSProperties) => JSX.Element;
-
-  /** Called when exit transition ends */
   onExited?: () => void;
-
-  /** Called when exit transition starts */
   onExit?: () => void;
-
-  /** Called when enter transition starts */
   onEnter?: () => void;
-
-  /** Called when enter transition ends */
   onEntered?: () => void;
-
-  /** Delay in ms before enter transition starts */
   enterDelay?: number;
-
-  /** Delay in ms before exit transition starts */
   exitDelay?: number;
 }
 
@@ -49,38 +31,71 @@ export type TransitionOverride = Partial<Omit<TransitionProps, 'mounted'>>;
 
 export function Transition(props: TransitionProps) {
   const env = useMantineEnv();
-  const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
-    mounted: props.mounted,
-    exitDuration: props.duration ?? 250,
-    duration: props.duration ?? 250,
-    timingFunction: props.timingFunction ?? 'ease',
-    onExit: props.onExit,
-    onEntered: props.onEntered,
-    onEnter: props.onEnter,
-    onExited: props.onExited,
-    enterDelay: props.enterDelay,
-    exitDelay: props.exitDelay,
-  });
+  const [local] = splitProps(props, [
+    'keepMounted', 'transition', 'duration', 'exitDuration', 'timingFunction',
+    'mounted', 'children', 'onExited', 'onExit', 'onEnter', 'onEntered', 'enterDelay', 'exitDelay'
+  ]);
 
-  if (transitionDuration() === 0 || env === 'test') {
-    return props.mounted ? <>{props.children({})}</> : props.keepMounted ? props.children({ display: 'none' }) : null;
+  const duration = local.duration ?? 250;
+  const exitDuration = local.exitDuration ?? duration;
+  const timingFunction = local.timingFunction ?? 'ease';
+
+  const mkStyles = (state: Parameters<typeof getTransitionStyles>[0]['state'], dur: number) =>
+    getTransitionStyles({ transition: local.transition ?? 'fade', state, duration: dur, timingFunction });
+
+  function animate(
+    el: HTMLElement,
+    fromState: Parameters<typeof getTransitionStyles>[0]['state'],
+    toState: Parameters<typeof getTransitionStyles>[0]['state'],
+    dur: number,
+    cb?: () => void
+  ) {
+    const from = mkStyles(fromState, dur);
+    const to = mkStyles(toState, dur);
+    Object.assign(el.style, from);
+    void el.offsetHeight;
+    Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
+    if (cb) setTimeout(cb, dur);
   }
 
-  return transitionStatus() === 'exited' ? (
-    props.keepMounted ? (
-      props.children({ display: 'none' })
-    ) : null
-  ) : (
-    <>
-      {props.children(
-        getTransitionStyles({
-          transition: props.transition ?? 'fade',
-          duration: transitionDuration(),
-          state: transitionStatus(),
-          timingFunction: transitionTimingFunction,
-        })
-      )}
-    </>
+  // No-animation fallback
+  if (env === 'test' || (duration === 0 && exitDuration === 0)) {
+    return local.mounted
+      ? <>{local.children({})}</>
+      : local.keepMounted
+        ? local.children({ display: 'none' })
+        : null;
+  }
+
+  return (
+    <SolidTransition
+      appear
+      mode="inout"
+      onBeforeEnter={el => el instanceof HTMLElement && Object.assign(el.style, mkStyles('pre-entering', duration))}
+      onEnter={(el, done) => {
+        if (!(el instanceof HTMLElement)) return done();
+        local.onEnter?.();
+        animate(el, 'pre-entering', 'entering', duration, () => {
+          local.onEntered?.();
+          done();
+        });
+      }}
+      onAfterEnter={el => el instanceof HTMLElement && Object.assign(el.style, mkStyles('entered', duration))}
+      onBeforeExit={el => el instanceof HTMLElement && Object.assign(el.style, mkStyles('pre-exiting', exitDuration))}
+      onExit={(el, done) => {
+        if (!(el instanceof HTMLElement)) return done();
+        local.onExit?.();
+        animate(el, 'exiting', 'exiting', exitDuration, () => {
+          local.onExited?.();
+          done();
+        });
+      }}
+      onAfterExit={el => el instanceof HTMLElement && Object.assign(el.style, mkStyles('exited', exitDuration))}
+    >
+      <Show when={local.mounted || local.keepMounted} fallback={null}>
+        {local.children(local.mounted ? mkStyles('entered', duration) : { display: 'none' })}
+      </Show>
+    </SolidTransition>
   );
 }
 

@@ -60,8 +60,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     'size',
     '__staticSelector',
     '__inheritStyles',
-    'variant',
-    'ref'
+    'variant'
   ]);
 
   const ctx = useInputWrapperContext();

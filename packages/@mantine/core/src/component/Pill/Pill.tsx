@@ -87,8 +87,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
     'radius',
     'size',
     'disabled',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = usePillGroupContext();
@@ -136,12 +135,18 @@ export const Pill = factory<PillFactory>((_props, ref) => {
             className: local.removeButtonProps?.className,
             style: local.removeButtonProps?.style,
           })}
-          onMouseDown={(event) => {
+          onMouseDown={(event: MouseEvent & {
+            currentTarget: HTMLButtonElement;
+            target: Element;
+          }) => {
             event.preventDefault();
             event.stopPropagation();
             typeof local.removeButtonProps?.onMouseDown === "function" && local.removeButtonProps?.onMouseDown?.(event);
           }}
-          onClick={(event) => {
+          onClick={(event: MouseEvent & {
+            currentTarget: HTMLButtonElement;
+            target: Element;
+          }) => {
             event.stopPropagation();
             local.onRemove?.();
             typeof local.removeButtonProps?.onClick === "function" && local.removeButtonProps?.onClick?.(event);

@@ -136,8 +136,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     'color',
     'emptySymbol',
     'fullSymbol',
-    'highlightSelectedOnly',
-    'ref'
+    'highlightSelectedOnly'
   ]);
 
   const getStyles = useStyles<RatingFactory>({
@@ -299,7 +298,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
       );
     });
 
-  const mergedRef = useMergedRef(local.ref as PossibleRef<HTMLDivElement>, (el) => {
+  const mergedRef = useMergedRef(ref as PossibleRef<HTMLDivElement>, (el) => {
     if (el) {
       rootRef;
     }

@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { CssVariable } from '../../../../Box';
 import { MantineTheme } from '../../../../MantineProvider';
 import { mergeVars } from './merge-vars';

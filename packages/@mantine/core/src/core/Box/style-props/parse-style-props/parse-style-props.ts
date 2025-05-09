@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineTheme } from '../../../MantineProvider';
 import { keys } from '../../../utils';
 import { resolvers } from '../resolvers';
@@ -61,6 +61,10 @@ export interface ParseStylePropsResult {
   media: Record<string, JSX.CSSProperties>;
 }
 
+function camelToKebab(str: string) {
+  return str.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+}
+
 export function parseStyleProps({
   styleProps,
   data,
@@ -90,7 +94,8 @@ export function parseStyleProps({
 
         if (!hasResponsiveStyles(styleProps[styleProp])) {
           properties.forEach((property) => {
-            (acc.inlineStyles as any)[property] = resolvers[propertyData.type](baseValue, theme);
+            // change from camelCase to kebab-case
+            (acc.inlineStyles as any)[camelToKebab(property)] = resolvers[propertyData.type](baseValue, theme);
           });
 
           return acc;

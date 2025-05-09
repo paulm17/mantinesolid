@@ -1,5 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
-import { createSignal, splitProps } from 'solid-js';
+import { createSignal, splitProps, JSX } from 'solid-js';
 import { factory, Factory, useProps } from '../../core';
 import { __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
@@ -53,8 +52,7 @@ export const JsonInput = factory<JsonInputFactory>((_props, ref) => {
     'onFocus',
     'onBlur',
     'readOnly',
-    'error',
-    'ref'
+    'error'
   ]);
 
   // Internal state management (controlled/uncontrolled)

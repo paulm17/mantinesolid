@@ -71,8 +71,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     'children',
     '__staticSelector',
     'variant',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const _getStyles = useStyles<InputLabelFactory>({

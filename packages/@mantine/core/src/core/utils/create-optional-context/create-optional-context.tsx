@@ -1,11 +1,11 @@
-import { createContext, JSXElement, useContext } from 'solid-js';
+import { createContext, JSX, useContext } from 'solid-js';
 
 export function createOptionalContext<ContextValue>(initialValue: ContextValue | null = null) {
   const Context = createContext<ContextValue | null>(initialValue);
 
   const useOptionalContext = () => useContext(Context);
 
-  const Provider = ({ children, value }: { value: ContextValue; children: JSXElement }) => (
+  const Provider = ({ children, value }: { value: ContextValue; children: JSX.Element }) => (
     <Context.Provider value={value}>{children}</Context.Provider>
   );
 

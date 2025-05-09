@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -15,7 +15,6 @@ import {
 } from '../../../core';
 import { useTimelineContext } from '../Timeline.context';
 import classes from '../Timeline.module.css';
-import { splitProps } from 'solid-js';
 
 export type TimelineItemStylesNames =
   | 'itemBody'
@@ -83,8 +82,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
     'lineVariant',
     'children',
     'title',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = useTimelineContext();

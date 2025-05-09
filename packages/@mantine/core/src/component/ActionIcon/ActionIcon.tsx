@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -20,8 +21,7 @@ import { UnstyledButton } from '../UnstyledButton';
 import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
 import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
 import classes from './ActionIcon.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
+
 
 export type ActionIconVariant =
   | 'filled'

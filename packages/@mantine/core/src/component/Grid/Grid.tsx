@@ -1,3 +1,4 @@
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -16,8 +17,6 @@ import { GridBreakpoints, GridProvider } from './Grid.context';
 import { GridCol } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
 import classes from './Grid.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type GridStylesNames = 'root' | 'col' | 'inner' | 'container';
 export type GridCssVariables = {
@@ -90,8 +89,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     'justify',
     'children',
     'breakpoints',
-    'type',
-    'ref'
+    'type'
   ]);
 
   const getStyles = useStyles<GridFactory>({

@@ -1,4 +1,4 @@
-import { JSXElement, splitProps } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -58,16 +58,16 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   gradient?: MantineGradient;
 
   /** Content displayed on the left side of the badge label */
-  leftSection?: JSXElement;
+  leftSection?: JSX.Element;
 
   /** Content displayed on the right side of the badge label */
-  rightSection?: JSXElement;
+  rightSection?: JSX.Element;
 
   /** Determines whether Badge should take 100% of its parent width, `false` by default */
   fullWidth?: boolean;
 
   /** Main badge content */
-  children?: JSXElement;
+  children?: JSX.Element;
 
   /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;

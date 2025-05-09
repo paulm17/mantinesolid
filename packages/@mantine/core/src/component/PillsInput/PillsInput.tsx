@@ -36,8 +36,7 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
     'disabled',
     '__staticSelector',
     'error',
-    'variant',
-    'ref'
+    'variant'
   ]);
 
   const fieldRef = null as HTMLInputElement | null;
@@ -50,12 +49,18 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
         variant={local.variant}
         component="div"
         ref={ref}
-        onMouseDown={(event) => {
+        onMouseDown={(event: MouseEvent & {
+          currentTarget: HTMLDivElement;
+          target: Element;
+      }) => {
           event.preventDefault();
           typeof local.onMouseDown === "function" && local.onMouseDown?.(event);
           fieldRef?.focus();
         }}
-        onClick={(event) => {
+        onClick={(event: MouseEvent & {
+          currentTarget: HTMLDivElement;
+          target: Element;
+      }) => {
           event.preventDefault();
           const fieldset = event.currentTarget.closest('fieldset');
           if (!fieldset?.disabled) {

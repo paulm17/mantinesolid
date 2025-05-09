@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { cssObjectToString } from '../css-object-to-string/css-object-to-string';
 
 export interface InlineStylesMediaQuery {

@@ -41,8 +41,7 @@ export const PaginationDots = factory<PaginationDotsFactory>((_props, ref) => {
     'style',
     'styles',
     'vars',
-    'icon',
-    'ref'
+    'icon'
   ]);
 
   const ctx = usePaginationContext();

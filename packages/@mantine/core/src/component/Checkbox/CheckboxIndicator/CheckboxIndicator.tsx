@@ -115,8 +115,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     'mod',
     'variant',
     'disabled',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const Icon = local.icon!;

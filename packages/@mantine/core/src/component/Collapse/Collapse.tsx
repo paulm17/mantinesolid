@@ -50,8 +50,7 @@ export const Collapse = factory<CollapseFactory>((_props, ref) => {
     'transitionTimingFunction',
     'style',
     'onTransitionEnd',
-    'animateOpacity',
-    'ref'
+    'animateOpacity'
   ]);
 
   const opened = local.in;

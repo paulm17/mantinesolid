@@ -1,3 +1,4 @@
+import { Component, createEffect, createSignal, onMount, splitProps, JSX } from 'solid-js';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -28,8 +29,6 @@ import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';
 import classes from './Checkbox.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
-import { Component, createEffect, createSignal, onMount, splitProps } from 'solid-js';
 
 export type CheckboxVariant = 'filled' | 'outline';
 export type CheckboxStylesNames = 'icon' | 'inner' | 'input' | InlineInputStylesNames;
@@ -152,8 +151,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     'iconColor',
     'onChange',
     'autoContrast',
-    'mod',
-    'ref'
+    'mod'
   ]);
 
   const ctx = useCheckboxGroupContext();
@@ -216,13 +214,13 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       ref={local.rootRef}
       mod={local.mod}
       {...styleProps}
-      {...local.wrapperProps}
+      {...local.wrapperProps as any}
     >
       <Box {...getStyles('inner')} mod={{ 'data-label-position': local.labelPosition }}>
         <Box
           component="input"
           id={uuid}
-          ref={ref}
+          ref={ref as HTMLInputElement}
           checked={local.checked}
           disabled={local.disabled}
           mod={{ error: !!local.error, intermediate: local.indeterminate }}

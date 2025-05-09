@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -18,7 +18,6 @@ import {
 } from '../../core';
 import { FLEX_STYLE_PROPS_DATA } from './flex-props';
 import classes from './Flex.module.css';
-import { splitProps } from 'solid-js';
 
 export type FlexStylesNames = 'root';
 

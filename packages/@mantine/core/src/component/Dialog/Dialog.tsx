@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { splitProps, JSX } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -16,7 +16,6 @@ import { CloseButton } from '../CloseButton';
 import { Paper, PaperBaseProps } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
 import classes from './Dialog.module.css';
-import { splitProps } from 'solid-js';
 
 export type DialogStylesNames = 'root' | 'closeButton';
 export type DialogCssVariables = {

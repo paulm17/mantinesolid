@@ -53,8 +53,7 @@ export const GridCol = factory<GridColFactory>((_props, ref) => {
     'vars',
     'span',
     'order',
-    'offset',
-    'ref'
+    'offset'
   ])
 
   const ctx = useGridContext();

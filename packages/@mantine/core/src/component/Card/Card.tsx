@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { children, splitProps, JSX } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -16,7 +16,6 @@ import { Paper } from '../Paper';
 import { CardProvider } from './Card.context';
 import { CardSection } from './CardSection/CardSection';
 import classes from './Card.module.css';
-import { children, splitProps } from 'solid-js';
 
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {

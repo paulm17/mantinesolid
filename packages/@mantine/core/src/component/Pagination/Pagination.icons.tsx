@@ -1,10 +1,12 @@
-interface _PaginationIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+import { Component, JSX } from "solid-js";
+
+interface _PaginationIconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
   path: string;
   stroke?: any;
 }
 
 export type PaginationIconProps = Omit<_PaginationIconProps, 'path'>;
-export type PaginationIcon = React.FC<PaginationIconProps>;
+export type PaginationIcon = Component<PaginationIconProps>;
 
 function PaginationIcon({ style, children, path, ...others }: _PaginationIconProps) {
   return (
@@ -14,7 +16,7 @@ function PaginationIcon({ style, children, path, ...others }: _PaginationIconPro
       style={{
         width: 'calc(var(--pagination-control-size) / 1.8)',
         height: 'calc(var(--pagination-control-size) / 1.8)',
-        ...style,
+        ...(style as Record<string, any>),
       }}
       {...others}
     >

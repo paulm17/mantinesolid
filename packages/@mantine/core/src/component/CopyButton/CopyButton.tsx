@@ -1,6 +1,6 @@
+import { JSX } from 'solid-js';
 import { useClipboard } from '@mantine/hooks';
 import { useProps } from '../../core';
-import { JSX } from 'solid-js/jsx-runtime';
 
 export interface CopyButtonProps {
   /** Children callback, provides current status and copy function as an argument */

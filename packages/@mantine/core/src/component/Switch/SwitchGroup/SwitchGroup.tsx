@@ -1,10 +1,9 @@
+import { splitProps, JSX } from 'solid-js';
 import { useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { SwitchGroupProvider } from '../SwitchGroup.context';
-import { JSX } from 'solid-js/jsx-runtime';
-import { splitProps } from 'solid-js';
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
 
@@ -49,8 +48,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((_props, ref) => {
     'size',
     'wrapperProps',
     'children',
-    'readOnly',
-    'ref'
+    'readOnly'
   ]);
 
   const [_value, setValue] = useUncontrolled({
