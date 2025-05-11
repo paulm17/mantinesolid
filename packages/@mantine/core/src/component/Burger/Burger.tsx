@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { Accessor, createEffect, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -42,7 +42,7 @@ export interface BurgerProps
   color?: MantineColor;
 
   /** State of the burger, when `true` burger is transformed into X, `false` by default */
-  opened?: boolean;
+  opened?: Accessor<boolean>;
 
   /** `transition-duration` property value in ms, `300` by default */
   transitionDuration?: number;

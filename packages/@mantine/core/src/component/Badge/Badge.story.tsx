@@ -88,8 +88,8 @@ export function AutoContrast() {
       }}
     >
       <For each={buttons}>
-        {(_, index) => (
-          <Badge color={`blue.${index()}`} autoContrast>
+        {(color) => (
+          <Badge color={color} autoContrast>
             $$
           </Badge>
         )}

@@ -95,7 +95,7 @@ export function useRadialMove<T extends HTMLElement = any>(
 
     const onMouseDown = (e: MouseEvent) => { begin(); update(e.clientX, e.clientY); };
     const onMouseMove = (e: MouseEvent) => update(e.clientX, e.clientY);
-    const onMouseUp   = (e: MouseEvent) => { update(e.clientX, e.clientY, true); end(); };
+    const onMouseUp   = (e: MouseEvent) => update(e.clientX, e.clientY, true); end();
 
     const onTouchStart= (e: TouchEvent) => {
       e.preventDefault(); begin();

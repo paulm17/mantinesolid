@@ -4,7 +4,7 @@ export default { title: 'Card' };
 
 export function Usage() {
   return (
-    <div style={{ maxWidth: 400, padding: 40, margin: 'auto' }}>
+    <div style={{ 'max-width': '400px', 'padding': '40px', 'margin': 'auto' }}>
       <Card withBorder>
         <Card.Section inheritPadding py="md" withBorder>
           Card section 1
@@ -28,7 +28,7 @@ export function Usage() {
 
 export function CustomComponent() {
   return (
-    <div style={{ maxWidth: 400, padding: 40, margin: 'auto' }}>
+    <div style={{ 'max-width': '400px', 'padding': '40px', margin: 'auto' }}>
       <Card withBorder component="a" href="https://mantine.dev">
         <Card.Section bg="blue">Card section 1</Card.Section>
         <Card.Section component="button">Card section 2</Card.Section>
@@ -41,7 +41,7 @@ export function CustomComponent() {
 
 export function Unstyled() {
   return (
-    <div style={{ maxWidth: 400, padding: 40, margin: 'auto' }}>
+    <div style={{ 'max-width': '400px', 'padding': '40px', margin: 'auto' }}>
       <Card withBorder unstyled>
         <Card.Section inheritPadding py="md" withBorder>
           Card section 1

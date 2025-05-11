@@ -1,6 +1,7 @@
 import { IconPhoto } from '@tabler/icons-solidjs';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
+import { For } from 'solid-js';
 
 export default { title: 'Alert' };
 
@@ -77,22 +78,7 @@ export function Variants() {
 }
 
 export function AutoContrast() {
-  const buttons = Array(10)
-    .fill(0)
-    .map((_, index) => (
-      <Alert
-        withCloseButton
-        title="Bummer!"
-        color={`yellow.${index}`}
-        variant="filled"
-        mt="xl"
-        autoContrast
-        key={index}
-      >
-        Something terrible happened! You made a mistake and there is no going back, your data was
-        lost forever!
-      </Alert>
-    ));
+  const buttons = Array(10).fill(0);
 
   return (
     <div
@@ -104,7 +90,21 @@ export function AutoContrast() {
         'padding': '40px',
       }}
     >
-      {buttons}
+      <For each={buttons}>
+        {(_, index) => (
+          <Alert
+            withCloseButton
+            title="Bummer!"
+            color={`yellow.${index}`}
+            variant="filled"
+            mt="xl"
+            autoContrast
+          >
+            Something terrible happened! You made a mistake and there is no going back, your data was
+            lost forever!
+          </Alert>
+        )}
+      </For>
     </div>
   );
 }

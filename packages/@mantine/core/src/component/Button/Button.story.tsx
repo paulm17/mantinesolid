@@ -1,22 +1,16 @@
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-solidjs';
 import { DEFAULT_THEME, rem } from '../../core';
 import { Button, ButtonProps } from './Button';
-import { createSignal } from 'solid-js';
+import { createSignal, For } from 'solid-js';
 
 export default { title: 'Button' };
 
-export function RenderRoot() {
-  return <Button renderRoot={(props) => <a {...props} href="#" />}>Some content</Button>;
-}
+// export function RenderRoot() {
+//   return <Button renderRoot={(props) => <a {...props} href="#" />}>Some content</Button>;
+// }
 
 export function AutoContrast() {
-  const buttons = Array(10)
-    .fill(0)
-    .map((_, index) => (
-      <Button key={index} color={`red.${index}`} autoContrast>
-        Button
-      </Button>
-    ));
+  const buttons = Array.from({ length: 10 }, (_, i) => `red.${i}`);
 
   return (
     <div
@@ -28,7 +22,13 @@ export function AutoContrast() {
         'padding': '40px',
       }}
     >
-      {buttons}
+       <For each={buttons}>
+        {(color) => (
+          <Button color={color} autoContrast>
+            Button
+          </Button>
+        )}
+      </For>
     </div>
   );
 }
@@ -70,16 +70,20 @@ export function WithinDisabledFieldset() {
 }
 
 function Colors({ index, ...others }: ButtonProps & { index?: number }) {
-  const colors = Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <Button
-      color={`${color}${typeof index === 'number' ? `.${index}` : ''}`}
-      key={color}
-      {...others}
-    >
-      Button
-    </Button>
-  ));
-  return <div style={{ display: 'flex', 'gap': '20px', 'padding': '40px' }}>{colors}</div>;
+  const colors = Object.keys(DEFAULT_THEME.colors);
+
+  return <div style={{ display: 'flex', 'gap': '20px', 'padding': '40px' }}>
+    <For each={colors}>
+      {(color) => (
+        <Button
+          color={`${color}${typeof index === 'number' ? `.${index}` : ''}`}
+          {...others}
+        >
+          Button
+        </Button>
+      )}
+    </For>
+  </div>;
 }
 
 export function Usage() {

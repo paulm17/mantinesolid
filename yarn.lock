@@ -3544,7 +3544,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.20.0, @babel/types@npm:^7.23.3, @babel/types@npm:^7.27.1, @babel/types@npm:^7.7.0":
+"@babel/types@npm:^7.20.0, @babel/types@npm:^7.23.3, @babel/types@npm:^7.26.10, @babel/types@npm:^7.27.1, @babel/types@npm:^7.7.0":
   version: 7.27.1
   resolution: "@babel/types@npm:7.27.1"
   dependencies:
@@ -6947,7 +6947,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solid-devtools/shared@npm:^0.19.0":
+"@solid-devtools/debugger@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@solid-devtools/debugger@npm:0.27.0"
+  dependencies:
+    "@nothing-but/utils": "npm:~0.17.0"
+    "@solid-devtools/shared": "npm:^0.19.1"
+    "@solid-primitives/bounds": "npm:^0.1.0"
+    "@solid-primitives/event-listener": "npm:^2.4.0"
+    "@solid-primitives/keyboard": "npm:^1.3.0"
+    "@solid-primitives/platform": "npm:^0.2.0"
+    "@solid-primitives/rootless": "npm:^1.5.0"
+    "@solid-primitives/scheduled": "npm:^1.5.0"
+    "@solid-primitives/static-store": "npm:^0.1.0"
+    "@solid-primitives/utils": "npm:^6.3.0"
+  peerDependencies:
+    solid-js: ^1.9.0
+  checksum: 10c0/0f7dd8b32e4f9006b8b9b5a91333abe1f14f399178eb073df531f107202ed5e9f0f30302cceffad80edb168ba38eec7852807093c19b7ca3318f02517a543b9a
+  languageName: node
+  linkType: hard
+
+"@solid-devtools/shared@npm:^0.19.0, @solid-devtools/shared@npm:^0.19.1":
   version: 0.19.1
   resolution: "@solid-devtools/shared@npm:0.19.1"
   dependencies:
@@ -6977,6 +6997,20 @@ __metadata:
   peerDependencies:
     solid-js: ^1.6.12
   checksum: 10c0/abca7ab4d8ce967e0bfec918365b150f9222e47a5de982ef086bd2b533cbc7c5a51ebebd8e1498c325b63ecd2a8c0156e944a5c198a33f70761f6e696045818e
+  languageName: node
+  linkType: hard
+
+"@solid-primitives/bounds@npm:^0.1.0":
+  version: 0.1.1
+  resolution: "@solid-primitives/bounds@npm:0.1.1"
+  dependencies:
+    "@solid-primitives/event-listener": "npm:^2.4.1"
+    "@solid-primitives/resize-observer": "npm:^2.1.1"
+    "@solid-primitives/static-store": "npm:^0.1.1"
+    "@solid-primitives/utils": "npm:^6.3.1"
+  peerDependencies:
+    solid-js: ^1.6.12
+  checksum: 10c0/03f6d878223f72327ed2fd0841021a6dd1c8d6193178908a9f59f2dc13a4ef5c731b89713973785786ce587694e8697baca2fe6f87508130a5ce4bc3ed93b497
   languageName: node
   linkType: hard
 
@@ -7011,7 +7045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solid-primitives/keyboard@npm:^1.2.8":
+"@solid-primitives/keyboard@npm:^1.2.8, @solid-primitives/keyboard@npm:^1.3.0":
   version: 1.3.1
   resolution: "@solid-primitives/keyboard@npm:1.3.1"
   dependencies:
@@ -7047,6 +7081,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solid-primitives/platform@npm:^0.2.0":
+  version: 0.2.1
+  resolution: "@solid-primitives/platform@npm:0.2.1"
+  peerDependencies:
+    solid-js: ^1.6.12
+  checksum: 10c0/27864ec34f6d559dc23b0217302d45d48f4a6d10d4ade63d8a2fbdb46aabdec499169d8697c77dd3631a59514738121f4b70347b6ae933c156e04f4b0a2dd1a9
+  languageName: node
+  linkType: hard
+
 "@solid-primitives/presence@npm:^0.1.1":
   version: 0.1.1
   resolution: "@solid-primitives/presence@npm:0.1.1"
@@ -7069,7 +7112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solid-primitives/resize-observer@npm:^2.0.26":
+"@solid-primitives/resize-observer@npm:^2.0.26, @solid-primitives/resize-observer@npm:^2.1.1":
   version: 2.1.1
   resolution: "@solid-primitives/resize-observer@npm:2.1.1"
   dependencies:
@@ -26156,6 +26199,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"solid-devtools@npm:^0.34.0":
+  version: 0.34.0
+  resolution: "solid-devtools@npm:0.34.0"
+  dependencies:
+    "@babel/core": "npm:^7.26.10"
+    "@babel/plugin-syntax-typescript": "npm:^7.25.9"
+    "@babel/types": "npm:^7.26.10"
+    "@solid-devtools/debugger": "npm:^0.27.0"
+    "@solid-devtools/shared": "npm:^0.19.1"
+  peerDependencies:
+    solid-js: ^1.9.0
+    vite: ^2.2.3 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 10c0/be9fe57c5a447ffd537944fc62734f076429a20ce1a4630de0cc908a66e0e52d377057aded2a759836481dc312db1a1e6e27bb363b5a5728ab6575e43143f6ce
+  languageName: node
+  linkType: hard
+
 "solid-js@npm:^1.9.5":
   version: 1.9.5
   resolution: "solid-js@npm:1.9.5"
@@ -29100,6 +29162,7 @@ __metadata:
     postcss: "npm:^8.5.3"
     postcss-preset-mantine: "npm:1.17.0"
     postcss-simple-vars: "npm:^7.0.1"
+    solid-devtools: "npm:^0.34.0"
     solid-js: "npm:^1.9.5"
     typescript: "npm:^5.8.2"
     vite: "npm:^6.2.2"

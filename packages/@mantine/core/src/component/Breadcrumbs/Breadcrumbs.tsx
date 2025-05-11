@@ -1,4 +1,4 @@
-import { children, splitProps, JSX } from 'solid-js';
+import { children, splitProps, JSX, createEffect } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -78,28 +78,22 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const resolved = children(() => local.children);
-  const sep = local.separator ?? "/";
-
   const items = () => {
-    const c = resolved();
-    const arr = Array.isArray(c) ? c.flat(Infinity) : [c];
+    const c = children(() => props.children).toArray().filter((item) => !!item);
     const result: JSX.Element[] = [];
 
-    arr.forEach((child, i) => {
+    c.forEach((child, i) => {
       result.push(
-        <div class={classes.breadcrumb}>
+        <Box {...getStyles('breadcrumb')}>
           {child}
-        </div>
+        </Box>
       );
-      if (i < arr.length - 1) {
+
+      if (i < c.length - 1) {
         result.push(
-          <div
-            class={classes.separator}
-            style={{ margin: `0 ${local.separatorMargin ?? "0"}` }}
-          >
-            {sep}
-          </div>
+          <Box {...getStyles('separator')}>
+            {local.separator}
+          </Box>
         );
       }
     });

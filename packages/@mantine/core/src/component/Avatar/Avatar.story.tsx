@@ -1,3 +1,4 @@
+import { For } from 'solid-js';
 import { Box } from '../../core';
 import { Center } from '../Center';
 import { Group } from '../Group';
@@ -30,18 +31,17 @@ export function InitialsColor() {
     'Tom Smith',
   ];
 
-  const items = names.map((name) => <Avatar key={name} name={name} color="initials" />);
-  return <div style={{ 'padding': '40px', display: 'flex', 'gap': '10px' }}>{items}</div>;
+  return <div style={{ 'padding': '40px', display: 'flex', 'gap': '10px' }}>
+    <For each={names}>
+      {(name) => (
+        <Avatar name={name} color="initials" />
+      )}
+    </For>
+  </div>;
 }
 
 export function AutoContrast() {
-  const buttons = Array(10)
-    .fill(0)
-    .map((_, index) => (
-      <Avatar key={index} variant="filled" color={`red.${index}`} autoContrast>
-        $$
-      </Avatar>
-    ));
+  const buttons = Array.from({ length: 10 }, (_, i) => `red.${i}`);
 
   return (
     <div
@@ -53,7 +53,13 @@ export function AutoContrast() {
         'padding': '40px',
       }}
     >
-      {buttons}
+      <For each={buttons}>
+        {(color) => (
+          <Avatar variant="filled" color={color} autoContrast>
+            $$
+          </Avatar>
+        )}
+      </For>
     </div>
   );
 }
@@ -92,33 +98,47 @@ export function AvatarGroup() {
 }
 
 export function Variants() {
+  const variants = [
+    'filled',
+    'light',
+    'white',
+    'default',
+    'gradient',
+    'outline',
+  ];
+
   return (
     <div style={{ 'padding': '40px' }}>
       <Stack>
         <Group>
-          {['filled', 'light', 'white', 'default', 'gradient', 'outline'].map((variant) => (
-            <Avatar key={variant} variant={variant} color="blue" radius="md">
-              ZH
-            </Avatar>
-          ))}
+          <For each={variants}>
+            {(variant) => (
+              <Avatar variant={variant} color="blue" radius="md">
+                ZH
+              </Avatar>
+            )}
+          </For>
         </Group>
 
         <Group>
-          {['filled', 'light', 'white', 'default', 'gradient', 'outline'].map((variant) => (
-            <Avatar key={variant} variant={variant} color="blue" radius="xl" />
-          ))}
+          <For each={variants}>
+            {(variant) => (
+              <Avatar variant={variant} color="blue" radius="xl" />
+            )}
+          </For>
         </Group>
 
         <Group>
-          {['filled', 'light', 'white', 'default', 'gradient', 'outline'].map((variant) => (
-            <Avatar
-              key={variant}
-              variant={variant}
-              color="blue"
-              radius="xl"
-              src="https://avatars.githubusercontent.com/u/10353856?s=460&u=88394dfd67727327c1f7670a1764dc38a8a24831&v=4"
-            />
-          ))}
+          <For each={variants}>
+            {(variant) => (
+              <Avatar
+                variant={variant}
+                color="blue"
+                radius="xl"
+                src="https://avatars.githubusercontent.com/u/10353856?s=460&u=88394dfd67727327c1f7670a1764dc38a8a24831&v=4"
+              />
+            )}
+          </For>
         </Group>
       </Stack>
     </div>
@@ -153,7 +173,7 @@ export function Gradient() {
 
 export function Unstyled() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <Group>
         <Avatar
           unstyled

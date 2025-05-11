@@ -1,4 +1,4 @@
-import { children, splitProps, JSX } from 'solid-js';
+import { children, splitProps, JSX, createSignal, lazy, createEffect, Show } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -13,9 +13,10 @@ import {
   useStyles,
 } from '../../core';
 import { Paper } from '../Paper';
-import { CardProvider } from './Card.context';
 import { CardSection } from './CardSection/CardSection';
 import classes from './Card.module.css';
+import { setCardStylesStore } from './Card.store';
+import { Dynamic } from 'solid-js/web';
 
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {
@@ -88,28 +89,36 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
   const resolved = children(() => local.children);
 
   const content = () => {
-    const c = resolved();
-    const arr = Array.isArray(c) ? c.flat(Infinity) : [c];
-    return arr.map((child, i) => {
-      if ((child as any).type === CardSection) {
-        return (
-          <CardSection
-            {...(child as any).props}
-            data-first-section={i === 0 || undefined}
-            data-last-section={i === arr.length - 1 || undefined}
-          />
-        );
-      }
-      return child;
+    const c = resolved.toArray().filter((item) => !!item);
+
+    return c.map((node, index) => {
+      const isSection = (node as any)?.dataset?.cardSection === 'true';
+      if (!isSection) return node;
+
+      const clone = (node as any).cloneNode(true);
+      const sectionClasses = getStyles('section').className;
+      const sectionStyles = getStyles('section').style;
+
+      clone.removeAttribute('data-card-section');
+      clone.setAttribute('class', sectionClasses);
+      if (index === 0) clone.setAttribute('data-first-section', 'true');
+      if (index === c.length - 1) clone.setAttribute('data-last-section', 'true');
+
+      Object.entries(sectionStyles).forEach(([prop, value]) => {
+        const cssProp = prop.replace(/([A-Z])/g, '-$1').toLowerCase();
+        (clone as HTMLElement).style.setProperty(cssProp, value);
+      });
+
+      return clone;
     });
   };
 
+  setCardStylesStore({ getStyles });
+
   return (
-    <CardProvider value={{ getStyles }}>
-      <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
-        {content()}
-      </Paper>
-    </CardProvider>
+    <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
+      {content()}
+    </Paper>
   );
 });
 

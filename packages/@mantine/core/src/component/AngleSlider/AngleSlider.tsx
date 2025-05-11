@@ -1,5 +1,5 @@
-import { JSX, splitProps } from 'solid-js';
-import { normalizeRadialValue, PossibleRef, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
+import { For, JSX, splitProps } from 'solid-js';
+import { normalizeRadialValue, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -189,23 +189,19 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     }
   };
 
-  const marksItems = local.marks?.map((mark, index) => (
-    <div
-      {...getStyles('mark', { style: { '--angle': `${mark.value}deg` } })}
-      data-label={mark.label || undefined}
-      // key={index}
-    />
-  ));
-
-  const mergedRef = useMergedRef(ref as PossibleRef<HTMLDivElement>, (el) => {
-    if (el) {
-      rootRef;
-    }
-  });
-
   return (
-    <Box ref={mergedRef} {...getStyles('root', { focusable: true })} {...others}>
-      {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
+    <Box ref={useMergedRef(ref, rootRef)} {...getStyles('root', { focusable: true })} {...others}>
+      {local.marks && local.marks.length > 0 && (
+        <div {...getStyles('marks')}>
+          <For each={local.marks}>{(mark) => (
+            <div
+              {...getStyles('mark', { style: { '--angle': `${mark.value}deg` } })}
+              data-label={mark.label || undefined}
+            />
+          )}
+          </For>
+        </div>
+      )}
 
       {local.withLabel && (
         <div {...getStyles('label')}>
@@ -220,7 +216,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
         aria-valuenow={_value()}
         onKeyDown={handleKeyDown}
         aria-label={local['aria-label']}
-        {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })}
+        {...getStyles('thumb', { style: { transform: `rotate(${_value()}deg)` } })}
       />
       <input type="hidden" name={local.name} value={_value()} {...local.hiddenInputProps} />
     </Box>

@@ -91,18 +91,12 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     displayAfterTransitionEnd: local.displayAfterTransitionEnd,
   });
 
-  const mergedRef = useMergedRef(ref as PossibleRef<HTMLDivElement>, (el) => {
-    if (el) {
-      innerRef;
-    }
-  });
-
   if (!local.target || !parent) {
     return null;
   }
 
   return (
-    <Box ref={mergedRef} mod={[{ initialized, hidden }, local.mod]} {...getStyles('root')} {...others} />
+    <Box ref={useMergedRef(ref, innerRef!)} mod={[{ initialized, hidden }, local.mod]} {...getStyles('root')} {...others} />
   );
 });
 

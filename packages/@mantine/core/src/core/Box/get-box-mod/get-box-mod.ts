@@ -6,11 +6,12 @@ export function getMod(props: Record<string, any>) {
   return Object.keys(props).reduce<Record<string, any>>((acc, key) => {
     const value = props[key];
 
-    if (value === undefined || value === '' || value === false || value === null) {
+    const resolvedValue = typeof value === 'function' ? value() : value;
+    if (resolvedValue === undefined || resolvedValue === '' || resolvedValue === false || resolvedValue === null) {
       return acc;
     }
 
-    acc[transformModKey(key)] = props[key];
+    acc[transformModKey(key)] = resolvedValue;
     return acc;
   }, {});
 }
