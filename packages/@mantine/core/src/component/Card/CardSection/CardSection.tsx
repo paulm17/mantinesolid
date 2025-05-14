@@ -50,15 +50,11 @@ export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) 
     styles: local.styles,
   });
 
-  // console.log(local.className)
-  // console.log(_props);
-
   return (
     <Box
       ref={ref}
       mod={[{ 'with-border': local.withBorder, 'inherit-padding': local.inheritPadding, 'card-section': true }, local.mod]}
-      className={local.className}
-      // {...styles}
+      {...styles}
       {...others}
     />
   );

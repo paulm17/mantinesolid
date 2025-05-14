@@ -23,7 +23,7 @@ export function WithinGroup() {
 
   return (
     <div style={{ 'padding': '40px' }}>
-      <CheckboxGroup value={value} onChange={setValue}>
+      <CheckboxGroup value={value()} onChange={setValue}>
         <CheckboxCard
           value="1"
           checked={value().includes('1')}

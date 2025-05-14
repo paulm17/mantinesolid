@@ -3,11 +3,11 @@ export { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 export { CheckIcon } from './CheckIcon';
 export { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
-export { useCheckboxCardContext } from './CheckboxCard/CheckboxCard.context';
-export { useCheckboxGroupContext } from './CheckboxGroup.context';
+// export { useCheckboxCardContext } from './CheckboxCard/CheckboxCard.context';
+// export { useCheckboxGroupContext } from './CheckboxGroup.context';
 
 export type { CheckboxIconProps, CheckIconProps } from './CheckIcon';
-export type { CheckboxCardContextValue } from './CheckboxCard/CheckboxCard.context';
+// export type { CheckboxCardContextValue } from './CheckboxCard/CheckboxCard.context';
 
 export type {
   CheckboxCssVariables,

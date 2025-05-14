@@ -32,9 +32,11 @@ export function resolveVars({
   themeName,
   headless,
 }: ResolveVarsInput) {
-  return mergeVars([
+  const _vars =  mergeVars([
     headless ? {} : varsResolver?.(theme, props, stylesCtx),
     ...themeName.map((name) => theme.components?.[name]?.vars?.(theme, props, stylesCtx)),
     vars?.(theme, props, stylesCtx),
   ])?.[selector] as JSX.CSSProperties;
+
+  return _vars;
 }

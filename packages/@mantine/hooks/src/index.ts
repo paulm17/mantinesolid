@@ -5,6 +5,7 @@ export { useDebouncedCallback } from './use-debounced-callback/use-debounced-cal
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
+export { useControlled } from "./use-controlled/use-controlled"
 export { useCounter } from './use-counter/use-counter';
 // export { useDebouncedState } from './use-debounced-state/use-debounced-state';
 // export { useDebouncedValue } from './use-debounced-value/use-debounced-value';

@@ -1,4 +1,4 @@
-import { filterProps } from '../../utils';
+import { mergeProps } from 'solid-js';
 import { useMantineTheme } from '../MantineThemeProvider';
 
 export function useProps<T extends Record<string, any>, U extends Partial<T> = {}>(
@@ -13,5 +13,7 @@ export function useProps<T extends Record<string, any>, U extends Partial<T> = {
   const contextProps =
     typeof contextPropsPayload === 'function' ? contextPropsPayload(theme) : contextPropsPayload;
 
-  return { ...defaultProps, ...contextProps, ...filterProps(props) };
+  return mergeProps(defaultProps, contextProps || {}, props) as T & {
+    [Key in Extract<keyof T, keyof U>]-?: U[Key] | NonNullable<T[Key]>;
+  };
 }

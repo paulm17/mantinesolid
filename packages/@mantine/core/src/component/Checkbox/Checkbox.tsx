@@ -24,7 +24,7 @@ import {
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
 import { CheckboxCard } from './CheckboxCard/CheckboxCard';
-import { useCheckboxGroupContext } from './CheckboxGroup.context';
+import { useCheckboxGroupContext } from './CheckboxGroup.store';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';
@@ -176,8 +176,9 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 
   const contextProps = ctx
     ? {
-        checked: ctx.value.includes(rest.value as string),
+        checked: ctx.value().includes(rest.value as string),
         onChange: (event: Event) => {
+          console.log('onChanged!!');
           ctx.onChange(event as any);
           if (typeof local.onChange === 'function') {
             local.onChange(event as any);
@@ -191,7 +192,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 
   let inputRef: HTMLInputElement | undefined;
   createEffect(() => {
-    if (inputRef) inputRef.indeterminate = !!local.indeterminate;
+    if (inputRef) inputRef.indeterminate = local.indeterminate || false;
   });
 
   return (
@@ -223,7 +224,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           ref={ref as HTMLInputElement}
           checked={local.checked}
           disabled={local.disabled}
-          mod={{ error: !!local.error, intermediate: local.indeterminate }}
+          mod={{ error: !!local.error, indeterminate: local.indeterminate }}
           {...getStyles('input', { focusable: true, variant: local.variant })}
           onChange={local.onChange}
           {...rest}

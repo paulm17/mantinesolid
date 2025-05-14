@@ -1,4 +1,4 @@
-import { Component, splitProps } from 'solid-js';
+import { Component, createEffect, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -19,7 +19,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard.context';
+import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard.store';
+// import { checkboxCardStore, setCheckboxCardStore } from '../CheckboxCard/CheckboxCard.store';
 import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 
@@ -135,17 +136,21 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
   });
 
   const ctx = useCheckboxCardContext();
+
+  const checked = () => local.checked;
+  const indeterminate = () => local.indeterminate;
+  const cardStoreValue = () => ctx?.checked();
   const _checked =
     typeof local.checked === 'boolean' || typeof local.indeterminate === 'boolean'
-      ? local.checked || local.indeterminate
-      : ctx?.checked || false;
+      ? checked || indeterminate
+      : () => cardStoreValue;
 
   return (
     <Box
       ref={ref}
       {...getStyles('indicator', { variant: local.variant })}
       variant={local.variant}
-      mod={[{ checked: _checked, disabled: local.disabled }, local.mod]}
+      mod={[{ checked: _checked(), disabled: local.disabled }, local.mod]}
       {...others}
     >
       <Icon indeterminate={local.indeterminate} {...getStyles('icon')} />

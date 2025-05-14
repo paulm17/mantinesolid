@@ -12,9 +12,10 @@ import {
   useStyles,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
-import { useCheckboxGroupContext } from '../CheckboxGroup.context';
-import { CheckboxCardProvider } from './CheckboxCard.context';
+import { useCheckboxGroupContext } from '../CheckboxGroup.store';
+import { CheckboxCardProvider } from './CheckboxCard.store';
 import classes from './CheckboxCard.module.css';
+import { useControlled } from '@mantine/hooks';
 
 export type CheckboxCardStylesNames = 'card';
 export type CheckboxCardCssVariables = {
@@ -61,25 +62,23 @@ const varsResolver = createVarsResolver<CheckboxCardFactory>((_, { radius }) => 
   },
 }));
 
-export const CheckboxCard = factory<CheckboxCardFactory>((props, ref) => {
-  const [local, others] = splitProps(
-    useProps('CheckboxCard', defaultProps, props),
-    [
-      'classNames',
-      'className',
-      'style',
-      'styles',
-      'unstyled',
-      'vars',
-      'checked',
-      'mod',
-      'withBorder',
-      'value',
-      'onClick',
-      'defaultChecked',
-      'onChange'
-    ]
-  );
+export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
+  const props = useProps('CheckboxCard', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'classNames',
+    'className',
+    'style',
+    'styles',
+    'unstyled',
+    'vars',
+    'checked',
+    'mod',
+    'withBorder',
+    'value',
+    'onClick',
+    'defaultChecked',
+    'onChange'
+  ]);
 
   const getStyles = useStyles<CheckboxCardFactory>({
     name: 'CheckboxCard',
@@ -96,47 +95,44 @@ export const CheckboxCard = factory<CheckboxCardFactory>((props, ref) => {
   });
 
   const ctx = useCheckboxGroupContext();
-  const initialChecked = typeof local.checked === 'boolean'
-    ? local.checked
-    : ctx ? ctx.value.includes(local.value || '') : undefined;
+  const checked = () => local.checked;
+  const groupStoreValue = ctx ? ctx.value().includes(local.value || '') : undefined;
+  const _checked = typeof local.checked === 'boolean'? checked : () => groupStoreValue;
 
-  const [checked, setChecked] = createSignal(
-    initialChecked !== undefined ? initialChecked : local.defaultChecked || false
-  );
-
-  // Update internal value when controlled value changes
-  createEffect(() => {
-    if (local.checked !== undefined) {
-      setChecked(local.checked);
-    } else if (ctx && local.value) {
-      setChecked(ctx.value.includes(local.value));
-    }
+  const [_value, setValue] = useControlled({
+    value: _checked,
+    initialValue: local.defaultChecked ?? false,
+    // finalValue: [],
+    onChange: local.onChange,
   });
 
-  const handleClick = (event: MouseEvent & { currentTarget: HTMLButtonElement; target: Element }) => {
-    if (typeof local.onClick === 'function') {
-      local.onClick(event);
-    }
+  createEffect(() => {
+    console.log('checkboxcard _checked', _checked());
+  });
 
-    if (ctx && local.value) {
-      ctx.onChange(local.value);
-    }
+  createEffect(() => {
+    console.log('ctx value', ctx?.value().includes(local.value || ''));
+  });
 
-    const newValue = !checked();
-    setChecked(newValue);
-    local.onChange?.(newValue);
-  };
+  createEffect(() => {
+    console.log('checkboxcard _value', _value());
+  });
 
   return (
-    <CheckboxCardProvider value={{ checked: checked() }}>
+    <CheckboxCardProvider value={{ checked: _value }}>
       <UnstyledButton
         ref={ref}
-        mod={[{ 'with-border': local.withBorder, checked: checked() }, local.mod]}
+        mod={[{ 'with-border': local.withBorder, checked: _value() }, local.mod]}
         {...getStyles('card')}
         {...others}
         role="checkbox"
-        aria-checked={checked()}
-        onClick={handleClick}
+        aria-checked={_value()}
+        onClick={(event) => {
+          console.log('checkboxcard onClick', local.value || '');
+          typeof local.onClick === "function" && local.onClick?.(event);
+          () => ctx && ctx.onChange(local.value || '');
+          setValue(!_value());
+        }}
       />
     </CheckboxCardProvider>
   );

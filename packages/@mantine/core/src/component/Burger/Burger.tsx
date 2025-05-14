@@ -1,4 +1,4 @@
-import { Accessor, createEffect, splitProps } from 'solid-js';
+import { createEffect, mergeProps, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -12,6 +12,7 @@ import {
   MantineSize,
   rem,
   StylesApiProps,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '../../core';
@@ -42,7 +43,7 @@ export interface BurgerProps
   color?: MantineColor;
 
   /** State of the burger, when `true` burger is transformed into X, `false` by default */
-  opened?: Accessor<boolean>;
+  opened?: boolean;
 
   /** `transition-duration` property value in ms, `300` by default */
   transitionDuration?: number;
@@ -74,7 +75,8 @@ const varsResolver = createVarsResolver<BurgerFactory>(
 );
 
 export const Burger = factory<BurgerFactory>((_props, ref) => {
-  const props = useProps('Burger', defaultProps, _props);
+  const props = mergeProps(defaultProps, defaultProps, _props);
+
   const [local, others] = splitProps(props, [
     'classNames',
     'className',
@@ -104,7 +106,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
 
   return (
     <UnstyledButton {...getStyles('root')} ref={ref} {...others}>
-      <Box mod={['reduce-motion', { opened: local.opened }]} {...getStyles('burger')} />
+      <Box mod={['reduce-motion', { opened: () => local.opened }]} {...getStyles('burger')} />
       {local.children}
     </UnstyledButton>
   );

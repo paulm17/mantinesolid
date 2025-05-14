@@ -71,6 +71,10 @@ export function InlineInput(props: InlineInputProps) {
     'ref'
   ]);
 
+  const labelPosition = local.labelPosition || 'left';
+  const bodyElement = local.bodyElement || 'div';
+  const labelElement = local.labelElement || 'label';
+
   const getStyles = useStyles<InlineInputFactory>({
     name: local.__staticSelector,
     props: local.__stylesApiProps,
@@ -90,14 +94,14 @@ export function InlineInput(props: InlineInputProps) {
         '--label-fz': getFontSize(local.size),
         '--label-lh': getSize(local.size, 'label-lh'),
       }}
-      mod={[{ 'label-position': local.labelPosition }, local.mod]}
+      mod={[{ 'label-position': labelPosition }, local.mod]}
       variant={local.variant}
       size={local.size}
       {...others}
     >
       <Box
-        component={local.bodyElement}
-        htmlFor={local.bodyElement === 'label' ? local.id : undefined}
+        component={bodyElement}
+        htmlFor={bodyElement === 'label' ? local.id : undefined}
         {...getStyles('body')}
       >
         {local.children}
@@ -105,8 +109,8 @@ export function InlineInput(props: InlineInputProps) {
         <div {...getStyles('labelWrapper')} data-disabled={local.disabled || undefined}>
           {local.label && (
             <Box
-              component={local.labelElement}
-              htmlFor={local.labelElement === 'label' ? local.id : undefined}
+              component={labelElement}
+              htmlFor={labelElement === 'label' ? local.id : undefined}
               {...getStyles('label')}
               data-disabled={local.disabled || undefined}
             >

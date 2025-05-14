@@ -1,8 +1,9 @@
-import { createEffect, createSignal, splitProps, JSX } from 'solid-js';
+import { createEffect, createSignal, splitProps, JSX, Accessor } from 'solid-js';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
-import { CheckboxGroupProvider } from '../CheckboxGroup.context';
+import { CheckboxGroupProvider } from '../CheckboxGroup.store';
+import { useControlled, useUncontrolled } from '@mantine/hooks';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
@@ -37,52 +38,50 @@ export type CheckboxGroupFactory = Factory<{
 
 const defaultProps: Partial<CheckboxGroupProps> = {};
 
-export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
-  const [local, others] = splitProps(
-    useProps('CheckboxGroup', defaultProps, props),
-    [
-      'value',
-      'defaultValue',
-      'onChange',
-      'size',
-      'wrapperProps',
-      'children',
-      'readOnly'
-    ]
-  );
+export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
+  const props = useProps('Checkbox', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'value',
+    'defaultValue',
+    'onChange',
+    'size',
+    'wrapperProps',
+    'children',
+    'readOnly'
+  ]);
 
-    const [internalValue, setInternalValue] = createSignal(
-      local.value || local.defaultValue || []
-    );
+  const [_value, setValue] = useControlled({
+    value: () => local.value,
+    initialValue: local.defaultValue!,
+    // finalValue: [],
+    onChange: () => local.onChange,
+  });
 
-    // Update internal value when controlled value changes
-    createEffect(() => {
-      if (local.value !== undefined) {
-        setInternalValue(local.value);
-      }
-    });
+  const handleChange = (event: Event | string) => {
+    console.log('handleChange', event);
 
-    const handleChange = (event: Event | string) => {
-      if (local.readOnly) return;
+    const itemValue = typeof event === 'string'
+      ? event
+      : (event.currentTarget as HTMLInputElement).value;
 
-      const itemValue = typeof event === 'string'
-        ? event
-        : (event.currentTarget as HTMLInputElement).value;
+    if (!local.readOnly) {
+      setValue(
+        _value().includes(itemValue)
+          ? _value().filter((item) => item !== itemValue)
+          : [..._value(), itemValue]
+      );
+    }
+  };
 
-      const currentValue = internalValue();
-      const newValue = currentValue.includes(itemValue)
-        ? currentValue.filter(item => item !== itemValue)
-        : [...currentValue, itemValue];
-
-      setInternalValue(newValue);
-      local.onChange?.(newValue);
-    };
+  createEffect(() => {
+    console.log('checkboxGroup value', _value());
+  });
 
   return (
     <CheckboxGroupProvider value={{
-      value: internalValue(),
-      onChange: handleChange,
-      size: local.size
+      value: _value,
+      onChange: () => handleChange,
+      size: () => local.size
     }}>
       <Input.Wrapper
         size={local.size}

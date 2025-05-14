@@ -1,4 +1,4 @@
-import { createContext, createMemo, JSX, useContext } from 'solid-js';
+import { createContext, createMemo, JSX, splitProps, useContext } from 'solid-js';
 import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme';
 import { MantineTheme, MantineThemeOverride } from '../theme.types';
@@ -32,11 +32,16 @@ export interface MantineThemeProviderProps {
 
 // Don't destructure props, otherwise they lose their reactivity
 export function MantineThemeProvider(props: MantineThemeProviderProps) {
-  const { theme, inherit = true } = props;
+  const [local] = splitProps(props, [
+    'theme',
+    'inherit',
+  ]);
+
+  const inherit = local.inherit ?? true;
 
   const parentTheme = useSafeMantineTheme();
   const mergedTheme = createMemo(() =>
-    mergeMantineTheme(inherit ? parentTheme : DEFAULT_THEME, theme)
+    mergeMantineTheme(inherit ? parentTheme : DEFAULT_THEME, local.theme)
   );
 
   return (

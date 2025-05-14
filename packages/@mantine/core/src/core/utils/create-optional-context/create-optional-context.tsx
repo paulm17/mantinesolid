@@ -5,8 +5,8 @@ export function createOptionalContext<ContextValue>(initialValue: ContextValue |
 
   const useOptionalContext = () => useContext(Context);
 
-  const Provider = ({ children, value }: { value: ContextValue; children: JSX.Element }) => (
-    <Context.Provider value={value}>{children}</Context.Provider>
+  const Provider = (props: { value: ContextValue; children: JSX.Element }) => (
+    <Context.Provider value={props.value}>{props.children}</Context.Provider>
   );
 
   return [Provider, useOptionalContext] as const;

@@ -16,7 +16,6 @@ import { Paper } from '../Paper';
 import { CardSection } from './CardSection/CardSection';
 import classes from './Card.module.css';
 import { setCardStylesStore } from './Card.store';
-import { Dynamic } from 'solid-js/web';
 
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {
@@ -113,7 +112,9 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     });
   };
 
-  setCardStylesStore({ getStyles });
+  createEffect(() => {
+    setCardStylesStore({ getStyles });
+  });
 
   return (
     <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
