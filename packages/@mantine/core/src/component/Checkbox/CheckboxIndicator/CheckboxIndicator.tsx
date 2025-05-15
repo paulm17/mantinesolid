@@ -140,10 +140,10 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
   const checked = () => local.checked;
   const indeterminate = () => local.indeterminate;
   const cardStoreValue = () => ctx?.checked();
-  const _checked =
+  const _checked = () =>
     typeof local.checked === 'boolean' || typeof local.indeterminate === 'boolean'
-      ? checked || indeterminate
-      : () => cardStoreValue;
+      ? checked() || indeterminate()
+      : cardStoreValue();
 
   return (
     <Box

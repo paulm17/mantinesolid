@@ -96,26 +96,14 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
 
   const ctx = useCheckboxGroupContext();
   const checked = () => local.checked;
-  const groupStoreValue = ctx ? ctx.value().includes(local.value || '') : undefined;
-  const _checked = typeof local.checked === 'boolean'? checked : () => groupStoreValue;
+  const groupStoreValue = () => ctx ? ctx.value().includes(local.value || '') : undefined;
+  const _checked = () => typeof local.checked === 'boolean'? checked() : groupStoreValue();
 
   const [_value, setValue] = useControlled({
     value: _checked,
     initialValue: local.defaultChecked ?? false,
     // finalValue: [],
     onChange: local.onChange,
-  });
-
-  createEffect(() => {
-    console.log('checkboxcard _checked', _checked());
-  });
-
-  createEffect(() => {
-    console.log('ctx value', ctx?.value().includes(local.value || ''));
-  });
-
-  createEffect(() => {
-    console.log('checkboxcard _value', _value());
   });
 
   return (
@@ -128,9 +116,8 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
         role="checkbox"
         aria-checked={_value()}
         onClick={(event) => {
-          console.log('checkboxcard onClick', local.value || '');
           typeof local.onClick === "function" && local.onClick?.(event);
-          () => ctx && ctx.onChange(local.value || '');
+          typeof local.onClick !== "function" && ctx && ctx.onChange(local.value || '');
           setValue(!_value());
         }}
       />

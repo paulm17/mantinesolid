@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { onMount, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -125,6 +125,10 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     vars: local.vars,
     varsResolver,
   });
+
+  // onMount(() => {
+  //   console.log('Text mounted');
+  // })
 
   return (
     <Box

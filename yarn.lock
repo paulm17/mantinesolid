@@ -20544,6 +20544,7 @@ __metadata:
     eslint-config-mantine: "npm:^4.0.3"
     eslint-plugin-jest: "npm:^28.9.0"
     eslint-plugin-jsx-a11y: "npm:^6.10.2"
+    eslint-plugin-solid: "npm:^0.14.5"
     execa: "npm:^9.4.0"
     fast-glob: "npm:^3.3.2"
     fdir: "npm:^6.4.2"

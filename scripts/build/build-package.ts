@@ -26,8 +26,8 @@ export async function buildPackage(_packageName: string) {
   try {
     const startTime = Date.now();
 
-    logger.log(`Generating ${formattedPackageName} *.d.ts files...`);
-    await generateDts(packagePath);
+    // logger.log(`Generating ${formattedPackageName} *.d.ts files...`);
+    // await generateDts(packagePath);
 
     const config = createPackageConfig(packagePath);
     logger.log(`Compiling ${formattedPackageName} package with rollup...`);

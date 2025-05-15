@@ -1,9 +1,9 @@
-import { createEffect, createSignal, splitProps, JSX, Accessor } from 'solid-js';
+import { splitProps, JSX, onMount } from 'solid-js';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { CheckboxGroupProvider } from '../CheckboxGroup.store';
-import { useControlled, useUncontrolled } from '@mantine/hooks';
+import { useControlled } from '@mantine/hooks';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
@@ -54,12 +54,10 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
     value: () => local.value,
     initialValue: local.defaultValue!,
     // finalValue: [],
-    onChange: () => local.onChange,
+    onChange: local.onChange,
   });
 
   const handleChange = (event: Event | string) => {
-    console.log('handleChange', event);
-
     const itemValue = typeof event === 'string'
       ? event
       : (event.currentTarget as HTMLInputElement).value;
@@ -73,14 +71,10 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
     }
   };
 
-  createEffect(() => {
-    console.log('checkboxGroup value', _value());
-  });
-
   return (
     <CheckboxGroupProvider value={{
       value: _value,
-      onChange: () => handleChange,
+      onChange: handleChange,
       size: () => local.size
     }}>
       <Input.Wrapper

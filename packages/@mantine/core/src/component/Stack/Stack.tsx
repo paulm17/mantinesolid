@@ -1,4 +1,4 @@
-import { splitProps, JSX } from 'solid-js';
+import { splitProps, JSX, onMount } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -78,6 +78,10 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     vars: local.vars,
     varsResolver,
   });
+
+  // onMount(() => {
+  //   console.log('Stack mounted');
+  // });
 
   return <Box ref={ref} {...getStyles('root')} variant={local.variant} {...others} />;
 });

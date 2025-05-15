@@ -9,7 +9,6 @@ interface InputWrapperContextValue {
   labelId: string | undefined;
   getStyles: GetStylesApi<InputWrapperFactory> | null;
 }
-
 export const [InputWrapperProvider, useInputWrapperContext] =
   createOptionalContext<InputWrapperContextValue>({
     offsetBottom: false,

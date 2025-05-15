@@ -85,7 +85,8 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
     'darkHidden',
     'renderRoot',
     '__size',
-    'ref'
+    'ref',
+    'children'
   ]);
 
   const theme = useMantineTheme();
@@ -142,9 +143,7 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
         local.renderRoot(elementProps())
       ) : (
         <Dynamic component={Element} {...elementProps()}>
-          {props.children instanceof HTMLCollection
-            ? Array.from(props.children)
-            : props.children}
+          {local.children}
         </Dynamic>
       )}
     </>
