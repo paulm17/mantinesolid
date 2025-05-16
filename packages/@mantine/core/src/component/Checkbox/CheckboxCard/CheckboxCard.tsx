@@ -12,8 +12,8 @@ import {
   useStyles,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
-import { useCheckboxGroupContext } from '../CheckboxGroup.store';
-import { CheckboxCardProvider } from './CheckboxCard.store';
+import { useCheckboxGroupContext } from '../CheckboxGroup.context';
+import { CheckboxCardProvider } from './CheckboxCard.context';
 import classes from './CheckboxCard.module.css';
 import { useControlled } from '@mantine/hooks';
 

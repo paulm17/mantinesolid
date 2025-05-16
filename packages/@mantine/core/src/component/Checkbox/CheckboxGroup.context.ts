@@ -9,7 +9,7 @@ interface CheckboxGroupContextValue {
 
 const CheckboxGroupContext = createContext<CheckboxGroupContextValue | undefined>(undefined);
 export const CheckboxGroupProvider = CheckboxGroupContext.Provider;
-export const useCheckboxGroupContext = () => useContext(CheckboxGroupContext);
+export const useCheckboxGroupContext = () => useContext(CheckboxGroupContext)!;
 
 // import { createStore } from "solid-js/store";
 // import { MantineSize } from '../../core';

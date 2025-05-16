@@ -24,7 +24,7 @@ import {
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
 import { CheckboxCard } from './CheckboxCard/CheckboxCard';
-import { useCheckboxGroupContext } from './CheckboxGroup.store';
+import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';

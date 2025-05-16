@@ -2,7 +2,7 @@ import { splitProps, JSX, onMount } from 'solid-js';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
-import { CheckboxGroupProvider } from '../CheckboxGroup.store';
+import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 import { useControlled } from '@mantine/hooks';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
