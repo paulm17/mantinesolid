@@ -20,9 +20,9 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { PaginationProvider } from '../Pagination.context';
+import { SetPaginationStore } from '../Pagination.store';
 import classes from '../Pagination.module.css';
-import { splitProps } from 'solid-js';
+import { createEffect, splitProps } from 'solid-js';
 
 export type PaginationRootStylesNames = 'root' | 'control' | 'dots';
 export type PaginationRootCssVariables = {
@@ -152,38 +152,46 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const { range, setPage, next, previous, active, first, last } = usePagination({
+  const [pagination] = splitProps(usePagination({
     page: local.value,
     initialPage: local.defaultValue,
     onChange: local.onChange,
     total: local.total,
     siblings: local.siblings,
     boundaries: local.boundaries,
-  });
+  }), [
+    'range',
+    'setPage',
+    'next',
+    'previous',
+    'active',
+    'first',
+    'last',
+  ]);
 
-  const handleNextPage = createEventHandler(local.onNextPage, next);
-  const handlePreviousPage = createEventHandler(local.onPreviousPage, previous);
-  const handleFirstPage = createEventHandler(local.onFirstPage, first);
-  const handleLastPage = createEventHandler(local.onLastPage, last);
+  const handleNextPage = createEventHandler(local.onNextPage, pagination.next);
+  const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination.previous);
+  const handleFirstPage = createEventHandler(local.onFirstPage, pagination.first);
+  const handleLastPage = createEventHandler(local.onLastPage, pagination.last);
+
+  createEffect(() => {
+    SetPaginationStore({
+      total: local.total,
+      range: pagination.range(),
+      active: pagination.active(),
+      disabled: local.disabled,
+      getItemProps: local.getItemProps,
+      onChange: pagination.setPage,
+      onNext: handleNextPage,
+      onPrevious: handlePreviousPage,
+      onFirst: handleFirstPage,
+      onLast: handleLastPage,
+      getStyles,
+    });
+  })
 
   return (
-    <PaginationProvider
-      value={{
-        total: local.total,
-        range,
-        active: active(),
-        disabled: local.disabled,
-        getItemProps: local.getItemProps,
-        onChange: setPage,
-        onNext: handleNextPage,
-        onPrevious: handlePreviousPage,
-        onFirst: handleFirstPage,
-        onLast: handleLastPage,
-        getStyles,
-      }}
-    >
-      <Box ref={ref} {...getStyles('root')} {...others} />
-    </PaginationProvider>
+    <Box ref={ref} {...getStyles('root')} {...others} />
   );
 });
 

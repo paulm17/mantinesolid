@@ -9,8 +9,7 @@ export function InlineStyles(props: InlineStylesInput) {
     <style
       data-mantine-styles="inline"
       nonce={nonce?.()}
-      // @ts-ignore
-      dangerouslySetInnerHTML={{ __html: stylesToString(props) }}
+      innerHTML={stylesToString(props) }
     />
   );
 }

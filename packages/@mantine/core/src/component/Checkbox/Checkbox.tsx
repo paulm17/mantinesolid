@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, onMount, splitProps, JSX } from 'solid-js';
+import { Component, createEffect, splitProps, JSX } from 'solid-js';
 import { useId } from '@mantine/hooks';
 import {
   Box,

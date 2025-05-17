@@ -8,7 +8,7 @@ const url =
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <Image src={url} h={600} />
     </div>
   );
@@ -16,7 +16,7 @@ export function Usage() {
 
 export function WithinGroup() {
   return (
-    <Group style={{ padding: 40 }}>
+    <Group style={{ 'padding': '40px' }}>
       <Image src={url} h={200} radius="md" />
     </Group>
   );

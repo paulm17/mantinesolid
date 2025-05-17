@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, JSX, splitProps } from 'solid-js';
+import { Component, createEffect, JSX, splitProps } from 'solid-js';
 import {
   BoxProps,
   ElementProps,
@@ -12,6 +12,7 @@ import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
 import { InputBase } from '../InputBase/InputBase';
+import { useUncontrolled } from '@mantine/hooks';
 
 export interface FileInputProps<Multiple = false>
   extends BoxProps,
@@ -122,9 +123,12 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     props,
   });
 
-  const [_value, setValue] = createSignal<null | File | File[]>(
-    local.value !== undefined ? local.value : local.defaultValue !== undefined ? local.defaultValue : local.multiple ? [] : null
-  );
+  const [_value, setValue] = useUncontrolled<null | File | File[]>({
+    value: () => local.value,
+    defaultValue: local.defaultValue,
+    onChange: local.onChange as any,
+    finalValue: local.multiple ? [] : null,
+  });
 
   // Handle controlled component
   createEffect(() => {

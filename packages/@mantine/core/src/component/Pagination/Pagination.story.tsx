@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createSignal } from 'solid-js';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Pagination } from './Pagination';
@@ -6,10 +6,10 @@ import { Pagination } from './Pagination';
 export default { title: 'Pagination' };
 
 export function DynamicTotal() {
-  const [total, setTotal] = useState(20);
+  const [total, setTotal] = createSignal(20);
   return (
-    <div style={{ padding: 40 }}>
-      <Pagination total={total} mb="xl" />
+    <div style={{ 'padding': '40px' }}>
+      <Pagination total={total()} mb="xl" />
       <Group>
         <Button onClick={() => setTotal(30)}>Set 30</Button>
         <Button onClick={() => setTotal(10)}>Set 10</Button>
@@ -27,21 +27,21 @@ export function SimpleType() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = createSignal(1);
   return (
     <>
       Current page: {value}
-      <Pagination total={20} value={value} onChange={setValue} withEdges />
+      <Pagination total={20} value={value()} onChange={setValue} withEdges />
     </>
   );
 }
 
 export function Unstyled() {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = createSignal(1);
   return (
     <>
       Current page: {value}
-      <Pagination total={20} value={value} onChange={setValue} withEdges unstyled />
+      <Pagination total={20} value={value()} onChange={setValue} withEdges unstyled />
     </>
   );
 }

@@ -6,7 +6,7 @@ export default { title: 'FileInput' };
 export function Usage() {
   const [value, setValue] = useState<File | null>(null);
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <FileInput placeholder="Pick file" value={value} onChange={setValue} />
     </div>
   );
@@ -15,7 +15,7 @@ export function Usage() {
 export function Unstyled() {
   const [value, setValue] = useState<File | null>(null);
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <FileInput placeholder="Pick file" value={value} onChange={setValue} unstyled />
     </div>
   );
@@ -24,7 +24,7 @@ export function Unstyled() {
 export function Multiple() {
   const [value, setValue] = useState<File[]>([]);
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <FileInput placeholder="Multiple" multiple value={value} onChange={setValue} clearable />
     </div>
   );

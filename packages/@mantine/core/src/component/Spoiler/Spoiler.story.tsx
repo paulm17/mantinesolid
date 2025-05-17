@@ -1,29 +1,33 @@
-import { useState } from 'react';
+import { createEffect, createSignal, Index } from 'solid-js';
 import { Accordion } from '../Accordion/Accordion';
 import { Spoiler } from './Spoiler';
 
 export default { title: 'Spoiler' };
 
 export function ContentChanges() {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = createSignal(1);
+  const [content, setContent] = createSignal(Array(count()).fill(0));
   const randomCount = () => setCount(Math.round(Math.random() * 5 + 1));
-  const content = Array(count)
-    .fill(0)
-    .map((_, index) => (
-      <p key={index}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem officiis, incidunt libero,
-        itaque, quaerat labore quis odio culpa tempore quisquam porro unde omnis tempora nostrum
-        nihil eligendi distinctio. Animi, consectetur!
-      </p>
-    ));
+
+  createEffect(() => {
+    setContent(Array(count()).fill(0));
+  })
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <button type="button" onClick={randomCount}>
         Random count
       </button>
       <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide">
-        {content}
+        <Index each={content()}>
+          {_ => (
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem officiis, incidunt libero,
+              itaque, quaerat labore quis odio culpa tempore quisquam porro unde omnis tempora nostrum
+              nihil eligendi distinctio. Animi, consectetur!
+            </p>
+          )}
+        </Index>
       </Spoiler>
     </div>
   );
@@ -31,7 +35,7 @@ export function ContentChanges() {
 
 export function InsideAccordion() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <Accordion>
         <Accordion.Item value="first">
           <Accordion.Control>Expand me</Accordion.Control>
@@ -54,7 +58,7 @@ export function InsideAccordion() {
 
 export function Usage() {
   return (
-    <div style={{ padding: 40, maxWidth: 500 }}>
+    <div style={{ 'padding': '40px', 'max-width': '500px' }}>
       <Spoiler showLabel="Show more" hideLabel="Hide details" maxHeight={50}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut quam vitae lorem
         viverra ultricies. Integer hendrerit, quam mollis tempus iaculis, tellus est pellentesque
@@ -71,14 +75,14 @@ export function Usage() {
 }
 
 export function Controlled() {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = createSignal(false);
   return (
-    <div style={{ padding: 40, maxWidth: 500 }}>
+    <div style={{ 'padding': '40px', 'max-width': '500px' }}>
       <Spoiler
         showLabel="Show more"
         hideLabel="Hide details"
         maxHeight={50}
-        expanded={expanded}
+        expanded={expanded()}
         onExpandedChange={setExpanded}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut quam vitae lorem

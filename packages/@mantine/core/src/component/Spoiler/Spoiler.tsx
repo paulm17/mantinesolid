@@ -1,4 +1,4 @@
-import { splitProps, JSX } from 'solid-js';
+import { splitProps, JSX, createEffect, Show } from 'solid-js';
 import { Ref } from '@solid-primitives/refs';
 import { useElementSize, useId, useUncontrolled } from '@mantine/hooks';
 import {
@@ -106,39 +106,41 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const _id = useId(local.id);
   const regionId = `${_id}-region`;
   const [show, setShowState] = useUncontrolled({
-    value: local.expanded,
+    value: () => local.expanded,
     defaultValue: local.initialState,
     finalValue: false,
     onChange: local.onExpandedChange,
   });
   const { ref: contentRef, height } = useElementSize();
-  const spoilerMoreContent = show() ? local.hideLabel : local.showLabel;
-  const spoiler = spoilerMoreContent !== null && local.maxHeight! < height();
+  const spoilerMoreContent = () => show() ? local.hideLabel : local.showLabel;
+  const spoiler = () => spoilerMoreContent !== null && local.maxHeight! < height();
 
   return (
     <Box
       {...getStyles('root')}
       id={_id}
       ref={ref}
-      data-has-spoiler={spoiler || undefined}
+      data-has-spoiler={spoiler() || undefined}
       {...others}
     >
-      {spoiler && (
+      <Show when={spoiler()}>
         <Anchor
           component="button"
           type="button"
           ref={local.controlRef}
-          onClick={() => setShowState(!show)}
+          onClick={() => {
+            setShowState(!show())
+          }}
           aria-expanded={show()}
           aria-controls={regionId}
           {...getStyles('control')}
         >
-          {spoilerMoreContent}
+          {spoilerMoreContent()}
         </Anchor>
-      )}
+      </Show>
       <div
         {...getStyles('content', {
-          style: { maxHeight: !show ? rem(local.maxHeight) : height ? rem(height) : undefined },
+          style: { 'max-height': !show() ? rem(local.maxHeight) : height() ? rem(height()) : undefined },
         })}
         data-reduce-motion
         role="region"

@@ -3,7 +3,7 @@ import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../.
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
-import { useControlled } from '@mantine/hooks';
+import { useUncontrolled } from '@mantine/hooks';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
@@ -50,10 +50,10 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
     'readOnly'
   ]);
 
-  const [_value, setValue] = useControlled({
+  const [_value, setValue] = useUncontrolled({
     value: () => local.value,
-    initialValue: local.defaultValue!,
-    // finalValue: [],
+    defaultValue: local.defaultValue!,
+    finalValue: [],
     onChange: local.onChange,
   });
 
@@ -65,7 +65,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
     if (!local.readOnly) {
       setValue(
         _value().includes(itemValue)
-          ? _value().filter((item) => item !== itemValue)
+          ? _value().filter((item: any) => item !== itemValue)
           : [..._value(), itemValue]
       );
     }

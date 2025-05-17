@@ -8,7 +8,7 @@ import {
   useProps,
 } from '../../../core';
 import classes from '../Card.module.css';
-import { useCardContext } from '../Card.context';
+import { CardStore, useCardStore } from '../Card.store';
 
 export type CardSectionStylesNames = 'section';
 
@@ -43,13 +43,19 @@ export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) 
     'mod',
   ]);
 
-  const ctx = useCardContext();
+  const store = useCardStore();
+  const styles = store.getStyles('section', {
+    className: local.className,
+    style: local.style,
+    classNames: local.classNames,
+    styles: local.styles,
+  });
 
   return (
     <Box
       ref={ref}
       mod={[{ 'with-border': local.withBorder, 'inherit-padding': local.inheritPadding, 'card-section': true }, local.mod]}
-      {...ctx.getStyles('section', { className: local.className, style: local.style, styles: local.styles, classNames: local.classNames })}
+      {...styles}
       {...others}
     />
   );

@@ -123,8 +123,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   ]);
 
   const [_value, setValue] = useUncontrolled({
-    value: local.value,
-    defaultValue: local.defaultValue,
+    value: () => local.value,
+    defaultValue: local.defaultValue ?? 0,
     finalValue: 0,
     onChange: local.onChange,
   });

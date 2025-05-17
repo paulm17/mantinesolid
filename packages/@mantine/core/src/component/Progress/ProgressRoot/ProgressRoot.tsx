@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { createEffect, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -14,7 +14,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { ProgressProvider } from '../Progress.context';
+import { SetProgressStore } from '../Progress.context';
 import classes from '../Progress.module.css';
 
 export type ProgressRootStylesNames = 'root' | 'section' | 'label';
@@ -86,10 +86,15 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     varsResolver,
   });
 
+  createEffect(() => {
+    SetProgressStore({
+      getStyles,
+      autoContrast: local.autoContrast
+    })
+  });
+
   return (
-    <ProgressProvider value={{ getStyles, autoContrast: local.autoContrast }}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
-    </ProgressProvider>
+    <Box ref={ref} {...getStyles('root')} {...others} />
   );
 });
 

@@ -14,7 +14,7 @@ export function Usage() {
       </Group>
 
       <Dialog
-        opened={opened}
+        opened={opened()}
         withCloseButton
         onClose={close}
         size="lg"
@@ -44,7 +44,7 @@ export function Unstyled() {
       </Group>
 
       <Dialog
-        opened={opened}
+        opened={opened()}
         withCloseButton
         onClose={close}
         size="lg"

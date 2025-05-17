@@ -101,7 +101,7 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
     >
       <span {...getStyles('alphaOverlay')} />
       {local.withShadow && <span {...getStyles('shadowOverlay')} />}
-      <span {...getStyles('colorOverlay', { style: { backgroundColor: local.color } })} />
+      <span {...getStyles('colorOverlay', { style: { 'background-color': local.color } })} />
       <span {...getStyles('childrenOverlay')}>{local.children}</span>
     </Box>
   );

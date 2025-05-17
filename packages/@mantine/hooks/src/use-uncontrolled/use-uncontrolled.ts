@@ -1,46 +1,67 @@
-// src/hooks/use-uncontrolled.ts
-import { createSignal, createMemo } from "solid-js";
+import {
+  type Accessor,
+  createSignal,
+  type Setter,
+  type Signal,
+  untrack,
+} from 'solid-js'
 
-export interface UseUncontrolledInput<T> {
-  /** Value for controlled state */
-  value?: T;
+/**
+ * Creates a simple reactive state with a getter and setter. Can be controlled by providing your own state through the `value` prop.
+ * @param props.value - Controlled value of the state.
+ * @param props.defaultValue - Initial value of the state.
+ * @param props.onChange - Callback fired when the value changes.
+ * @returns ```typescript
+ * [state: Accessor<T>, setState: Setter<T>]
+ * ```
+ */
+function useUncontrolled<T>(props: {
+  value?: Accessor<T | undefined>
+  onChange?: (value: T) => void
+}): Signal<T | undefined>
+function useUncontrolled<T>(props: {
+  value?: Accessor<T | undefined>
+  defaultValue: T
+  finalValue: T
+  onChange?: (value: T) => void
+}): Signal<T>
+function useUncontrolled<T>(props: {
+  value?: Accessor<T | undefined>
+  defaultValue?: T
+  finalValue?: T
+  onChange?: (value: T) => void
+}): Signal<T | undefined> {
+  const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
+    props.defaultValue !== undefined? props.defaultValue : props.finalValue,
+  )
 
-  /** Initial value for uncontrolled state */
-  defaultValue?: T;
+  const isControlled = () => props.value?.() !== undefined
+  const value = () =>
+    isControlled() ? (props.value?.() as T) : uncontrolledSignal()
 
-  /** Final value for uncontrolled state when value and defaultValue are not provided */
-  finalValue?: T;
-
-  /** Controlled state onChange handler */
-  onChange?: (value: T, ...payload: any[]) => void;
-}
-
-export function useUncontrolled<T>({
-  value,
-  defaultValue,
-  finalValue,
-  onChange = () => {},
-}: UseUncontrolledInput<T>): [() => T, (val: T, ...payload: any[]) => void] {
-  const [uncontrolled, setUncontrolled] = createSignal<T>(
-    defaultValue !== undefined ? defaultValue : (finalValue as T)
-  );
-
-  const isControlled = () => value !== undefined;
-
-  const current = createMemo<T>(() =>
-    isControlled() ? (value as T) : uncontrolled()
-  );
-
-  const setValue = (val: T, ...payload: any[]) => {
-    if (!isControlled()) {
-      if (typeof val === 'function') {
-        setUncontrolled(() => val as any);
+  const setValue: Setter<T | undefined> = (next?: unknown) => {
+    return untrack(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+      let nextValue: Exclude<T, Function>
+      if (typeof next === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+        nextValue = next(value()) as Exclude<T, Function>
       } else {
-        setUncontrolled(() => val);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+        nextValue = next as Exclude<T, Function>
       }
-    }
-    onChange(val, ...payload);
-  };
 
-  return [current, setValue];
+      if (!Object.is(nextValue, value())) {
+        if (!isControlled()) {
+          setUncontrolledSignal(nextValue)
+        }
+        props.onChange?.(nextValue)
+      }
+      return nextValue as never
+    })
+  }
+
+  return [value, setValue]
 }
+
+export { useUncontrolled }

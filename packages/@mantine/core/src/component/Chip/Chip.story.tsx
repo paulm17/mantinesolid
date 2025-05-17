@@ -1,6 +1,7 @@
 import { IconCheck } from '@tabler/icons-solidjs';
 import { Tooltip } from '../Tooltip';
 import { Chip } from './Chip';
+import { For } from 'solid-js';
 
 export default { title: 'Chip' };
 
@@ -17,13 +18,7 @@ export function WithTooltip() {
 }
 
 export function AutoContrast() {
-  const buttons = Array(10)
-    .fill(0)
-    .map((_, index) => (
-      <Chip key={index} variant="filled" color={`red.${index}`} autoContrast defaultChecked>
-        Chip
-      </Chip>
-    ));
+  const buttons = Array.from({ length: 10 }, (_, i) => `red.${i}`);
 
   return (
     <div
@@ -35,7 +30,13 @@ export function AutoContrast() {
         'padding': '40px',
       }}
     >
-      {buttons}
+      <For each={buttons}>
+        {(button) => (
+          <Chip variant="filled" color={button} autoContrast defaultChecked>
+            Chip
+          </Chip>
+        )}
+      </For>
     </div>
   );
 }

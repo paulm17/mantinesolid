@@ -1,9 +1,17 @@
-import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js';
-import { createStore, reconcile } from 'solid-js/store';
+import {
+  createSignal,
+  createEffect,
+  onCleanup,
+  Accessor,
+} from "solid-js";
+import {
+  makeResizeObserver,
+  createElementSize,
+} from "@solid-primitives/resize-observer";
 
-type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
-
-const defaultState: ObserverRect = {
+// Define the shape of the observed bounding box
+export type ObserverRect = Omit<DOMRectReadOnly, "toJSON">;
+const defaultRect: ObserverRect = {
   x: 0,
   y: 0,
   width: 0,
@@ -15,79 +23,64 @@ const defaultState: ObserverRect = {
 };
 
 /**
- * A hook that returns a resize observer.
- *
- * @example
- * ```ts
- * const [ref, rectStore] = useResizeObserver();
- *
- * return (<div ref={ref}>{rectStore.width}</div>);
+ * SolidJS equivalent of React's useResizeObserver
+ * @param options native ResizeObserverOptions
+ * @returns [refSetter, rectAccessor]
  */
-export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
-  let frameID = 0;
-  const [ref, setRef] = createSignal<T | null>(null);
+export function useResizeObserver<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): readonly [
+  /** attach to your element: `<div ref={setRef}>` */
+  (el: T | undefined) => void,
+  /** reactive rect: `{ x, y, width, height, top, left, bottom, right }` */
+  Accessor<ObserverRect>
+] {
+  const [el, setEl] = createSignal<T>();
+  const [rect, setRect] = createSignal<ObserverRect>(defaultRect);
 
-  /**
-   * SolidJS stores always need a deeper object for the 'setter' and 'reconcile' to work,
-   * hence why I wrapped it in { rect: ObserverRect }. When originally, it sohuld just be `ObserverRect`.
-   */
-  const [rectStore, setRectStore] = createStore<{ rect: ObserverRect }>({ rect: defaultState });
-
-  const observer = createMemo(() => {
-    if (typeof window === 'undefined') {
-      return null;
-    }
-
-    return new ResizeObserver((entries: any) => {
+  const { observe, unobserve } = makeResizeObserver<T>(
+    (entries) => {
       const entry = entries[0];
-
-      if (entry) {
-        cancelAnimationFrame(frameID);
-
-        frameID = requestAnimationFrame(() => {
-          if (ref()) {
-            setRectStore('rect', reconcile(entry.contentRect));
-          }
-        });
-      }
-    });
-  });
+      if (entry) setRect(entry.contentRect);
+    },
+    options
+  );
 
   createEffect(() => {
-    if (ref()) {
-      observer()?.observe(ref()!, options);
+    const node = el();
+    if (node) {
+      observe(node);
+      onCleanup(() => unobserve(node));
     }
-
-    onCleanup(() => {
-      observer()?.disconnect();
-
-      if (frameID) {
-        cancelAnimationFrame(frameID);
-      }
-    });
   });
 
-  return [setRef, rectStore] as const;
+  return [setEl, rect] as const;
 }
 
 /**
- * A hook that returns the current size of an element.
- *
- * Plus points on SolidJS for this: `width()` and `height()` only emit a change when it actually changed its value.
- * This is thanks to useResizeObserver using a `store` with `reconcile` under the hood.
- *
- * @example
- * ```ts
- * const { ref, width, height } = useElementSize();
- *
- * return (<div ref={ref}>{width()} | {height()}</div>);
+ * SolidJS equivalent of React's useElementSize
+ * @param options native ResizeObserverOptions
+ * @returns { ref, width, height }
  */
-export function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
-  const [ref, rectStore] = useResizeObserver<T>(options);
+export function useElementSize<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): {
+  /** Attach to your element: `<div ref={setRef}>…</div>` */
+  ref: (el: T | undefined) => void;
+  /** Reactive width (never null) */
+  width: Accessor<number>;
+  /** Reactive height (never null) */
+  height: Accessor<number>;
+} {
+  // 1) Signal to hold the target element
+  const [el, setEl] = createSignal<T | undefined>();
 
-  return {
-    ref,
-    width: createMemo(() => rectStore?.rect?.width),
-    height: createMemo(() => rectStore?.rect?.height),
-  };
+  // 2) Primitive store { width, height } driven by ResizeObserver under the hood
+  const size = createElementSize(el);
+
+  // 3) Coerce null to 0 so width/height are always numbers
+  const width: Accessor<number> = () => size.width ?? 0;
+  const height: Accessor<number> = () => size.height ?? 0;
+
+  return { ref: setEl, width, height };
 }

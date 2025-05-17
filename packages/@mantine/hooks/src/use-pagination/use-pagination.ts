@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { createMemo } from 'solid-js';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 import { splitProps } from 'solid-js';
 
@@ -30,7 +30,7 @@ export interface PaginationParams {
 }
 
 export function usePagination(props: PaginationParams) {
-  const [local, others] = splitProps(props, [
+  const [local] = splitProps(props, [
     'total',
     'siblings',
     'boundaries',
@@ -45,7 +45,7 @@ export function usePagination(props: PaginationParams) {
 
   const _total = Math.max(Math.trunc(local.total), 0);
   const [activePage, setActivePage] = useUncontrolled({
-    value: local.page,
+    value: () => local.page,
     onChange: local.onChange,
     defaultValue: initialPage,
     finalValue: initialPage,
@@ -66,7 +66,7 @@ export function usePagination(props: PaginationParams) {
   const first = () => setPage(1);
   const last = () => setPage(_total);
 
-  const paginationRange = useMemo((): (number | 'dots')[] => {
+  const paginationRange = createMemo((): (number | 'dots')[] => {
     const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
     if (totalPageNumbers >= _total) {
       return range(1, _total);
@@ -95,7 +95,7 @@ export function usePagination(props: PaginationParams) {
       DOTS,
       ...range(_total - boundaries + 1, _total),
     ];
-  }, [_total, siblings, activePage]);
+  });
 
   return {
     range: paginationRange,

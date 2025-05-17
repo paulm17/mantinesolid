@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 import { cssObjectToString } from '../css-object-to-string/css-object-to-string';
 
 export interface InlineStylesMediaQuery {
@@ -13,17 +13,24 @@ export interface InlineStylesInput {
   container?: InlineStylesMediaQuery[];
 }
 
-export function stylesToString({ selector, styles, media, container }: InlineStylesInput) {
-  const baseStyles = styles ? cssObjectToString(styles) : '';
-  const mediaQueryStyles = !Array.isArray(media)
-    ? []
-    : media.map((item) => `@media${item.query}{${selector}{${cssObjectToString(item.styles)}}}`);
+export function stylesToString(props: InlineStylesInput) {
+  const [local] = splitProps(props, [
+    'selector',
+    'styles',
+    'media',
+    'container'
+  ]);
 
-  const containerStyles = !Array.isArray(container)
+  const baseStyles = local.styles ? cssObjectToString(local.styles) : '';
+  const mediaQueryStyles = !Array.isArray(local.media)
     ? []
-    : container.map(
-        (item) => `@container ${item.query}{${selector}{${cssObjectToString(item.styles)}}}`
+    : local.media.map((item) => `@media${item.query}{${local.selector}{${cssObjectToString(item.styles)}}}`);
+
+  const containerStyles = !Array.isArray(local.container)
+    ? []
+    : local.container.map(
+        (item) => `@container ${item.query}{${local.selector}{${cssObjectToString(item.styles)}}}`
       );
 
-  return `${baseStyles ? `${selector}{${baseStyles}}` : ''}${mediaQueryStyles.join('')}${containerStyles.join('')}`.trim();
+  return `${baseStyles ? `${local.selector}{${baseStyles}}` : ''}${mediaQueryStyles.join('')}${containerStyles.join('')}`.trim();
 }

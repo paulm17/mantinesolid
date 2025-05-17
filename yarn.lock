@@ -6164,6 +6164,8 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     "@solid-primitives/presence": "npm:^0.1.1"
     "@solid-primitives/refs": "npm:^1.1.1"
+    "@solid-primitives/resize-observer": "npm:^2.1.1"
+    "@solid-primitives/utils": "npm:^6.3.1"
     clsx: "npm:^2.1.1"
     floating-ui-solid: "workspace:*"
     solid-number-format: "workspace:*"

@@ -1,4 +1,4 @@
-import { createEffect, createSignal, splitProps } from 'solid-js';
+import { splitProps } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -15,7 +15,7 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { useCheckboxGroupContext } from '../CheckboxGroup.context';
 import { CheckboxCardProvider } from './CheckboxCard.context';
 import classes from './CheckboxCard.module.css';
-import { useControlled } from '@mantine/hooks';
+import { useUncontrolled } from '@mantine/hooks';
 
 export type CheckboxCardStylesNames = 'card';
 export type CheckboxCardCssVariables = {
@@ -99,10 +99,10 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
   const groupStoreValue = () => ctx ? ctx.value().includes(local.value || '') : undefined;
   const _checked = () => typeof local.checked === 'boolean'? checked() : groupStoreValue();
 
-  const [_value, setValue] = useControlled({
+  const [_value, setValue] = useUncontrolled({
     value: _checked,
-    initialValue: local.defaultChecked ?? false,
-    // finalValue: [],
+    defaultValue: local.defaultChecked ?? false,
+    finalValue: false,
     onChange: local.onChange,
   });
 

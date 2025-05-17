@@ -1,3 +1,4 @@
+import { For } from 'solid-js';
 import { Box } from '../../core';
 import { Avatar } from '../Avatar';
 import { Group } from '../Group';
@@ -10,21 +11,23 @@ const positions = ['top', 'middle', 'bottom'] as const;
 const placements = ['start', 'center', 'end'] as const;
 
 export const Positions = () => {
-  const items = positions.map((position) => {
-    const _items = placements.map((placement) => (
-      <Indicator position={`${position}-${placement}`} key={placement}>
-        <Avatar radius={0} />
-      </Indicator>
-    ));
-
-    return (
-      <Group mt="md" key={position}>
-        {_items}
-      </Group>
-    );
-  });
-
-  return <Box p={40}>{items}</Box>;
+  return (
+    <Box p={40}>
+      <For each={positions}>
+        {(position) => (
+          <Group mt="md">
+            <For each={placements}>
+              {(placement) => (
+                <Indicator position={`${position}-${placement}`}>
+                  <Avatar radius={0} />
+                </Indicator>
+              )}
+            </For>
+          </Group>
+        )}
+      </For>
+    </Box>
+  );
 };
 
 export const Inline = () => (

@@ -1,4 +1,4 @@
-import { children, splitProps, JSX, createSignal, lazy, createEffect, Show } from 'solid-js';
+import { children, splitProps, JSX, createEffect } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -15,7 +15,7 @@ import {
 import { Paper } from '../Paper';
 import { CardSection } from './CardSection/CardSection';
 import classes from './Card.module.css';
-import { CardProvider } from './Card.context';
+import { SetCardStore } from './Card.store';
 
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {
@@ -112,16 +112,14 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     });
   };
 
-  // createEffect(() => {
-  //   setCardStylesStore({ getStyles });
-  // });
+  createEffect(() => {
+    SetCardStore({ getStyles });
+  });
 
   return (
-    <CardProvider value={{ getStyles }}>
-      <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
-        {content()}
-      </Paper>
-    </CardProvider>
+    <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
+      {content()}
+    </Paper>
   );
 });
 

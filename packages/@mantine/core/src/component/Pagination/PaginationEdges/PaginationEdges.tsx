@@ -1,6 +1,6 @@
 import { Component, splitProps } from 'solid-js';
 import { BoxProps, createPolymorphicComponent, useProps } from '../../../core';
-import { usePaginationContext } from '../Pagination.context';
+import { usePaginationStore } from '../Pagination.store';
 import {
   PaginationFirstIcon,
   PaginationIconProps,
@@ -33,14 +33,14 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
       'ref'
     ]);
     const Icon = local.icon!;
-    const ctx = usePaginationContext();
-    const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === 1;
+    const store = usePaginationStore();
+    const disabled = type === 'next' ? store.active === store.total : store.active === 1;
 
     return (
       <PaginationControl
-        disabled={ctx.disabled || disabled}
+        disabled={store.disabled || disabled}
         ref={local.ref}
-        onClick={ctx[action]}
+        onClick={store[action]}
         withPadding={false}
         {...others}
       >
