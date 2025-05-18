@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { createSignal, onMount, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -8,7 +8,7 @@ import {
   useProps,
 } from '../../../core';
 import classes from '../Card.module.css';
-import { CardStore, useCardStore } from '../Card.store';
+import { useCardContext } from '../Card.context';
 
 export type CardSectionStylesNames = 'section';
 
@@ -43,8 +43,17 @@ export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) 
     'mod',
   ]);
 
-  const store = useCardStore();
-  const styles = store.getStyles('section', {
+  const ctx = useCardContext();
+
+  const [idx, setIdx] = createSignal<number>(-1);
+  onMount(() => {
+    setIdx(ctx.registerItem());
+  });
+
+  const isFirst = () => idx() === 0;
+  const isLast = () => idx() === ctx.totalItems() - 1;
+
+  const styles = ctx.getStyles('section', {
     className: local.className,
     style: local.style,
     classNames: local.classNames,
@@ -54,7 +63,12 @@ export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) 
   return (
     <Box
       ref={ref}
-      mod={[{ 'with-border': local.withBorder, 'inherit-padding': local.inheritPadding, 'card-section': true }, local.mod]}
+      mod={[{
+        'with-border': local.withBorder,
+        'inherit-padding': local.inheritPadding,
+        'first-section': isFirst(),
+        'last-section': isLast()
+      }, local.mod]}
       {...styles}
       {...others}
     />

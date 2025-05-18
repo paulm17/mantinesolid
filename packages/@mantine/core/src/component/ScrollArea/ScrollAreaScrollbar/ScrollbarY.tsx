@@ -1,6 +1,6 @@
 import { createSignal, onMount, splitProps } from 'solid-js';
 import { PossibleRef, useMergedRef } from '@mantine/hooks';
-import { useScrollAreaStore } from '../ScrollArea.store';
+import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAxisProps } from '../ScrollArea.types';
 import { getThumbSize, isScrollingWithinScrollbarBounds, toInt } from '../utils';
 import { Scrollbar } from './Scrollbar';
@@ -13,7 +13,7 @@ export function ScrollAreaScrollbarY(props: ScrollAreaScrollbarAxisProps) {
     'ref',
   ]);
 
-  const store = useScrollAreaStore();
+  const ctx = useScrollAreaContext();
   const [computedStyle, setComputedStyle] = createSignal<CSSStyleDeclaration>();
   const [ref, setRef] = createSignal<PossibleRef<HTMLDivElement>>();
 
@@ -43,8 +43,8 @@ export function ScrollAreaScrollbarY(props: ScrollAreaScrollbarAxisProps) {
         event: WheelEvent,                                                         // :contentReference[oaicite:16]{index=16}
         maxScrollPos: number
       ) => {
-        if (store.viewport) {
-          const scrollPos = store.viewport.scrollTop + event.deltaY;
+        if (ctx.viewport) {
+          const scrollPos = ctx.viewport.scrollTop + event.deltaY;
           props.onWheelScroll(scrollPos);
           if (isScrollingWithinScrollbarBounds(scrollPos, maxScrollPos)) {
             event.preventDefault();
@@ -52,10 +52,10 @@ export function ScrollAreaScrollbarY(props: ScrollAreaScrollbarAxisProps) {
         }
       }}
       onResize={() => {
-        if (ref() && store.viewport && computedStyle()) {
+        if (ref() && ctx.viewport && computedStyle()) {
           local.onSizesChange({
-            content: store.viewport.scrollHeight,
-            viewport: store.viewport.offsetHeight,
+            content: ctx.viewport.scrollHeight,
+            viewport: ctx.viewport.offsetHeight,
             scrollbar: {
               size: ref().clientHeight,
               paddingStart: toInt(computedStyle()?.paddingTop),

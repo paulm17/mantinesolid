@@ -1,8 +1,7 @@
-import { createStore } from "solid-js/store";
-import type { GetStylesApi } from "../../core";
+import { createSafeContext, GetStylesApi } from '../../core';
 import type { ScrollAreaFactory } from './ScrollArea';
 
-interface ScrollAreaContextValue {
+export interface ScrollAreaContextValue {
   type: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
   scrollHideDelay: number;
   scrollArea: HTMLDivElement | null;
@@ -23,28 +22,6 @@ interface ScrollAreaContextValue {
   getStyles: GetStylesApi<ScrollAreaFactory>;
 }
 
-const defaultGetStyles: GetStylesApi<ScrollAreaFactory> = () => ({} as any);
-
-export const [ScrollAreaStore, SetScrollAreaStore] =
-  createStore<ScrollAreaContextValue>({
-    type: 'auto',
-    scrollHideDelay: 500,
-    scrollArea: null,
-    viewport: null,
-    onViewportChange: () => {},
-    content: null,
-    onContentChange: () => {},
-    scrollbarX: null,
-    onScrollbarXChange: () => {},
-    scrollbarXEnabled: false,
-    onScrollbarXEnabledChange: () => {},
-    scrollbarY: null,
-    onScrollbarYChange: () => {},
-    scrollbarYEnabled: false,
-    onScrollbarYEnabledChange: () => {},
-    onCornerWidthChange: () => {},
-    onCornerHeightChange: () => {},
-    getStyles: defaultGetStyles
-  });
-
-export const useScrollAreaStore = () => ScrollAreaStore;
+export const [ScrollAreaProvider, useScrollAreaContext] = createSafeContext<ScrollAreaContextValue>(
+  'ScrollArea.Root component was not found in tree'
+);

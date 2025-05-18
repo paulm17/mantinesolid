@@ -1,6 +1,6 @@
-import { createEffect, JSX, splitProps } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 import { Box, BoxProps, ElementProps, useDirection } from '../../../core';
-import { useRatingStore } from '../Rating.store';
+import { useRatingContext } from '../Rating.context';
 import { StarSymbol } from '../StarSymbol/StarSymbol';
 
 export interface RatingItemProps extends BoxProps, ElementProps<'input', 'value' | 'size'> {
@@ -34,7 +34,7 @@ export function RatingItem(props: RatingItemProps) {
     'style',
   ]);
 
-  const store = useRatingStore();
+  const ctx = useRatingContext();
   const _fullIcon = typeof local.fullIcon === 'function' ? local.fullIcon(local.value) : local.fullIcon;
   const _emptyIcon = typeof local.emptyIcon === 'function' ? local.emptyIcon(local.value) : local.emptyIcon;
   const { dir } = useDirection();
@@ -43,7 +43,7 @@ export function RatingItem(props: RatingItemProps) {
     <>
       {!local.readOnly && (
         <input
-          {...store.getStyles('input')}
+          {...ctx.getStyles('input')}
           onKeyDown={(event) => event.key === ' ' && local.onChange(local.value)}
           id={local.id}
           type="radio"
@@ -58,7 +58,7 @@ export function RatingItem(props: RatingItemProps) {
 
       <Box
         component={local.readOnly ? 'div' : 'label'}
-        {...store.getStyles('label')}
+        {...ctx.getStyles('label')}
         data-read-only={local.readOnly || undefined}
         html-for={local.id}
         onClick={() => local.onChange(local.value)}
@@ -67,7 +67,7 @@ export function RatingItem(props: RatingItemProps) {
         }}
       >
         <Box
-          {...store.getStyles('symbolBody')}
+          {...ctx.getStyles('symbolBody')}
           __vars={{
             '--rating-symbol-clip-path':
             local.fractionValue === 1

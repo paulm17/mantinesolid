@@ -13,8 +13,8 @@ export function createSafeContext<ContextValue>(errorMessage: string) {
     return ctx;
   };
 
-  const Provider = ({ children, value }: { value: ContextValue; children: JSX.Element }) => (
-    <Context.Provider value={value}>{children}</Context.Provider>
+  const Provider = (props: { value: ContextValue; children: JSX.Element }) => (
+    <Context.Provider value={props.value}>{props.children}</Context.Provider>
   );
 
   return [Provider, useSafeContext] as const;

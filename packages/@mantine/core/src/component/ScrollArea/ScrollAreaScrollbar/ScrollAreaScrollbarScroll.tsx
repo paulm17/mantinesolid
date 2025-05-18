@@ -6,7 +6,7 @@ import {
   Show,
 } from 'solid-js';
 import { useDebouncedCallback } from '@mantine/hooks';
-import { useScrollAreaStore } from '../ScrollArea.store';
+import { useScrollAreaContext } from '../ScrollArea.context';
 import { composeEventHandlers } from '../utils';
 import {
   ScrollAreaScrollbarVisible,
@@ -20,19 +20,19 @@ export interface ScrollAreaScrollbarScrollProps
 
 export function ScrollAreaScrollbarScroll(props: ScrollAreaScrollbarScrollProps) {
   const [local, others] = splitProps(props, ['forceMount', 'ref', 'orientation']);
-  const store = useScrollAreaStore();
+  const ctx = useScrollAreaContext();
   const [state, setState] = createSignal<'hidden' | 'idle' | 'interacting' | 'scrolling'>('hidden');
   const debounceScrollEnd = useDebouncedCallback(() => setState('idle'), 100);
 
   createEffect(() => {
     if (state() === 'idle') {
-      const hideTimer = window.setTimeout(() => setState('hidden'), store.scrollHideDelay);
+      const hideTimer = window.setTimeout(() => setState('hidden'), ctx.scrollHideDelay);
       onCleanup(() => window.clearTimeout(hideTimer));
     }
   });
 
   createEffect(() => {
-    const el = store.viewport;
+    const el = ctx.viewport;
     if (!el) return;
     let prev = el[local.orientation === 'horizontal' ? 'scrollLeft' : 'scrollTop'];
     const handleScroll = () => {

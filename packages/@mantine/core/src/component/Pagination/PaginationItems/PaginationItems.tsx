@@ -1,5 +1,5 @@
 import { For, splitProps } from 'solid-js';
-import { usePaginationStore } from '../Pagination.store';
+import { usePaginationContext } from '../Pagination.context';
 import { PaginationIcon } from '../Pagination.icons';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
 import { PaginationDots } from '../PaginationDots/PaginationDots';
@@ -10,26 +10,26 @@ export interface PaginationItemsProps {
 }
 
 export function PaginationItems(props: PaginationItemsProps) {
-  const store = usePaginationStore();
+  const ctx = usePaginationContext();
   const [local, _] = splitProps(props, [
     'dotsIcon',
   ]);
 
   return (
     <>
-      <For each={store.range}>
+      <For each={ctx.range}>
         {(page) =>
           page === 'dots' ? (
             <PaginationDots icon={local.dotsIcon} />
           ) : (
             <PaginationControl
-              active={page === store.active}
-              aria-current={page === store.active ? 'page' : undefined}
-              onClick={() => store.onChange(page)}
-              disabled={store.disabled}
-              {...store.getItemProps?.(page)}
+              active={page === ctx.active}
+              aria-current={page === ctx.active ? 'page' : undefined}
+              onClick={() => ctx.onChange(page)}
+              disabled={ctx.disabled}
+              {...ctx.getItemProps?.(page)}
             >
-              {store.getItemProps?.(page)?.children ?? page}
+              {ctx.getItemProps?.(page)?.children ?? page}
             </PaginationControl>
           )
         }

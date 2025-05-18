@@ -8,7 +8,7 @@ import {
   Factory,
   useProps,
 } from '../../../core';
-import { usePaginationStore } from '../Pagination.store';
+import { usePaginationContext } from '../Pagination.context';
 import { PaginationDotsIcon, PaginationIconProps } from '../Pagination.icons';
 import classes from '../Pagination.module.css';
 
@@ -44,12 +44,12 @@ export const PaginationDots = factory<PaginationDotsFactory>((_props, ref) => {
     'icon'
   ]);
 
-  const store = usePaginationStore();
+  const ctx = usePaginationContext();
   const Icon = local.icon!;
 
   return (
     <Box ref={ref}
-      {...store.getStyles('dots', {
+      {...ctx.getStyles('dots', {
         className: local.className,
         style: local.style,
         styles: local.styles,

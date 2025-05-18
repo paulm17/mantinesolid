@@ -9,7 +9,7 @@ import {
   useProps,
 } from '../../core';
 import type { TableFactory } from './Table';
-import { TableContextValue, useTableStore } from './Table.store';
+import { TableContextValue, useTableContext } from './Table.context';
 import classes from './Table.module.css';
 
 export interface TableElementProps<Selector extends string>
@@ -125,14 +125,14 @@ export function tableElement<Factory extends FactoryPayload>(
     const props = useProps(name, {}, _props);
     const { classNames, className, style, styles, ...others } = props;
 
-    const store = useTableStore();
+    const ctx = useTableContext();
 
     return (
       <Box
         component={element}
         ref={ref}
-        {...getDataAttributes(store, options)}
-        {...store.getStyles(element, { className, classNames, style, styles, props })}
+        {...getDataAttributes(ctx, options)}
+        {...ctx.getStyles(element, { className, classNames, style, styles, props })}
         {...others}
       />
     );

@@ -1,5 +1,5 @@
 import { createEffect, Match, onCleanup, splitProps, Switch } from 'solid-js';
-import { useScrollAreaStore } from '../ScrollArea.store';
+import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAuto } from './ScrollAreaScrollbarAuto';
 import { ScrollAreaScrollbarHover } from './ScrollAreaScrollbarHover';
 import { ScrollAreaScrollbarScroll } from './ScrollAreaScrollbarScroll';
@@ -19,31 +19,31 @@ export function ScrollAreaScrollbar(props: ScrollAreaScrollbarProps) {
     'orientation'
   ]);
 
-  const store = useScrollAreaStore();
+  const ctx = useScrollAreaContext();
   const isHorizontal = () => local.orientation === 'horizontal';
 
   createEffect(() => {
-    if (isHorizontal()) store.onScrollbarXEnabledChange(true);
-    else store.onScrollbarYEnabledChange(true);
+    if (isHorizontal()) ctx.onScrollbarXEnabledChange(true);
+    else ctx.onScrollbarYEnabledChange(true);
 
     onCleanup(() => {
-      if (isHorizontal()) store.onScrollbarXEnabledChange(false);
-      else store.onScrollbarYEnabledChange(false);
+      if (isHorizontal()) ctx.onScrollbarXEnabledChange(false);
+      else ctx.onScrollbarYEnabledChange(false);
     });
   });
 
   return (
     <Switch fallback={null}>
-      <Match when={store.type === "hover"}>
+      <Match when={ctx.type === "hover"}>
         <ScrollAreaScrollbarHover {...others} ref={local.ref} forceMount={local.forceMount} />
       </Match>
-      <Match when={store.type === "scroll"}>
+      <Match when={ctx.type === "scroll"}>
         <ScrollAreaScrollbarScroll {...others} ref={local.ref} forceMount={local.forceMount} />
       </Match>
-      <Match when={store.type === "auto"}>
+      <Match when={ctx.type === "auto"}>
         <ScrollAreaScrollbarAuto {...others} ref={local.ref} forceMount={local.forceMount} />
       </Match>
-      <Match when={store.type === "always"}>
+      <Match when={ctx.type === "always"}>
         <ScrollAreaScrollbarVisible {...others} ref={local.ref} />
       </Match>
     </Switch>

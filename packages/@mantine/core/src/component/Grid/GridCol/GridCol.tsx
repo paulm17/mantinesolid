@@ -10,7 +10,7 @@ import {
   useProps,
   useRandomClassName,
 } from '../../../core';
-import { useGridStore } from '../Grid.store';
+import { useGridContext } from '../Grid.context';
 import { GridColVariables } from './GridColVariables';
 import classes from '../Grid.module.css';
 import { splitProps } from 'solid-js';
@@ -56,7 +56,7 @@ export const GridCol = factory<GridColFactory>((_props, ref) => {
     'offset'
   ])
 
-  const store = useGridStore();
+  const ctx = useGridContext();
   const responsiveClassName = useRandomClassName();
 
   return (
@@ -70,7 +70,7 @@ export const GridCol = factory<GridColFactory>((_props, ref) => {
 
       <Box
         ref={ref}
-        {...store.getStyles('col', {
+        {...ctx.getStyles('col', {
           className: cx(local.className, responsiveClassName),
           style: local.style,
           classNames: local.classNames,

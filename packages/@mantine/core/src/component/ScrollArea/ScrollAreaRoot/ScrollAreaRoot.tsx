@@ -1,8 +1,8 @@
+import { createSignal, splitProps } from 'solid-js';
 import { useMergedRef } from '@mantine/hooks';
 import { Box, BoxProps, ElementProps, Factory, GetStylesApi, useProps } from '../../../core';
 import type { ScrollAreaFactory } from '../ScrollArea';
-import { SetScrollAreaStore } from '../ScrollArea.store';
-import { createEffect, createSignal, splitProps } from 'solid-js';
+import { ScrollAreaProvider } from '../ScrollArea.context';
 
 export type ScrollAreaRootStylesNames =
   | 'root'
@@ -56,8 +56,8 @@ export function ScrollAreaRoot(_props: ScrollAreaRootProps) {
   const [scrollbarYEnabled, setScrollbarYEnabled] = createSignal(false);
   const rootRef = useMergedRef(local.ref, (node: HTMLDivElement) => setScrollArea(node));
 
-  createEffect(() => {
-    SetScrollAreaStore({
+  return (
+    <ScrollAreaProvider value={{
       type: local.type!,
       scrollHideDelay: local.scrollHideDelay!,
       scrollArea: scrollArea(),
@@ -76,18 +76,16 @@ export function ScrollAreaRoot(_props: ScrollAreaRootProps) {
       onCornerWidthChange: setCornerWidth,
       onCornerHeightChange: setCornerHeight,
       getStyles: local.getStyles,
-    })
-  })
-
-  return (
-    <Box
-      {...others}
-      ref={rootRef}
-      __vars={{
-        '--sa-corner-width': local.scrollbars !== 'xy' ? '0px' : `${cornerWidth}px`,
-        '--sa-corner-height': local.scrollbars !== 'xy' ? '0px' : `${cornerHeight}px`,
-      }}
-    />
+    }}>
+      <Box
+        {...others}
+        ref={rootRef}
+        __vars={{
+          '--sa-corner-width': local.scrollbars !== 'xy' ? '0px' : `${cornerWidth}px`,
+          '--sa-corner-height': local.scrollbars !== 'xy' ? '0px' : `${cornerHeight}px`,
+        }}
+      />
+    </ScrollAreaProvider>
   );
 };
 

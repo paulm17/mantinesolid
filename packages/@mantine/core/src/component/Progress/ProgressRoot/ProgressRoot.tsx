@@ -14,7 +14,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { SetProgressStore } from '../Progress.context';
+import { ProgressProvider } from '../Progress.context';
 import classes from '../Progress.module.css';
 
 export type ProgressRootStylesNames = 'root' | 'section' | 'label';
@@ -86,15 +86,10 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     varsResolver,
   });
 
-  createEffect(() => {
-    SetProgressStore({
-      getStyles,
-      autoContrast: local.autoContrast
-    })
-  });
-
   return (
-    <Box ref={ref} {...getStyles('root')} {...others} />
+    <ProgressProvider value={{ getStyles, autoContrast: local.autoContrast }}>
+      <Box ref={ref} {...getStyles('root')} {...others} />
+    </ProgressProvider>
   );
 });
 

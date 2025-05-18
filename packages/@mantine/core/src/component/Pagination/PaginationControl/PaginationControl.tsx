@@ -8,7 +8,7 @@ import {
   useProps,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
-import { usePaginationStore } from '../Pagination.store';
+import { usePaginationContext } from '../Pagination.context';
 import classes from '../Pagination.module.css';
 
 export type PaginationControlStylesNames = 'control';
@@ -49,15 +49,15 @@ export const PaginationControl = factory<PaginationControlFactory>((_props, ref)
     'mod'
   ]);
 
-  const store = usePaginationStore();
-  const _disabled = local.disabled || store.disabled;
+  const ctx = usePaginationContext();
+  const _disabled = local.disabled || ctx.disabled;
 
   return (
     <UnstyledButton
       ref={ref}
       disabled={_disabled}
       mod={[{ active: local.active, disabled: _disabled, 'with-padding': local.withPadding }, local.mod]}
-      {...store.getStyles('control', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles, active: !_disabled })}
+      {...ctx.getStyles('control', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles, active: !_disabled })}
       {...others}
     />
   );

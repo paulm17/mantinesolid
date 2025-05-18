@@ -1,4 +1,4 @@
-import { children, splitProps, JSX, createEffect } from 'solid-js';
+import { splitProps, JSX, createSignal } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -17,10 +17,9 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { SetTimelineStore } from './Timeline.store';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
+import { TimelineProvider } from './Timeline.context';
 import classes from './Timeline.module.css';
-import { Dynamic } from 'solid-js/web';
 
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;
 export type TimelineCssVariables = {
@@ -123,49 +122,27 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const resolved = children(() => local.children);
+  const [count, setCount] = createSignal(0);
 
-  const content = () => {
-    const c = resolved.toArray().filter((item) => !!item);
-
-    return c.map((node: any, index: number) => {
-      // Get a reference to the original node
-      const clone = node.cloneNode(true);
-
-      if (clone) {
-        // Set attributes directly on the DOM node
-        clone.setAttribute('unstyled', local.unstyled ? 'true' : undefined);
-        clone.setAttribute('__align', local.align);
-
-        const isActive =
-          node.active ||
-          (local.reverseActive
-            ? local.active! >= c.length - index - 1
-            : local.active! >= index);
-        clone.setAttribute('__active', isActive ? 'true' : undefined);
-
-        const isLineActive =
-          node.lineActive ||
-          (local.reverseActive
-            ? local.active! >= c.length - index - 1
-            : local.active! - 1 >= index);
-        clone.setAttribute('__lineActive', isLineActive ? 'true' : undefined);
-      }
-
-      return clone;
-    });
+  const registerItem = () => {
+    const idx = count();
+    setCount(idx + 1);
+    return idx;
   };
 
-  createEffect(() => {
-    SetTimelineStore({
-      getStyles
-    })
-  });
-
   return (
-    <Box {...getStyles('root')} mod={[{ align: local.align }, local.mod]} ref={ref} {...others}>
-      {content()}
-    </Box>
+    <TimelineProvider value={{
+      getStyles,
+      registerItem,
+      activeIndex: () => local.active!,
+      reverseActive: () => local.reverseActive!,
+      align: () => local.align!,
+      unstyled: () => !!local.unstyled,
+    }}>
+      <Box {...getStyles('root')} mod={[{ align: local.align }, local.mod]} ref={ref} {...others}>
+        {local.children}
+      </Box>
+    </TimelineProvider>
   );
 });
 

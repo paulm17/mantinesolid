@@ -8,7 +8,7 @@ import {
   useMantineTheme,
 } from '../../core';
 import type { GridProps } from './Grid';
-import type { GridBreakpoints } from './Grid.store';
+import type { GridBreakpoints } from './Grid.context';
 
 interface GridVariablesProps extends GridProps {
   selector: string;

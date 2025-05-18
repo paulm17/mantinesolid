@@ -5,7 +5,7 @@ import {
   Match,
 } from 'solid-js';
 import { useDirection } from '../../../core';
-import { useScrollAreaStore } from '../ScrollArea.store';
+import { useScrollAreaContext } from '../ScrollArea.context';
 import {
   ScrollAreaScrollbarX,
 } from './ScrollbarX';
@@ -30,7 +30,7 @@ export interface ScrollAreaScrollbarVisibleProps {
 export function ScrollAreaScrollbarVisible(props: ScrollAreaScrollbarVisibleProps) {
   const [local, others] = splitProps(props, ['orientation', 'ref']);
 
-  const store = useScrollAreaStore();
+  const ctx = useScrollAreaContext();
   const { dir } = useDirection();
 
   let thumbEl: HTMLDivElement | null;
@@ -60,18 +60,18 @@ export function ScrollAreaScrollbarVisible(props: ScrollAreaScrollbarVisibleProp
           onThumbPointerUp={() => (pointerOffset = 0)}
           onThumbPointerDown={(pos) => (pointerOffset = pos)}
           onThumbPositionChange={() => {
-            if (store.viewport && thumbEl) {
-              const scrollPos = store.viewport.scrollLeft;
+            if (ctx.viewport && thumbEl) {
+              const scrollPos = ctx.viewport.scrollLeft;
               const offset = getThumbOffsetFromScroll(scrollPos, sizes(), dir);
               thumbEl.style.transform = `translate3d(${offset}px, 0, 0)`;
             }
           }}
           onWheelScroll={(scrollPos) => {
-            if (store.viewport) store.viewport.scrollLeft = scrollPos;
+            if (ctx.viewport) ctx.viewport.scrollLeft = scrollPos;
           }}
           onDragScroll={(pointerPos) => {
-            if (store.viewport)
-              store.viewport.scrollLeft = getScrollPosition(pointerPos, dir);
+            if (ctx.viewport)
+              ctx.viewport.scrollLeft = getScrollPosition(pointerPos, dir);
           }}
         />
       </Match>
@@ -87,8 +87,8 @@ export function ScrollAreaScrollbarVisible(props: ScrollAreaScrollbarVisibleProp
           onThumbPointerUp={() => (pointerOffset = 0)}
           onThumbPointerDown={(pos) => (pointerOffset = pos)}
           onThumbPositionChange={() => {
-            if (store.viewport && thumbEl) {
-              const scrollPos = store.viewport.scrollTop;
+            if (ctx.viewport && thumbEl) {
+              const scrollPos = ctx.viewport.scrollTop;
               const offset = getThumbOffsetFromScroll(scrollPos, sizes());
               thumbEl.style.setProperty(
                 '--thumb-opacity',
@@ -98,11 +98,11 @@ export function ScrollAreaScrollbarVisible(props: ScrollAreaScrollbarVisibleProp
             }
           }}
           onWheelScroll={(scrollPos) => {
-            if (store.viewport) store.viewport.scrollTop = scrollPos;
+            if (ctx.viewport) ctx.viewport.scrollTop = scrollPos;
           }}
           onDragScroll={(pointerPos) => {
-            if (store.viewport)
-              store.viewport.scrollTop = getScrollPosition(pointerPos);
+            if (ctx.viewport)
+              ctx.viewport.scrollTop = getScrollPosition(pointerPos);
           }}
         />
       </Match>

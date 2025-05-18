@@ -8,7 +8,7 @@ import {
   Factory,
   useProps,
 } from '../../../core';
-import { useProgressStore } from '../Progress.context';
+import { useProgressContext } from '../Progress.context';
 import classes from '../Progress.module.css';
 
 export type ProgressLabelStylesNames = 'label';
@@ -37,12 +37,12 @@ export const ProgressLabel = factory<ProgressLabelFactory>((_props, ref) => {
     'vars'
   ]);
 
-  const store = useProgressStore();
+  const ctx = useProgressContext();
 
   return (
     <Box
       ref={ref}
-      {...store.getStyles('label', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles })}
+      {...ctx.getStyles('label', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles })}
       {...others}
     />
   );

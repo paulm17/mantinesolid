@@ -1,12 +1,12 @@
 import { JSX, createSignal, createEffect, onCleanup, onMount, splitProps } from 'solid-js';
-import { useScrollAreaStore } from '../ScrollArea.store';
+import { useScrollAreaContext } from '../ScrollArea.context';
+import {
+  ScrollbarContextValue,
+  ScrollbarProvider,
+} from './Scrollbar.context';
 import { Sizes } from '../ScrollArea.types';
 import { useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { composeEventHandlers } from '../utils';
-import {
-  ScrollbarContextValue,
-  SetScrollAreaScrollbarStore,
-} from './Scrollbar.store';
 
 export interface ScrollbarPrivateProps {
   sizes: Sizes;
@@ -34,7 +34,7 @@ export function Scrollbar(props: ScrollbarPrivateProps & JSX.HTMLAttributes<HTML
     'ref',
   ]);
 
-  const store = useScrollAreaStore();
+  const ctx = useScrollAreaContext();
   const [scrollbar, setScrollbar] = createSignal<HTMLDivElement |  null>(null);
   const composeRefs = useMergedRef(local.ref, (node: HTMLDivElement) => setScrollbar(node));
   const [rectRef, setRect] = createSignal<DOMRect | null>(null);
@@ -74,53 +74,51 @@ export function Scrollbar(props: ScrollbarPrivateProps & JSX.HTMLAttributes<HTML
   onMount(() => {
     const obs = new ResizeObserver(handleResize);
     if (scrollbar()) obs.observe(scrollbar()!);
-    if (store.content) obs.observe(store.content);
+    if (ctx.content) obs.observe(ctx.content);
     onCleanup(() => obs.disconnect());
   });
 
-  createEffect(() => {
-    SetScrollAreaScrollbarStore({
+  return (
+    <ScrollbarProvider value={{
       scrollbar: scrollbar(),
       hasThumb: local.hasThumb,
       onThumbChange: local.onThumbChange,
       onThumbPointerUp: local.onThumbPointerUp,
       onThumbPositionChange: local.onThumbPositionChange,
       onThumbPointerDown: local.onThumbPointerDown,
-    })
-  })
-
-  return (
-    <div
-      {...scrollbarProps}
-      ref={composeRefs}
-      data-mantine-scrollbar
-      style={{
-        position: 'absolute',
-        ...(typeof scrollbarProps.style === 'object' && scrollbarProps.style !== null ? scrollbarProps.style : {})
-      }}
-      onPointerDown={composeEventHandlers(local.onThumbPointerDown, (e: PointerEvent) => {
-        e.preventDefault();
-        if (e.button === 0) {
-          const el = e.currentTarget as HTMLElement;
-          el.setPointerCapture(e.pointerId);
-          setRect(scrollbar()!.getBoundingClientRect());
-          setPrevWebkitUserSelectRef(document.body.style.webkitUserSelect);
-          document.body.style.webkitUserSelect = 'none';
-          handleDragScroll(e);
-        }
-      })}
-      onPointerMove={composeEventHandlers(local.onThumbPositionChange, handleDragScroll)}
-      onPointerUp={composeEventHandlers(local.onThumbPointerUp, (e: PointerEvent) => {
-        const el = e.currentTarget as HTMLElement;
-        if (el.hasPointerCapture(e.pointerId)) {
+    }}>
+      <div
+        {...scrollbarProps}
+        ref={composeRefs}
+        data-mantine-scrollbar
+        style={{
+          position: 'absolute',
+          ...(typeof scrollbarProps.style === 'object' && scrollbarProps.style !== null ? scrollbarProps.style : {})
+        }}
+        onPointerDown={composeEventHandlers(local.onThumbPointerDown, (e: PointerEvent) => {
           e.preventDefault();
-          el.releasePointerCapture(e.pointerId);
-        }
-      })}
-      onLostPointerCapture={() => {
-        document.body.style.webkitUserSelect = prevWebkitUserSelectRef();
-        setRect(null);
-      }}
-    />
+          if (e.button === 0) {
+            const el = e.currentTarget as HTMLElement;
+            el.setPointerCapture(e.pointerId);
+            setRect(scrollbar()!.getBoundingClientRect());
+            setPrevWebkitUserSelectRef(document.body.style.webkitUserSelect);
+            document.body.style.webkitUserSelect = 'none';
+            handleDragScroll(e);
+          }
+        })}
+        onPointerMove={composeEventHandlers(local.onThumbPositionChange, handleDragScroll)}
+        onPointerUp={composeEventHandlers(local.onThumbPointerUp, (e: PointerEvent) => {
+          const el = e.currentTarget as HTMLElement;
+          if (el.hasPointerCapture(e.pointerId)) {
+            e.preventDefault();
+            el.releasePointerCapture(e.pointerId);
+          }
+        })}
+        onLostPointerCapture={() => {
+          document.body.style.webkitUserSelect = prevWebkitUserSelectRef();
+          setRect(null);
+        }}
+      />
+    </ScrollbarProvider>
   );
 }

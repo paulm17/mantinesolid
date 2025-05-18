@@ -1,4 +1,4 @@
-import { children, splitProps, JSX, createEffect } from 'solid-js';
+import { children, splitProps, JSX, createEffect, createSignal } from 'solid-js';
 import {
   BoxProps,
   createVarsResolver,
@@ -15,7 +15,7 @@ import {
 import { Paper } from '../Paper';
 import { CardSection } from './CardSection/CardSection';
 import classes from './Card.module.css';
-import { SetCardStore } from './Card.store';
+import { CardProvider } from './Card.context';
 
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {
@@ -85,41 +85,28 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const resolved = children(() => local.children);
+  const [count, setCount] = createSignal(0);
 
-  const content = () => {
-    const c = resolved.toArray().filter((item) => !!item);
+  function registerItem() {
+    const idx = count();
+    setCount(idx + 1);
+    return idx;
+  }
 
-    return c.map((node, index) => {
-      const isSection = (node as any)?.dataset?.cardSection === 'true';
-      if (!isSection) return node;
-
-      const clone = (node as any).cloneNode(true);
-      const sectionClasses = getStyles('section').className;
-      const sectionStyles = getStyles('section').style;
-
-      clone.removeAttribute('data-card-section');
-      clone.setAttribute('class', sectionClasses);
-      if (index === 0) clone.setAttribute('data-first-section', 'true');
-      if (index === c.length - 1) clone.setAttribute('data-last-section', 'true');
-
-      Object.entries(sectionStyles).forEach(([prop, value]) => {
-        const cssProp = prop.replace(/([A-Z])/g, '-$1').toLowerCase();
-        (clone as HTMLElement).style.setProperty(cssProp, value);
-      });
-
-      return clone;
-    });
-  };
-
-  createEffect(() => {
-    SetCardStore({ getStyles });
-  });
+  function totalItems() {
+    return count();
+  }
 
   return (
-    <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
-      {content()}
-    </Paper>
+    <CardProvider value={{
+      getStyles,
+      registerItem,
+      totalItems,
+     }}>
+      <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
+        {local.children}
+      </Paper>
+    </CardProvider>
   );
 });
 

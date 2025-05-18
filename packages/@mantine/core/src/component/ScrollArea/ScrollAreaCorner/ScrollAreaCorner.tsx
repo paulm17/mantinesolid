@@ -1,5 +1,5 @@
 import { createSignal, splitProps, Show, JSX } from "solid-js";
-import { useScrollAreaStore } from "../ScrollArea.store";
+import { useScrollAreaContext } from "../ScrollArea.context";
 import { useResizeObserver } from "../use-resize-observer";
 
 interface ScrollAreaCornerProps extends JSX.HTMLAttributes<HTMLDivElement> {}
@@ -7,7 +7,7 @@ interface ScrollAreaCornerProps extends JSX.HTMLAttributes<HTMLDivElement> {}
 export function Corner(props: ScrollAreaCornerProps) {
   // separate style and ref from other div‑props
   const [local, others] = splitProps(props, ["style", "ref"]);
-  const store = useScrollAreaStore();
+  const store = useScrollAreaContext();
 
   // width/height signals in place of React useState
   const [width, setWidth] = createSignal(0);
@@ -46,9 +46,9 @@ export function Corner(props: ScrollAreaCornerProps) {
 }
 
 export function ScrollAreaCorner(props: ScrollAreaCornerProps) {
-  const store = useScrollAreaStore();
-  const hasBoth = () => store.scrollbarX && store.scrollbarY;
-  const hasCorner = () => store.type !== "scroll" && hasBoth();
+  const ctx = useScrollAreaContext();
+  const hasBoth = () => ctx.scrollbarX && ctx.scrollbarY;
+  const hasCorner = () => ctx.type !== "scroll" && hasBoth();
 
   return (
     <Show when={hasCorner()}>

@@ -13,7 +13,7 @@ import {
   useRandomClassName,
   useStyles,
 } from '../../core';
-import { GridBreakpoints, SetGridStore } from './Grid.store';
+import { GridBreakpoints, GridProvider } from './Grid.context';
 import { GridCol } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
 import classes from './Grid.module.css';
@@ -108,41 +108,25 @@ export const Grid = factory<GridFactory>((_props, ref) => {
   const responsiveClassName = useRandomClassName();
 
   if (local.type === 'container' && local.breakpoints) {
-    SetGridStore({
-      getStyles,
-      grow: local.grow,
-      columns: local.columns || 12,
-      breakpoints: local.breakpoints,
-      type: local.type
-    })
-
     return (
-      <>
+      <GridProvider value={{ getStyles, grow: local.grow, columns: local.columns || 12, breakpoints: local.breakpoints, type: local.type }}>
         <GridVariables selector={`.${responsiveClassName}`} {...props} />
         <div {...getStyles('container')}>
           <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
             <div {...getStyles('inner')}>{local.children}</div>
           </Box>
         </div>
-      </>
+      </GridProvider>
     );
   }
 
-  SetGridStore({
-    getStyles,
-    grow: local.grow,
-    columns: local.columns || 12,
-    breakpoints: local.breakpoints,
-    type: local.type
-  })
-
   return (
-    <>
+    <GridProvider value={{ getStyles, grow: local.grow, columns: local.columns || 12, breakpoints: local.breakpoints, type: local.type }}>
       <GridVariables selector={`.${responsiveClassName}`} {...props} />
       <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
         <div {...getStyles('inner')}>{local.children}</div>
       </Box>
-    </>
+    </GridProvider>
   );
 });
 

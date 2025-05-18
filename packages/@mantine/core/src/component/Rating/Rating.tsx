@@ -16,7 +16,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { SetRatingStore } from './Rating.store';
+import { RatingProvider } from './Rating.context';
 import { RatingItem } from './RatingItem/RatingItem';
 import classes from './Rating.module.css';
 
@@ -262,71 +262,68 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     }
   };
 
-  createEffect(() => {
-    SetRatingStore({
-      getStyles
-    })
-  });
-
   const items = Array(_count).fill(0);
+  const content = <Index each={items}>
+    {(_, index) => {
+      const integerValue = index + 1;
+      const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
+      const isGroupActive = createMemo(() => !local.readOnly && Math.ceil(hovered()) === integerValue);
+
+      return (
+        <div
+          data-active={isGroupActive() ? true : undefined}
+          {...getStyles('symbolGroup')}
+        >
+          <Index each={fractionItems}>
+            {(_, fractionIndex) => {
+              const fractionValue = createMemo(() => decimalUnit * (index === 0 ? fractionIndex : fractionIndex + 1));
+              const symbolValue = createMemo(() => roundValueTo(integerValue - 1 + fractionValue(), decimalUnit));
+
+              return (
+                <RatingItem
+                  getSymbolLabel={local.getSymbolLabel}
+                  emptyIcon={local.emptySymbol}
+                  fullIcon={local.fullSymbol}
+                  full={
+                    local.highlightSelectedOnly ? symbolValue() === finalValue() : symbolValue() <= finalValue()
+                  }
+                  active={symbolValue() === finalValue()}
+                  checked={symbolValue() === stableValueRounded()}
+                  readOnly={local.readOnly}
+                  fractionValue={fractionValue()}
+                  value={symbolValue()}
+                  name={_name}
+                  onChange={handleChange}
+                  onBlur={handleItemBlur}
+                  onInputChange={handleInputChange}
+                  id={`${_id}-${index}-${fractionIndex}`}
+                />
+              )
+            }}
+          </Index>
+        </div>
+      )
+    }}
+  </Index>
 
   return (
-    <Box
-      ref={useMergedRef(ref, setRootRef)}
-      {...getStyles('root')}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      variant={local.variant}
-      size={local.size}
-      id={_id}
-      {...others}
-    >
-      <Index each={items}>
-        {(_, index) => {
-          const integerValue = index + 1;
-          const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
-          const isGroupActive = createMemo(() => !local.readOnly && Math.ceil(hovered()) === integerValue);
-
-          return (
-            <div
-              data-active={isGroupActive() ? true : undefined}
-              {...getStyles('symbolGroup')}
-            >
-              <Index each={fractionItems}>
-                {(_, fractionIndex) => {
-                  const fractionValue = createMemo(() => decimalUnit * (index === 0 ? fractionIndex : fractionIndex + 1));
-                  const symbolValue = createMemo(() => roundValueTo(integerValue - 1 + fractionValue(), decimalUnit));
-
-                  return (
-                    <RatingItem
-                      getSymbolLabel={local.getSymbolLabel}
-                      emptyIcon={local.emptySymbol}
-                      fullIcon={local.fullSymbol}
-                      full={
-                        local.highlightSelectedOnly ? symbolValue() === finalValue() : symbolValue() <= finalValue()
-                      }
-                      active={symbolValue() === finalValue()}
-                      checked={symbolValue() === stableValueRounded()}
-                      readOnly={local.readOnly}
-                      fractionValue={fractionValue()}
-                      value={symbolValue()}
-                      name={_name}
-                      onChange={handleChange}
-                      onBlur={handleItemBlur}
-                      onInputChange={handleInputChange}
-                      id={`${_id}-${index}-${fractionIndex}`}
-                    />
-                  )
-                }}
-              </Index>
-            </div>
-          )
-        }}
-      </Index>
-    </Box>
+    <RatingProvider value={{ getStyles }}>
+      <Box
+        ref={useMergedRef(ref, setRootRef)}
+        {...getStyles('root')}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        variant={local.variant}
+        size={local.size}
+        id={_id}
+        {...others}
+      >
+        {content}
+      </Box>
+    </RatingProvider>
   );
 });
 

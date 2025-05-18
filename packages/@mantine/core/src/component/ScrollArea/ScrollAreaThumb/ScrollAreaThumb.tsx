@@ -1,7 +1,7 @@
 import { onMount, onCleanup, JSX, splitProps, Show } from 'solid-js';
 import { useDebouncedCallback, useMergedRef } from '@mantine/hooks';    // your Solid version
-import { useScrollAreaStore } from '../ScrollArea.store';       // assume rewritten as Solid context
-import { useScrollAreaScrollbarStore } from '../ScrollAreaScrollbar/Scrollbar.store';
+import { useScrollAreaContext } from '../ScrollArea.context';       // assume rewritten as Solid context
+import { useScrollbarContext } from '../ScrollAreaScrollbar/Scrollbar.context';
 import { addUnlinkedScrollListener, composeEventHandlers } from '../utils';
 
 interface ThumbProps extends JSX.HTMLAttributes<HTMLDivElement> {}
@@ -11,10 +11,10 @@ export function Thumb(props: ThumbProps) {
     "style", "onPointerDown", "onPointerUp", "ref"
   ]);
 
-  const scrollAreaStore = useScrollAreaStore();
-  const scrollbarStore = useScrollAreaScrollbarStore();
+  const scrollAreaContext = useScrollAreaContext();
+  const scrollbarContext = useScrollbarContext();
 
-  const composedRef = useMergedRef(local.ref, (el: HTMLDivElement) => scrollbarStore.onThumbChange(el));
+  const composedRef = useMergedRef(local.ref, (el: HTMLDivElement) => scrollbarContext.onThumbChange(el));
 
   const removeListenerRef: { current?: () => void } = {};
   const debounceScrollEnd = useDebouncedCallback(() => {
@@ -23,17 +23,17 @@ export function Thumb(props: ThumbProps) {
   }, 100);
 
   onMount(() => {
-    const viewport = scrollAreaStore.viewport;
+    const viewport = scrollAreaContext.viewport;
     if (!viewport) return;
 
     // initial position
-    scrollbarStore.onThumbPositionChange();
+    scrollbarContext.onThumbPositionChange();
 
     const handleScroll = () => {
       debounceScrollEnd();
       if (!removeListenerRef.current) {
-        removeListenerRef.current = addUnlinkedScrollListener(viewport, scrollbarStore.onThumbPositionChange);
-        scrollbarStore.onThumbPositionChange();
+        removeListenerRef.current = addUnlinkedScrollListener(viewport, scrollbarContext.onThumbPositionChange);
+        scrollbarContext.onThumbPositionChange();
       }
     };
 
@@ -44,7 +44,7 @@ export function Thumb(props: ThumbProps) {
 
   return (
     <div
-      data-state={scrollbarStore.hasThumb ? 'visible' : 'hidden'}
+      data-state={scrollbarContext.hasThumb ? 'visible' : 'hidden'}
       {...others}
       ref={composedRef}
       style={{ width: 'var(--sa-thumb-width)', height: 'var(--sa-thumb-height)', ...(typeof local.style === 'object' && local.style !== null ? local.style : {})  }}
@@ -53,7 +53,7 @@ export function Thumb(props: ThumbProps) {
           local.onPointerDown as (e: PointerEvent & { currentTarget: HTMLDivElement; target: Element }) => void,
           (event) => {
             const rect = event.currentTarget.getBoundingClientRect();
-            scrollbarStore.onThumbPointerDown({
+            scrollbarContext.onThumbPointerDown({
               x: event.clientX - rect.left,
               y: event.clientY - rect.top,
             });
@@ -63,7 +63,7 @@ export function Thumb(props: ThumbProps) {
       onPointerUp={
         composeEventHandlers(
           local.onPointerUp as (e: PointerEvent & { currentTarget: HTMLDivElement; target: Element }) => void,
-          () => scrollbarStore.onThumbPointerUp()
+          () => scrollbarContext.onThumbPointerUp()
         )
       }
     />
@@ -80,10 +80,10 @@ export function ScrollAreaThumb(props: ScrollAreaThumbProps) {
     'forceMount',
     'ref'
   ]);
-  const scrollbarStore = useScrollAreaScrollbarStore();
+  const scrollbarContext = useScrollbarContext();
 
   return (
-    <Show when={local.forceMount || scrollbarStore.hasThumb}>
+    <Show when={local.forceMount || scrollbarContext.hasThumb}>
       <Thumb ref={local.ref} {...thumbProps} />
     </Show>
   );

@@ -105,12 +105,7 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
     })
   );
 
-  const mods = createMemo(() => getBoxMod(local.mod));
-
   const elementProps = createMemo(() => {
-    // const m = mods();
-    // console.log('[Box] mods():', m);
-
     return {
       ref: local.ref,
       style: getBoxStyle({
@@ -129,7 +124,7 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
       'data-variant': local.variant,
       'data-size': isNumberLike(local.size) ? undefined : local.size || undefined,
       size: local.__size,
-      ...mods(),
+      ...getBoxMod(local.mod),
       ...rest,
     };
   });

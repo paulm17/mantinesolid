@@ -5,7 +5,7 @@ import {
   splitProps,
   Show,
 } from 'solid-js';
-import { useScrollAreaStore } from '../ScrollArea.store';
+import { useScrollAreaContext } from '../ScrollArea.context';
 import {
   ScrollAreaScrollbarAuto,
   ScrollAreaScrollbarAutoProps,
@@ -18,11 +18,11 @@ export interface ScrollAreaScrollbarHoverProps
 
 export function ScrollAreaScrollbarHover(props: ScrollAreaScrollbarHoverProps) {
   const [local, others] = splitProps(props, ['forceMount', 'ref', 'orientation']);
-  const store = useScrollAreaStore();
+  const ctx = useScrollAreaContext();
   const [visible, setVisible] = createSignal(false);
 
   createEffect(() => {
-    const el = store.scrollArea;
+    const el = ctx.scrollArea;
     if (!el) return;
 
     let hideTimer: number;
@@ -33,7 +33,7 @@ export function ScrollAreaScrollbarHover(props: ScrollAreaScrollbarHoverProps) {
     };
 
     const onLeave = () => {
-      hideTimer = window.setTimeout(() => setVisible(false), store.scrollHideDelay);
+      hideTimer = window.setTimeout(() => setVisible(false), ctx.scrollHideDelay);
     };
 
     el.addEventListener('pointerenter', onEnter);

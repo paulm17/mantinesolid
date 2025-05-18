@@ -13,7 +13,7 @@ import {
   useMantineTheme,
   useProps,
 } from '../../../core';
-import { useProgressStore } from '../Progress.context';
+import { useProgressContext } from '../Progress.context';
 import classes from '../Progress.module.css';
 
 export type ProgressSectionStylesNames = 'section';
@@ -65,7 +65,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((_props, ref) => 
     'mod'
   ]);
 
-  const store = useProgressStore();
+  const ctx = useProgressContext();
   const theme = useMantineTheme();
 
   const ariaAttributes = local.withAria
@@ -81,15 +81,15 @@ export const ProgressSection = factory<ProgressSectionFactory>((_props, ref) => 
   return (
     <Box
       ref={ref}
-      {...store.getStyles('section', { className: local.className, classNames: local.classNames, styles: local.styles, style: local.style })}
+      {...ctx.getStyles('section', { className: local.className, classNames: local.classNames, styles: local.styles, style: local.style })}
       {...others}
       {...ariaAttributes}
       mod={[{ striped: local.striped || local.animated, animated: local.animated }, local.mod]}
       __vars={{
         '--progress-section-width': `${local.value}%`,
         '--progress-section-color': getThemeColor(local.color, theme),
-        '--progress-label-color': getAutoContrastValue(store.autoContrast, theme)
-          ? getContrastColor({ color: local.color, theme, autoContrast: store.autoContrast })
+        '--progress-label-color': getAutoContrastValue(ctx.autoContrast, theme)
+          ? getContrastColor({ color: local.color, theme, autoContrast: ctx.autoContrast })
           : undefined,
       }}
     />

@@ -20,7 +20,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { SetPaginationStore } from '../Pagination.store';
+import { PaginationProvider } from '../Pagination.context';
 import classes from '../Pagination.module.css';
 import { createEffect, splitProps } from 'solid-js';
 
@@ -174,8 +174,8 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
   const handleFirstPage = createEventHandler(local.onFirstPage, pagination.first);
   const handleLastPage = createEventHandler(local.onLastPage, pagination.last);
 
-  createEffect(() => {
-    SetPaginationStore({
+  return (
+    <PaginationProvider value={{
       total: local.total,
       range: pagination.range(),
       active: pagination.active(),
@@ -187,11 +187,9 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
       onFirst: handleFirstPage,
       onLast: handleLastPage,
       getStyles,
-    });
-  })
-
-  return (
-    <Box ref={ref} {...getStyles('root')} {...others} />
+    }}>
+      <Box ref={ref} {...getStyles('root')} {...others} />
+    </PaginationProvider>
   );
 });
 

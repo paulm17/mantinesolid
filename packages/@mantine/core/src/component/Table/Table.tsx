@@ -1,4 +1,4 @@
-import { splitProps, JSX, createEffect } from 'solid-js';
+import { splitProps, JSX } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -24,7 +24,7 @@ import {
   TableThead,
   TableTr,
 } from './Table.components';
-import { SetTableStore } from './Table.store';
+import { TableProvider } from './Table.context';
 import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer } from './TableScrollContainer';
 import classes from './Table.module.css';
@@ -212,8 +212,8 @@ export const Table = factory<TableFactory>((_props, ref) => {
     varsResolver,
   });
 
-  createEffect(() => {
-    SetTableStore({
+  return (
+    <TableProvider value={{
       getStyles,
       stickyHeader: local.stickyHeader,
       striped: local.striped === true ? 'odd' : local.striped || undefined,
@@ -221,20 +221,18 @@ export const Table = factory<TableFactory>((_props, ref) => {
       withColumnBorders: local.withColumnBorders,
       withRowBorders: local.withRowBorders,
       captionSide: local.captionSide || 'bottom',
-    })
-  });
-
-  return (
-    <Box
-      component="table"
-      variant={local.variant}
-      ref={ref}
-      mod={[{ 'data-with-table-border': local.withTableBorder, 'data-tabular-nums': local.tabularNums }, local.mod]}
-      {...getStyles('table')}
-      {...others}
-    >
-      {local.children || (!!local.data && <TableDataRenderer data={local.data} />)}
-    </Box>
+    }}>
+      <Box
+        component="table"
+        variant={local.variant}
+        ref={ref}
+        mod={[{ 'data-with-table-border': local.withTableBorder, 'data-tabular-nums': local.tabularNums }, local.mod]}
+        {...getStyles('table')}
+        {...others}
+      >
+        {local.children || (!!local.data && <TableDataRenderer data={local.data} />)}
+      </Box>
+    </TableProvider>
   );
 });
 
