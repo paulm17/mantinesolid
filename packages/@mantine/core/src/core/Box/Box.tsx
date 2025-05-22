@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { createMemo, Show, splitProps, JSX, children } from 'solid-js';
+import { createMemo, Show, splitProps, JSX, children, createEffect } from 'solid-js';
 import { Ref } from "@solid-primitives/refs";
 import { Dynamic } from 'solid-js/web';
 import { createPolymorphicComponent } from '../factory';
@@ -128,6 +128,10 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
       ...rest,
     };
   });
+
+   createEffect(() => {
+     console.log('box', rest);
+   })
 
   return (
     <>
