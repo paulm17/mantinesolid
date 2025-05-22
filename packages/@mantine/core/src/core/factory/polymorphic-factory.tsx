@@ -1,4 +1,4 @@
-import { JSX, mergeProps } from 'solid-js';
+import { JSX, mergeProps, Ref } from 'solid-js';
 import { ElementType, PolymorphicComponentProps } from './create-polymorphic-component';
 import {
   ComponentClasses,
@@ -16,20 +16,22 @@ export interface PolymorphicFactoryPayload extends FactoryPayload {
 export type PolymorphicComponentWithProps<Payload extends PolymorphicFactoryPayload> = {
   withProps: <C extends ElementType = Payload['defaultComponent']>(
     fixedProps: PolymorphicComponentProps<C, Payload['props']>
-  ) => <L extends ElementType = C>(props: PolymorphicComponentProps<L, Payload['props']>) => JSX.Element;
+  ) => <L extends ElementType = C>(
+    props: PolymorphicComponentProps<L, Payload['props']> & { ref?: Ref<Payload['defaultRef']> }
+  ) => JSX.Element;
 };
 
 export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
-  ui: (props: Payload['props'], ref?: Payload['defaultRef']) => JSX.Element
+  ui: (props: Payload['props'], ref?: Ref<Payload['defaultRef']>) => JSX.Element
 ) {
   type ComponentProps<C extends ElementType> = PolymorphicComponentProps<C, Payload['props']>;
 
   type _PolymorphicComponent = <C extends ElementType = Payload['defaultComponent']>(
-    props: ComponentProps<C>,
-    ref: Payload['defaultRef']
+    // props: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
+    props: ComponentProps<C> & { ref?: Ref<any> }
   ) => JSX.Element;
 
-  type ComponentProperties = Omit<(props: ComponentProps<any>) => JSX.Element, never>;
+  type ComponentProperties = Omit<(props: ComponentProps<any> & { ref?: Ref<Payload['defaultRef']> }) => JSX.Element, never>;
 
   type PolymorphicComponent = _PolymorphicComponent &
     ComponentProperties &
@@ -41,17 +43,32 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
     };
 
   // Create the component function
-  const Component = ((props: any, ref: any) => {
-    return ui(props, ref);
+  const Component = (<C extends ElementType = Payload['defaultComponent']>(
+    allProps: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
+  ) => {
+    // a) Extract `ref` from the incoming props:
+    const { ref, ...rest } = allProps as any;
+
+    // b) Now call `ui(rest, ref)`.  Rest contains everything except `ref`.
+    return ui(rest as Payload['props'], ref);
   }) as unknown as PolymorphicComponent;
 
+
   // Add withProps method
-  Component.withProps = (fixedProps: any) => {
-    const Extended = ((props: any, ref: any) => {
-      // Merge the fixed props with the passed props
-      const mergedProps = mergeProps(fixedProps, props);
-      // In SolidJS, we need to pass the props directly to the function
-      return ui(mergedProps, ref);
+  Component.withProps = <C extends ElementType = Payload['defaultComponent']>(
+    fixedProps: PolymorphicComponentProps<C, Payload['props']>
+  ) => {
+    const Extended = (<L extends ElementType = C>(
+      allProps: PolymorphicComponentProps<L, Payload['props']> & { ref?: Ref<Payload['defaultRef']> }
+    ) => {
+      // a) merge the incoming props with fixedProps:
+      const merged = mergeProps(fixedProps as any, allProps as any);
+
+      // b) pull `ref` out of that merged object:
+      const { ref: refHandler, ...rest } = merged as any;
+
+      // c) call the same UI callback with “rest” + refHandler
+      return ui(rest as Payload['props'], refHandler);
     }) as any;
 
     Extended.extend = Component.extend;

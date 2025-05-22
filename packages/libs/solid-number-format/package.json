@@ -2,6 +2,7 @@
   "name": "solid-number-format",
   "description": "Solidjs component to format number in an input or as a text.",
   "version": "5.4.4",
+  "type": "module",
   "main": "dist/solid-number-format.cjs.js",
   "module": "dist/solid-number-format.es.js",
   "types": "types/index.d.ts",
@@ -87,5 +88,5 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@4.5.3"
 }

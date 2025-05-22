@@ -1,4 +1,4 @@
-import { splitProps, JSX } from 'solid-js';
+import { splitProps, JSX, createEffect } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -248,6 +248,18 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     : {};
 
   const _rightSection: JSX.Element = local.rightSection || (local.__clearable && local.__clearSection) || local.__defaultRightSection;
+
+  createEffect(() => {
+    console.log('rest', rest);
+  })
+
+  createEffect(() => {
+    console.log('others', others);
+  })
+
+  createEffect(() => {
+    console.log('props', (props as any).value);
+  })
 
   return (
     <InputContext value={{ size: local.size || 'sm' }}>

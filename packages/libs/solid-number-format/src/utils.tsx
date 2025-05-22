@@ -1,4 +1,4 @@
-import { createMemo, createSignal, onCleanup } from 'solid-js';
+import { createMemo, createSignal } from 'solid-js';
 import {
   NumberFormatBaseProps,
   FormatInputValueFunction,
@@ -30,7 +30,7 @@ export function memoizeOnce<T extends unknown[], R extends unknown>(cb: (...args
 }
 
 export function charIsNumber(char?: string) {
-  return !!(char || '').match(/\d/);
+  return !!(String(char || '')).match(/\d/);
 }
 
 export function isNil(val: any): val is null | undefined {
@@ -455,13 +455,13 @@ export function caretUnknownFormatBoundary(formattedValue: string) {
 }
 
 export function useInternalValues(
-  value: string | number | null | undefined,
+  value: () => string | number | null | undefined,
   defaultValue: string | number | null | undefined,
   valueIsNumericString: boolean,
   format: FormatInputValueFunction,
   removeFormatting: NumberFormatBaseProps['removeFormatting'],
   onValueChange: NumberFormatBaseProps['onValueChange'] = noop,
-): [{ formattedValue: string; numAsString: string }, OnValueChange] {
+): [() => { formattedValue: string; numAsString: string }, OnValueChange] {
   type Values = { formattedValue: string; numAsString: string };
 
   const getValues = usePersistentCallback(
@@ -482,10 +482,7 @@ export function useInternalValues(
     },
   );
 
-  // const [values, setValues] = createSignal<Values>(() => {
-  //   return getValues(isNil(value) ? defaultValue : value, valueIsNumericString);
-  // });
-  const initialValues = getValues(isNil(value) ? defaultValue : value, valueIsNumericString);
+  const initialValues = getValues(isNil(value()) ? defaultValue : value(), valueIsNumericString);
   const [values, setValues] = createSignal<Values>(initialValues);
 
   const _onValueChange: typeof onValueChange = (newValues, sourceInfo) => {
@@ -501,20 +498,12 @@ export function useInternalValues(
   };
 
   // if value is switch from controlled to uncontrolled, use the internal state's value to format with new props
-  let _value = value;
-  let _valueIsNumericString = valueIsNumericString;
-  if (isNil(value)) {
-    _value = values().numAsString;
-    _valueIsNumericString = true;
-  }
-
-  const newValues = getValues(_value, _valueIsNumericString);
-
   createMemo(() => {
-    if (newValues.formattedValue !== values().formattedValue) {
-      setValues(newValues);
-    }
+    const _value = isNil(value()) ? values().numAsString : value();
+    const _valueIsNumericString = isNil(value()) ? true : valueIsNumericString;
+    const newValues = getValues(_value, _valueIsNumericString);
+    setValues(newValues);
   });
 
-  return [values(), _onValueChange];
+  return [values, _onValueChange];
 }

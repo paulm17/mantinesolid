@@ -15,23 +15,16 @@ export function format<BaseType = InputAttributes>(
   numStr: string,
   props: PatternFormatProps<BaseType>,
 ) {
-  const [local, _] = splitProps(props, [
-    'allowEmptyFormatting',
-    'mask',
-    'patternChar',
-    'format',
-  ]);
+  const patternChar = props.patternChar || '#';
+  const format = props.format as string;
 
-  const patternChar = local.patternChar || '#';
-  const format = local.format as string;
-
-  if (numStr === '' && !local.allowEmptyFormatting) return '';
+  if (numStr === '' && !props.allowEmptyFormatting) return '';
 
   let hashCount = 0;
   const formattedNumberAry = format.split('');
   for (let i = 0, ln = format.length; i < ln; i++) {
     if (format[i] === patternChar) {
-      formattedNumberAry[i] = numStr[hashCount] || getMaskAtIndex(local.mask, hashCount);
+      formattedNumberAry[i] = numStr[hashCount] || getMaskAtIndex(props.mask, hashCount);
       hashCount += 1;
     }
   }
@@ -43,14 +36,8 @@ export function removeFormatting<BaseType = InputAttributes>(
   changeMeta: ChangeMeta = getDefaultChangeMeta(value),
   props: PatternFormatProps<BaseType>,
 ) {
-  const [local, _] = splitProps(props, [
-    'patternChar',
-    'format',
-  ]);
-
-  const patternChar = local.patternChar || '#';
-  const format = local.format as string;
-  const { from, to, lastValue = '' } = changeMeta;
+  const patternChar = props.patternChar || '#';
+  const format = props.format as string;
 
   const isNumericSlot = (caretPos: number) => format[caretPos] === patternChar;
 
@@ -77,7 +64,7 @@ export function removeFormatting<BaseType = InputAttributes>(
    * and remove the format characters, if there is a mismatch on the pattern, do plane number extract
    */
   if (
-    (lastValue === '' || from.end - from.start === lastValue.length) &&
+    (changeMeta.lastValue === '' || changeMeta.from.end - changeMeta.from.start === changeMeta.lastValue.length) &&
     value.length === format.length
   ) {
     let str = '';
@@ -110,13 +97,13 @@ export function removeFormatting<BaseType = InputAttributes>(
    * and middle one from the update value.
    */
 
-  const firstSection = lastValue.substring(0, from.start);
-  const middleSection = value.substring(to.start, to.end);
-  const lastSection = lastValue.substring(from.end);
+  const firstSection = changeMeta.lastValue.substring(0, changeMeta.from.start);
+  const middleSection = value.substring(changeMeta.to.start, changeMeta.to.end);
+  const lastSection = changeMeta.lastValue.substring(changeMeta.from.end);
 
   return `${removeFormatChar(firstSection, 0)}${extractNumbers(middleSection)}${removeFormatChar(
     lastSection,
-    from.end,
+    changeMeta.from.end,
   )}`;
 }
 
@@ -124,14 +111,8 @@ export function getCaretBoundary<BaseType = InputAttributes>(
   formattedValue: string,
   props: PatternFormatProps<BaseType>,
 ) {
-  const [local, _] = splitProps(props, [
-    'patternChar',
-    'format',
-    'mask'
-  ]);
-
-  const format = local.format as string;
-  const patternChar = local.patternChar || '#';
+  const format = props.format as string;
+  const patternChar = props.patternChar || '#';
 
   const boundaryAry = Array.from({ length: formattedValue.length + 1 }).map(() => true);
 
@@ -143,7 +124,7 @@ export function getCaretBoundary<BaseType = InputAttributes>(
     let maskAtIndex = undefined;
     if (char === patternChar) {
       hashCount++;
-      maskAtIndex = getMaskAtIndex(local.mask, hashCount - 1);
+      maskAtIndex = getMaskAtIndex(props.mask, hashCount - 1);
       if (firstEmptySlot === -1 && formattedValue[index] === maskAtIndex) {
         firstEmptySlot = index;
       }
@@ -171,12 +152,10 @@ export function getCaretBoundary<BaseType = InputAttributes>(
 }
 
 function validateProps<BaseType = InputAttributes>(props: PatternFormatProps<BaseType>) {
-  const { mask } = props;
-
-  if (mask) {
-    const maskAsStr = mask === 'string' ? mask : mask.toString();
+  if (props.mask) {
+    const maskAsStr = props.mask === 'string' ? props.mask : props.mask.toString();
     if (maskAsStr.match(/\d/g)) {
-      throw new Error(`Mask ${mask} should not contain numeric character;`);
+      throw new Error(`Mask ${props.mask} should not contain numeric character;`);
     }
   }
 }
