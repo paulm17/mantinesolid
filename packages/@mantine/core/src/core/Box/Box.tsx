@@ -129,10 +129,6 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
     };
   });
 
-   createEffect(() => {
-     console.log('box', rest);
-   })
-
   return (
     <>
       <Show when={parsedStyleProps().hasResponsiveStyles}>

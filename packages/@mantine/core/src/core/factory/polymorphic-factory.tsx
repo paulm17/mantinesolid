@@ -1,4 +1,4 @@
-import { JSX, mergeProps, Ref } from 'solid-js';
+import { JSX, mergeProps, Ref, splitProps } from 'solid-js';
 import { ElementType, PolymorphicComponentProps } from './create-polymorphic-component';
 import {
   ComponentClasses,
@@ -46,11 +46,11 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
   const Component = (<C extends ElementType = Payload['defaultComponent']>(
     allProps: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
   ) => {
-    // a) Extract `ref` from the incoming props:
-    const { ref, ...rest } = allProps as any;
+    console.log('allProps', allProps);
 
-    // b) Now call `ui(rest, ref)`.  Rest contains everything except `ref`.
-    return ui(rest as Payload['props'], ref);
+    const [props, rest] = splitProps(allProps, ['ref']);
+
+    return ui(rest as Payload['props'], props.ref);
   }) as unknown as PolymorphicComponent;
 
 
@@ -61,14 +61,10 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
     const Extended = (<L extends ElementType = C>(
       allProps: PolymorphicComponentProps<L, Payload['props']> & { ref?: Ref<Payload['defaultRef']> }
     ) => {
-      // a) merge the incoming props with fixedProps:
       const merged = mergeProps(fixedProps as any, allProps as any);
+      const [props, ref] = splitProps(merged, ['ref']);
 
-      // b) pull `ref` out of that merged object:
-      const { ref: refHandler, ...rest } = merged as any;
-
-      // c) call the same UI callback with “rest” + refHandler
-      return ui(rest as Payload['props'], refHandler);
+      return ui(props as Payload['props'], ref.ref);
     }) as any;
 
     Extended.extend = Component.extend;

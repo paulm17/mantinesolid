@@ -99,15 +99,9 @@ export function factory<Payload extends FactoryPayload>(
   ui: (props: Omit<Payload['props'], 'ref'>, ref?: Ref<Payload['ref']>) => JSX.Element
 ): SolidFactoryComponent<Payload> {
   const Component = ((allProps: Omit<Payload['props'], 'ref'> & { ref?: Ref<Payload['ref']> }) => {
-    // separate ref from props
     const [local, others] = splitProps(allProps, ['ref']);
-    // others now cannot include ref
-    const props = mergeProps({} as Omit<Payload['props'], 'ref'>, others) as Omit<Payload['props'], 'ref'>;
 
-    // Use a type-safe empty callback that doesn't specify the element type
-    const refHandler = mergeRefs<Payload['ref']>(local.ref as Ref<Payload['ref']>, () => {});
-
-    return ui(props, refHandler);
+    return ui(others as unknown as Omit<Payload['props'], 'ref'>, local.ref);
   }) as SolidFactoryComponent<Payload>;
 
   Component.extend = identity;

@@ -181,7 +181,11 @@ const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
 }));
 
 export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
+  console.log('input');
   const props = useProps('Input', defaultProps, _props);
+
+  console.log('input _props', _props);
+
   const [local, others] = splitProps(props, [
     'classNames',
     'className',
@@ -248,18 +252,6 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     : {};
 
   const _rightSection: JSX.Element = local.rightSection || (local.__clearable && local.__clearSection) || local.__defaultRightSection;
-
-  createEffect(() => {
-    console.log('rest', rest);
-  })
-
-  createEffect(() => {
-    console.log('others', others);
-  })
-
-  createEffect(() => {
-    console.log('props', (props as any).value);
-  })
 
   return (
     <InputContext value={{ size: local.size || 'sm' }}>

@@ -1,4 +1,4 @@
-import { splitProps, JSX } from 'solid-js';
+import { splitProps, JSX, createEffect } from 'solid-js';
 import {
   BoxProps,
   DataAttributes,
@@ -7,6 +7,7 @@ import {
   StylesApiProps,
 } from '../../core';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
+import { unwrap } from 'solid-js/store';
 
 export interface InputBaseProps
   extends BoxProps,
@@ -39,7 +40,18 @@ const defaultProps: Partial<InputBaseProps> = {
 };
 
 export const InputBase = polymorphicFactory<InputBaseFactory>((_props, ref) => {
+  console.log('inputBase');
+
+  createEffect(() => {
+    console.log('inputbase _props', _props)
+  })
+
   const props = useInputProps('InputBase', defaultProps, _props);
+
+  createEffect(() => {
+    console.log('inputbase props', props)
+  })
+
   const [local, others] = splitProps(props, [
     'inputProps',
     'wrapperProps',

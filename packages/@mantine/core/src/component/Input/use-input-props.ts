@@ -76,7 +76,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     classNames: local.classNames,
     styles: local.styles,
     unstyled: local.unstyled,
-    wrapperProps: { ...wrapperProps, ...styleProps } as typeof wrapperProps & BoxProps,
+    wrapperProps: mergeProps(wrapperProps, styleProps ) as typeof wrapperProps & BoxProps,
     inputProps: {
       required: local.required,
       classNames: local.classNames,
