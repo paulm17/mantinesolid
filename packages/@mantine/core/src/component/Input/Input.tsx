@@ -222,7 +222,11 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     '__defaultRightSection',
   ]);
 
-  const { styleProps, rest } = extractStyleProps(others);
+  // const { styleProps, rest } = extractStyleProps(others);
+
+  // @ts-ignore
+  const [styleProps, rest] = extractStyleProps(others);
+
   const ctx = useInputWrapperContext();
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
 
