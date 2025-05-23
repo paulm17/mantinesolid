@@ -129,6 +129,10 @@ const _Box = <T extends HTMLElement = HTMLDivElement>(
     };
   });
 
+  createEffect(() => {
+    console.log('box props', (props as any).value);
+  })
+
   return (
     <>
       <Show when={parsedStyleProps().hasResponsiveStyles}>

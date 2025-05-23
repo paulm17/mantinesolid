@@ -46,11 +46,7 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
   const Component = (<C extends ElementType = Payload['defaultComponent']>(
     allProps: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
   ) => {
-    console.log('allProps', allProps);
-
-    const [props, rest] = splitProps(allProps, ['ref']);
-
-    return ui(rest as Payload['props'], props.ref);
+    return ui(allProps as Payload['props'], allProps.ref);
   }) as unknown as PolymorphicComponent;
 
 
@@ -62,9 +58,7 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
       allProps: PolymorphicComponentProps<L, Payload['props']> & { ref?: Ref<Payload['defaultRef']> }
     ) => {
       const merged = mergeProps(fixedProps as any, allProps as any);
-      const [props, ref] = splitProps(merged, ['ref']);
-
-      return ui(props as Payload['props'], ref.ref);
+      return ui(merged as Payload['props'], merged.ref);
     }) as any;
 
     Extended.extend = Component.extend;

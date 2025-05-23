@@ -4,7 +4,7 @@ export default { title: 'NumberFormatter' };
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <NumberFormatter
         value={-1022233.34}
         decimalScale={3}
@@ -13,7 +13,7 @@ export function Usage() {
         thousandSeparator
         prefix="$ "
         suffix=" R$"
-        className="test"
+        class="test"
       />
     </div>
   );

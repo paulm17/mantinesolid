@@ -68,7 +68,7 @@ export * from './Mark';
 export * from './NavLink';
 export * from './Notification';
 export * from './NumberFormatter';
-export * from './NumberInput';
+export * from './NumberInput'; // <-- does not refresh input on value change
 // export * from './Pagination'; <-- has rendering issues
 export * from './PasswordInput';
 export * from './Pill';

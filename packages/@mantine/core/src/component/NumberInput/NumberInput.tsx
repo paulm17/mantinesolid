@@ -2,6 +2,7 @@ import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'solid-number-format';
 import { clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
+  Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
@@ -19,7 +20,7 @@ import { InputBase } from '../InputBase';
 import { UnstyledButton } from '../UnstyledButton';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
-import { createEffect, Ref, splitProps } from 'solid-js';
+import { createEffect, createSignal, Ref, splitProps } from 'solid-js';
 
 // Re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
 // And for positive 0., 0.0, 0.00, 0.000 ... strings
@@ -260,7 +261,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   });
 
   const shouldUseStepInterval = () => local.stepHoldDelay !== undefined && local.stepHoldInterval !== undefined;
-  let inputRef: HTMLInputElement | undefined;
+  const [inputRef, setInputRef] = createSignal<HTMLInputElement | null>(null);
   let onStepTimeoutRef: number | null = null;
   let stepCountRef = 0;
 
@@ -287,12 +288,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
   const adjustCursor = (position?: number) => {
     if (inputRef && typeof position !== 'undefined') {
-      inputRef.setSelectionRange(position, position);
+      inputRef()?.setSelectionRange(position, position);
     }
   };
 
   const increment = () => {
-    console.log('increment');
     if (!canIncrement(_value())) {
       return;
     }
@@ -321,16 +321,13 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       { floatValue: finalValue, formattedValue, value: formattedValue },
       { source: 'increment' as any }
     );
-    setTimeout(() => adjustCursor(inputRef?.value.length), 0);
+    setTimeout(() => adjustCursor(inputRef()?.value.length), 0);
   };
 
   const decrement = () => {
-    console.log('decrement');
     if (!canIncrement(_value())) {
       return;
     }
-
-    console.log("hi - decrement")
 
     let val: number;
     const minValue = local.min !== undefined ? local.min : !local.allowNegative ? 0 : Number.MIN_SAFE_INTEGER;
@@ -356,7 +353,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       { floatValue: finalValue, formattedValue, value: formattedValue },
       { source: 'decrement' as any }
     );
-    setTimeout(() => adjustCursor(inputRef?.value.length), 0);
+    setTimeout(() => adjustCursor(inputRef()?.value.length), 0);
   };
 
   createEffect(() => {
@@ -366,14 +363,6 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       // For ref objects
       local.handlersRef = { increment, decrement };
     }
-  });
-
-  createEffect(() => {
-    console.log('local.value', local.value);
-  });
-
-  createEffect(() => {
-    console.log('_value', _value());
   });
 
   const handleKeyDown = (event: KeyboardEvent & { currentTarget: HTMLInputElement; target: Element; }) => {
@@ -434,8 +423,6 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   };
 
   const onStepHandleChange = (isIncrement: boolean) => {
-    console.log("onStepHandleChange", isIncrement);
-
     if (isIncrement) {
       increment();
     } else {
@@ -460,9 +447,8 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     event: MouseEvent | KeyboardEvent,
     isIncrement: boolean
   ) => {
-    console.log("onStep");
     event.preventDefault();
-    inputRef?.focus();
+    inputRef()?.focus();
     onStepHandleChange(isIncrement);
     if (shouldUseStepInterval()) {
       onStepTimeoutRef = window.setTimeout(() => onStepLoop(isIncrement), local.stepHoldDelay);
@@ -487,7 +473,6 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         mod={{ direction: 'up' }}
         onMouseDown={(event) => event.preventDefault()}
         onPointerDown={(event) => {
-          console.log("hi onPointerDown - up")
           onStep(event, true);
         }}
         onPointerUp={onStepDone}
@@ -503,7 +488,6 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         mod={{ direction: 'down' }}
         onMouseDown={(event) => event.preventDefault()}
         onPointerDown={(event) => {
-          console.log("hi onPointerDown - down")
           onStep(event, false);
         }}
         onPointerUp={onStepDone}
@@ -525,7 +509,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       readOnly={local.readOnly}
       disabled={local.disabled}
       value={_value()}
-      ref={useMergedRef(ref, inputRef)}
+      ref={useMergedRef(ref, setInputRef)}
       onValueChange={handleValueChange}
       rightSection={
         local.hideControls || local.readOnly || !canIncrement(_value()) ? local.rightSection : local.rightSection || controls

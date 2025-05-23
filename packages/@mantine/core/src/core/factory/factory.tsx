@@ -1,5 +1,5 @@
-import { JSX, splitProps, mergeProps, Component } from "solid-js";
-import { mergeRefs, Ref } from "@solid-primitives/refs";
+import { JSX, splitProps, Component } from "solid-js";
+import { Ref } from "@solid-primitives/refs";
 import type { MantineThemeComponent } from "../MantineProvider";
 import type { ClassNames, PartialVarsResolver, Styles } from "../styles-api";
 
@@ -101,7 +101,7 @@ export function factory<Payload extends FactoryPayload>(
   const Component = ((allProps: Omit<Payload['props'], 'ref'> & { ref?: Ref<Payload['ref']> }) => {
     const [local, others] = splitProps(allProps, ['ref']);
 
-    return ui(others as unknown as Omit<Payload['props'], 'ref'>, local.ref);
+    return ui(others as Payload['props'], local.ref);
   }) as SolidFactoryComponent<Payload>;
 
   Component.extend = identity;

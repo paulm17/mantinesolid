@@ -71,12 +71,11 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
     ...local.wrapperProps,
   };
 
-  return mergeProps({
-    ...rest,
+  return mergeProps(rest, {
     classNames: local.classNames,
     styles: local.styles,
     unstyled: local.unstyled,
-    wrapperProps: mergeProps(wrapperProps, styleProps ) as typeof wrapperProps & BoxProps,
+    wrapperProps: {...wrapperProps, ...styleProps } as typeof wrapperProps & BoxProps,
     inputProps: {
       required: local.required,
       classNames: local.classNames,
@@ -89,5 +88,5 @@ export function useInputProps<T extends BaseProps, U extends Partial<T>>(
       variant: local.variant,
       id: local.id,
     },
-  });
+  })
 }

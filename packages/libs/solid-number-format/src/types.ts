@@ -47,7 +47,10 @@ export type ChangeMeta = {
 export type InputAttributes = Omit<
   JSX.InputHTMLAttributes<HTMLInputElement>,
   'defaultValue' | 'value' | 'children'
->;
+> & {
+  // Override the capture property to match the expected type
+  capture?: "user" | "environment" | undefined;
+};
 
 type NumberFormatProps<Props, BaseType = InputAttributes> = Props &
   Omit<InputAttributes, keyof BaseType> &
