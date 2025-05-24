@@ -138,9 +138,11 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
   const stylesApi = { classNames: local.classNames, styles: local.styles };
 
   const [idx, setIdx] = createSignal<number>(-1);
+  const [mounted, setMounted] = createSignal(false);
   onMount(() => {
     setIdx(ctx.registerStep());
     ctx.registerStepContent?.(idx(), <>{props.children}</>);
+    setMounted(true);
   });
 
   const state = createMemo<'stepInactive' | 'stepProgress' | 'stepCompleted'>(() => {
@@ -150,10 +152,10 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     return 'stepInactive';
   });
 
-  // const dataAttributes = {
-  //   'data-progress': state() === 'stepProgress' || undefined,
-  //   'data-completed': state() === 'stepCompleted' || undefined,
-  // };
+  const dataAttributes = createMemo(() => ({
+    'data-progress': state() === 'stepProgress' || undefined,
+    'data-completed': state() === 'stepCompleted' || undefined,
+  }));
 
   const shouldAllowSelect = createMemo<boolean>(() => {
     if (typeof ctx.onStepClick !== 'function') return false;
@@ -163,21 +165,40 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     return state() === 'stepCompleted' || ctx.allowNextStepsSelect();
   });
 
-  const _icon = createMemo<JSX.Element | undefined>(() => {
-    if (state() === 'stepCompleted') return undefined;
-    if (state() === 'stepProgress') {
-      return local.progressIcon
-        ? getStepFragment(local.progressIcon, idx())
-        : getStepFragment(ctx.progressIcon as any, idx());
+  const _icon = createMemo<JSX.Element | string>(() => {
+    const currentState = state();
+
+    if (currentState === 'stepProgress') {
+      // 1) In‐progress state: try local.progressIcon first, then ctx.progressIcon, else fallback to number
+      if (local.progressIcon) {
+        return getStepFragment(local.progressIcon, idx());
+      }
+      if (ctx.progressIcon) {
+        return getStepFragment(ctx.progressIcon as any, idx());
+      }
+      return (idx() + 1).toString();
     }
-    return local.icon
-      ? getStepFragment(local.icon, idx())
-      : ctx.icon
-      ? getStepFragment(ctx.icon as any, idx())
-      : (idx() + 1).toString();
+
+    if (currentState === 'stepCompleted') {
+      // 2) Completed steps do NOT use _icon(); they render inside the <Transition> below.
+      return undefined as any;
+    }
+
+    // 3) Inactive state: try local.icon, then ctx.icon, else fallback to number
+    if (local.icon) {
+      return getStepFragment(local.icon, idx());
+    }
+    if (ctx.icon) {
+      return getStepFragment(ctx.icon as any, idx());
+    }
+    return (idx() + 1).toString();
   });
 
   const isLoading = createMemo(() => !!local.loading);
+
+  createEffect(() => {
+    console.log('icon', local.withIcon);
+  });
 
   return (
     <UnstyledButton
@@ -188,17 +209,11 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
         ...stylesApi
       })}
       mod={[
-        {
-          'icon-position': local.iconPosition || ctx.iconPosition,
-          'allow-click': local.allowStepClick,
-          'type': 'step',
-          'progress': state() === 'stepProgress' || undefined,
-          'completed': state() === 'stepCompleted' || undefined,
-        },
+        { 'icon-position': local.iconPosition || ctx.iconPosition, 'allow-click': local.allowStepClick, 'type': 'step' },
         local.mod,
       ]}
       ref={ref}
-      // {...dataAttributes}
+      {...dataAttributes()}
       {...others}
       onClick={() => {
         if (shouldAllowSelect()) {
@@ -216,10 +231,8 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     >
       {local.withIcon && (
         <span {...ctx.getStyles('stepWrapper', stylesApi)}>
-          <span {...ctx.getStyles('stepIcon', stylesApi)}
-          // {...dataAttributes}
-        >
-            <Transition mounted={local.state === 'stepCompleted'} transition="pop" duration={200}>
+          <span {...ctx.getStyles('stepIcon', stylesApi)} {...dataAttributes()}>
+            <Transition mounted={mounted() && state() === 'stepCompleted'} transition="pop" duration={200}>
               {(transitionStyles) => (
                 <span
                   {...ctx.getStyles('stepCompletedIcon', { style: transitionStyles, ...stylesApi })}
@@ -231,12 +244,11 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
                       {...ctx.getStyles('stepLoader', stylesApi)}
                     />
                   ) : (
-                    getStepFragment(
-                      local.completedIcon
-                        ? local.completedIcon
-                        : (ctx.completedIcon as any) ?? (idx() + 1).toString(),
-                      idx()
-                    ) || <CheckIcon size="60%" />
+                    local.completedIcon
+                      ? getStepFragment(local.completedIcon, idx())
+                      : ctx.completedIcon
+                      ? getStepFragment(ctx.completedIcon as any, idx())
+                      : <CheckIcon size="60%" />
                   )}
                 </span>
               )}
@@ -280,7 +292,7 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
         </span>
       )}
 
-      <Switch>
+      {/* <Switch>
         <Match when={ctx.orientation === 'horizontal' && idx() < ctx.activeIndex() + (ctx.wrap() ? 0 : 0)}>
           <span
             {...ctx.getStyles('separator')}
@@ -288,7 +300,7 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
             data-orientation={ctx.orientation}
           />
         </Match>
-      </Switch>
+      </Switch> */}
     </UnstyledButton>
   );
 });

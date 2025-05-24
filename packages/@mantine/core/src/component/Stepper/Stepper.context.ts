@@ -1,4 +1,4 @@
-import { ChildrenReturn, JSX } from 'solid-js';
+import { JSX } from 'solid-js';
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { StepperFactory } from './Stepper';
 
