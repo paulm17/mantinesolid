@@ -46,7 +46,7 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
   const Component = (<C extends ElementType = Payload['defaultComponent']>(
     allProps: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
   ) => {
-    return ui(allProps as Payload['props'], () => allProps.ref);
+    return ui(allProps as Payload['props'], allProps.ref);
   }) as unknown as PolymorphicComponent;
 
 

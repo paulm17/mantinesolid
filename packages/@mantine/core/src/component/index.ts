@@ -69,7 +69,7 @@ export * from './NavLink';
 export * from './Notification';
 export * from './NumberFormatter';
 export * from './NumberInput'; // <-- does not refresh input on value change
-// export * from './Pagination'; <-- has rendering issues
+export * from './Pagination'; // <-- has rendering issues
 export * from './PasswordInput';
 export * from './Pill';
 export * from './PillsInput';
@@ -88,7 +88,7 @@ export * from './Skeleton';
 export * from './Space';
 export * from './Spoiler';
 export * from './Stack';
-// export * from './Stepper';
+export * from './Stepper';
 export * from './Switch';
 export * from './Table';
 export * from './TableOfContents';
