@@ -150,10 +150,10 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     return 'stepInactive';
   });
 
-  const dataAttributes = {
-    'data-progress': state() === 'stepProgress' || undefined,
-    'data-completed': state() === 'stepCompleted' || undefined,
-  };
+  // const dataAttributes = {
+  //   'data-progress': state() === 'stepProgress' || undefined,
+  //   'data-completed': state() === 'stepCompleted' || undefined,
+  // };
 
   const shouldAllowSelect = createMemo<boolean>(() => {
     if (typeof ctx.onStepClick !== 'function') return false;
@@ -188,11 +188,17 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
         ...stylesApi
       })}
       mod={[
-        { 'icon-position': local.iconPosition || ctx.iconPosition, 'allow-click': local.allowStepClick, 'type': 'step' },
+        {
+          'icon-position': local.iconPosition || ctx.iconPosition,
+          'allow-click': local.allowStepClick,
+          'type': 'step',
+          'progress': state() === 'stepProgress' || undefined,
+          'completed': state() === 'stepCompleted' || undefined,
+        },
         local.mod,
       ]}
       ref={ref}
-      {...dataAttributes}
+      // {...dataAttributes}
       {...others}
       onClick={() => {
         if (shouldAllowSelect()) {
@@ -210,7 +216,9 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     >
       {local.withIcon && (
         <span {...ctx.getStyles('stepWrapper', stylesApi)}>
-          <span {...ctx.getStyles('stepIcon', stylesApi)} {...dataAttributes}>
+          <span {...ctx.getStyles('stepIcon', stylesApi)}
+          // {...dataAttributes}
+        >
             <Transition mounted={local.state === 'stepCompleted'} transition="pop" duration={200}>
               {(transitionStyles) => (
                 <span
