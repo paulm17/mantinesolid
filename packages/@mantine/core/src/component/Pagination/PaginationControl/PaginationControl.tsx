@@ -50,7 +50,7 @@ export const PaginationControl = factory<PaginationControlFactory>((_props, ref)
   ]);
 
   const ctx = usePaginationContext();
-  const _disabled = local.disabled || ctx.disabled;
+  const _disabled = local.disabled || ctx.disabled();
 
   return (
     <UnstyledButton

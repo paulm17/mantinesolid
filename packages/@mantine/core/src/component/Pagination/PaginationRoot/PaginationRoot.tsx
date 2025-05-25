@@ -22,7 +22,7 @@ import {
 } from '../../../core';
 import { PaginationProvider } from '../Pagination.context';
 import classes from '../Pagination.module.css';
-import { createEffect, splitProps } from 'solid-js';
+import { createEffect, createMemo, splitProps } from 'solid-js';
 
 export type PaginationRootStylesNames = 'root' | 'control' | 'dots';
 export type PaginationRootCssVariables = {
@@ -152,36 +152,33 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const [pagination] = splitProps(usePagination({
+  const pagination = createMemo(() => usePagination({
     page: local.value,
     initialPage: local.defaultValue,
     onChange: local.onChange,
     total: local.total,
     siblings: local.siblings,
     boundaries: local.boundaries,
-  }), [
-    'range',
-    'setPage',
-    'next',
-    'previous',
-    'active',
-    'first',
-    'last',
-  ]);
+  }));
 
-  const handleNextPage = createEventHandler(local.onNextPage, pagination.next);
-  const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination.previous);
-  const handleFirstPage = createEventHandler(local.onFirstPage, pagination.first);
-  const handleLastPage = createEventHandler(local.onLastPage, pagination.last);
+  createEffect(() => {
+    console.log('pagination active', pagination().active())
+    console.log('pagination range1', pagination().range())
+  })
+
+  const handleNextPage = createEventHandler(local.onNextPage, pagination().next);
+  const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination().previous);
+  const handleFirstPage = createEventHandler(local.onFirstPage, pagination().first);
+  const handleLastPage = createEventHandler(local.onLastPage, pagination().last);
 
   return (
     <PaginationProvider value={{
-      total: local.total,
-      range: pagination.range(),
-      active: pagination.active(),
-      disabled: local.disabled,
+      total: () => local.total,
+      range: pagination().range,
+      active: pagination().active,
+      disabled: () => local.disabled,
       getItemProps: local.getItemProps,
-      onChange: pagination.setPage,
+      onChange: pagination().setPage,
       onNext: handleNextPage,
       onPrevious: handlePreviousPage,
       onFirst: handleFirstPage,

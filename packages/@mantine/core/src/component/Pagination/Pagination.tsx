@@ -1,3 +1,4 @@
+import { splitProps } from 'solid-js';
 import { factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { PaginationIcon } from './Pagination.icons';
@@ -17,7 +18,6 @@ import {
   PaginationRootStylesNames,
 } from './PaginationRoot/PaginationRoot';
 import classes from './Pagination.module.css';
-import { splitProps } from 'solid-js';
 
 export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;

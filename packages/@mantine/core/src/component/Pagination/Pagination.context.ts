@@ -1,11 +1,12 @@
+import { Accessor } from 'solid-js';
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { PaginationRootFactory } from './PaginationRoot/PaginationRoot';
 
 interface PaginationContext {
-  total: number;
-  range: (number | 'dots')[];
-  active: number;
-  disabled: boolean | undefined;
+  total: Accessor<number>;
+  range: Accessor<(number | 'dots')[]>;
+  active: Accessor<number>;
+  disabled: Accessor<boolean | undefined>;
   getItemProps?: (page: number) => Record<string, any>;
   onChange: (page: number) => void;
   onNext: () => void;

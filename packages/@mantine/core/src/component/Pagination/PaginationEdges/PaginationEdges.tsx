@@ -23,24 +23,24 @@ export interface PaginationEdgeProps extends BoxProps {
   ref?: HTMLButtonElement;
 }
 
-export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComponent) {
-  const defaultProps: Partial<PaginationEdgeProps> = { icon };
+export function createEdgeComponent(edgeProps: CreateEdgeComponent) {
+  const defaultProps: Partial<PaginationEdgeProps> = { icon: edgeProps.icon };
 
   const Component = (_props: PaginationEdgeProps) => {
-    const props = useProps(name, defaultProps, _props);
+    const props = useProps(edgeProps.name, defaultProps, _props);
     const [local, others] = splitProps(props, [
       'icon',
       'ref'
     ]);
     const Icon = local.icon!;
     const ctx = usePaginationContext();
-    const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === 1;
+    const disabled = edgeProps.type === 'next' ? ctx.active() === ctx.total() : ctx.active() === 1;
 
     return (
       <PaginationControl
-        disabled={ctx.disabled || disabled}
+        disabled={ctx.disabled() || disabled}
         ref={local.ref}
-        onClick={ctx[action]}
+        onClick={ctx[edgeProps.action]}
         withPadding={false}
         {...others}
       >
@@ -55,7 +55,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
     );
   };
 
-  Component.displayName = `@mantine/core/${name}`;
+  Component.displayName = `@mantine/core/${edgeProps.name}`;
   return createPolymorphicComponent<'button', PaginationEdgeProps>(Component);
 }
 

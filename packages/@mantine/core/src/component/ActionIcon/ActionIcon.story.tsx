@@ -12,7 +12,7 @@ function Colors({ index, ...others }: ActionIconProps & { index?: number }) {
     <For each={colors}>
       {(color, index) => (
         <ActionIcon
-          color={`${color}${typeof index === 'number' ? `.${index}` : ''}`}
+          color={`${color}${typeof index() === 'number' ? `.${index()}` : ''}`}
           {...others}
           size="lg"
         >

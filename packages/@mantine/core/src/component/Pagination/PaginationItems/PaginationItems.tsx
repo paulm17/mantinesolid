@@ -1,4 +1,4 @@
-import { For, splitProps } from 'solid-js';
+import { createEffect, For, splitProps } from 'solid-js';
 import { usePaginationContext } from '../Pagination.context';
 import { PaginationIcon } from '../Pagination.icons';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
@@ -11,30 +11,29 @@ export interface PaginationItemsProps {
 
 export function PaginationItems(props: PaginationItemsProps) {
   const ctx = usePaginationContext();
-  const [local, _] = splitProps(props, [
-    'dotsIcon',
-  ]);
+
+  createEffect(() => {
+    console.log('range', ctx.range());
+  })
 
   return (
-    <>
-      <For each={ctx.range}>
-        {(page) =>
-          page === 'dots' ? (
-            <PaginationDots icon={local.dotsIcon} />
-          ) : (
-            <PaginationControl
-              active={page === ctx.active}
-              aria-current={page === ctx.active ? 'page' : undefined}
-              onClick={() => ctx.onChange(page)}
-              disabled={ctx.disabled}
-              {...ctx.getItemProps?.(page)}
-            >
-              {ctx.getItemProps?.(page)?.children ?? page}
-            </PaginationControl>
-          )
-        }
-      </For>
-    </>
+    <For each={ctx.range()}>
+      {(page) =>
+        page === 'dots' ? (
+          <PaginationDots icon={props.dotsIcon} />
+        ) : (
+          <PaginationControl
+            active={page === ctx.active()}
+            aria-current={page === ctx.active() ? 'page' : undefined}
+            onClick={() => ctx.onChange(page)}
+            disabled={ctx.disabled()}
+            {...ctx.getItemProps?.(page)}
+          >
+            {ctx.getItemProps?.(page)?.children ?? page}
+          </PaginationControl>
+        )
+      }
+    </For>
   );
 }
 

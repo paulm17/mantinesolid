@@ -95,7 +95,7 @@ export function AutoContrast() {
           <Alert
             withCloseButton
             title="Bummer!"
-            color={`yellow.${index}`}
+            color={`yellow.${index()}`}
             variant="filled"
             mt="xl"
             autoContrast

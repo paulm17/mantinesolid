@@ -169,7 +169,6 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     const currentState = state();
 
     if (currentState === 'stepProgress') {
-      // 1) In‐progress state: try local.progressIcon first, then ctx.progressIcon, else fallback to number
       if (local.progressIcon) {
         return getStepFragment(local.progressIcon, idx());
       }
@@ -180,11 +179,9 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     }
 
     if (currentState === 'stepCompleted') {
-      // 2) Completed steps do NOT use _icon(); they render inside the <Transition> below.
       return undefined as any;
     }
 
-    // 3) Inactive state: try local.icon, then ctx.icon, else fallback to number
     if (local.icon) {
       return getStepFragment(local.icon, idx());
     }
@@ -291,16 +288,6 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
           )}
         </span>
       )}
-
-      {/* <Switch>
-        <Match when={ctx.orientation === 'horizontal' && idx() < ctx.activeIndex() + (ctx.wrap() ? 0 : 0)}>
-          <span
-            {...ctx.getStyles('separator')}
-            data-active={idx() < ctx.activeIndex() || undefined}
-            data-orientation={ctx.orientation}
-          />
-        </Match>
-      </Switch> */}
     </UnstyledButton>
   );
 });
