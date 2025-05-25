@@ -116,7 +116,7 @@ const varsResolver = createVarsResolver<AppShellFactory>(
   })
 );
 
-export const AppShell = factory<AppShellFactory>((_props, ref) => {
+export const AppShell = factory<AppShellFactory>(_props => {
   const props = useProps('AppShell', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -137,7 +137,8 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
     'aside',
     'footer',
     'offsetScrollbars',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const offsetScrollbars = local.layout !== 'alt';
@@ -167,7 +168,7 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
         padding={local.padding}
       />
       <Box
-        ref={ref}
+        ref={local.ref}
         {...getStyles('root')}
         mod={[{ resizing, layout: local.layout, disabled: local.disabled }, local.mod]}
         {...others}

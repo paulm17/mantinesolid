@@ -88,7 +88,7 @@ const varsResolver = createVarsResolver<NotificationFactory>((theme, { radius, c
   },
 }));
 
-export const Notification = factory<NotificationFactory>((_props, ref) => {
+export const Notification = factory<NotificationFactory>(_props => {
   const props = useProps('Notification', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -110,7 +110,8 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     'vars',
     'mod',
     'loaderProps',
-    'role'
+    'role',
+    'ref'
   ]);
 
   const getStyles = useStyles<NotificationFactory>({
@@ -130,7 +131,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     <Box
       {...getStyles('root')}
       mod={[{ 'data-with-icon': !!local.icon || local.loading, 'data-with-border': local.withBorder }, local.mod]}
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       role={local.role || 'alert'}
       {...others}

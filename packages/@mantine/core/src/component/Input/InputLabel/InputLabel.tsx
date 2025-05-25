@@ -54,7 +54,7 @@ const varsResolver = createVarsResolver<InputLabelFactory>((_, { size }) => ({
   },
 }));
 
-export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
+export const InputLabel = factory<InputLabelFactory>(_props => {
   const props = useProps('InputLabel', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -71,7 +71,8 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     'children',
     '__staticSelector',
     'variant',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const _getStyles = useStyles<InputLabelFactory>({
@@ -97,7 +98,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
       component={local.labelElement as 'label'}
       variant={local.variant}
       size={local.size}
-      ref={ref}
+      ref={local.ref}
       for={local.labelElement === 'label' ? local.for : undefined}
       mod={[{ required: local.required }, local.mod]}
       onMouseDown={(event) => {

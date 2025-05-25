@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -120,59 +120,59 @@ const varsResolver = createVarsResolver<NavLinkFactory>(
   }
 );
 
-export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
+export const NavLink = polymorphicFactory<NavLinkFactory>(_props => {
   const props = useProps('NavLink', defaultProps, _props);
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    unstyled,
-    vars,
-    opened,
-    defaultOpened,
-    onChange,
-    children,
-    onClick,
-    active,
-    disabled,
-    leftSection,
-    rightSection,
-    label,
-    description,
-    disableRightSectionRotation,
-    noWrap,
-    childrenOffset,
-    onKeyDown,
-    autoContrast,
-    mod,
-    ...others
-  } = props;
+  const [local, others] = splitProps(props, [
+    'classNames',
+    'className',
+    'style',
+    'styles',
+    'unstyled',
+    'vars',
+    'opened',
+    'defaultOpened',
+    'onChange',
+    'children',
+    'onClick',
+    'active',
+    'disabled',
+    'leftSection',
+    'rightSection',
+    'label',
+    'description',
+    'disableRightSectionRotation',
+    'noWrap',
+    'childrenOffset',
+    'onKeyDown',
+    'autoContrast',
+    'mod',
+    'ref',
+  ]);
 
   const getStyles = useStyles<NavLinkFactory>({
     name: 'NavLink',
     props,
     classes,
-    className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-    vars,
+    className: local.className,
+    style: local.style,
+    classNames: local.classNames,
+    styles: local.styles,
+    unstyled: local.unstyled,
+    vars: local.vars,
     varsResolver,
   });
 
   const [_opened, setOpened] = useUncontrolled({
-    value: opened,
-    defaultValue: defaultOpened,
+    value: () => local.opened,
+    defaultValue: local.defaultOpened,
     finalValue: false,
-    onChange,
+    onChange: local.onChange,
   });
 
-  const withChildren = !!children;
+  const withChildren = !!local.children;
 
   const handleClick = (event: MouseEvent) => {
-    onClick?.(event);
+    local.onClick?.(event);
 
     if (withChildren) {
       event.preventDefault();
@@ -185,48 +185,48 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
       <UnstyledButton
         {...getStyles('root')}
         component="a"
-        ref={ref}
+        ref={local.ref}
         onClick={handleClick}
         onKeyDown={(event) => {
-          onKeyDown?.(event);
+          local.onKeyDown?.(event);
 
           if (event.code === 'Space' && withChildren) {
             event.preventDefault();
             setOpened(!_opened);
           }
         }}
-        unstyled={unstyled}
-        mod={[{ disabled, active, expanded: _opened }, mod]}
+        unstyled={local.unstyled}
+        mod={[{ disabled: local.disabled, active: local.active, expanded: _opened }, local.mod]}
         {...others}
       >
-        {leftSection && (
+        {local.leftSection && (
           <Box component="span" {...getStyles('section')} mod={{ position: 'left' }}>
-            {leftSection}
+            {local.leftSection}
           </Box>
         )}
-        <Box {...getStyles('body')} mod={{ 'no-wrap': noWrap }}>
+        <Box {...getStyles('body')} mod={{ 'no-wrap': local.noWrap }}>
           <Box component="span" {...getStyles('label')}>
-            {label}
+            {local.label}
           </Box>
-          <Box component="span" mod={{ active }} {...getStyles('description')}>
-            {description}
+          <Box component="span" mod={{ active: local.active }} {...getStyles('description')}>
+            {local.description}
           </Box>
         </Box>
-        {(withChildren || rightSection) && (
+        {(withChildren || local.rightSection) && (
           <Box
             {...getStyles('section')}
             component="span"
-            mod={{ rotate: _opened() && !disableRightSectionRotation, position: 'right' }}
+            mod={{ rotate: _opened() && !local.disableRightSectionRotation, position: 'right' }}
           >
             {withChildren
-              ? rightSection || <AccordionChevron {...getStyles('chevron')} />
-              : rightSection}
+              ? local.rightSection || <AccordionChevron {...getStyles('chevron')} />
+              : local.rightSection}
           </Box>
         )}
       </UnstyledButton>
       {withChildren && (
         <Collapse in={_opened()} {...getStyles('collapse')}>
-          <div {...getStyles('children')}>{children}</div>
+          <div {...getStyles('children')}>{local.children}</div>
         </Collapse>
       )}
     </>

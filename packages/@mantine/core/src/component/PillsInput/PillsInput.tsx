@@ -26,7 +26,7 @@ export type PillsInputFactory = Factory<{
 
 const defaultProps: Partial<PillsInputProps> = {};
 
-export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
+export const PillsInput = factory<PillsInputFactory>(_props => {
   const props = useProps('PillsInput', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'children',
@@ -36,7 +36,8 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
     'disabled',
     '__staticSelector',
     'error',
-    'variant'
+    'variant',
+    'ref'
   ]);
 
   const fieldRef = null as HTMLInputElement | null;
@@ -48,7 +49,7 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
         error={local.error}
         variant={local.variant}
         component="div"
-        ref={ref}
+        ref={local.ref}
         onMouseDown={(event: MouseEvent & {
           currentTarget: HTMLDivElement;
           target: Element;

@@ -28,14 +28,15 @@ export type InputClearButtonFactory = Factory<{
 
 const defaultProps: Partial<InputClearButtonProps> = {};
 
-export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) => {
+export const InputClearButton = factory<InputClearButtonFactory>(_props => {
   const props = useProps('InputClearButton', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
     'styles',
     'variant',
     'vars',
-    'size'
+    'size',
+    'ref'
   ]);
 
   const ctx = useInputContext();
@@ -49,7 +50,7 @@ export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) =
   return (
     <CloseButton
       variant={local.variant || 'transparent'}
-      ref={ref}
+      ref={local.ref}
       size={local.size || ctx?.size || 'sm'}
       classNames={resolvedClassNames}
       styles={resolvedStyles}

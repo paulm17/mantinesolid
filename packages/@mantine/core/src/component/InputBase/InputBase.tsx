@@ -38,12 +38,13 @@ const defaultProps: Partial<InputBaseProps> = {
   withAria: true,
 };
 
-export const InputBase = polymorphicFactory<InputBaseFactory>((_props, ref) => {
+export const InputBase = polymorphicFactory<InputBaseFactory>(_props => {
   const props = useInputProps('InputBase', defaultProps, _props);
 
   const [local, others] = splitProps(props, [
     'inputProps',
     'wrapperProps',
+    'ref'
   ]);
 
   createEffect(() => {
@@ -52,7 +53,7 @@ export const InputBase = polymorphicFactory<InputBaseFactory>((_props, ref) => {
 
   return (
     <Input.Wrapper {...local.wrapperProps}>
-      <Input {...local.inputProps} {...others} ref={ref} />
+      <Input {...local.inputProps} {...others} ref={local.ref} />
     </Input.Wrapper>
   );
 });

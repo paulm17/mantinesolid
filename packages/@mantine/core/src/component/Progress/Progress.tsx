@@ -47,7 +47,7 @@ export type ProgressFactory = Factory<{
 
 const defaultProps: Partial<ProgressProps> = {};
 
-export const Progress = factory<ProgressFactory>((_props, ref) => {
+export const Progress = factory<ProgressFactory>(_props => {
   const props = useProps('Progress', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'value',
@@ -57,7 +57,8 @@ export const Progress = factory<ProgressFactory>((_props, ref) => {
     'color',
     'striped',
     'animated',
-    'aria-label'
+    'aria-label',
+    'ref'
   ]);
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<ProgressFactory>({
@@ -68,7 +69,7 @@ export const Progress = factory<ProgressFactory>((_props, ref) => {
 
   return (
     <ProgressRoot
-      ref={ref}
+      ref={local.ref}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       vars={local.vars as any}

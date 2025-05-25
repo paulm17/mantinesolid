@@ -69,7 +69,7 @@ const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) 
   },
 }));
 
-export const Affix = factory<AffixFactory>((_props, ref) => {
+export const Affix = factory<AffixFactory>(_props => {
   const props = useProps('Affix', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -82,6 +82,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
     'zIndex',
     'withinPortal',
     'position',
+    'ref'
   ]);
 
   const getStyles = useStyles<AffixFactory>({
@@ -99,7 +100,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
 
   return (
     <OptionalPortal {...local.portalProps} withinPortal={local.withinPortal}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box ref={local.ref} {...getStyles('root')} {...others} />
     </OptionalPortal>
   );
 });

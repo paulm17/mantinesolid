@@ -33,7 +33,7 @@ export type ListItemFactory = Factory<{
 
 const defaultProps: Partial<ListItemProps> = {};
 
-export const ListItem = factory<ListItemFactory>((_props, ref) => {
+export const ListItem = factory<ListItemFactory>(_props => {
   const props = useProps('ListItem', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -43,7 +43,8 @@ export const ListItem = factory<ListItemFactory>((_props, ref) => {
     'vars',
     'icon',
     'children',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useListContext();
@@ -55,7 +56,7 @@ export const ListItem = factory<ListItemFactory>((_props, ref) => {
       {...ctx.getStyles('item', { ...stylesApiProps, className: local.className, style: local.style })}
       component="li"
       mod={[{ 'with-icon': !!_icon, centered: ctx.center }, local.mod]}
-      ref={ref}
+      ref={local.ref}
       {...others}
     >
       <div {...ctx.getStyles('itemWrapper', stylesApiProps)}>

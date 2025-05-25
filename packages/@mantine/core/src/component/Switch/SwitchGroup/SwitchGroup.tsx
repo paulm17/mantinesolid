@@ -38,7 +38,7 @@ export type SwitchGroupFactory = Factory<{
 
 const defaultProps: Partial<SwitchGroupProps> = {};
 
-export const SwitchGroup = factory<SwitchGroupFactory>((_props, ref) => {
+export const SwitchGroup = factory<SwitchGroupFactory>(_props => {
   const props = useProps('SwitchGroup', defaultProps, _props);
 
   const [local, others] = splitProps(props, [
@@ -48,7 +48,8 @@ export const SwitchGroup = factory<SwitchGroupFactory>((_props, ref) => {
     'size',
     'wrapperProps',
     'children',
-    'readOnly'
+    'readOnly',
+    'ref'
   ]);
 
   const [_value, setValue] = useUncontrolled({
@@ -72,7 +73,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((_props, ref) => {
     <SwitchGroupProvider value={{ value: _value(), onChange: handleChange, size: local.size }}>
       <Input.Wrapper
         size={local.size}
-        ref={ref}
+        ref={local.ref}
         {...local.wrapperProps}
         {...others}
         labelElement="div"

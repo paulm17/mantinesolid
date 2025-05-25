@@ -121,19 +121,18 @@ export function tableElement<Factory extends FactoryPayload>(
   options?: TableElementOptions
 ) {
   const name = `Table${element.charAt(0).toUpperCase()}${element.slice(1)}`;
-  const Component = factory<Factory>((_props, ref) => {
+  const Component = factory<Factory>(_props => {
     const props = useProps(name, {}, _props);
-    const { classNames, className, style, styles, ...others } = props;
 
     const ctx = useTableContext();
 
     return (
       <Box
         component={element}
-        ref={ref}
+        ref={props.ref}
         {...getDataAttributes(ctx, options)}
-        {...ctx.getStyles(element, { className, classNames, style, styles, props })}
-        {...others}
+        {...ctx.getStyles(element, { className: props.className, classNames: props.classNames, style: props.style, styles: props.styles, props })}
+        {...props.others}
       />
     );
   });

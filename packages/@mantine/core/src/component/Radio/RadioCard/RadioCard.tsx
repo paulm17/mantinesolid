@@ -59,7 +59,7 @@ const varsResolver = createVarsResolver<RadioCardFactory>((_, { radius }) => ({
   },
 }));
 
-export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
+export const RadioCard = factory<RadioCardFactory>(_props => {
   const props = useProps('RadioCard', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -74,7 +74,8 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
     'value',
     'onClick',
     'name',
-    'onKeyDown'
+    'onKeyDown',
+    'ref'
   ]);
 
   const getStyles = useStyles<RadioCardFactory>({
@@ -137,7 +138,7 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
   return (
     <RadioCardProvider value={{ checked: _checked }}>
       <UnstyledButton
-        ref={ref}
+        ref={local.ref}
         mod={[{ 'with-border': local.withBorder, checked: _checked }, local.mod]}
         {...getStyles('card')}
         {...others}

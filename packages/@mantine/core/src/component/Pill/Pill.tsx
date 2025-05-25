@@ -70,7 +70,7 @@ const varsResolver = createVarsResolver<PillFactory>((_, { radius }, { size }) =
   },
 }));
 
-export const Pill = factory<PillFactory>((_props, ref) => {
+export const Pill = factory<PillFactory>(_props => {
   const props = useProps('Pill', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -87,7 +87,8 @@ export const Pill = factory<PillFactory>((_props, ref) => {
     'radius',
     'size',
     'disabled',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = usePillGroupContext();
@@ -112,7 +113,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
   return (
     <Box
       component="div"
-      ref={ref}
+      ref={local.ref}
       variant={_variant}
       size={_size}
       {...getStyles('root', { variant: _variant })}

@@ -82,7 +82,7 @@ const varsResolver = createVarsResolver<ActionIconGroupSectionFactory>(
   }
 );
 
-export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_props, ref) => {
+export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>(_props => {
   const props = useProps('ActionIconGroupSection', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -94,7 +94,8 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     'variant',
     'gradient',
     'radius',
-    'autoContrast'
+    'autoContrast',
+    'ref'
   ]);
 
   const getStyles = useStyles<ActionIconGroupSectionFactory>({
@@ -111,7 +112,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     rootSelector: 'groupSection',
   });
 
-  return <Box {...getStyles('groupSection')} ref={ref} variant={local.variant} {...others} />;
+  return <Box {...getStyles('groupSection')} ref={local.ref} variant={local.variant} {...others} />;
 });
 
 ActionIconGroupSection.classes = classes;

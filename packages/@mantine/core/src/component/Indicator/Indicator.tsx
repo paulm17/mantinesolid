@@ -112,7 +112,7 @@ const varsResolver = createVarsResolver<IndicatorFactory>(
   })
 );
 
-export const Indicator = factory<IndicatorFactory>((_props, ref) => {
+export const Indicator = factory<IndicatorFactory>(_props => {
   const props = useProps('Indicator', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -133,7 +133,8 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     'processing',
     'zIndex',
     'autoContrast',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<IndicatorFactory>({
@@ -150,7 +151,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} mod={[{ inline: local.inline }, local.mod]} {...others}>
+    <Box ref={local.ref} {...getStyles('root')} mod={[{ inline: local.inline }, local.mod]} {...others}>
       {!local.disabled && (
         <Box
           mod={{ 'with-label': !!local.label, 'with-border': local.withBorder, processing: local.processing  }}

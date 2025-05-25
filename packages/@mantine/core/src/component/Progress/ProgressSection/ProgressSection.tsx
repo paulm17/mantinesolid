@@ -49,7 +49,7 @@ const defaultProps: Partial<ProgressSectionProps> = {
   withAria: true,
 };
 
-export const ProgressSection = factory<ProgressSectionFactory>((_props, ref) => {
+export const ProgressSection = factory<ProgressSectionFactory>(_props => {
   const props = useProps('ProgressSection', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -62,7 +62,8 @@ export const ProgressSection = factory<ProgressSectionFactory>((_props, ref) => 
     'color',
     'striped',
     'animated',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useProgressContext();
@@ -80,7 +81,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((_props, ref) => 
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       {...ctx.getStyles('section', { className: local.className, classNames: local.classNames, styles: local.styles, style: local.style })}
       {...others}
       {...ariaAttributes}

@@ -27,14 +27,15 @@ export type AppShellMainFactory = Factory<{
 
 const defaultProps: Partial<AppShellMainProps> = {};
 
-export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
+export const AppShellMain = factory<AppShellMainFactory>(_props => {
   const props = useProps('AppShellMain', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
     'className',
     'style',
     'styles',
-    'vars'
+    'vars',
+    'ref'
   ]);
 
   const ctx = useAppShellContext();
@@ -42,7 +43,7 @@ export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
   return (
     <Box
       component="main"
-      ref={ref}
+      ref={local.ref}
       {...ctx.getStyles('main', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles })}
       {...others}
     />

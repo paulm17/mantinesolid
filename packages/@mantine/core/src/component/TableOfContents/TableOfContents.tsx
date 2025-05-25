@@ -123,7 +123,7 @@ const varsResolver = createVarsResolver<TableOfContentsFactory>(
   }
 );
 
-export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => {
+export const TableOfContents = factory<TableOfContentsFactory>(_props => {
   const props = useProps('TableOfContents', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -141,7 +141,8 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     'depthOffset',
     'variant',
     'radius',
-    'reinitializeRef'
+    'reinitializeRef',
+    'ref'
   ]);
 
   const getStyles = useStyles<TableOfContentsFactory>({
@@ -191,7 +192,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
   });
 
   return (
-    <Box ref={ref} variant={local.variant} {...getStyles('root')} {...others}>
+    <Box ref={local.ref} variant={local.variant} {...getStyles('root')} {...others}>
       {controls}
     </Box>
   );

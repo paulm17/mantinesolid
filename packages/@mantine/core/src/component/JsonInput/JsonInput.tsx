@@ -39,7 +39,7 @@ const defaultProps: Partial<JsonInputProps> = {
   deserialize: JSON.parse,
 };
 
-export const JsonInput = factory<JsonInputFactory>((_props, ref) => {
+export const JsonInput = factory<JsonInputFactory>(_props => {
   const props = useProps('JsonInput', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'value',
@@ -52,7 +52,8 @@ export const JsonInput = factory<JsonInputFactory>((_props, ref) => {
     'onFocus',
     'onBlur',
     'readOnly',
-    'error'
+    'error',
+    'ref'
   ]);
 
   // Internal state management (controlled/uncontrolled)
@@ -107,7 +108,7 @@ export const JsonInput = factory<JsonInputFactory>((_props, ref) => {
       onChange={event => setValue(event.currentTarget.value)}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      ref={ref}
+      ref={local.ref}
       readOnly={local.readOnly}
       {...others}
       auto-complete="off"

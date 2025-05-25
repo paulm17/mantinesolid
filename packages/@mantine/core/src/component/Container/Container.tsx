@@ -45,7 +45,7 @@ const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) =
   },
 }));
 
-export const Container = factory<ContainerFactory>((_props, ref) => {
+export const Container = factory<ContainerFactory>(_props => {
   const props = useProps('Container', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -55,7 +55,8 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'fluid',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<ContainerFactory>({
@@ -71,7 +72,7 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} mod={[{ fluid: local.fluid }, local.mod]} {...getStyles('root')} {...others} />;
+  return <Box ref={local.ref} mod={[{ fluid: local.fluid }, local.mod]} {...getStyles('root')} {...others} />;
 });
 
 Container.classes = classes;

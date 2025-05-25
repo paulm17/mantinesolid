@@ -43,7 +43,7 @@ const varsResolver = createVarsResolver<ButtonGroupFactory>((_, { borderWidth })
   group: { '--button-border-width': rem(borderWidth) },
 }));
 
-export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
+export const ButtonGroup = factory<ButtonGroupFactory>(_props => {
   const props = useProps('ButtonGroup', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -56,6 +56,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
     'borderWidth',
     'variant',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<ButtonGroupFactory>({
@@ -75,7 +76,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('group')}
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       mod={[{ 'data-orientation': local.orientation }, local.mod]}
       role="group"

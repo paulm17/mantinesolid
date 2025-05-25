@@ -79,7 +79,7 @@ const varsResolver = createVarsResolver<GroupFactory>(
   })
 );
 
-export const Group = factory<GroupFactory>((_props, ref) => {
+export const Group = factory<GroupFactory>(_props => {
   const props = useProps('Group', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -97,7 +97,8 @@ export const Group = factory<GroupFactory>((_props, ref) => {
     'vars',
     'variant',
     '__size',
-    'mod'
+    'mod',
+    'ref',
   ]);
 
   const filteredChildren = filterFalsyChildren(local.children);
@@ -126,7 +127,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('root')}
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       mod={[{ grow: local.grow }, local.mod]}
       size={local.__size}

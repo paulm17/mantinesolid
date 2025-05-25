@@ -69,7 +69,7 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
   },
 }));
 
-export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
+export const PasswordInput = factory<PasswordInputFactory>(_props => {
   const props = useProps('PasswordInput', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -108,7 +108,8 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     'leftSectionProps',
     'leftSectionPointerEvents',
     'withErrorStyles',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const uuid = useId(local.id);
@@ -230,7 +231,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
           {...getStyles('innerInput')}
           disabled={local.disabled}
           id={uuid}
-          ref={ref}
+          ref={local.ref}
           {...rest}
           auto-complete={rest.autocomplete || 'off'}
           type={_visible() ? 'text' : 'password'}

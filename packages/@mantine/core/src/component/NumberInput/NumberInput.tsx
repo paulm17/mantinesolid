@@ -197,7 +197,7 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
   },
 }));
 
-export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
+export const NumberInput = factory<NumberInputFactory>(_props => {
   const props = useProps('NumberInput', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -234,6 +234,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     'allowLeadingZeros',
     'withKeyboardEvents',
     'trimLeadingZeroesOnBlur',
+    'ref'
   ])
 
   const getStyles = useStyles<NumberInputFactory>({
@@ -509,7 +510,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       readOnly={local.readOnly}
       disabled={local.disabled}
       value={_value()}
-      ref={useMergedRef(ref, setInputRef)}
+      ref={useMergedRef(local.ref, setInputRef)}
       onValueChange={handleValueChange}
       rightSection={
         local.hideControls || local.readOnly || !canIncrement(_value()) ? local.rightSection : local.rightSection || controls

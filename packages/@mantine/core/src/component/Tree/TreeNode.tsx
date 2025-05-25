@@ -1,8 +1,7 @@
-import { createEffect, createSignal, For, Show, splitProps } from 'solid-js';
+import { createSignal, For, Show, splitProps } from 'solid-js';
 import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
-import type { PossibleRef } from '@mantine/hooks';
 
 function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
   if (!anchor || !value) {

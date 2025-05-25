@@ -1,3 +1,4 @@
+import { splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -83,37 +84,38 @@ const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
   }
 );
 
-export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, ref) => {
+export const ButtonGroupSection = factory<ButtonGroupSectionFactory>(_props => {
   const props = useProps('ButtonGroupSection', defaultProps, _props);
-  const {
-    className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-    vars,
-    variant,
-    gradient,
-    radius,
-    autoContrast,
-    ...others
-  } = useProps('ButtonGroupSection', defaultProps, _props);
+
+  const [local, others] = splitProps(props, [
+    'className',
+    'style',
+    'classNames',
+    'styles',
+    'unstyled',
+    'vars',
+    'variant',
+    'gradient',
+    'radius',
+    'autoContrast',
+    'ref'
+  ]);
 
   const getStyles = useStyles<ButtonGroupSectionFactory>({
     name: 'ButtonGroupSection',
     props,
     classes,
-    className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-    vars,
+    className: local.className,
+    style: local.style,
+    classNames: local.classNames,
+    styles: local.styles,
+    unstyled: local.unstyled,
+    vars: local.vars,
     varsResolver,
     rootSelector: 'groupSection',
   });
 
-  return <Box {...getStyles('groupSection')} ref={ref} variant={variant} {...others} />;
+  return <Box {...getStyles('groupSection')} ref={local.ref} variant={local.variant} {...others} />;
 });
 
 ButtonGroupSection.classes = classes;

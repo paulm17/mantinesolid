@@ -79,7 +79,7 @@ const varsResolver = createVarsResolver<BlockquoteFactory>((theme, { color, icon
   };
 });
 
-export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
+export const Blockquote = factory<BlockquoteFactory>(_props => {
   const props = useProps('Blockquote', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -91,7 +91,8 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
     'children',
     'icon',
     'iconSize',
-    'cite'
+    'cite',
+    'ref'
   ]);
 
   const getStyles = useStyles<BlockquoteFactory>({
@@ -108,7 +109,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="blockquote" ref={ref} {...getStyles('root')} {...others}>
+    <Box component="blockquote" ref={local.ref} {...getStyles('root')} {...others}>
       {local.icon && <span {...getStyles('icon')}>{local.icon}</span>}
       {local.children}
       {local.cite && <cite {...getStyles('cite')}>{local.cite}</cite>}

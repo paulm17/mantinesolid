@@ -124,7 +124,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
   }
 );
 
-export const Radio = factory<RadioFactory>((_props, ref) => {
+export const Radio = factory<RadioFactory>(_props => {
   const props = useProps('Radio', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -148,7 +148,8 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     'rootRef',
     'iconColor',
     'onChange',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const Icon = props.icon ?? RadioIcon;
@@ -215,7 +216,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
           {...contextProps}
           component="input"
           mod={{ error: !!local.error }}
-          ref={ref}
+          ref={local.ref}
           id={uuid}
           disabled={local.disabled}
           type="radio"

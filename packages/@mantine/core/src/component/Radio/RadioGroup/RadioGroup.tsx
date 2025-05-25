@@ -42,7 +42,7 @@ export type RadioGroupFactory = Factory<{
 
 const defaultProps: Partial<RadioGroupProps> = {};
 
-export const RadioGroup = factory<RadioGroupFactory>((_props, ref) => {
+export const RadioGroup = factory<RadioGroupFactory>(_props => {
   const props = useProps('RadioGroup', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'value',
@@ -52,7 +52,8 @@ export const RadioGroup = factory<RadioGroupFactory>((_props, ref) => {
     'wrapperProps',
     'children',
     'name',
-    'readOnly'
+    'readOnly',
+    'ref'
   ]);
 
   const _name = useId(local.name);
@@ -71,7 +72,7 @@ export const RadioGroup = factory<RadioGroupFactory>((_props, ref) => {
     <RadioGroupProvider value={{ value: _value(), onChange: handleChange, size: local.size, name: _name }}>
       <Input.Wrapper
         size={local.size}
-        ref={ref}
+        ref={local.ref}
         {...local.wrapperProps}
         {...others}
         labelElement="div"

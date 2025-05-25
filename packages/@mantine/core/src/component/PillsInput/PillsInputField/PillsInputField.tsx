@@ -37,7 +37,7 @@ const defaultProps: Partial<PillsInputFieldProps> = {
   type: 'visible',
 };
 
-export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => {
+export const PillsInputField = factory<PillsInputFieldFactory>(_props => {
   const props = useProps('PillsInputField', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -50,7 +50,8 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
     'disabled',
     'id',
     'pointer',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = usePillsInputContext();
@@ -73,7 +74,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
   return (
     <Box
       component="input"
-      ref={useMergedRef(ref, ctx?.fieldRef)}
+      ref={useMergedRef(local.ref, ctx?.fieldRef)}
       data-type={local.type}
       disabled={_disabled}
       mod={[{ disabled: _disabled, pointer: local.pointer }, local.mod]}

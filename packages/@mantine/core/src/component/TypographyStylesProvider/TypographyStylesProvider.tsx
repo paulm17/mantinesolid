@@ -26,14 +26,15 @@ export type TypographyStylesProviderFactory = Factory<{
 
 const defaultProps: Partial<TypographyStylesProviderProps> = {};
 
-export const TypographyStylesProvider = factory<TypographyStylesProviderFactory>((_props, ref) => {
+export const TypographyStylesProvider = factory<TypographyStylesProviderFactory>(_props => {
   const props = useProps('TypographyStylesProvider', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
     'className',
     'style',
     'styles',
-    'unstyled'
+    'unstyled',
+    'ref'
   ]);
 
   const getStyles = useStyles<TypographyStylesProviderFactory>({
@@ -47,7 +48,7 @@ export const TypographyStylesProvider = factory<TypographyStylesProviderFactory>
     unstyled: local.unstyled,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box ref={local.ref} {...getStyles('root')} {...others} />;
 });
 
 TypographyStylesProvider.classes = classes;

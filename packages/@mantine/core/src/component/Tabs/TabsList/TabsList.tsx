@@ -36,7 +36,7 @@ export type TabsListFactory = Factory<{
 
 const defaultProps: Partial<TabsListProps> = {};
 
-export const TabsList = factory<TabsListFactory>((_props, ref) => {
+export const TabsList = factory<TabsListFactory>(_props => {
   const props = useProps('TabsList', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'children',
@@ -47,6 +47,7 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
     'styles',
     'style',
     'mod',
+    'ref'
   ]);
 
   const ctx = useTabsContext();
@@ -62,7 +63,7 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
         props,
         variant: ctx.variant,
       })}
-      ref={ref}
+      ref={local.ref}
       role="tablist"
       variant={ctx.variant}
       mod={[

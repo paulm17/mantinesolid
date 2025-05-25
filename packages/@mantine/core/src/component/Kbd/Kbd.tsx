@@ -37,7 +37,7 @@ const varsResolver = createVarsResolver<KbdFactory>((_, { size }) => ({
   root: { '--kbd-fz': getSize(size, 'kbd-fz') },
 }));
 
-export const Kbd = factory<KbdFactory>((_props, ref) => {
+export const Kbd = factory<KbdFactory>(_props => {
   const props = useProps('Kbd', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -45,7 +45,8 @@ export const Kbd = factory<KbdFactory>((_props, ref) => {
     'style',
     'styles',
     'unstyled',
-    'vars'
+    'vars',
+    'ref'
   ]);
 
   const getStyles = useStyles<KbdFactory>({
@@ -61,7 +62,7 @@ export const Kbd = factory<KbdFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box component="kbd" ref={ref} {...getStyles('root')} {...others} />;
+  return <Box component="kbd" ref={local.ref} {...getStyles('root')} {...others} />;
 });
 
 Kbd.classes = classes;

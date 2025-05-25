@@ -116,7 +116,7 @@ const varsResolver = createVarsResolver<ActionIconFactory>(
   }
 );
 
-export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) => {
+export const ActionIcon = polymorphicFactory<ActionIconFactory>(_props => {
   const props = useProps('ActionIcon', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -138,6 +138,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
     'data-disabled',
     'autoContrast',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<ActionIconFactory>({
@@ -161,7 +162,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
       variant={local.variant}
       size={local.size}
       disabled={local.disabled || local.loading}
-      ref={ref}
+      ref={local.ref}
       mod={[{ loading: local.loading, disabled: local.disabled || local["data-disabled"] }, local.mod]}
     >
       <Transition mounted={!!local.loading} transition="slide-down" duration={150}>

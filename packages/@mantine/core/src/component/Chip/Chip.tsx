@@ -128,7 +128,7 @@ const varsResolver = createVarsResolver<ChipFactory>(
   }
 );
 
-export const Chip = factory<ChipFactory>((_props, ref) => {
+export const Chip = factory<ChipFactory>(_props => {
   const props = useProps('Chip', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -151,7 +151,8 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     'icon',
     'rootRef',
     'autoContrast',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<ChipFactory>({
@@ -219,7 +220,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
         }}
         id={uuid}
         disabled={local.disabled}
-        ref={ref}
+        ref={local.ref}
         value={local.value}
         {...contextProps}
         {...rest}

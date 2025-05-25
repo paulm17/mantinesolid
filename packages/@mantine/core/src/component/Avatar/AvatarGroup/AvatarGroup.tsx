@@ -43,7 +43,7 @@ const varsResolver = createVarsResolver<AvatarGroupFactory>((_, { spacing }) => 
   },
 }));
 
-export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
+export const AvatarGroup = factory<AvatarGroupFactory>(_props => {
   const props = useProps('AvatarGroup', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -52,7 +52,8 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
     'styles',
     'unstyled',
     'vars',
-    'spacing'
+    'spacing',
+    'ref'
   ]);
 
   const getStyles = useStyles<AvatarGroupFactory>({
@@ -71,7 +72,7 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
 
   return (
     <AvatarGroupProvider value>
-      <Box ref={ref} {...getStyles('group')} {...others} />
+      <Box ref={local.ref} {...getStyles('group')} {...others} />
     </AvatarGroupProvider>
   );
 });

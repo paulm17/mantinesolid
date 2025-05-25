@@ -84,7 +84,7 @@ const defaultProps: Partial<FileInputProps> = {
   valueComponent: DefaultValue,
 };
 
-const _FileInput = factory<FileInputFactory>((_props, ref) => {
+const _FileInput = factory<FileInputFactory>(_props => {
   const props = useProps('FileInput', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'unstyled',
@@ -108,7 +108,8 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     'component',
     'resetRef',
     'classNames',
-    'styles'
+    'styles',
+    'ref'
   ]);
 
   let resetFn: (() => void) | undefined;
@@ -185,7 +186,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
       {(fileButtonProps) => (
         <InputBase
           component={local.component || 'button'}
-          ref={ref}
+          ref={local.ref}
           rightSection={_rightSection()}
           {...fileButtonProps}
           {...others}

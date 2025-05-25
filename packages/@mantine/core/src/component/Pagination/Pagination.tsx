@@ -82,7 +82,7 @@ const defaultProps: Partial<PaginationProps> = {
   gap: 8,
 };
 
-export const Pagination = factory<PaginationFactory>((_props, ref) => {
+export const Pagination = factory<PaginationFactory>(_props => {
   const props = useProps('Pagination', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'withEdges',
@@ -96,7 +96,8 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
     'total',
     'gap',
     'hideWithOnePage',
-    'withPages'
+    'withPages',
+    'ref'
   ]);
 
   if (local.total <= 0 || (local.hideWithOnePage && local.total === 1)) {
@@ -104,7 +105,7 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
   }
 
   return (
-    <PaginationRoot ref={ref} total={local.total} {...others}>
+    <PaginationRoot ref={local.ref} total={local.total} {...others}>
       <Group gap={local.gap}>
         {local.withEdges && <PaginationFirst icon={local.firstIcon} {...local.getControlProps?.('first')} />}
         {local.withControls && (

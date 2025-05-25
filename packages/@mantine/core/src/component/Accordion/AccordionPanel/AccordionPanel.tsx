@@ -31,7 +31,7 @@ export type AccordionPanelFactory = Factory<{
 
 const defaultProps: Partial<AccordionPanelProps> = {};
 
-export const AccordionPanel = factory<AccordionPanelFactory>((_props, ref) => {
+export const AccordionPanel = factory<AccordionPanelFactory>(_props => {
   const props = useProps('AccordionPanel', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -40,6 +40,7 @@ export const AccordionPanel = factory<AccordionPanelFactory>((_props, ref) => {
     'styles',
     'vars',
     'children',
+    'ref'
   ]);
 
   const { value } = useAccordionItemContext();
@@ -47,7 +48,7 @@ export const AccordionPanel = factory<AccordionPanelFactory>((_props, ref) => {
 
   return (
     <Collapse
-      ref={ref}
+      ref={local.ref}
       {...ctx.getStyles('panel', { className: local.className, classNames: local.classNames, style: local.style, styles: local.styles })}
       {...others}
       in={ctx.isItemActive(value)}

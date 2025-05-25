@@ -58,7 +58,7 @@ const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
   },
 }));
 
-export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
+export const Card = polymorphicFactory<CardFactory>(_props => {
   const props = useProps('Card', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -70,6 +70,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     'children',
     'padding',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<CardFactory>({
@@ -103,7 +104,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
       registerItem,
       totalItems,
      }}>
-      <Paper ref={ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
+      <Paper ref={local.ref} unstyled={local.unstyled} {...getStyles('root')} {...others}>
         {local.children}
       </Paper>
     </CardProvider>

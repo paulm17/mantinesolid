@@ -180,7 +180,7 @@ const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
   },
 }));
 
-export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
+export const Input = polymorphicFactory<InputFactory>(_props => {
   const props = useProps('Input', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -216,6 +216,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     '__clearSection',
     '__clearable',
     '__defaultRightSection',
+    'ref'
   ]);
 
   const { styleProps, rest } = extractStyleProps(others);
@@ -290,7 +291,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
           component="input"
           {...rest}
           {...ariaAttributes}
-          ref={ref}
+          ref={local.ref}
           required={local.required}
           mod={{ disabled: local.disabled, error: !!local.error && local.withErrorStyles }}
           variant={local.variant}

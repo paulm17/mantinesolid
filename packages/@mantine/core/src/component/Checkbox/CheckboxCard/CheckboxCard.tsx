@@ -62,7 +62,7 @@ const varsResolver = createVarsResolver<CheckboxCardFactory>((_, { radius }) => 
   },
 }));
 
-export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
+export const CheckboxCard = factory<CheckboxCardFactory>(_props => {
   const props = useProps('CheckboxCard', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -77,7 +77,8 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     'value',
     'onClick',
     'defaultChecked',
-    'onChange'
+    'onChange',
+    'ref'
   ]);
 
   const getStyles = useStyles<CheckboxCardFactory>({
@@ -109,7 +110,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
   return (
     <CheckboxCardProvider value={{ checked: _value }}>
       <UnstyledButton
-        ref={ref}
+        ref={local.ref}
         mod={[{ 'with-border': local.withBorder, checked: _value() }, local.mod]}
         {...getStyles('card')}
         {...others}

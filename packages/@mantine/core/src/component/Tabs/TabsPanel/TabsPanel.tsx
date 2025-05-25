@@ -36,7 +36,7 @@ export type TabsPanelFactory = Factory<{
 
 const defaultProps: Partial<TabsPanelProps> = {};
 
-export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
+export const TabsPanel = factory<TabsPanelFactory>(_props => {
   const props = useProps('TabsPanel', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'children',
@@ -47,6 +47,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
     'style',
     'mod',
     'keepMounted',
+    'ref'
   ]);
 
   const ctx = useTabsContext();
@@ -64,7 +65,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
         style: [local.style, !active ? { display: 'none' } : undefined],
         props,
       })}
-      ref={ref}
+      ref={local.ref}
       mod={[{ orientation: ctx.orientation }, local.mod]}
       role="tabpanel"
       id={ctx.getPanelId(local.value)}

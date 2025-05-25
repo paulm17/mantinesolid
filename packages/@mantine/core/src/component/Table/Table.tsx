@@ -168,7 +168,7 @@ const varsResolver = createVarsResolver<TableFactory>(
   })
 );
 
-export const Table = factory<TableFactory>((_props, ref) => {
+export const Table = factory<TableFactory>(_props => {
   const props = useProps('Table', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -195,7 +195,8 @@ export const Table = factory<TableFactory>((_props, ref) => {
     'stickyHeader',
     'stickyHeaderOffset',
     'mod',
-    'tabularNums'
+    'tabularNums',
+    'ref'
   ]);
 
   const getStyles = useStyles<TableFactory>({
@@ -225,7 +226,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
       <Box
         component="table"
         variant={local.variant}
-        ref={ref}
+        ref={local.ref}
         mod={[{ 'data-with-table-border': local.withTableBorder, 'data-tabular-nums': local.tabularNums }, local.mod]}
         {...getStyles('table')}
         {...others}

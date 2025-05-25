@@ -18,16 +18,17 @@ export type SpaceFactory = Factory<{
 
 const defaultProps: Partial<SpaceProps> = {};
 
-export const Space = factory<SpaceFactory>((_props, ref) => {
+export const Space = factory<SpaceFactory>(_props => {
   const props = useProps('Space', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'w',
     'h',
     'miw',
-    'mih'
+    'mih',
+    'ref'
   ]);
 
-  return <Box ref={ref} {...others} w={local.w} miw={local.miw ?? local.w} h={local.h} mih={local.mih ?? local.h} />;
+  return <Box ref={local.ref} {...others} w={local.w} miw={local.miw ?? local.w} h={local.h} mih={local.mih ?? local.h} />;
 });
 
 Space.displayName = '@mantine/core/Space';

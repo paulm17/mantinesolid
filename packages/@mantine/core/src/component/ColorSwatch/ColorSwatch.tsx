@@ -61,7 +61,7 @@ const varsResolver = createVarsResolver<ColorSwatchFactory>((_, { radius, size }
   },
 }));
 
-export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) => {
+export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>(_props => {
   const props = useProps('ColorSwatch', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -76,6 +76,7 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
     'withShadow',
     'children',
     'variant',
+    'ref'
   ]);
 
   const getStyles = useStyles<ColorSwatchFactory>({
@@ -93,7 +94,7 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       size={local.size}
       {...getStyles('root', { focusable: true })}

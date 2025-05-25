@@ -106,7 +106,7 @@ const defaultProps: Partial<StepperStepProps> = {
   iconPosition: 'left',
 };
 
-export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
+export const StepperStep = factory<StepperStepFactory>(_props => {
   const props = useProps('StepperStep', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -129,7 +129,8 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
     'allowStepSelect',
     'iconPosition',
     'orientation',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useStepperContext();
@@ -209,7 +210,7 @@ export const StepperStep = factory<StepperStepFactory>((_props, ref) => {
         { 'icon-position': local.iconPosition || ctx.iconPosition, 'allow-click': local.allowStepClick, 'type': 'step' },
         local.mod,
       ]}
-      ref={ref}
+      ref={local.ref}
       {...dataAttributes()}
       {...others}
       onClick={() => {

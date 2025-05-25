@@ -122,7 +122,7 @@ const varsResolver = createVarsResolver<SemiCircleProgressFactory>(
   })
 );
 
-export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, ref) => {
+export const SemiCircleProgress = factory<SemiCircleProgressFactory>(_props => {
   const props = useProps('SemiCircleProgress', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -140,7 +140,8 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
     'emptySegmentColor',
     'transitionDuration',
     'label',
-    'labelPosition'
+    'labelPosition',
+    'ref'
   ]);
 
   const getStyles = useStyles<SemiCircleProgressFactory>({
@@ -162,7 +163,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
   const semiCirclePercentage = clamp(local.value, 0, 100) * (circumference / 100);
 
   return (
-    <Box ref={ref} size={local.size} {...getStyles('root')} {...others}>
+    <Box ref={local.ref} size={local.size} {...getStyles('root')} {...others}>
       {local.label && (
         <p {...getStyles('label')} data-position={local.labelPosition} data-orientation={local.orientation}>
           {local.label}

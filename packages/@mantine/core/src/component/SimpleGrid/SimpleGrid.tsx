@@ -46,7 +46,7 @@ const defaultProps: Partial<SimpleGridProps> = {
   type: 'media',
 };
 
-export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
+export const SimpleGrid = factory<SimpleGridFactory>(_props => {
   const props = useProps('SimpleGrid', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -58,7 +58,8 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
     'cols',
     'verticalSpacing',
     'spacing',
-    'type'
+    'type',
+    'ref'
   ]);
 
   const getStyles = useStyles<SimpleGridFactory>({
@@ -80,7 +81,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
       <>
         <SimpleGridContainerVariables {...props} selector={`.${responsiveClassName}`} />
         <div {...getStyles('container')}>
-          <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others} />
+          <Box ref={local.ref} {...getStyles('root', { className: responsiveClassName })} {...others} />
         </div>
       </>
     );
@@ -89,7 +90,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
   return (
     <>
       <SimpleGridMediaVariables {...props} selector={`.${responsiveClassName}`} />
-      <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others} />
+      <Box ref={local.ref} {...getStyles('root', { className: responsiveClassName })} {...others} />
     </>
   );
 });

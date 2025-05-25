@@ -88,7 +88,7 @@ const varsResolver = createVarsResolver<TimelineFactory>(
   })
 );
 
-export const Timeline = factory<TimelineFactory>((_props, ref) => {
+export const Timeline = factory<TimelineFactory>(_props => {
   const props = useProps('Timeline', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -106,7 +106,8 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     'lineWidth',
     'reverseActive',
     'mod',
-    'autoContrast'
+    'autoContrast',
+    'ref'
   ]);
 
   const getStyles = useStyles<TimelineFactory>({
@@ -139,7 +140,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
       align: () => local.align!,
       unstyled: () => !!local.unstyled,
     }}>
-      <Box {...getStyles('root')} mod={[{ align: local.align }, local.mod]} ref={ref} {...others}>
+      <Box {...getStyles('root')} mod={[{ align: local.align }, local.mod]} ref={local.ref} {...others}>
         {local.children}
       </Box>
     </TimelineProvider>

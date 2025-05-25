@@ -148,7 +148,7 @@ const varsResolver = createVarsResolver<PinInputFactory>((_, { size }) => ({
   },
 }));
 
-export const PinInput = factory<PinInputFactory>((_props, ref) => {
+export const PinInput = factory<PinInputFactory>(_props => {
   const props = useProps('PinInput', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'name',
@@ -184,6 +184,7 @@ export const PinInput = factory<PinInputFactory>((_props, ref) => {
     'hiddenInputProps',
     'rootRef',
     'getInputProps',
+    'ref'
   ]);
 
   const uuid = useId(local.id);
@@ -422,7 +423,7 @@ export const PinInput = factory<PinInputFactory>((_props, ref) => {
               variant={local.variant}
               disabled={local.disabled}
               ref={(el: HTMLInputElement) => {
-                if (typeof ref === 'function') ref(el);
+                if (typeof local.ref === 'function') local.ref(el);
 
                 setInputsRef(prev => {
                   const next = [...prev];

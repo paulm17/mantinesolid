@@ -53,7 +53,7 @@ const varsResolver = createVarsResolver<TableScrollContainerFactory>(
   })
 );
 
-export const TableScrollContainer = factory<TableScrollContainerFactory>((_props, ref) => {
+export const TableScrollContainer = factory<TableScrollContainerFactory>(_props => {
   const props = useProps('TableScrollContainer', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -65,7 +65,8 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
     'children',
     'minWidth',
     'maxHeight',
-    'type'
+    'type',
+    'ref'
   ]);
 
   const getStyles = useStyles<TableScrollContainerFactory>({
@@ -90,7 +91,7 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
           ? { offsetScrollbars: 'xy' }
           : { offsetScrollbars: 'x' }
         : {})}
-      ref={ref}
+      ref={local.ref}
       {...getStyles('scrollContainer')}
       {...others}
     >

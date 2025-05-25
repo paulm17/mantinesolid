@@ -29,7 +29,7 @@ export type CenterFactory = PolymorphicFactory<{
 
 const defaultProps: Partial<CenterProps> = {};
 
-export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
+export const Center = polymorphicFactory<CenterFactory>(_props => {
   const props = useProps('Center', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -40,6 +40,7 @@ export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
     'vars',
     'inline',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<CenterFactory>({
@@ -54,7 +55,7 @@ export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
     vars: local.vars,
   });
 
-  return <Box ref={ref} mod={[{ inline: local.inline }, local.mod]} {...getStyles('root')} {...others} />;
+  return <Box ref={local.ref} mod={[{ inline: local.inline }, local.mod]} {...getStyles('root')} {...others} />;
 });
 
 Center.classes = classes;

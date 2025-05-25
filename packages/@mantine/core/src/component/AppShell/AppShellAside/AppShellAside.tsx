@@ -32,7 +32,7 @@ export type AppShellAsideFactory = Factory<{
 
 const defaultProps: Partial<AppShellAsideProps> = {};
 
-export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
+export const AppShellAside = factory<AppShellAsideFactory>(_props => {
   const props = useProps('AppShellAside', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -44,6 +44,7 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
     'withBorder',
     'zIndex',
     'mod',
+    'ref'
   ]);
 
   const ctx = useAppShellContext();
@@ -55,7 +56,7 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
   return (
     <Box
       component="aside"
-      ref={ref}
+      ref={local.ref}
       mod={[{ 'with-border': local.withBorder ?? ctx.withBorder }, local.mod]}
       {...ctx.getStyles('aside', { className: local.className, classNames: local.classNames, styles: local.styles, style: local.style })}
       {...others}

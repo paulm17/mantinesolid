@@ -49,7 +49,7 @@ const varsResolver = createVarsResolver<FieldsetFactory>((_, { radius }) => ({
   },
 }));
 
-export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
+export const Fieldset = factory<FieldsetFactory>(_props => {
   const props = useProps('Fieldset', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -60,7 +60,8 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
     'vars',
     'legend',
     'variant',
-    'children'
+    'children',
+    'ref'
   ]);
 
   const getStyles = useStyles<FieldsetFactory>({
@@ -79,7 +80,7 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
   return (
     <Box
       component="fieldset"
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       {...getStyles('root', { variant: local.variant })}
       {...others}

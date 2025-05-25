@@ -34,7 +34,7 @@ export type AppShellHeaderFactory = Factory<{
 
 const defaultProps: Partial<AppShellHeaderProps> = {};
 
-export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
+export const AppShellHeader = factory<AppShellHeaderFactory>(_props => {
   const props = useProps('AppShellHeader', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -45,7 +45,8 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
     'vars',
     'withBorder',
     'zIndex',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useAppShellContext();
@@ -57,7 +58,7 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
   return (
     <Box
       component="header"
-      ref={ref}
+      ref={local.ref}
       mod={[{ 'with-border': local.withBorder ?? ctx.withBorder }, local.mod]}
       {...ctx.getStyles('header', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, local.className),

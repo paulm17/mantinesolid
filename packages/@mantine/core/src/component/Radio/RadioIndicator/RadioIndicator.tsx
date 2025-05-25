@@ -99,7 +99,7 @@ const varsResolver = createVarsResolver<RadioIndicatorFactory>(
   }
 );
 
-export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
+export const RadioIndicator = factory<RadioIndicatorFactory>(_props => {
   const props = useProps('RadioIndicator', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -116,7 +116,8 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
     'checked',
     'mod',
     'variant',
-    'disabled'
+    'disabled',
+    'ref'
   ]);
 
   const Icon = local.icon!;
@@ -140,7 +141,7 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       {...getStyles('indicator', { variant: local.variant })}
       variant={local.variant}
       mod={[{ checked: _checked, disabled: local.disabled }, local.mod]}

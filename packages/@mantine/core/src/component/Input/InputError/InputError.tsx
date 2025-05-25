@@ -47,7 +47,7 @@ const varsResolver = createVarsResolver<InputErrorFactory>((_, { size }) => ({
   },
 }));
 
-export const InputError = factory<InputErrorFactory>((_props, ref) => {
+export const InputError = factory<InputErrorFactory>(_props => {
   const props = useProps('InputError', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -59,8 +59,10 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
     'size',
     '__staticSelector',
     '__inheritStyles',
-    'variant'
+    'variant',
+    'ref'
   ]);
+
   const _getStyles = useStyles<InputErrorFactory>({
     name: ['InputWrapper', local.__staticSelector],
     props,
@@ -81,7 +83,7 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
   return (
     <Box
       component="p"
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       size={local.size}
       {...getStyles('error', ctx?.getStyles ? { className: local.className, style: local.style } : undefined)}

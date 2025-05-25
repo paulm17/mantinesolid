@@ -34,20 +34,21 @@ export type HighlightFactory = PolymorphicFactory<{
 
 const defaultProps: Partial<HighlightProps> = {};
 
-export const Highlight = polymorphicFactory<HighlightFactory>((_props, ref) => {
+export const Highlight = polymorphicFactory<HighlightFactory>(_props => {
   const props = useProps('Highlight', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'unstyled',
     'children',
     'highlight',
     'highlightStyles',
-    'color'
+    'color',
+    'ref'
   ]);
 
   const highlightChunks = highlighter(local.children, local.highlight);
 
   return (
-    <Text unstyled={local.unstyled} ref={ref} {...others} __staticSelector="Highlight">
+    <Text unstyled={local.unstyled} ref={local.ref} {...others} __staticSelector="Highlight">
       <For each={highlightChunks}>
         {(item, i) =>
           item.highlighted ? (

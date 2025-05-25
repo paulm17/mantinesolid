@@ -143,7 +143,7 @@ const varsResolver = createVarsResolver<StepperFactory>(
   })
 );
 
-export const Stepper = factory<StepperFactory>((_props, ref) => {
+export const Stepper = factory<StepperFactory>(_props => {
   const props = useProps('Stepper', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -167,7 +167,8 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
     'radius',
     'allowNextStepsSelect',
     'wrap',
-    'autoContrast'
+    'autoContrast',
+    'ref'
   ]);
 
   const getStyles = useStyles<StepperFactory>({
@@ -219,7 +220,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
       stepChildren: stepContents,
       registerStepContent,
     }}>
-      <Box {...getStyles('root')} ref={ref} size={local.size} {...others}>
+      <Box {...getStyles('root')} ref={local.ref} size={local.size} {...others}>
         <Box
           {...getStyles('steps')}
           mod={{

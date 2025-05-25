@@ -51,7 +51,7 @@ const varsResolver = createVarsResolver<BreadcrumbsFactory>((_, { separatorMargi
   },
 }));
 
-export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
+export const Breadcrumbs = factory<BreadcrumbsFactory>(_props => {
   const props = useProps('Breadcrumbs', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -62,7 +62,8 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
     'vars',
     'children',
     'separator',
-    'separatorMargin'
+    'separatorMargin',
+    'ref'
   ]);
 
   const getStyles = useStyles<BreadcrumbsFactory>({
@@ -102,7 +103,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
   };
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box ref={local.ref} {...getStyles('root')} {...others}>
       {items()}
     </Box>
   );

@@ -90,7 +90,7 @@ const varsResolver = createVarsResolver<AlertFactory>(
   }
 );
 
-export const Alert = factory<AlertFactory>((_props, ref) => {
+export const Alert = factory<AlertFactory>(_props => {
   const props = useProps('Alert', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -110,6 +110,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     'closeButtonLabel',
     'variant',
     'autoContrast',
+    'ref'
   ]);
 
   const getStyles = useStyles<AlertFactory>({
@@ -134,7 +135,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
       id={rootId}
       {...getStyles('root', { variant: local.variant  })}
       variant={local.variant}
-      ref={ref}
+      ref={local.ref}
       {...others}
       role="alert"
       aria-describedby={bodyId}

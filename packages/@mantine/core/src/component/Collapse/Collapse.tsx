@@ -41,7 +41,7 @@ const defaultProps: Partial<CollapseProps> = {
   animateOpacity: true,
 };
 
-export const Collapse = factory<CollapseFactory>((_props, ref) => {
+export const Collapse = factory<CollapseFactory>(_props => {
   const props = useProps('Collapse', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'children',
@@ -50,7 +50,8 @@ export const Collapse = factory<CollapseFactory>((_props, ref) => {
     'transitionTimingFunction',
     'style',
     'onTransitionEnd',
-    'animateOpacity'
+    'animateOpacity',
+    'ref'
   ]);
 
   const opened = local.in;
@@ -82,7 +83,7 @@ export const Collapse = factory<CollapseFactory>((_props, ref) => {
         transition: local.animateOpacity ? `opacity ${duration}ms ${local.transitionTimingFunction}` : 'none',
         ...getStyleObject(local.style, theme),
       }}
-      ref={ref}
+      ref={local.ref}
       {...others}
     >
       {local.children}

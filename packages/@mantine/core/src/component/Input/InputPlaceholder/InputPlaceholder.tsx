@@ -31,7 +31,7 @@ export type InputPlaceholderFactory = Factory<{
 
 const defaultProps: Partial<InputPlaceholderProps> = {};
 
-export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) => {
+export const InputPlaceholder = factory<InputPlaceholderFactory>(_props => {
   const props = useProps('InputPlaceholder', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -43,7 +43,8 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     '__staticSelector',
     'variant',
     'error',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<InputPlaceholderFactory>({
@@ -64,7 +65,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
       mod={[{ error: !!local.error }, local.mod]}
       component="span"
       variant={local.variant}
-      ref={ref}
+      ref={local.ref}
       {...others}
     />
   );

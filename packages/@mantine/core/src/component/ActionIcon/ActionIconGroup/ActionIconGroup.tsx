@@ -43,7 +43,7 @@ const varsResolver = createVarsResolver<ActionIconGroupFactory>((_, { borderWidt
   group: { '--ai-border-width': rem(borderWidth) },
 }));
 
-export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => {
+export const ActionIconGroup = factory<ActionIconGroupFactory>(_props => {
   const props = useProps('ActionIconGroup', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -56,6 +56,7 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
     'borderWidth',
     'variant',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<ActionIconGroupFactory>({
@@ -75,7 +76,7 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
   return (
     <Box
       {...getStyles('group')}
-      ref={ref}
+      ref={local.ref}
       variant={local.variant}
       mod={[{ 'data-orientation': local.orientation }, local.mod]}
       role="group"

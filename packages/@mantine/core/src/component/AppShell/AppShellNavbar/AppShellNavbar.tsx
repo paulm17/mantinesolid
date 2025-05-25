@@ -32,7 +32,7 @@ export type AppShellNavbarFactory = Factory<{
 
 const defaultProps: Partial<AppShellNavbarProps> = {};
 
-export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
+export const AppShellNavbar = factory<AppShellNavbarFactory>(_props => {
   const props = useProps('AppShellNavbar', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -43,7 +43,8 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
     'vars',
     'withBorder',
     'zIndex',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useAppShellContext();
@@ -56,7 +57,7 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
     // @ts-ignore
     <Box
       component="nav"
-      ref={ref}
+      ref={local.ref}
       mod={[{ 'with-border': local.withBorder ?? ctx.withBorder }, local.mod]}
       {...ctx.getStyles('navbar', { className: local.className, classNames: local.classNames, styles: local.styles, style: local.style })}
       {...others}

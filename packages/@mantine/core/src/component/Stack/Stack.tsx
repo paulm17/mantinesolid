@@ -51,7 +51,7 @@ const varsResolver = createVarsResolver<StackFactory>((_, { gap, align, justify 
   },
 }));
 
-export const Stack = factory<StackFactory>((_props, ref) => {
+export const Stack = factory<StackFactory>(_props => {
   const props = useProps('Stack', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -63,7 +63,8 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     'align',
     'justify',
     'gap',
-    'variant'
+    'variant',
+    'ref'
   ]);
 
   const getStyles = useStyles<StackFactory>({
@@ -79,11 +80,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     varsResolver,
   });
 
-  // onMount(() => {
-  //   console.log('Stack mounted');
-  // });
-
-  return <Box ref={ref} {...getStyles('root')} variant={local.variant} {...others} />;
+  return <Box ref={local.ref} {...getStyles('root')} variant={local.variant} {...others} />;
 });
 
 Stack.classes = classes;

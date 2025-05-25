@@ -107,7 +107,7 @@ const varsResolver = createVarsResolver<RatingFactory>((theme, { size, color }) 
   },
 }));
 
-export const Rating = factory<RatingFactory>((_props, ref) => {
+export const Rating = factory<RatingFactory>(_props => {
   const props = useProps('Rating', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -136,7 +136,8 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     'color',
     'emptySymbol',
     'fullSymbol',
-    'highlightSelectedOnly'
+    'highlightSelectedOnly',
+    'ref'
   ]);
 
   const getStyles = useStyles<RatingFactory>({
@@ -309,7 +310,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
   return (
     <RatingProvider value={{ getStyles }}>
       <Box
-        ref={useMergedRef(ref, setRootRef)}
+        ref={useMergedRef(local.ref, setRootRef)}
         {...getStyles('root')}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}

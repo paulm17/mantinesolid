@@ -143,7 +143,7 @@ const varsResolver = createVarsResolver<ButtonFactory>(
   }
 );
 
-export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
+export const Button = polymorphicFactory<ButtonFactory>(_props => {
   const props = useProps('Button', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'style',
@@ -166,6 +166,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
     'data-disabled',
     'autoContrast',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<ButtonFactory>({
@@ -186,7 +187,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
 
   return (
     <UnstyledButton
-      ref={ref}
+      ref={local.ref}
       {...getStyles('root', { active: !local.disabled && !local.loading && !local["data-disabled"] })}
       unstyled={local.unstyled}
       variant={local.variant}

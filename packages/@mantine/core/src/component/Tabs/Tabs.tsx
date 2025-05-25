@@ -123,7 +123,7 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
   },
 }));
 
-export const Tabs = factory<TabsFactory>((_props, ref) => {
+export const Tabs = factory<TabsFactory>(_props => {
   const props = useProps('Tabs', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'defaultValue',
@@ -148,7 +148,8 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     'style',
     'vars',
     'autoContrast',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const uid = useId(local.id);
@@ -196,7 +197,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
       }}
     >
       <Box
-        ref={ref}
+        ref={local.ref}
         id={uid}
         variant={local.variant}
         mod={[

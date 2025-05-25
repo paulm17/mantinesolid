@@ -74,7 +74,7 @@ const varsResolver = createVarsResolver<BurgerFactory>(
   })
 );
 
-export const Burger = factory<BurgerFactory>((_props, ref) => {
+export const Burger = factory<BurgerFactory>(_props => {
   const props = mergeProps(defaultProps, defaultProps, _props);
 
   const [local, others] = splitProps(props, [
@@ -88,7 +88,8 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
     'children',
     'transitionDuration',
     'transitionTimingFunction',
-    'lineSize'
+    'lineSize',
+    'ref'
   ]);
 
   const getStyles = useStyles<BurgerFactory>({
@@ -105,7 +106,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
   });
 
   return (
-    <UnstyledButton {...getStyles('root')} ref={ref} {...others}>
+    <UnstyledButton {...getStyles('root')} ref={local.ref} {...others}>
       <Box mod={['reduce-motion', { opened: () => local.opened }]} {...getStyles('burger')} />
       {local.children}
     </UnstyledButton>

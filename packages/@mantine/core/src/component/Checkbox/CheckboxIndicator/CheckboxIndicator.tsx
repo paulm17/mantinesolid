@@ -96,7 +96,7 @@ const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
   }
 );
 
-export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref) => {
+export const CheckboxIndicator = factory<CheckboxIndicatorFactory>(_props => {
   const props = useProps('CheckboxIndicator', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -115,7 +115,8 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     'mod',
     'variant',
     'disabled',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const Icon = local.icon!;
@@ -146,7 +147,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       {...getStyles('indicator', { variant: local.variant })}
       variant={local.variant}
       mod={[{ checked: _checked(), disabled: local.disabled }, local.mod]}

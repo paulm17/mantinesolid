@@ -29,8 +29,7 @@ export type UnstyledButtonFactory = PolymorphicFactory<{
   defaultRef: HTMLButtonElement;
 }>;
 
-export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
-  (_props: UnstyledButtonProps & { component?: any }, ref) => {
+export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>((_props: UnstyledButtonProps & { component?: any, ref?: any }) => {
     const props = useProps('UnstyledButton', defaultProps, _props);
     const [local, others] = splitProps(props, [
       'className',
@@ -40,6 +39,7 @@ export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
       'classNames',
       'styles',
       'style',
+      'ref'
     ]);
 
     const getStyles = useStyles<UnstyledButtonFactory>({
@@ -57,7 +57,7 @@ export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
       <Box
         {...getStyles('root', { focusable: true })}
         component={local.component ?? 'button'}
-        ref={ref}
+        ref={local.ref}
         type={local.component === 'button' ? 'button' : undefined}
         {...others}
       />

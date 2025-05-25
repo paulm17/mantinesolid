@@ -115,7 +115,7 @@ const varsResolver = createVarsResolver<AvatarFactory>(
   }
 );
 
-export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
+export const Avatar = polymorphicFactory<AvatarFactory>(_props => {
   const props = useProps('Avatar', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -134,7 +134,8 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     'autoContrast',
     'mod',
     'name',
-    'allowedInitialsColors'
+    'allowedInitialsColors',
+    'ref'
   ]);
   const ctx = useAvatarGroupContext();
   const [error, setError] = createSignal(!local.src);
@@ -158,7 +159,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     <Box
       {...getStyles('root')}
       mod={[{ 'within-group': ctx.withinGroup }, local.mod]}
-      ref={ref}
+      ref={local.ref}
       {...others}
     >
       {error() ? (

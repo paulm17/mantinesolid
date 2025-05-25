@@ -42,7 +42,7 @@ const varsResolver = createVarsResolver<CodeFactory>((theme, { color }) => ({
   },
 }));
 
-export const Code = factory<CodeFactory>((_props, ref) => {
+export const Code = factory<CodeFactory>(_props => {
   const props = useProps('Code', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -54,7 +54,8 @@ export const Code = factory<CodeFactory>((_props, ref) => {
     'color',
     'block',
     'variant',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<CodeFactory>({
@@ -74,7 +75,7 @@ export const Code = factory<CodeFactory>((_props, ref) => {
     <Box<any>
       component={local.block ? 'pre' : 'code'}
       variant={local.variant}
-      ref={ref}
+      ref={local.ref}
       mod={[{ block: local.block }, local.mod]}
       {...getStyles('root')}
       {...others}

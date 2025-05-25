@@ -50,7 +50,7 @@ const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) =>
   },
 }));
 
-export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
+export const Paper = polymorphicFactory<PaperFactory>(_props => {
   const props = useProps('Paper', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -64,6 +64,7 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
     'shadow',
     'variant',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<PaperFactory>({
@@ -81,7 +82,7 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       mod={[{ 'data-with-border': local.withBorder }, local.mod]}
       {...getStyles('root')}
       variant={local.variant}

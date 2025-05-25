@@ -46,7 +46,7 @@ export type TabsTabFactory = Factory<{
 
 const defaultProps: Partial<TabsTabProps> = {};
 
-export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
+export const TabsTab = factory<TabsTabFactory>(_props => {
   const props = useProps('TabsTab', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'className',
@@ -64,6 +64,7 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
     'vars',
     'mod',
     'tabIndex',
+    'ref'
   ]);
 
   const theme = useMantineTheme();
@@ -94,7 +95,7 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
         },
         local.mod,
       ]}
-      ref={ref}
+      ref={local.ref}
       role="tab"
       id={ctx.getTabId(local.value)}
       aria-selected={active}

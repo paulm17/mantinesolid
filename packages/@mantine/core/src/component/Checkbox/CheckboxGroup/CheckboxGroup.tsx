@@ -38,7 +38,7 @@ export type CheckboxGroupFactory = Factory<{
 
 const defaultProps: Partial<CheckboxGroupProps> = {};
 
-export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
+export const CheckboxGroup = factory<CheckboxGroupFactory>(_props => {
   const props = useProps('Checkbox', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'value',
@@ -47,7 +47,8 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
     'size',
     'wrapperProps',
     'children',
-    'readOnly'
+    'readOnly',
+    'ref'
   ]);
 
   const [_value, setValue] = useUncontrolled({
@@ -79,7 +80,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((_props, ref) => {
     }}>
       <Input.Wrapper
         size={local.size}
-        ref={ref}
+        ref={local.ref}
         {...local.wrapperProps}
         {...others}
         labelElement="div"

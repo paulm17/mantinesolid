@@ -1,5 +1,5 @@
-import { JSX, mergeProps, Ref, splitProps } from 'solid-js';
-import { ElementType, PolymorphicComponentProps } from './create-polymorphic-component';
+import { Component, JSX, mergeProps } from 'solid-js';
+import { PolymorphicComponentProps } from './create-polymorphic-component';
 import {
   ComponentClasses,
   FactoryPayload,
@@ -14,24 +14,21 @@ export interface PolymorphicFactoryPayload extends FactoryPayload {
 }
 
 export type PolymorphicComponentWithProps<Payload extends PolymorphicFactoryPayload> = {
-  withProps: <C extends ElementType = Payload['defaultComponent']>(
+  withProps: <C = Payload['defaultComponent']>(
     fixedProps: PolymorphicComponentProps<C, Payload['props']>
-  ) => <L extends ElementType = C>(
-    props: PolymorphicComponentProps<L, Payload['props']> & { ref?: Ref<Payload['defaultRef']> }
-  ) => JSX.Element;
+  ) => <L = C>(props: PolymorphicComponentProps<L, Payload['props']>) => JSX.Element;
 };
 
 export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
-  ui: (props: Payload['props'], ref?: Ref<Payload['defaultRef']>) => JSX.Element
+  ui: (props: Payload['props'] & { ref?: 'ref' extends keyof Payload['props'] ? Payload['props']['ref'] : any }) => JSX.Element
 ) {
-  type ComponentProps<C extends ElementType> = PolymorphicComponentProps<C, Payload['props']>;
+  type ComponentProps<C> = PolymorphicComponentProps<C, Payload['props']>;
 
-  type _PolymorphicComponent = <C extends ElementType = Payload['defaultComponent']>(
-    // props: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
-    props: ComponentProps<C> & { ref?: Ref<any> }
+  type _PolymorphicComponent = <C = Payload['defaultComponent']>(
+    props: ComponentProps<C>
   ) => JSX.Element;
 
-  type ComponentProperties = Omit<(props: ComponentProps<any> & { ref?: Ref<Payload['defaultRef']> }) => JSX.Element, never>;
+  type ComponentProperties = Omit<Component<ComponentProps<any>>, never>;
 
   type PolymorphicComponent = _PolymorphicComponent &
     ComponentProperties &
@@ -42,29 +39,16 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
       displayName?: string | undefined;
     };
 
-  // Create the component function
-  const Component = (<C extends ElementType = Payload['defaultComponent']>(
-    allProps: ComponentProps<C> & { ref?: Ref<Payload['defaultRef']> }
-  ) => {
-    return ui(allProps as Payload['props'], allProps.ref);
-  }) as unknown as PolymorphicComponent;
-
-
-  // Add withProps method
-  Component.withProps = <C extends ElementType = Payload['defaultComponent']>(
-    fixedProps: PolymorphicComponentProps<C, Payload['props']>
-  ) => {
-    const Extended = (<L extends ElementType = C>(
-      allProps: PolymorphicComponentProps<L, Payload['props']> & { ref?: Ref<Payload['defaultRef']> }
-    ) => {
-      const merged = mergeProps(fixedProps as any, allProps as any);
-      return ui(merged as Payload['props'], merged.ref);
-    }) as any;
-
-    Extended.extend = Component.extend;
-    Extended.displayName = `WithProps(${Component.displayName})`;
-    return Extended;
-  };
+    const Component = ui as unknown as PolymorphicComponent;
+    Component.withProps = (fixedProps: any) => {
+      const Extended = ((props: any) => {
+        const mergedProps = mergeProps(fixedProps, props);
+        return Component(mergedProps as ComponentProps<any>);
+      }) as any;
+      Extended.extend = Component.extend;
+      Extended.displayName = `WithProps(${Component.displayName})`;
+      return Extended;
+    };
 
   Component.extend = identity as any;
 

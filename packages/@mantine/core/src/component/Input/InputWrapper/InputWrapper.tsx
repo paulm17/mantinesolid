@@ -124,7 +124,7 @@ const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
   },
 }));
 
-export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
+export const InputWrapper = factory<InputWrapperFactory>(_props => {
   const props = useProps('InputWrapper', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -150,7 +150,8 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     'id',
     'required',
     '__stylesApiProps',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<InputWrapperFactory>({
@@ -246,7 +247,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
       }}
     >
       <Box
-        ref={ref}
+        ref={local.ref}
         variant={local.variant}
         size={local.size}
         mod={[{ error: !!local.error }, local.mod]}

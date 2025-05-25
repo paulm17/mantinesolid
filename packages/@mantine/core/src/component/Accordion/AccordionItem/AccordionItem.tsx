@@ -31,7 +31,7 @@ export type AccordionItemFactory = Factory<{
 
 const defaultProps: Partial<AccordionItemProps> = {};
 
-export const AccordionItem = factory<AccordionItemFactory>((_props, ref) => {
+export const AccordionItem = factory<AccordionItemFactory>(_props => {
   const props = useProps('AccordionItem', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -41,13 +41,14 @@ export const AccordionItem = factory<AccordionItemFactory>((_props, ref) => {
     'vars',
     'value',
     'mod',
+    'ref'
   ]);
   const ctx = useAccordionContext();
 
   return (
     <AccordionItemProvider value={{ value: local.value }}>
       <Box
-        ref={ref}
+        ref={local.ref}
         mod={[{ active: ctx.isItemActive(local.value) }, local.mod]}
         {...ctx.getStyles('item', { className: local.className, classNames: local.classNames, styles: local.styles, style: local.style, variant: ctx.variant })}
         {...others}

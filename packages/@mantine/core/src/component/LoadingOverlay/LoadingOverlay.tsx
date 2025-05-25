@@ -61,7 +61,7 @@ const varsResolver = createVarsResolver<LoadingOverlayFactory>((_, { zIndex }) =
   },
 }));
 
-export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
+export const LoadingOverlay = factory<LoadingOverlayFactory>(_props => {
   const props = useProps('LoadingOverlay', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -74,7 +74,8 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
     'loaderProps',
     'overlayProps',
     'visible',
-    'zIndex'
+    'zIndex',
+    'ref'
   ]);
 
   const theme = useMantineTheme();
@@ -97,7 +98,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
   return (
     <Transition transition="fade" {...local.transitionProps} mounted={!!local.visible}>
       {(transitionStyles) => (
-        <Box {...getStyles('root', { style: transitionStyles })} ref={ref} {...others}>
+        <Box {...getStyles('root', { style: transitionStyles })} ref={local.ref} {...others}>
           <Loader {...getStyles('loader')} unstyled={local.unstyled} {...local.loaderProps} />
 
           <Overlay

@@ -77,7 +77,7 @@ const varsResolver = createVarsResolver<OverlayFactory>(
   })
 );
 
-export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
+export const Overlay = polymorphicFactory<OverlayFactory>(_props => {
   const props = useProps('Overlay', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -96,6 +96,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
     'color',
     'backgroundOpacity',
     'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<OverlayFactory>({
@@ -112,7 +113,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} mod={[{ center: local.center, fixed: local.fixed }, local.mod]} {...others}>
+    <Box ref={local.ref} {...getStyles('root')} mod={[{ center: local.center, fixed: local.fixed }, local.mod]} {...others}>
       {local.children}
     </Box>
   );

@@ -113,7 +113,7 @@ const varsResolver = createVarsResolver<PaginationRootFactory>(
   })
 );
 
-export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
+export const PaginationRoot = factory<PaginationRootFactory>(_props => {
   const props = useProps('PaginationRoot', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -136,7 +136,8 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     'onFirstPage',
     'onLastPage',
     'getItemProps',
-    'autoContrast'
+    'autoContrast',
+    'ref'
   ]);
 
   const getStyles = useStyles<PaginationRootFactory>({
@@ -174,7 +175,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
   return (
     <PaginationProvider value={{
       total: () => local.total,
-      range: pagination().range,
+      range: () => pagination().range(),
       active: pagination().active,
       disabled: () => local.disabled,
       getItemProps: local.getItemProps,
@@ -185,7 +186,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
       onLast: handleLastPage,
       getStyles,
     }}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box ref={local.ref} {...getStyles('root')} {...others} />
     </PaginationProvider>
   );
 });

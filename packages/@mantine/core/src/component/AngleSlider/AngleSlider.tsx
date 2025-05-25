@@ -92,7 +92,7 @@ const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSiz
   },
 }));
 
-export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
+export const AngleSlider = factory<AngleSliderFactory>(_props => {
   const props = useProps('AngleSlider', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -119,7 +119,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     'aria-label',
     'tabIndex',
     'onScrubStart',
-    'onScrubEnd'
+    'onScrubEnd',
+    'ref'
   ]);
 
   const [_value, setValue] = useUncontrolled({
@@ -190,7 +191,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   };
 
   return (
-    <Box ref={useMergedRef(ref, rootRef)} {...getStyles('root', { focusable: true })} {...others}>
+    <Box ref={useMergedRef(local.ref, rootRef)} {...getStyles('root', { focusable: true })} {...others}>
       {local.marks && local.marks.length > 0 && (
         <div {...getStyles('marks')}>
           <For each={local.marks}>{(mark) => (

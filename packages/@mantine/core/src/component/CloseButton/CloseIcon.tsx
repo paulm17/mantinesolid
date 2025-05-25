@@ -5,10 +5,10 @@ export interface CloseIconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
   size?: string;
 }
 
-export function CloseIcon(props: CloseIconProps, ref: SVGSVGElement) {
+export function CloseIcon(props: CloseIconProps) {
   const [local, others] = splitProps(
     mergeProps({ size: 'var(--cb-icon-size, 70%)' }, props),
-    ['size', 'style']
+    ['size', 'style', 'ref']
   );
 
   return (
@@ -17,7 +17,7 @@ export function CloseIcon(props: CloseIconProps, ref: SVGSVGElement) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ ...(local.style as Record<string, any>), width: local.size, height: local.size }}
-      ref={ref}
+      ref={local.ref}
       {...others}
     >
       <path

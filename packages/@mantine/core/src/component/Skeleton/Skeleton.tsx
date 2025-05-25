@@ -64,7 +64,7 @@ const varsResolver = createVarsResolver<SkeletonFactory>(
   })
 );
 
-export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
+export const Skeleton = factory<SkeletonFactory>(_props => {
   const props = useProps('Skeleton', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -79,7 +79,8 @@ export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
     'visible',
     'radius',
     'animate',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<SkeletonFactory>({
@@ -95,7 +96,7 @@ export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} mod={[{ visible: local.visible, animate: local.animate }, local.mod]} {...others} />;
+  return <Box ref={local.ref} {...getStyles('root')} mod={[{ visible: local.visible, animate: local.animate }, local.mod]} {...others} />;
 });
 
 Skeleton.classes = classes;

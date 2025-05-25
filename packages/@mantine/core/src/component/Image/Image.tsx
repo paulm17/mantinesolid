@@ -54,7 +54,7 @@ const varsResolver = createVarsResolver<ImageFactory>((_, { radius, fit }) => ({
   },
 }));
 
-export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
+export const Image = polymorphicFactory<ImageFactory>(_props => {
   const props = useProps('Image', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -68,7 +68,8 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     'radius',
     'fit',
     'fallbackSrc',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const [error, setError] = createSignal(!local.src);
@@ -92,7 +93,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     return (
       <Box
         component="img"
-        ref={ref}
+        ref={local.ref}
         src={local.fallbackSrc}
         {...getStyles('root')}
         onError={local.onError}
@@ -105,7 +106,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
   return (
     <Box
       component="img"
-      ref={ref}
+      ref={local.ref}
       {...getStyles('root')}
       src={local.src}
       onError={(event) => {

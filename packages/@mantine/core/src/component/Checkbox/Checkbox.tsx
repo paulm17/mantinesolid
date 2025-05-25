@@ -124,7 +124,7 @@ const varsResolver = createVarsResolver<CheckboxFactory>(
   }
 );
 
-export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
+export const Checkbox = factory<CheckboxFactory>(_props => {
   const props = useProps('Checkbox', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -151,7 +151,8 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     'iconColor',
     'onChange',
     'autoContrast',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useCheckboxGroupContext();
@@ -188,7 +189,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     : {};
 
   const fallbackRef = null;
-  const ref = forwardedRef || fallbackRef;
+  const ref = local.ref || fallbackRef;
 
   let inputRef: HTMLInputElement | undefined;
   createEffect(() => {

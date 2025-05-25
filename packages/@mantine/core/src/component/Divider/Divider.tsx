@@ -62,7 +62,7 @@ const varsResolver = createVarsResolver<DividerFactory>((theme, { color, variant
   },
 }));
 
-export const Divider = factory<DividerFactory>((_props, ref) => {
+export const Divider = factory<DividerFactory>(_props => {
   const props = useProps('Divider', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -75,7 +75,8 @@ export const Divider = factory<DividerFactory>((_props, ref) => {
     'orientation',
     'label',
     'labelPosition',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles<DividerFactory>({
@@ -93,7 +94,7 @@ export const Divider = factory<DividerFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       mod={[{ orientation: local.orientation, 'with-label': !!local.label }, local.mod]}
       {...getStyles('root')}
       {...others}

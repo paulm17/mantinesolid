@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<BadgeFactory>(
   }
 );
 
-export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
+export const Badge = polymorphicFactory<BadgeFactory>(_props => {
   const props = useProps('Badge', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -128,7 +128,8 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     'fullWidth',
     'autoContrast',
     'circle',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const getStyles = useStyles({
@@ -157,7 +158,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
         local.mod,
       ]}
       {...getStyles('root', { variant: local.variant })}
-      ref={ref}
+      ref={local.ref}
       {...others}
     >
       {local.leftSection && (

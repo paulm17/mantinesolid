@@ -60,7 +60,7 @@ const varsResolver = createVarsResolver<ProgressRootFactory>(
   })
 );
 
-export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
+export const ProgressRoot = factory<ProgressRootFactory>(_props => {
   const props = useProps('ProgressRoot', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -70,7 +70,8 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'autoContrast',
-    'transitionDuration'
+    'transitionDuration',
+    'ref'
   ]);
 
   const getStyles = useStyles<ProgressRootFactory>({
@@ -88,7 +89,7 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
 
   return (
     <ProgressProvider value={{ getStyles, autoContrast: local.autoContrast }}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box ref={local.ref} {...getStyles('root')} {...others} />
     </ProgressProvider>
   );
 });

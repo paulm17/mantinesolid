@@ -40,7 +40,7 @@ const varsResolver = createVarsResolver<AspectRatioFactory>((_, { ratio }) => ({
   },
 }));
 
-export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
+export const AspectRatio = factory<AspectRatioFactory>(_props => {
   const props = useProps('AspectRatio', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -49,7 +49,8 @@ export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
     'styles',
     'unstyled',
     'vars',
-    'ratio'
+    'ratio',
+    'ref'
   ]);
 
   const getStyles = useStyles<AspectRatioFactory>({
@@ -65,7 +66,7 @@ export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box ref={local.ref} {...getStyles('root')} {...others} />;
 });
 
 AspectRatio.classes = classes;

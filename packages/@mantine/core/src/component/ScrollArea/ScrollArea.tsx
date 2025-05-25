@@ -103,7 +103,7 @@ const varsResolver = createVarsResolver<ScrollAreaFactory>(
   })
 );
 
-export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
+export const ScrollArea = factory<ScrollAreaFactory>(_props => {
   const props = useProps('ScrollArea', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -123,7 +123,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     'scrollbars',
     'onBottomReached',
     'onTopReached',
-    'overscrollBehavior'
+    'overscrollBehavior',
+    'ref'
   ]);
 
   const [scrollbarHovered, setScrollbarHovered] = createSignal(false);
@@ -171,7 +172,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       getStyles={getStyles}
       type={local.type === 'never' ? 'always' : local.type}
       scrollHideDelay={local.scrollHideDelay}
-      ref={ref}
+      ref={local.ref}
       scrollbars={local.scrollbars}
       {...getStyles('root')}
       {...others}
@@ -250,51 +251,52 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
 
 ScrollArea.displayName = '@mantine/core/ScrollArea';
 
-export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
-  const {
-    children,
-    classNames,
-    styles,
-    scrollbarSize,
-    scrollHideDelay,
-    type,
-    dir,
-    offsetScrollbars,
-    viewportRef,
-    onScrollPositionChange,
-    unstyled,
-    variant,
-    viewportProps,
-    scrollbars,
-    style,
-    vars,
-    onBottomReached,
-    onTopReached,
-    ...others
-  } = useProps('ScrollAreaAutosize', defaultProps, props);
+export const ScrollAreaAutosize = factory<ScrollAreaFactory>(_props => {
+  const props = useProps('ScrollAreaAutosize', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'children',
+    'classNames',
+    'styles',
+    'scrollbarSize',
+    'scrollHideDelay',
+    'type',
+    'dir',
+    'offsetScrollbars',
+    'viewportRef',
+    'onScrollPositionChange',
+    'unstyled',
+    'variant',
+    'viewportProps',
+    'scrollbars',
+    'style',
+    'vars',
+    'onBottomReached',
+    'onTopReached',
+    'ref'
+  ]);
 
   return (
-    <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
+    <Box {...others} ref={local.ref} style={[{ display: 'flex', overflow: 'auto' }, local.style]}>
       <Box style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <ScrollArea
-          classNames={classNames}
-          styles={styles}
-          scrollHideDelay={scrollHideDelay}
-          scrollbarSize={scrollbarSize}
-          type={type}
-          dir={dir}
-          offsetScrollbars={offsetScrollbars}
-          viewportRef={viewportRef}
-          onScrollPositionChange={onScrollPositionChange}
-          unstyled={unstyled}
-          variant={variant}
-          viewportProps={viewportProps}
-          vars={vars}
-          scrollbars={scrollbars}
-          onBottomReached={onBottomReached}
-          onTopReached={onTopReached}
+          classNames={local.classNames}
+          styles={local.styles}
+          scrollHideDelay={local.scrollHideDelay}
+          scrollbarSize={local.scrollbarSize}
+          type={local.type}
+          dir={local.dir}
+          offsetScrollbars={local.offsetScrollbars}
+          viewportRef={local.viewportRef}
+          onScrollPositionChange={local.onScrollPositionChange}
+          unstyled={local.unstyled}
+          variant={local.variant}
+          viewportProps={local.viewportProps}
+          vars={local.vars}
+          scrollbars={local.scrollbars}
+          onBottomReached={local.onBottomReached}
+          onTopReached={local.onTopReached}
         >
-          {children}
+          {local.children}
         </ScrollArea>
       </Box>
     </Box>

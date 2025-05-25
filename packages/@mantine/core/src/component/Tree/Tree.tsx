@@ -122,7 +122,7 @@ const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) =
   },
 }));
 
-export const Tree = factory<TreeFactory>((_props, ref) => {
+export const Tree = factory<TreeFactory>(_props => {
   const props = useProps('Tree', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -140,7 +140,8 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     'allowRangeSelection',
     'expandOnSpace',
     'levelOffset',
-    'checkOnSpace'
+    'checkOnSpace',
+    'ref'
   ]);
 
   const defaultController = useTree();
@@ -163,7 +164,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     () => local.clearSelectionOnOutsideClick && controller.clearSelected()
   );
 
-  const mergedRef = useMergedRef(ref, clickOutsideRef);
+  const mergedRef = useMergedRef(local.ref, clickOutsideRef);
 
   const flatValues = createMemo(() => getFlatValues(local.data), [local.data]);
 

@@ -42,7 +42,7 @@ export type AccordionControlFactory = Factory<{
 
 const defaultProps: Partial<AccordionControlProps> = {};
 
-export const AccordionControl = factory<AccordionControlFactory>((_props, ref) => {
+export const AccordionControl = factory<AccordionControlFactory>(_props => {
   const props = useProps('AccordionControl', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -57,6 +57,7 @@ export const AccordionControl = factory<AccordionControlFactory>((_props, ref) =
     'children',
     'disabled',
     'mod',
+    'ref'
   ]);
 
   const { value } = useAccordionItemContext();
@@ -75,7 +76,7 @@ export const AccordionControl = factory<AccordionControlFactory>((_props, ref) =
         { active: isActive, 'chevron-position': ctx.chevronPosition, disabled: local.disabled },
         local.mod,
       ]}
-      ref={ref}
+      ref={local.ref}
       onClick={(event: MouseEvent & {
         currentTarget: HTMLButtonElement;
         target: Element;

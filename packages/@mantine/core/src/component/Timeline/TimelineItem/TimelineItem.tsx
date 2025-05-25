@@ -64,8 +64,7 @@ export type TimelineItemFactory = Factory<{
 
 const defaultProps: Partial<TimelineItemProps> = {};
 
-export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
-  console.log("timelineItem");
+export const TimelineItem = factory<TimelineItemFactory>(_props => {
   const props = useProps('TimelineItem', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -83,7 +82,8 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
     'lineVariant',
     'children',
     'title',
-    'mod'
+    'mod',
+    'ref'
   ]);
 
   const ctx = useTimelineContext();
@@ -113,7 +113,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className: local.className, style: local.style })}
       mod={[{ "line-active": isLineActive(), active: isActive() }, local.mod]}
-      ref={ref}
+      ref={local.ref}
       __vars={{
         '--tli-radius': local.radius ? getRadius(local.radius) : undefined,
         '--tli-color': local.color ? getThemeColor(local.color, theme) : undefined,

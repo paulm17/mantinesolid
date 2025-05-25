@@ -126,7 +126,7 @@ const varsResolver = createVarsResolver<SwitchFactory>((theme, { radius, color, 
   },
 }));
 
-export const Switch = factory<SwitchFactory>((_props, ref) => {
+export const Switch = factory<SwitchFactory>(_props => {
   const props = useProps('Switch', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -155,6 +155,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     'rootRef',
     'mod',
     'withThumbIndicator',
+    'ref'
   ]);
 
   const ctx = useSwitchGroupContext();
@@ -223,7 +224,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
           handleChange(event.currentTarget.checked);
         }}
         id={uuid}
-        ref={ref}
+        ref={local.ref}
         type="checkbox"
         role="switch"
         {...getStyles('input')}

@@ -34,7 +34,7 @@ export type AppShellFooterFactory = Factory<{
 
 const defaultProps: Partial<AppShellFooterProps> = {};
 
-export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
+export const AppShellFooter = factory<AppShellFooterFactory>(_props => {
   const props = useProps('AppShellFooter', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -46,6 +46,7 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
     'withBorder',
     'zIndex',
     'mod',
+    'ref'
   ]);
 
   const ctx = useAppShellContext();
@@ -57,7 +58,7 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
   return (
     <Box
       component="footer"
-      ref={ref}
+      ref={local.ref}
       mod={[{ 'with-border': local.withBorder ?? ctx.withBorder }, local.mod]}
       {...ctx.getStyles('footer', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, local.className),

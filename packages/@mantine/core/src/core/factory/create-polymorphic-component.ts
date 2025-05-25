@@ -1,46 +1,48 @@
-import { Component, JSX } from 'solid-js';
+import { Component, ComponentProps, JSX } from 'solid-js';
 
-// Utility types for polymorphic components
-// Combine override props with base props
-export type ExtendedProps<Props = {}, OverrideProps = {}> = OverrideProps &
+type ExtendedProps<Props = {}, OverrideProps = {}> = OverrideProps &
   Omit<Props, keyof OverrideProps>;
 
-// Valid element types: intrinsic JSX tags or Solid components
-export type ElementType = keyof JSX.IntrinsicElements | Component<any>;
+type ElementType = keyof JSX.IntrinsicElements | Component<any>;
 
-// Get props of an ElementType
-export type PropsOf<C extends ElementType> = C extends keyof JSX.IntrinsicElements
+type PropsOf<C extends ElementType> = C extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[C]
   : C extends Component<infer P>
-    ? P
-    : {};
+  ? P
+  : never;
 
-// Allow passing a custom `component` prop
-export type ComponentProp<C> = { component?: C };
+type ComponentProp<C> = {
+  component?: C;
+};
 
-// Inherit props from C then add P
-export type InheritedProps<C extends ElementType, P = {}> = ExtendedProps<PropsOf<C>, P>;
+type InheritedProps<C extends ElementType, Props = {}> = ExtendedProps<PropsOf<C>, Props>;
 
-// Support `ref` prop on components
-export type PolymorphicRef<C extends ElementType> = C extends Component<any> ? { ref?: any } : {};
+export type PolymorphicRef<C> = C extends keyof JSX.IntrinsicElements
+  ? JSX.IntrinsicElements[C]['ref']
+  : C extends Component<any>
+  ? any
+  : never;
 
-// Final polymorphic props: inherited, ref, plus optional renderRoot
-export type PolymorphicComponentProps<
-  C extends ElementType,
-  Props = {}
-> = InheritedProps<C, Props & { component?: C; ref?: PolymorphicRef<C> }>;
+export type PolymorphicComponentProps<C, Props = {}> = C extends ElementType
+  ? InheritedProps<C, Props & ComponentProp<C>> & {
+      ref?: PolymorphicRef<C>;
+      renderRoot?: (props: any) => any;
+    }
+  : Props & { component: ElementType; renderRoot?: (props: Record<string, any>) => any };
 
-// Factory that casts raw component to a properly typed polymorphic component
 export function createPolymorphicComponent<
-  DefaultComponent extends ElementType,
-  P,
+  ComponentDefaultType,
+  Props,
   StaticComponents = Record<string, never>,
 >(component: any) {
-  type ComponentProps<C extends ElementType> = PolymorphicComponentProps<C, P>;
-  type _PolymorphicComponent = <C extends ElementType = DefaultComponent>(
+  type ComponentProps<C> = PolymorphicComponentProps<C, Props>;
+
+  type _PolymorphicComponent = <C = ComponentDefaultType>(
     props: ComponentProps<C>
   ) => JSX.Element;
+
   type ComponentProperties = Omit<Component<ComponentProps<any>>, never>;
+
   type PolymorphicComponent = _PolymorphicComponent & ComponentProperties & StaticComponents;
 
   return component as PolymorphicComponent;

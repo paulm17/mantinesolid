@@ -27,21 +27,22 @@ export type ProgressLabelFactory = Factory<{
 
 const defaultProps: Partial<ProgressLabelProps> = {};
 
-export const ProgressLabel = factory<ProgressLabelFactory>((_props, ref) => {
+export const ProgressLabel = factory<ProgressLabelFactory>(_props => {
   const props = useProps('ProgressLabel', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
     'className',
     'style',
     'styles',
-    'vars'
+    'vars',
+    'ref'
   ]);
 
   const ctx = useProgressContext();
 
   return (
     <Box
-      ref={ref}
+      ref={local.ref}
       {...ctx.getStyles('label', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles })}
       {...others}
     />

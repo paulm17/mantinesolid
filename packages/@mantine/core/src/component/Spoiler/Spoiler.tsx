@@ -69,7 +69,7 @@ const varsResolver = createVarsResolver<SpoilerFactory>((_, { transitionDuration
   },
 }));
 
-export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
+export const Spoiler = factory<SpoilerFactory>(_props => {
   const props = useProps('Spoiler', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -87,7 +87,8 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     'transitionDuration',
     'id',
     'expanded',
-    'onExpandedChange'
+    'onExpandedChange',
+    'ref'
   ]);
 
   const getStyles = useStyles<SpoilerFactory>({
@@ -119,7 +120,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     <Box
       {...getStyles('root')}
       id={_id}
-      ref={ref}
+      ref={local.ref}
       data-has-spoiler={spoiler() || undefined}
       {...others}
     >

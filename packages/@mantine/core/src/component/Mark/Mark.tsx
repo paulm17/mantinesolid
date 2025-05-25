@@ -42,7 +42,7 @@ const varsResolver = createVarsResolver<MarkFactory>((theme, { color }) => ({
   },
 }));
 
-export const Mark = factory<MarkFactory>((_props, ref) => {
+export const Mark = factory<MarkFactory>(_props => {
   const props = useProps('Mark', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'classNames',
@@ -52,7 +52,8 @@ export const Mark = factory<MarkFactory>((_props, ref) => {
     'unstyled',
     'vars',
     'color',
-    'variant'
+    'variant',
+    'ref'
   ]);
 
   const getStyles = useStyles<MarkFactory>({
@@ -68,7 +69,7 @@ export const Mark = factory<MarkFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box component="mark" ref={ref} variant={local.variant} {...getStyles('root')} {...others} />;
+  return <Box component="mark" ref={local.ref} variant={local.variant} {...getStyles('root')} {...others} />;
 });
 
 Mark.classes = classes;

@@ -92,7 +92,7 @@ const varsResolver = createVarsResolver<TextFactory>(
   })
 );
 
-export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
+export const Text = polymorphicFactory<TextFactory>((_props) => {
   const props = useProps('Text', defaultProps, _props);
   const [local, others] = splitProps(props, [
     'lineClamp',
@@ -110,7 +110,8 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     'unstyled',
     'variant',
     'mod',
-    'size'
+    'size',
+    'ref'
   ]);
 
   const getStyles = useStyles<TextFactory>({
@@ -126,14 +127,10 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     varsResolver,
   });
 
-  // onMount(() => {
-  //   console.log('Text mounted');
-  // })
-
   return (
     <Box
       {...getStyles('root', { focusable: true })}
-      ref={ref}
+      ref={local.ref}
       component={local.span ? 'span' : 'p'}
       variant={local.variant}
       mod={[
