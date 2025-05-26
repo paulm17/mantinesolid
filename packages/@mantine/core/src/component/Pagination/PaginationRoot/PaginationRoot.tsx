@@ -153,33 +153,33 @@ export const PaginationRoot = factory<PaginationRootFactory>(_props => {
     varsResolver,
   });
 
-  const pagination = createMemo(() => usePagination({
-    page: local.value,
-    initialPage: local.defaultValue,
+  const pagination = usePagination({
+    page: () => local.value!,
+    initialPage: () => local.defaultValue!,
     onChange: local.onChange,
-    total: local.total,
-    siblings: local.siblings,
-    boundaries: local.boundaries,
-  }));
+    total: () => local.total,
+    siblings: () => local.siblings!,
+    boundaries: () => local.boundaries!,
+  });
 
   createEffect(() => {
-    console.log('pagination active', pagination().active())
-    console.log('pagination range1', pagination().range())
+    console.log('pagination active', pagination.active())
+    console.log('pagination range1', pagination.range())
   })
 
-  const handleNextPage = createEventHandler(local.onNextPage, pagination().next);
-  const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination().previous);
-  const handleFirstPage = createEventHandler(local.onFirstPage, pagination().first);
-  const handleLastPage = createEventHandler(local.onLastPage, pagination().last);
+  const handleNextPage = createEventHandler(local.onNextPage, pagination.next);
+  const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination.previous);
+  const handleFirstPage = createEventHandler(local.onFirstPage, pagination.first);
+  const handleLastPage = createEventHandler(local.onLastPage, pagination.last);
 
   return (
     <PaginationProvider value={{
       total: () => local.total,
-      range: () => pagination().range(),
-      active: pagination().active,
+      range: () => pagination.range(),
+      active: pagination.active,
       disabled: () => local.disabled,
       getItemProps: local.getItemProps,
-      onChange: pagination().setPage,
+      onChange: pagination.setPage,
       onNext: handleNextPage,
       onPrevious: handlePreviousPage,
       onFirst: handleFirstPage,
