@@ -212,7 +212,7 @@ export const PinInput = factory<PinInputFactory>(_props => {
 
   const [_value, setValues] = useUncontrolled<string[]>({
     value: () => local.value ? createPinArray(local.length ?? 0, local.value) : undefined,
-    defaultValue: local.defaultValue?.split('').slice(0, local.length ?? 0),
+    defaultValue: local.defaultValue?.split('').slice(0, local.length ?? 0)!,
     finalValue: createPinArray(local.length ?? 0, ''),
     onChange:
       typeof local.onChange === 'function'

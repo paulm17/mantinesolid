@@ -144,7 +144,7 @@ export const ScrollArea = factory<ScrollAreaFactory>(_props => {
     varsResolver,
   });
 
-  const [localViewportRef, setLocalViewportRef] = createSignal<PossibleRef<HTMLDivElement>>();
+  const [localViewportRef, setLocalViewportRef] = createSignal<HTMLDivElement>();
   const combiedViewportRef = useMergedRef(local.viewportRef, setLocalViewportRef);
 
   createEffect(() => {
@@ -157,12 +157,12 @@ export const ScrollArea = factory<ScrollAreaFactory>(_props => {
     }
 
     const observer = new ResizeObserver(() => {
-      const { scrollHeight, clientHeight, scrollWidth, clientWidth } = localViewportRef();
+      const { scrollHeight, clientHeight, scrollWidth, clientWidth } = (localViewportRef() as HTMLDivElement);
       setVerticalThumbVisible(scrollHeight > clientHeight);
       setHorizontalThumbVisible(scrollWidth > clientWidth);
     });
 
-    observer.observe(localViewportRef());
+    observer.observe((localViewportRef() as HTMLDivElement));
 
     onCleanup(() => observer.disconnect());
   });

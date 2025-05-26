@@ -256,7 +256,7 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
 
   const [_value, setValue] = useUncontrolled({
     value: () => local.value,
-    defaultValue: local.defaultValue,
+    defaultValue: local.defaultValue!,
     finalValue: '',
     onChange: local.onChange,
   });
@@ -470,7 +470,7 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
         {...getStyles('control')}
         tabIndex={-1}
         aria-hidden
-        disabled={local.disabled || (typeof _value() === 'number' && local.max !== undefined && _value() >= local.max)}
+        disabled={local.disabled || (typeof _value() === 'number' && local.max !== undefined && (_value() as number) >= local.max)}
         mod={{ direction: 'up' }}
         onMouseDown={(event) => event.preventDefault()}
         onPointerDown={(event) => {
@@ -485,7 +485,7 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
         {...getStyles('control')}
         tabIndex={-1}
         aria-hidden
-        disabled={local.disabled || (typeof _value() === 'number' && local.min !== undefined && _value() <= local.min)}
+        disabled={local.disabled || (typeof _value() === 'number' && local.min !== undefined && (_value() as number) <= local.min)}
         mod={{ direction: 'down' }}
         onMouseDown={(event) => event.preventDefault()}
         onPointerDown={(event) => {

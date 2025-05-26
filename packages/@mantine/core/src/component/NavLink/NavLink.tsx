@@ -164,7 +164,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>(_props => {
 
   const [_opened, setOpened] = useUncontrolled({
     value: () => local.opened,
-    defaultValue: local.defaultOpened,
+    defaultValue: local.defaultOpened!,
     finalValue: false,
     onChange: local.onChange,
   });

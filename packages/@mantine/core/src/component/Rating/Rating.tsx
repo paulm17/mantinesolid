@@ -157,7 +157,7 @@ export const Rating = factory<RatingFactory>(_props => {
 
   const _name = useId(local.name);
   const _id = useId(local.id);
-  const [rootRef, setRootRef] = createSignal<HTMLDivElement | null>(null);
+  const [rootRef, setRootRef] = createSignal<HTMLDivElement>();
 
   const [_value, setValue] = useUncontrolled({
     value: () => local.value,

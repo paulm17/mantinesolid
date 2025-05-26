@@ -26,7 +26,7 @@ export const FocusTrap: Component<FocusTrapProps> = (props) => {
   }
 
   return (
-    <div ref={combinedRef} style={{ display: 'contents' }}>
+    <div ref={el => combinedRef} style={{ display: 'contents' }}>
       {local.children}
     </div>
   );

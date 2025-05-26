@@ -54,7 +54,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>(_props => {
 
   const [_value, setValue] = useUncontrolled({
     value: () => local.value,
-    defaultValue: local.defaultValue,
+    defaultValue: local.defaultValue!,
     finalValue: [],
     onChange: local.onChange,
   });

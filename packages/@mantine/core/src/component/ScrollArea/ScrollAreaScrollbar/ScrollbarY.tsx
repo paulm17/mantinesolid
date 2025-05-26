@@ -15,11 +15,11 @@ export function ScrollAreaScrollbarY(props: ScrollAreaScrollbarAxisProps) {
 
   const ctx = useScrollAreaContext();
   const [computedStyle, setComputedStyle] = createSignal<CSSStyleDeclaration>();
-  const [ref, setRef] = createSignal<PossibleRef<HTMLDivElement>>();
+  const [ref, setRef] = createSignal<Element>();
 
   onMount(() => {
     if (ref()) {
-      setComputedStyle(window.getComputedStyle(ref()));
+      setComputedStyle(window.getComputedStyle(ref() as Element));
     }
   });
 
@@ -57,7 +57,7 @@ export function ScrollAreaScrollbarY(props: ScrollAreaScrollbarAxisProps) {
             content: ctx.viewport.scrollHeight,
             viewport: ctx.viewport.offsetHeight,
             scrollbar: {
-              size: ref().clientHeight,
+              size: ref()!.clientHeight,
               paddingStart: toInt(computedStyle()?.paddingTop),
               paddingEnd: toInt(computedStyle()?.paddingBottom),
             },

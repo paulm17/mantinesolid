@@ -156,7 +156,7 @@ export const Tabs = factory<TabsFactory>(_props => {
 
   const [currentTab, setCurrentTab] = useUncontrolled({
     value: () => local.value,
-    defaultValue: local.defaultValue,
+    defaultValue: local.defaultValue!,
     finalValue: null,
     onChange: local.onChange,
   });

@@ -1,3 +1,4 @@
+import { JSX, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -28,7 +29,6 @@ import { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
 import { AppShellSection } from './AppShellSection/AppShellSection';
 import { useResizing } from './use-resizing/use-resizing';
 import classes from './AppShell.module.css';
-import { splitProps } from 'solid-js';
 
 export type AppShellStylesNames =
   | 'root'
@@ -69,7 +69,7 @@ export interface AppShellProps
   transitionDuration?: number;
 
   /** Timing function of all transitions, `ease` by default */
-  transitionTimingFunction?: React.CSSProperties['transitionTimingFunction'];
+  transitionTimingFunction?: JSX.CSSProperties['transition-timing-function'];
 
   /** `z-index` of all associated elements, `100` by default */
   zIndex?: string | number;

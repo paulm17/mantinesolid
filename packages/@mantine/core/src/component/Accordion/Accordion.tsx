@@ -137,8 +137,8 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
 
   const uid = useId(local.id);
   const [_value, handleChange] = useUncontrolled({
-    value: local.value,
-    defaultValue: local.defaultValue,
+    value: () => local.value,
+    defaultValue: local.defaultValue!,
     finalValue: local.multiple ? ([] as any) : null,
     onChange: local.onChange,
   });
@@ -155,7 +155,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
         ? null
         : (itemValue as any);
 
-    handleChange(nextValue);
+    handleChange(() => nextValue);
   };
 
   const getStyles = useStyles<AccordionFactory>({

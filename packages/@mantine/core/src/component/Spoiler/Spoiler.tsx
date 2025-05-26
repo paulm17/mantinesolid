@@ -108,7 +108,7 @@ export const Spoiler = factory<SpoilerFactory>(_props => {
   const regionId = `${_id}-region`;
   const [show, setShowState] = useUncontrolled({
     value: () => local.expanded,
-    defaultValue: local.initialState,
+    defaultValue: local.initialState!,
     finalValue: false,
     onChange: local.onExpandedChange,
   });
