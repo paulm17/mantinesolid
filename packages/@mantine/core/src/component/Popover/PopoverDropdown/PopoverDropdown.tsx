@@ -17,7 +17,7 @@ import { Transition } from '../../Transition';
 import type { PopoverStylesNames } from '../Popover';
 import { usePopoverContext } from '../Popover.context';
 import classes from '../Popover.module.css';
-import { createMemo, JSX, splitProps } from 'solid-js';
+import { createEffect, createMemo, JSX, splitProps } from 'solid-js';
 
 export interface PopoverDropdownProps
   extends BoxProps,
@@ -77,11 +77,11 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>(_props => {
 
   return (
     <OptionalPortal {...ctx.portalProps} withinPortal={ctx.withinPortal}>
-      {/* <Transition
+      <Transition
         mounted={isOpened()}
         {...ctx.transitionProps}
         transition={ctx.transitionProps?.transition || 'fade'}
-        duration={ctx.transitionProps?.duration ?? 150}
+        duration={ctx.transitionProps?.duration || 150}
         keepMounted={ctx.keepMounted}
         exitDuration={
           typeof ctx.transitionProps?.exitDuration === 'number'
@@ -90,67 +90,69 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>(_props => {
         }
       >
         {(transitionStyles) => (
-          <FocusTrap active={ctx.trapFocus && isOpened()} innerRef={mergedRef}> */}
-            <Box
-            ref={mergedRef}
-              {...accessibleProps}
-              {...others}
-              variant={local.variant}
-              onKeyDown={closeOnEscape(
-                () => {
-                  ctx.onClose?.();
-                  ctx.onDismiss?.();
-                },
-                {
-                  active: ctx.closeOnEscape,
-                  onTrigger: returnFocus,
-                  // @ts-ignore
-                  onKeyDown: local.onKeyDown,
-                }
-              )}
-              data-position={ctx.placement}
-              data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
-              {...ctx.getStyles('dropdown', {
-                className: local.className,
-                props,
-                classNames: local.classNames,
-                styles: local.styles,
-                style: [
-                  {
-                    // ...transitionStyles,
-                    zIndex: ctx.zIndex as JSX.CSSProperties['z-index'],
-                    ...coords(),
-                    width: ctx.width === 'target' ? undefined : rem(ctx.width),
-                    ...(ctx.referenceHidden ? { display: 'none' } : null),
+          <FocusTrap active={isOpened()} innerRef={mergedRef}>
+            {(focusTrapProps) => (
+              <Box
+                {...focusTrapProps}
+                {...accessibleProps}
+                {...others}
+                variant={local.variant}
+                onKeyDown={closeOnEscape(
+                  () => {
+                    ctx.onClose?.();
+                    ctx.onDismiss?.();
                   },
-                  ctx.resolvedStyles.dropdown,
-                  local.styles?.dropdown,
-                  local.style,
-                ],
-              })}
-            >
-              {isOpened() && local.children}
-
-              <FloatingArrow
-                ref={() => ctx.arrowRef}
-                arrowX={ctx.arrowX}
-                arrowY={ctx.arrowY}
-                visible={ctx.withArrow}
-                position={ctx.placement}
-                arrowSize={ctx.arrowSize}
-                arrowRadius={ctx.arrowRadius}
-                arrowOffset={ctx.arrowOffset}
-                arrowPosition={ctx.arrowPosition}
-                {...ctx.getStyles('arrow', {
+                  {
+                    active: ctx.closeOnEscape,
+                    onTrigger: returnFocus,
+                    // @ts-ignore
+                    onKeyDown: local.onKeyDown,
+                  }
+                )}
+                data-position={ctx.placement}
+                data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
+                {...ctx.getStyles('dropdown', {
+                  className: local.className,
                   props,
                   classNames: local.classNames,
                   styles: local.styles,
+                  style: [
+                    {
+                      ...transitionStyles,
+                      zIndex: ctx.zIndex as JSX.CSSProperties['z-index'],
+                      ...coords(),
+                      width: ctx.width === 'target' ? undefined : rem(ctx.width),
+                      ...(ctx.referenceHidden ? { display: 'none' } : null),
+                    },
+                    ctx.resolvedStyles.dropdown,
+                    local.styles?.dropdown,
+                    local.style,
+                  ],
                 })}
-              />
-            </Box>
-          {/* </FocusTrap>
-        )}
-      </Transition> */}
+              >
+                {local.children}
+
+                <FloatingArrow
+                  ref={() => ctx.arrowRef}
+                  arrowX={ctx.arrowX}
+                  arrowY={ctx.arrowY}
+                  visible={ctx.withArrow}
+                  position={ctx.placement}
+                  arrowSize={ctx.arrowSize}
+                  arrowRadius={ctx.arrowRadius}
+                  arrowOffset={ctx.arrowOffset}
+                  arrowPosition={ctx.arrowPosition}
+                  {...ctx.getStyles('arrow', {
+                    props,
+                    classNames: local.classNames,
+                    styles: local.styles,
+                  })}
+                />
+              </Box>
+            )}
+          </FocusTrap>
+         )}
+      </Transition>
     </OptionalPortal>
   );
 });
