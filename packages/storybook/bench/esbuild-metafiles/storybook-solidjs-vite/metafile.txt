@@ -1,5 +1,0 @@
-
-  dist/preset.js    2.3kb  100.0%
-   └ src/preset.ts  794b    34.4%
-
-  dist/index.mjs      0b   100.0%

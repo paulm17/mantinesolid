@@ -12,4 +12,7 @@ export default defineConfig({
     }),
     solidjs(),
   ],
+  define: {
+    __DEV__: true,
+  },
 })

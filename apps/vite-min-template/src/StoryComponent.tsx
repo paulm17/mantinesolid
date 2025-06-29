@@ -1,10 +1,14 @@
-// import NumInput from "./numberInput";
+import { ColorInput } from "@mantine/core";
 
-import Pagination from "./pagination";
 
 export default function StoryComponent() {
   return (
-    // <NumInput />
-    <Pagination />
+    <div style={{ 'padding': '40px' }}>
+      <ColorInput
+        label="Input label"
+        description="Input description"
+        placeholder="Input placeholder"
+      />
+    </div>
   );
 }

@@ -10,7 +10,7 @@ export { useCounter } from './use-counter/use-counter';
 // export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 // export { useDocumentTitle } from './use-document-title/use-document-title';
 // export { useDocumentVisibility } from './use-document-visibility/use-document-visibility';
-// export { useFocusReturn } from './use-focus-return/use-focus-return';
+export { useFocusReturn } from './use-focus-return/use-focus-return';
 // export { useDidUpdate } from './use-did-update/use-did-update';
 export { useFocusTrap } from './use-focus-trap/use-focus-trap';
 // export { useForceUpdate } from './use-force-update/use-force-update';
@@ -76,7 +76,7 @@ export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radia
 export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 // export { useFileDialog } from './use-file-dialog/use-file-dialog';
 
-// export type { UseMovePosition } from './use-move/use-move';
+export type { UseMovePosition } from './use-move/use-move';
 // export type { OS } from './use-os/use-os';
 // export type { HotkeyItem, HotkeyItemOptions } from './use-hotkeys/use-hotkeys';
 // export type { UseListStateHandlers } from './use-list-state/use-list-state';

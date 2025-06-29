@@ -250,10 +250,6 @@ export const Input = polymorphicFactory<InputFactory>(_props => {
 
   const _rightSection: JSX.Element = local.rightSection || (local.__clearable && local.__clearSection) || local.__defaultRightSection;
 
-  createEffect(() => {
-    console.log('input props', (props as any).value);
-  })
-
   return (
     <InputContext value={{ size: local.size || 'sm' }}>
       <Box
