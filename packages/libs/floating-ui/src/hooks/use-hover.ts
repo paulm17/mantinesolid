@@ -77,7 +77,7 @@ interface UseHoverOptions {
 
 const safePolygonIdentifier = createAttribute("safe-polygon");
 
-function getDelay(
+export function getDelay(
 	value: UseHoverOptions["delay"],
 	prop: "open" | "close",
 	pointerType?: PointerEvent["pointerType"],
@@ -97,6 +97,8 @@ function useHover(
 	context: () => FloatingContext,
 	options: () => UseHoverOptions = () => ({}),
 ): () => ElementProps {
+  const memoizedOptions = createMemo(options);
+
 	return createMemo(() => {
 		const ctx = context();
 		const opts = options();
@@ -116,7 +118,7 @@ function useHover(
 			restMs = 0,
 			move = true,
 			handleClose = null,
-		} = opts;
+		} = memoizedOptions();
 
 		// const tree = useFloatingTree();
 		// const parentId = useFloatingParentNodeId();
@@ -182,7 +184,7 @@ function useHover(
 			runElseBranch = true,
 			reason: OpenChangeReason = "hover",
 		) => {
-			const closeDelay = getDelay(delay, "close", pointerType);
+			const closeDelay = getDelay(memoizedOptions().delay, "close", pointerType);
 			if (closeDelay && !handler) {
 				clearTimeout(timeout);
 				timeout = window.setTimeout(
@@ -278,7 +280,7 @@ function useHover(
 						return;
 					}
 
-					const openDelay = getDelay(delay, "open", pointerType);
+					const openDelay = getDelay(memoizedOptions().delay, "open", pointerType);
 
 					if (openDelay) {
 						timeout = window.setTimeout(() => {

@@ -53,6 +53,7 @@ interface UseHoverOptions {
      */
     handleClose?: HandleCloseFn | null;
 }
+export declare function getDelay(value: UseHoverOptions["delay"], prop: "open" | "close", pointerType?: PointerEvent["pointerType"]): number;
 declare function useHover(context: () => FloatingContext, options?: () => UseHoverOptions): () => ElementProps;
 export type { UseHoverOptions };
 export { useHover };

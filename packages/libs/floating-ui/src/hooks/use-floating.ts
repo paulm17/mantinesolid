@@ -9,7 +9,7 @@ import {
 	computePosition,
 } from "@floating-ui/dom";
 import { createMemo, createEffect, Accessor } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createStore, type SetStoreFunction } from "solid-js/store";
 import { createPubSub } from "../internal/create-pub-sub";
 import { getDPR, roundByDPR } from "../internal/dpr";
 import { noop } from "../internal/noop";
@@ -167,6 +167,11 @@ interface FloatingContext extends UseFloatingData {
 	 */
 	data: ContextData;
 
+  /**
+	 * The setter for the data store.
+	 */
+	setData: SetStoreFunction<ContextData>;
+
 	/**
 	 * The id for the reference element
 	 */
@@ -286,7 +291,6 @@ function useFloating(options: UseFloatingOptions = {}): UseFloatingReturn {
 
 	const update = async () => {
 		if (!elements.floating || !elements.reference) {
-      console.log('[useFloating] skipping update—missing elements');
 			return;
 		}
 
@@ -296,22 +300,11 @@ function useFloating(options: UseFloatingOptions = {}): UseFloatingReturn {
 			middleware: middleware(),
 		};
 
-    console.log('[useFloating] calling computePosition with config →', config);
 		const position = await computePosition(
 			elements.reference,
 			elements.floating,
 			config,
 		);
-
-    console.log(
-      '[useFloating] computePosition result →',
-      {
-        x: position.x,
-        y: position.y,
-        placement:     position.placement,
-        middlewareData: position.middlewareData,
-      }
-    );
 
 		setState({
 			x: position.x,
@@ -321,15 +314,11 @@ function useFloating(options: UseFloatingOptions = {}): UseFloatingReturn {
 			middlewareData: position.middlewareData,
 			isPositioned: true,
 		});
-
-    console.log(
-      '[useFloating] state after setState →',
-      { x: state.x, y: state.y }
-    );
 	};
 
 	const context: FloatingContext = {
 		get data() { return data; },
+    setData: setData,
 		events,
 		get elements() { return elements; },
 		onOpenChange: handleOpenChange,
@@ -343,13 +332,6 @@ function useFloating(options: UseFloatingOptions = {}): UseFloatingReturn {
 		get isPositioned() { return state.isPositioned; },
 		get open() { return open(); },
 	};
-
-  createEffect(() => {
-    console.log(
-      '[useFloating•context] read context.x/y →',
-      { x: context.x, y: context.y }
-    );
-  });
 
 	// Effects to handle element updates
 	createEffect(() => {

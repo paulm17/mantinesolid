@@ -8,15 +8,15 @@ function horizontalSide(
   arrowPosition: ArrowPosition
 ) {
   if (placement === 'center' || arrowPosition === 'center') {
-    return { top: arrowY };
+    return { top: `${arrowY}px` };
   }
 
   if (placement === 'end') {
-    return { bottom: arrowOffset };
+    return { bottom: `${arrowOffset}px` };
   }
 
   if (placement === 'start') {
-    return { top: arrowOffset };
+    return { top: `${arrowOffset}px` };
   }
 
   return {};
@@ -81,8 +81,8 @@ export function getArrowPositionStyles({
 }) {
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
   const baseStyles = {
-    width: arrowSize,
-    height: arrowSize,
+    width: `${arrowSize}px`,
+    height: `${arrowSize}px`,
     transform: 'rotate(45deg)',
     position: 'absolute',
     [radiusByFloatingSide[side]]: arrowRadius,
@@ -94,10 +94,10 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
-      right: arrowPlacement,
-      borderLeftColor: 'transparent',
-      borderBottomColor: 'transparent',
-      clipPath: 'polygon(100% 0, 0 0, 100% 100%)',
+      right: `${arrowPlacement}px`,
+      'border-left-color': 'transparent',
+      'border-bottom-color': 'transparent',
+      'clip-path': 'polygon(100% 0, 0 0, 100% 100%)',
     };
   }
 
@@ -105,10 +105,10 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowY, arrowOffset, arrowPosition),
-      left: arrowPlacement,
-      borderRightColor: 'transparent',
-      borderTopColor: 'transparent',
-      clipPath: 'polygon(0 100%, 0 0, 100% 100%)',
+      left: `${arrowPlacement}px`,
+      'border-right-color': 'transparent',
+      'border-top-color': 'transparent',
+      'clip-path': 'polygon(0 100%, 0 0, 100% 100%)',
     };
   }
 
@@ -116,10 +116,10 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
-      bottom: arrowPlacement,
-      borderTopColor: 'transparent',
-      borderLeftColor: 'transparent',
-      clipPath: 'polygon(0 100%, 100% 100%, 100% 0)',
+      bottom: `${arrowPlacement}px`,
+      'border-top-color': 'transparent',
+      'border-left-color': 'transparent',
+      'clip-path': 'polygon(0 100%, 100% 100%, 100% 0)',
     };
   }
 
@@ -127,10 +127,10 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowX, arrowOffset, arrowPosition, dir),
-      top: arrowPlacement,
-      borderBottomColor: 'transparent',
-      borderRightColor: 'transparent',
-      clipPath: 'polygon(0 100%, 0 0, 100% 0)',
+      top: `${arrowPlacement}px`,
+      'border-bottom-color': 'transparent',
+      'border-right-color': 'transparent',
+      'clip-path': 'polygon(0 100%, 0 0, 100% 0)',
     };
   }
 

@@ -43,6 +43,13 @@ const normalizeProp = (
 	};
 };
 
+export interface DismissPayload {
+  type: 'outsidePress' | 'referencePress' | 'escapeKey' | 'mouseLeave';
+  data: {
+    returnFocus: boolean | {preventScroll: boolean};
+  };
+}
+
 interface UseDismissOptions {
 	/**
 	 * Whether the Hook is enabled, including all internal Effects and event
@@ -273,14 +280,14 @@ function useDismiss(context: () => FloatingContext, options: UseDismissOptions =
 	};
 
 	createEffect(() => {
-		const { open, elements: { reference, floating }, data } = contextData();
+		const { open, elements: { reference, floating }, setData } = contextData();
 
 		if (!open || !enabled) {
 			return;
 		}
 
-		data.__escapeKeyBubbles = escapeKeyBubbles;
-		data.__outsidePressBubbles = outsidePressBubbles;
+		setData("__escapeKeyBubbles", escapeKeyBubbles);
+		setData("__outsidePressBubbles", outsidePressBubbles);
 
 		function onScroll(event: Event) {
 			const { onOpenChange } = contextData();

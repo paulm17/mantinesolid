@@ -3,7 +3,7 @@ import { isElement } from "@floating-ui/utils/dom";
 import { contains, createAttribute, getDocument, isMouseLikePointerType, } from "../internal/dom";
 import { noop } from "../internal/noop";
 const safePolygonIdentifier = createAttribute("safe-polygon");
-function getDelay(value, prop, pointerType) {
+export function getDelay(value, prop, pointerType) {
     if (pointerType && !isMouseLikePointerType(pointerType)) {
         return 0;
     }
@@ -13,11 +13,12 @@ function getDelay(value, prop, pointerType) {
     return value?.[prop];
 }
 function useHover(context, options = () => ({})) {
+    const memoizedOptions = createMemo(options);
     return createMemo(() => {
         const ctx = context();
         const opts = options();
         const { open, onOpenChange, data, events, elements: { reference, floating }, } = ctx;
-        const { enabled = true, mouseOnly = false, delay = 0, restMs = 0, move = true, handleClose = null, } = opts;
+        const { enabled = true, mouseOnly = false, delay = 0, restMs = 0, move = true, handleClose = null, } = memoizedOptions();
         // const tree = useFloatingTree();
         // const parentId = useFloatingParentNodeId();
         let pointerType = undefined;
@@ -67,7 +68,7 @@ function useHover(context, options = () => ({})) {
             });
         });
         const closeWithDelay = (event, runElseBranch = true, reason = "hover") => {
-            const closeDelay = getDelay(delay, "close", pointerType);
+            const closeDelay = getDelay(memoizedOptions().delay, "close", pointerType);
             if (closeDelay && !handler) {
                 clearTimeout(timeout);
                 timeout = window.setTimeout(() => onOpenChange(false, event, reason), closeDelay);
@@ -144,7 +145,7 @@ function useHover(context, options = () => ({})) {
                         (restMs > 0 && !getDelay(delay, "open"))) {
                         return;
                     }
-                    const openDelay = getDelay(delay, "open", pointerType);
+                    const openDelay = getDelay(memoizedOptions().delay, "open", pointerType);
                     if (openDelay) {
                         timeout = window.setTimeout(() => {
                             onOpenChange(true, event, "hover");

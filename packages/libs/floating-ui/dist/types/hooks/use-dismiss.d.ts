@@ -1,4 +1,12 @@
 import type { FloatingContext } from "./use-floating";
+export interface DismissPayload {
+    type: 'outsidePress' | 'referencePress' | 'escapeKey' | 'mouseLeave';
+    data: {
+        returnFocus: boolean | {
+            preventScroll: boolean;
+        };
+    };
+}
 interface UseDismissOptions {
     /**
      * Whether the Hook is enabled, including all internal Effects and event

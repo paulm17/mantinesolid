@@ -11,7 +11,9 @@
   "dependencies": {
     "@floating-ui/solid": "workspace:*",
     "@mantine/core": "workspace:*",
-    "@mantine/hooks": "workspace:*"
+    "@mantine/hooks": "workspace:*",
+    "@tailwindcss/vite": "^4.1.11",
+    "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
     "postcss": "^8.5.3",

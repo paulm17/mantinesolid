@@ -1,5 +1,5 @@
 import { JSX } from 'solid-js';
-import type { FloatingContext } from "../../src/hooks/use-floating";
+import type { FloatingContext } from "../hooks/use-floating.js";
 type SVGAttrs = JSX.SvgSVGAttributes<SVGSVGElement>;
 type CleanSVGProps = Omit<SVGAttrs, Extract<keyof SVGAttrs, `aria-${string}`> | Extract<keyof SVGAttrs, `on${string}`>>;
 export interface FloatingArrowProps extends CleanSVGProps {

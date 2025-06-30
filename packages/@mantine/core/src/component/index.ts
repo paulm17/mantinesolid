@@ -100,7 +100,7 @@ export * from './Text';
 export * from './ThemeIcon';
 export * from './Timeline';
 export * from './Title';
-// // export * from './Tooltip';
+export * from './Tooltip';
 export * from './Transition';
 export * from './Tree';
 export * from './TypographyStylesProvider';

@@ -132,12 +132,12 @@ function useDismiss(context, options = {}) {
         getTarget(event)?.addEventListener(outsidePressEvent, callback);
     };
     createEffect(() => {
-        const { open, elements: { reference, floating }, data } = contextData();
+        const { open, elements: { reference, floating }, setData } = contextData();
         if (!open || !enabled) {
             return;
         }
-        data.__escapeKeyBubbles = escapeKeyBubbles;
-        data.__outsidePressBubbles = outsidePressBubbles;
+        setData("__escapeKeyBubbles", escapeKeyBubbles);
+        setData("__outsidePressBubbles", outsidePressBubbles);
         function onScroll(event) {
             const { onOpenChange } = contextData();
             onOpenChange(false, event, "ancestor-scroll");

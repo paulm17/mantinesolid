@@ -1,5 +1,6 @@
 import { type FloatingElement, type Middleware, type MiddlewareData, type Placement, type ReferenceElement, type Strategy } from "@floating-ui/dom";
 import { Accessor } from "solid-js";
+import { type SetStoreFunction } from "solid-js/store";
 import type { OpenChangeReason } from "../types";
 interface FloatingElements {
     /**
@@ -116,6 +117,10 @@ interface FloatingContext extends UseFloatingData {
      * Arbitrary data produced and consumer by other hooks.
      */
     data: ContextData;
+    /**
+       * The setter for the data store.
+       */
+    setData: SetStoreFunction<ContextData>;
     /**
      * The id for the reference element
      */

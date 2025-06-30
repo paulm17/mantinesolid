@@ -84,6 +84,7 @@ function useFloating(options = {}) {
     };
     const context = {
         get data() { return data; },
+        setData: setData,
         events,
         get elements() { return elements; },
         onOpenChange: handleOpenChange,

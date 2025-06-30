@@ -3,6 +3,7 @@
  */
 export * from "./components/floating-arrow";
 export { default as FloatingArrow } from "./components/floating-arrow";
+export * from "./components/floating-delay-group";
 
 /**
  * Hooks

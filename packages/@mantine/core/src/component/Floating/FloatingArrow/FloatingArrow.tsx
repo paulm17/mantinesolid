@@ -1,4 +1,4 @@
-import { JSX, splitProps } from 'solid-js';
+import { createEffect, createMemo, JSX, splitProps } from 'solid-js';
 import { useDirection } from '../../../core';
 import { ArrowPosition, FloatingPosition } from '../types';
 import { getArrowPositionStyles } from './get-arrow-position-styles';
@@ -35,23 +35,25 @@ export function FloatingArrow(props: FloatingArrowProps) {
     return null;
   }
 
+  const finalStyles = createMemo(() => ({
+    ...(typeof local.style === 'object' && local.style !== null ? local.style : {}),
+    ...getArrowPositionStyles({
+      position: local.position,
+      arrowSize: local.arrowSize,
+      arrowOffset: local.arrowOffset,
+      arrowRadius: local.arrowRadius,
+      arrowPosition: local.arrowPosition,
+      dir,
+      arrowX: local.arrowX,
+      arrowY: local.arrowY,
+    }),
+  }));
+
   return (
     <div
       {...others}
       ref={local.ref}
-      style={{
-        ...(typeof local.style === 'object' && local.style !== null ? local.style : {}),
-        ...getArrowPositionStyles({
-          position: local.position,
-          arrowSize: local.arrowSize,
-          arrowOffset: local.arrowOffset,
-          arrowRadius: local.arrowRadius,
-          arrowPosition: local.arrowPosition,
-          dir,
-          arrowX: local.arrowX,
-          arrowY: local.arrowY,
-        }),
-      }}
+      style={finalStyles()}  // Use the variable instead
     />
   );
 };

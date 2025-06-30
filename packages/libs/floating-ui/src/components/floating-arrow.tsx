@@ -2,7 +2,7 @@ import { createMemo, JSX, splitProps } from 'solid-js';
 import type { Alignment, Side } from "@floating-ui/dom";
 import { platform } from "@floating-ui/dom";
 import { useId } from "../hooks/use-id.js";
-import type { FloatingContext } from "../../src/hooks/use-floating";
+import type { FloatingContext } from "../hooks/use-floating.js";
 
 type SVGAttrs = JSX.SvgSVGAttributes<SVGSVGElement>;
 
