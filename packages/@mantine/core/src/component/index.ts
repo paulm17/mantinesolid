@@ -14,7 +14,7 @@ export * from './Overlay';
 export * from './Input';
 export * from './InputBase';
 export * from './Flex';
-// // export * from './FloatingIndicator';
+export * from './FloatingIndicator';
 
 // Regular components
 export * from './Accordion';
@@ -78,8 +78,8 @@ export * from './Portal';
 export * from './Progress';
 // export * from './Radio';
 // export * from './Rating';
-// // export * from './RingProgress';
-// export * from './SegmentedControl';
+export * from './RingProgress';
+export * from './SegmentedControl';
 // export * from './Select';
 export * from './SemiCircleProgress';
 export * from './SimpleGrid';

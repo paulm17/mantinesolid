@@ -5,7 +5,7 @@ export default { title: 'Tooltip' };
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip
         position="right"
         label="Tooltip label"
@@ -23,7 +23,7 @@ export function Usage() {
 
 export function Unstyled() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip
         position="right"
         label="Tooltip label"
@@ -41,7 +41,7 @@ export function Unstyled() {
 
 export function Multiline() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip
         position="right"
         label="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quaerat vero. Tempora reiciendis deserunt tenetur blanditiis velit. Illo, ipsam. Dignissimos fugit tempora iure accusamus, ipsum minima tenetur ex sequi eveniet."
@@ -59,7 +59,7 @@ export function Multiline() {
 
 export function MultilineWithJsx() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip.Floating
         position="right"
         label={
@@ -102,7 +102,7 @@ export const TooltipGroup = () => (
 export const Controlled = () => {
   const [opened, setOpened] = useState(false);
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip label="Tooltip 1" opened={opened}>
         <button
           type="button"
@@ -122,7 +122,7 @@ export const Controlled = () => {
 export const Floating = () => (
   <div style={{ padding: 0 }}>
     <Tooltip.Floating label="Tooltip">
-      <button type="button" style={{ width: 200, height: 200 }}>
+      <button type="button" style={{ width: '200px', height: '200px' }}>
         target
       </button>
     </Tooltip.Floating>
@@ -139,7 +139,7 @@ export const Unmount = () => {
       <Tooltip opened label="Tooltip">
         <button
           type="button"
-          style={{ width: 200, height: 200, display: mounted ? 'block' : 'none' }}
+          style={{ width: '200px', height: '200px', display: mounted ? 'block' : 'none' }}
         >
           target
         </button>
@@ -164,7 +164,7 @@ export const WithArrow = () => (
 );
 
 export const TooltipAndArrowWithBorder = () => (
-  <div style={{ padding: 40 }}>
+  <div style={{ padding: '40px' }}>
     <Tooltip
       opened
       position="right"
@@ -195,7 +195,7 @@ export const WithArrowRadius = () => (
 export function Inline() {
   return (
     <>
-      <div style={{ padding: 40, maxWidth: 400 }}>
+      <div style={{ padding: '40px', 'max-width': '400px' }}>
         <b>Via inline prop:</b>
         <div>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam
@@ -207,7 +207,7 @@ export function Inline() {
           animi dicta.
         </div>
       </div>
-      <div style={{ padding: 40, maxWidth: 400 }}>
+      <div style={{ padding: '40px', 'max-width': '400px' }}>
         <b>Via middlewares prop:</b>
         <div>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam
@@ -225,7 +225,7 @@ export function Inline() {
 
 export function DefaultOpened() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip
         position="right"
         label="Tooltip visible by default"
@@ -243,7 +243,7 @@ export function DefaultOpened() {
 
 export function Fixed() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Tooltip
         position="right"
         label="Tooltip has fixed position"

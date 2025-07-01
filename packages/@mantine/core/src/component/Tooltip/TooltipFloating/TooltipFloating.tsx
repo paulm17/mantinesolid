@@ -1,4 +1,5 @@
 import { JSX, splitProps } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -98,11 +99,11 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
     defaultOpened: local.defaultOpened!,
   });
 
-  if (!isElement(local.children)) {
-    throw new Error(
-      '[@mantine/core] Tooltip.Floating component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
-    );
-  }
+  // if (!isElement(local.children)) {
+  //   throw new Error(
+  //     '[@mantine/core] Tooltip.Floating component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
+  //   );
+  // }
 
   const targetRef = useMergedRef(boundaryRef, getRefProp(local.children), local.ref);
   const _childrenProps = (local.children as any).props as any;
@@ -117,6 +118,8 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
     _childrenProps.onMouseLeave?.(event);
     setOpened(false);
   };
+
+  const isSvgChild = targetRef?.parentElement?.tagName === 'svg' ? 'g' : 'span';
 
   return (
     <>
@@ -140,9 +143,14 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
         </Box>
       </OptionalPortal>
 
-      <span ref={targetRef} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <Dynamic
+        component={isSvgChild ? 'g' : 'span'}
+        ref={targetRef}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
         {local.children}
-      </span>
+      </Dynamic>
     </>
   );
 });
