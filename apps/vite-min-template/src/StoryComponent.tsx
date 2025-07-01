@@ -1,36 +1,15 @@
-import { RingProgress } from "@mantine/core";
+import { Slider } from "@mantine/core";
 
 export default function StoryComponent() {
+  const marks = [
+    { value: 20, label: '20%' },
+    { value: 50, label: '50%' },
+    { value: 80, label: '80%' },
+  ];
+
   return (
     <div style={{ 'padding': '40px' }}>
-        <RingProgress
-          label="Hello"
-          sections={[
-            {
-              value: 10,
-              color: 'blue.4',
-            },
-            {
-              value: 10,
-              color: 'red.1',
-            },
-            {
-              value: 10,
-              color: 'orange.9',
-            },
-          ]}
-        />
-        {/* <Tooltip
-          position="right"
-          label="Tooltip label"
-          withArrow
-          transitionProps={{ duration: 0 }}
-          opened
-          color="cyan"
-          radius="md"
-        >
-          <button type="button">target</button>
-        </Tooltip> */}
+      <Slider defaultValue={45} marks={marks} size="md" onChangeEnd={console.log} restrictToMarks />
     </div>
   );
 }

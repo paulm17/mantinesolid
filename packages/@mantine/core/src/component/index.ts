@@ -1,4 +1,4 @@
-// // // // Components which styles are reused in other components
+// Components which styles are reused in other components
 export * from './Collapse';
 export * from './ScrollArea';
 export * from './UnstyledButton';
@@ -34,8 +34,8 @@ export * from './Burger';
 export * from './Button';
 export * from './Card';
 export * from './Center';
-// export * from './Checkbox';
-// export * from './Chip';
+export * from './Checkbox';
+export * from './Chip';
 export * from './Code';
 export * from './ColorPicker';
 export * from './ColorInput';
@@ -46,9 +46,9 @@ export * from './CopyButton';
 export * from './Dialog';
 export * from './Divider';
 // export * from './Drawer';
-// export * from './Fieldset';
-// export * from './FileButton';
-// export * from './FileInput';
+export * from './Fieldset';
+export * from './FileButton';
+export * from './FileInput';
 export * from './Floating';
 export * from './FocusTrap';
 export * from './Grid';
@@ -56,7 +56,7 @@ export * from './Highlight';
 export * from './HoverCard';
 export * from './Image';
 export * from './Indicator';
-// export * from './JsonInput';
+export * from './JsonInput';
 export * from './Kbd';
 export * from './List';
 export * from './LoadingOverlay';
@@ -67,36 +67,36 @@ export * from './Mark';
 // export * from './NativeSelect';
 export * from './NavLink';
 export * from './Notification';
-// export * from './NumberFormatter';
-// export * from './NumberInput'; // <-- does not refresh input on value change
-// export * from './Pagination'; // <-- has rendering issues
-// export * from './PasswordInput';
-// export * from './Pill';
-// export * from './PillsInput';
-// export * from './PinInput';
+export * from './NumberFormatter';
+export * from './NumberInput'; // <-- does not refresh input on value change
+export * from './Pagination'; // <-- has rendering issues
+export * from './PasswordInput';
+export * from './Pill';
+export * from './PillsInput';
+export * from './PinInput';
 export * from './Portal';
 export * from './Progress';
-// export * from './Radio';
-// export * from './Rating';
+export * from './Radio';
+export * from './Rating';
 export * from './RingProgress';
 export * from './SegmentedControl';
 // export * from './Select';
 export * from './SemiCircleProgress';
 export * from './SimpleGrid';
 export * from './Skeleton';
-// // export * from './Slider'; <-- reorg children
+export * from './Slider'; // <-- reorg children
 export * from './Space';
 export * from './Spoiler';
 export * from './Stack';
-// export * from './Stepper';
-// export * from './Switch';
+export * from './Stepper';
+export * from './Switch';
 export * from './Table';
 export * from './TableOfContents';
 export * from './Tabs';
-// // export * from './TagsInput';
+// export * from './TagsInput';
 export * from './Text';
-// export * from './Textarea';
-// export * from './TextInput';
+export * from './Textarea';
+export * from './TextInput';
 export * from './ThemeIcon';
 export * from './Timeline';
 export * from './Title';
