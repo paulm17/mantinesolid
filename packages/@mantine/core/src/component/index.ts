@@ -61,7 +61,7 @@ export * from './Kbd';
 export * from './List';
 export * from './LoadingOverlay';
 export * from './Mark';
-// export * from './Menu';
+export * from './Menu';
 // export * from './Modal';
 // export * from './MultiSelect';
 // export * from './NativeSelect';
@@ -69,7 +69,7 @@ export * from './NavLink';
 export * from './Notification';
 export * from './NumberFormatter';
 export * from './NumberInput'; // <-- does not refresh input on value change
-export * from './Pagination'; // <-- has rendering issues
+// export * from './Pagination'; // <-- has rendering issues
 export * from './PasswordInput';
 export * from './Pill';
 export * from './PillsInput';

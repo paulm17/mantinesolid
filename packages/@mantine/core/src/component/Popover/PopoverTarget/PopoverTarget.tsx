@@ -36,11 +36,11 @@ export const PopoverTarget = factory<PopoverTargetFactory>(_props => {
     'ref'
   ])
 
-  if (!isElement(local.children)) {
-    throw new Error(
-      'Popover.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
-    );
-  }
+  // if (!isElement(local.children)) {
+  //   throw new Error(
+  //     'Popover.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
+  //   );
+  // }
 
   const ctx = usePopoverContext();
   const isOpened = () => ctx.opened();
