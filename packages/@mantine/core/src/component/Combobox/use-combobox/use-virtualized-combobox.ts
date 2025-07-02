@@ -1,16 +1,15 @@
 // WIP, not planned to be released in 7.0, maybe in 7.x
-import { useCallback, useEffect, useRef } from 'react';
+import { Accessor, createSignal, onCleanup } from 'solid-js';
 import { useUncontrolled } from '@mantine/hooks';
 import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-virtualized-index';
 import { ComboboxStore } from './use-combobox';
-import { createSignal, onCleanup } from 'solid-js';
 
 interface UseComboboxOptions {
   /** Default value for `dropdownOpened`, `false` by default */
   defaultOpened?: boolean;
 
   /** Controlled `dropdownOpened` state */
-  opened?: boolean;
+  opened?: Accessor<boolean>;
 
   /** Called when `dropdownOpened` state changes */
   onOpenedChange?: (opened: boolean) => void;

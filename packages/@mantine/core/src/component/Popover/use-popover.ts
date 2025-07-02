@@ -142,7 +142,9 @@ export function usePopover(options: UsePopoverOptions) {
     }
   };
 
-  const onToggle = () => setOpened(!_opened());
+  const onToggle = () => {
+    setOpened(!_opened());
+  }
 
   const floating: UseFloatingReturn = useFloating({
     strategy: options.strategy,
@@ -187,7 +189,7 @@ export function usePopover(options: UsePopoverOptions) {
 
   return {
     floating: () => floating,
-    controlled: typeof options.opened === 'boolean',
+    controlled: typeof options.opened() !== 'undefined',
     opened: () => _opened,
     onClose,
     onToggle,

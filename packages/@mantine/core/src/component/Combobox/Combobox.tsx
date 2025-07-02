@@ -1,4 +1,4 @@
-import { JSX, splitProps } from 'solid-js';
+import { createEffect, JSX, splitProps } from 'solid-js';
 import {
   createVarsResolver,
   ExtendComponent,
@@ -149,7 +149,6 @@ export function Combobox(_props: ComboboxProps) {
   });
 
   const onDropdownClose = () => {
-    console.log('🟠 Combobox onDropdownClose called');
     local.onClose?.();
     store.closeDropdown();
   };
@@ -159,14 +158,16 @@ export function Combobox(_props: ComboboxProps) {
       value={{
         getStyles,
         store,
-        onOptionSubmit: local.onOptionSubmit,
+        onOptionSubmit: (value, props) => {
+          local.onOptionSubmit?.(value, props);
+        },
         size: local.size!,
         resetSelectionOnOptionHover: local.resetSelectionOnOptionHover,
         readOnly: local.readOnly,
       }}
     >
       <Popover
-        opened={store.dropdownOpened}
+        opened={store.dropdownOpened()}
         {...others}
         onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}

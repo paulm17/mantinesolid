@@ -6,7 +6,7 @@ export type ComboboxDropdownEventSource = 'keyboard' | 'mouse' | 'unknown';
 
 export interface ComboboxStore {
   /** Current dropdown opened state */
-  dropdownOpened: boolean;
+  dropdownOpened: Accessor<boolean>;
 
   /** Opens dropdown */
   openDropdown: (eventSource?: ComboboxDropdownEventSource) => void;
@@ -130,7 +130,6 @@ export function useCombobox({
   let selectedIndexUpdateTimeout = -1;
 
   const openDropdown: ComboboxStore['openDropdown'] = (eventSource = 'unknown') => {
-    console.log('🔵 openDropdown called', { eventSource, currentOpened: dropdownOpened() });
     if (!dropdownOpened()) {
       setDropdownOpened(true);
       onDropdownOpen?.(eventSource);
@@ -138,9 +137,7 @@ export function useCombobox({
   };
 
   const closeDropdown: ComboboxStore['closeDropdown'] = (eventSource = 'unknown') => {
-    console.log('🔴 closeDropdown called', { eventSource, currentOpened: dropdownOpened() });
     if (dropdownOpened()) {
-      console.log('🔴 About to call setDropdownOpened(false)');
       setDropdownOpened(false);
       onDropdownClose?.(eventSource);
     }

@@ -34,7 +34,7 @@ const scrollableContent = (
 
 function StoryBase({ children }: { children: JSX.Element }) {
   const [opened, setOpened] = createSignal(true);
-  const store = useCombobox({ opened: opened(), onOpenedChange: setOpened });
+  const store = useCombobox({ opened: () => opened(), onOpenedChange: setOpened });
   const [value, setValue] = createSignal('');
 
   return (

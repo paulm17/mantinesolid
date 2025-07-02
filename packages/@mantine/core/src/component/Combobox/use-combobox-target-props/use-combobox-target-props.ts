@@ -69,7 +69,7 @@ export function useComboboxTargetProps({
 
         const selectedOptionIndex = ctx.store.getSelectedOptionIndex();
 
-        if (ctx.store.dropdownOpened && selectedOptionIndex !== -1) {
+        if (ctx.store.dropdownOpened() && selectedOptionIndex !== -1) {
           event.preventDefault();
           ctx.store.clickSelectedOption();
         } else if (targetType === 'button') {
@@ -96,8 +96,8 @@ export function useComboboxTargetProps({
         'aria-haspopup': 'listbox',
         'aria-expanded':
           (withExpandedAttribute && !!(ctx.store.listId && ctx.store.dropdownOpened)) || undefined,
-        'aria-controls': ctx.store.dropdownOpened ? ctx.store.listId : undefined,
-        'aria-activedescendant': ctx.store.dropdownOpened
+        'aria-controls': ctx.store.dropdownOpened() ? ctx.store.listId : undefined,
+        'aria-activedescendant': ctx.store.dropdownOpened()
           ? selectedOptionId() || undefined
           : undefined,
         autoComplete,
