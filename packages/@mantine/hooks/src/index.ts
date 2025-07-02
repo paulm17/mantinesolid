@@ -56,7 +56,7 @@ export { useDisclosure } from './use-disclosure/use-disclosure';
 // export { useNetwork } from './use-network/use-network';
 export { useTimeout } from './use-timeout/use-timeout';
 // export { useTextSelection } from './use-text-selection/use-text-selection';
-// export { usePrevious } from './use-previous/use-previous';
+export { usePrevious } from './use-previous/use-previous';
 // export { useFavicon } from './use-favicon/use-favicon';
 // export { useHeadroom } from './use-headroom/use-headroom';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';

@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -26,7 +26,7 @@ export interface ComboboxChevronProps
     StylesApiProps<ComboboxChevronFactory>,
     ElementProps<'svg', 'opacity' | 'display'> {
   size?: MantineSize | (string & {});
-  error?: React.ReactNode;
+  error?: JSX.Element;
   color?: MantineColor;
 }
 

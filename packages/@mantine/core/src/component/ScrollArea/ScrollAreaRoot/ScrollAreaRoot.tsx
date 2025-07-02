@@ -81,8 +81,8 @@ export function ScrollAreaRoot(_props: ScrollAreaRootProps) {
         {...others}
         ref={rootRef}
         __vars={{
-          '--sa-corner-width': local.scrollbars !== 'xy' ? '0px' : `${cornerWidth}px`,
-          '--sa-corner-height': local.scrollbars !== 'xy' ? '0px' : `${cornerHeight}px`,
+          '--sa-corner-width': local.scrollbars !== 'xy' ? '0px' : `${cornerWidth()}px`,
+          '--sa-corner-height': local.scrollbars !== 'xy' ? '0px' : `${cornerHeight()}px`,
         }}
       />
     </ScrollAreaProvider>

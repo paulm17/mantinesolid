@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { createMemo, JSX, splitProps } from 'solid-js';
 import cx from 'clsx';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
@@ -32,57 +32,59 @@ function isValueChecked(value: string | string[] | undefined | null, optionValue
   return Array.isArray(value) ? value.includes(optionValue) : value === optionValue;
 }
 
-function Option({
-  data,
-  withCheckIcon,
-  value,
-  checkIconPosition,
-  unstyled,
-  renderOption,
-}: OptionProps) {
-  if (!isOptionsGroup(data)) {
-    const checked = isValueChecked(value, data.value);
-    const check = withCheckIcon && checked && (
+function Option(props: OptionProps) {
+  const [local] = splitProps(props, [
+    'data',
+    'withCheckIcon',
+    'value',
+    'checkIconPosition',
+    'unstyled',
+    'renderOption',
+  ]);
+
+  if (!isOptionsGroup(local.data)) {
+    const checked = isValueChecked(local.value, local.data.value);
+    const check = local.withCheckIcon && checked && (
       <CheckIcon class={classes.optionsDropdownCheckIcon} />
     );
 
     const defaultContent = (
       <>
-        {checkIconPosition === 'left' && check}
-        <span>{data.label}</span>
-        {checkIconPosition === 'right' && check}
+        {local.checkIconPosition === 'left' && check}
+        <span>{local.data.label}</span>
+        {local.checkIconPosition === 'right' && check}
       </>
     );
 
     return (
       <Combobox.Option
-        value={data.value}
-        disabled={data.disabled}
-        className={cx({ [classes.optionsDropdownOption]: !unstyled })}
-        data-reverse={checkIconPosition === 'right' || undefined}
+        value={local.data.value}
+        disabled={local.data.disabled}
+        className={cx({ [classes.optionsDropdownOption]: !local.unstyled })}
+        data-reverse={local.checkIconPosition === 'right' || undefined}
         data-checked={checked || undefined}
         aria-selected={checked}
         active={checked}
       >
-        {typeof renderOption === 'function'
-          ? renderOption({ option: data, checked })
+        {typeof local.renderOption === 'function'
+          ? local.renderOption({ option: local.data, checked })
           : defaultContent}
       </Combobox.Option>
     );
   }
 
-  const options = data.items.map((item) => (
+  const options = local.data.items.map((item) => (
     <Option
       data={item}
-      value={value}
-      unstyled={unstyled}
-      withCheckIcon={withCheckIcon}
-      checkIconPosition={checkIconPosition}
-      renderOption={renderOption}
+      value={local.value}
+      unstyled={local.unstyled}
+      withCheckIcon={local.withCheckIcon}
+      checkIconPosition={local.checkIconPosition}
+      renderOption={local.renderOption}
     />
   ));
 
-  return <Combobox.Group label={data.group}>{options}</Combobox.Group>;
+  return <Combobox.Group label={local.data.group}>{options}</Combobox.Group>;
 }
 
 export interface OptionsDropdownProps {
@@ -106,67 +108,80 @@ export interface OptionsDropdownProps {
   scrollAreaProps: ScrollAreaProps | undefined;
 }
 
-export function OptionsDropdown({
-  data,
-  hidden,
-  hiddenWhenEmpty,
-  filter,
-  search,
-  limit,
-  maxDropdownHeight,
-  withScrollArea = true,
-  filterOptions = true,
-  withCheckIcon = false,
-  value,
-  checkIconPosition,
-  nothingFoundMessage,
-  unstyled,
-  labelId,
-  renderOption,
-  scrollAreaProps,
-  'aria-label': ariaLabel,
-}: OptionsDropdownProps) {
-  validateOptions(data);
+export function OptionsDropdown(props: OptionsDropdownProps) {
+  const [local] = splitProps(props, [
+    'data',
+    'hidden',
+    'hiddenWhenEmpty',
+    'filter',
+    'search',
+    'limit',
+    'maxDropdownHeight',
+    'withScrollArea',
+    'filterOptions',
+    'withCheckIcon',
+    'value',
+    'checkIconPosition',
+    'nothingFoundMessage',
+    'unstyled',
+    'labelId',
+    'renderOption',
+    'scrollAreaProps',
+    'aria-label',
+  ]);
 
-  const shouldFilter = typeof search === 'string';
-  const filteredData = shouldFilter
-    ? (filter || defaultOptionsFilter)({
-        options: data,
-        search: filterOptions ? search : '',
-        limit: limit ?? Infinity,
-      })
-    : data;
-  const isEmpty = isEmptyComboboxData(filteredData);
+  const withScrollArea = local.withScrollArea || true;
+  const filterOptions = local.filterOptions || true;
+  const withCheckIcon = local.withCheckIcon || false;
 
-  const options = filteredData.map((item) => (
-    <Option
-      data={item}
-      // key={isOptionsGroup(item) ? item.group : item.value}
-      withCheckIcon={withCheckIcon}
-      value={value}
-      checkIconPosition={checkIconPosition}
-      unstyled={unstyled}
-      renderOption={renderOption}
-    />
-  ));
+  validateOptions(local.data);
+
+  const filteredData = createMemo(() => {
+    const shouldFilter = typeof local.search === 'string';
+    const search = local.search || '';
+
+    if (!shouldFilter || local.search === '') {
+      return local.data;
+    }
+
+    return (local.filter || defaultOptionsFilter)({
+      options: local.data,
+      search: filterOptions ? search : '',
+      limit: local.limit ?? Infinity,
+    });
+  });
+  const isEmpty = createMemo(() => isEmptyComboboxData(filteredData()));
+
+  const options = createMemo(() =>
+    filteredData().map((item) => (
+      <Option
+        data={item}
+        withCheckIcon={withCheckIcon}
+        value={local.value}
+        checkIconPosition={local.checkIconPosition}
+        unstyled={local.unstyled}
+        renderOption={local.renderOption}
+      />
+    ))
+  );
 
   return (
-    <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)} data-composed>
-      <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
+    <Combobox.Dropdown hidden={local.hidden || (local.hiddenWhenEmpty && isEmpty())} data-composed>
+      <Combobox.Options labelledBy={local.labelId} aria-label={local['aria-label']}>
         {withScrollArea ? (
           <ScrollArea.Autosize
-            mah={maxDropdownHeight ?? 220}
+            mah={local.maxDropdownHeight ?? 220}
             type="scroll"
             scrollbarSize="var(--combobox-padding)"
             offsetScrollbars="y"
-            {...scrollAreaProps}
+            {...local.scrollAreaProps}
           >
-            {options}
+            {options()}
           </ScrollArea.Autosize>
         ) : (
-          options
+          options()
         )}
-        {isEmpty && nothingFoundMessage && <Combobox.Empty>{nothingFoundMessage}</Combobox.Empty>}
+        {isEmpty() && local.nothingFoundMessage && <Combobox.Empty>{local.nothingFoundMessage}</Combobox.Empty>}
       </Combobox.Options>
     </Combobox.Dropdown>
   );

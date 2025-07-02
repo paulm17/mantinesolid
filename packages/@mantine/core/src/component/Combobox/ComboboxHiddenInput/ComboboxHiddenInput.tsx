@@ -1,7 +1,7 @@
-import { JSX } from "solid-js";
+import { ComponentProps, JSX } from "solid-js";
 
 export interface ComboboxHiddenInputProps
-  extends Omit<JSX.HTMLAttributes<HTMLInputElement>, 'value'> {
+  extends Omit<ComponentProps<'input'>, 'value'> {
   /** Input value */
   value: string | string[] | null;
 
