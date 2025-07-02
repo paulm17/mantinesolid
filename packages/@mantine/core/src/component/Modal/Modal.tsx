@@ -90,6 +90,8 @@ export const Modal = factory<ModalFactory>(_props => {
     'ref'
   ]);
 
+  const openedFn = () => typeof local.opened === 'function' ? local.opened() : local.opened;
+
   const ctx = useModalStackContext();
   const hasHeader = !!local.title || local.withCloseButton;
   const stackProps =
@@ -102,11 +104,11 @@ export const Modal = factory<ModalFactory>(_props => {
       : {};
 
   const overlayVisible =
-    local.withOverlay === false ? false : local.stackId && ctx ? ctx.currentId === local.stackId : local.opened();
+    local.withOverlay === false ? false : local.stackId && ctx ? ctx.currentId === local.stackId : openedFn();
 
   createEffect(() => {
     if (ctx && local.stackId) {
-      local.opened()
+      openedFn()
         ? ctx.addModal(local.stackId, local.zIndex || getDefaultZIndex('modal'))
         : ctx.removeModal(local.stackId);
     }
@@ -116,7 +118,7 @@ export const Modal = factory<ModalFactory>(_props => {
     <ModalRoot
       ref={local.ref}
       radius={local.radius}
-      opened={local.opened}
+      opened={openedFn}
       zIndex={ctx && local.stackId ? ctx.getZIndex(local.stackId) : local.zIndex}
       {...others}
       {...stackProps}
@@ -130,7 +132,7 @@ export const Modal = factory<ModalFactory>(_props => {
       )}
       <ModalContent
         radius={local.radius}
-        __hidden={ctx && local.stackId && local.opened() ? local.stackId !== ctx.currentId : false}
+        __hidden={ctx && local.stackId && openedFn() ? local.stackId !== ctx.currentId : false}
       >
         {hasHeader && (
           <ModalHeader>

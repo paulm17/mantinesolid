@@ -25,7 +25,7 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   keepMounted?: boolean;
 
   /** Determines whether modal/drawer is opened */
-  opened: () => boolean;
+  opened: (() => boolean) | boolean;
 
   /** Called when modal/drawer is closed */
   onClose: () => void;
@@ -108,10 +108,12 @@ export function ModalBase(props: ModalBaseProps) {
     'ref'
   ]);
 
+  const openedFn = () => typeof local.opened === 'function' ? local.opened() : local.opened;
+
   const [modalProps] = splitProps(useModal({
     id: local.id,
     transitionProps: local.transitionProps,
-    opened: local.opened(),
+    opened: openedFn(),
     trapFocus: local.trapFocus,
     closeOnEscape: local.closeOnEscape,
     onClose: local.onClose,
@@ -131,7 +133,7 @@ export function ModalBase(props: ModalBaseProps) {
     <OptionalPortal {...local.portalProps} withinPortal={local.withinPortal}>
       <ModalBaseProvider
         value={{
-          opened: local.opened,
+          opened: openedFn,
           onClose: local.onClose,
           closeOnClickOutside: local.closeOnClickOutside,
           onExitTransitionEnd: local.onEnterTransitionEnd,
