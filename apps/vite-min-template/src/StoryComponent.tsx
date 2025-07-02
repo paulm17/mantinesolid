@@ -1,23 +1,10 @@
-import { TagsInput } from "@mantine/core";
+import PopoverComponent from "./popover";
 
 export default function StoryComponent() {
+
   return (
     <div style={{ 'padding': '40px' }}>
-      <TagsInput
-        data={[
-          'React',
-          'Angular',
-          'Svelte',
-          'Vue',
-          'Ember',
-          'Backbone',
-          'Preact',
-          'Inferno',
-          'Aurelia',
-          'Meteor',
-        ]}
-        placeholder="Select something"
-      />
+      <PopoverComponent />
     </div>
   )
 }

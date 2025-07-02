@@ -10,7 +10,7 @@ export * from './CloseButton';
 export * from './Group';
 export * from './Loader';
 export * from './Overlay';
-// export * from './ModalBase';
+export * from './ModalBase';
 export * from './Input';
 export * from './InputBase';
 export * from './Flex';
@@ -69,7 +69,7 @@ export * from './NavLink';
 export * from './Notification';
 export * from './NumberFormatter';
 export * from './NumberInput'; // <-- does not refresh input on value change
-// export * from './Pagination'; // <-- has rendering issues
+export * from './Pagination'; // <-- has rendering issues
 export * from './PasswordInput';
 export * from './Pill';
 export * from './PillsInput';
