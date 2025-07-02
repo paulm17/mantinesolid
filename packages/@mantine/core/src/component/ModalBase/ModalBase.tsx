@@ -111,7 +111,7 @@ export function ModalBase(props: ModalBaseProps) {
   const [modalProps] = splitProps(useModal({
     id: local.id,
     transitionProps: local.transitionProps,
-    opened: local.opened,
+    opened: local.opened(),
     trapFocus: local.trapFocus,
     closeOnEscape: local.closeOnEscape,
     onClose: local.onClose,

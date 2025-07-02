@@ -4,7 +4,7 @@ import { useLockScroll } from './use-lock-scroll';
 import { createSignal, splitProps } from 'solid-js';
 
 interface UseModalInput {
-  opened: () => boolean;
+  opened: boolean;
   onClose: () => void;
   id: string | undefined;
   transitionProps: TransitionOverride | undefined;
@@ -31,12 +31,12 @@ export function useModal(props: UseModalInput) {
   const transitionDuration =
     typeof local.transitionProps?.duration === 'number' ? local.transitionProps?.duration : 200;
 
-  const shouldLockScroll = useLockScroll({ opened: local.opened, transitionDuration });
+  const shouldLockScroll = useLockScroll({ opened: () => local.opened, transitionDuration });
 
   useWindowEvent(
     'keydown',
     (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && local.closeOnEscape && !event.isComposing && local.opened()) {
+      if (event.key === 'Escape' && local.closeOnEscape && !event.isComposing && local.opened) {
         const shouldTrigger =
           (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
         shouldTrigger && local.onClose();
@@ -45,7 +45,7 @@ export function useModal(props: UseModalInput) {
     { capture: true }
   );
 
-  useFocusReturn({ opened: local.opened, shouldReturnFocus: () => !!(local.trapFocus && local.returnFocus) });
+  useFocusReturn({ opened: () => local.opened, shouldReturnFocus: () => !!(local.trapFocus && local.returnFocus) });
 
   return {
     _id,

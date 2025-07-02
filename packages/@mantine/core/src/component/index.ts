@@ -62,7 +62,7 @@ export * from './List';
 export * from './LoadingOverlay';
 export * from './Mark';
 export * from './Menu';
-// export * from './Modal';
+export * from './Modal';
 export * from './MultiSelect';
 export * from './NativeSelect';
 export * from './NavLink';
