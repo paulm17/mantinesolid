@@ -1,4 +1,4 @@
-import { createSignal, splitProps, JSX, createEffect, createMemo } from 'solid-js';
+import { createSignal, splitProps, JSX, createEffect, createMemo, onCleanup } from 'solid-js';
 import { useClickOutside, useId } from '@mantine/hooks';
 import {
   createVarsResolver,
@@ -288,16 +288,27 @@ export function Popover(_props: PopoverProps) {
     strategy: local.floatingStrategy,
   });
 
-  useClickOutside(
-    () => {
-      if (local.closeOnClickOutside) {
-        popover.onClose();
-        local.onDismiss?.();
-      }
-    },
-    local.clickOutsideEvents,
-    [targetNode, dropdownNode]
-  );
+  createEffect(() => {
+    const target = targetNode();
+    const dropdown = dropdownNode();
+
+    if (!target || !dropdown) {
+      return;
+    }
+
+    const removeListener = useClickOutside(
+      () => {
+        if (local.closeOnClickOutside) {
+          popover.onClose();
+          local.onDismiss?.();
+        }
+      },
+      local.clickOutsideEvents,
+      [target, dropdown]
+    );
+
+    onCleanup(removeListener);
+  });
 
   const reference = (node: HTMLElement | null) => {
     setTargetNode(node);

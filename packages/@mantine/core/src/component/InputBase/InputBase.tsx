@@ -47,10 +47,6 @@ export const InputBase = polymorphicFactory<InputBaseFactory>(_props => {
     'ref'
   ]);
 
-  createEffect(() => {
-    console.log('inputbase props', (props as any).value);
-  })
-
   return (
     <Input.Wrapper {...local.wrapperProps}>
       <Input {...local.inputProps} {...others} ref={local.ref} />

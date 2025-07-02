@@ -40,7 +40,7 @@ export * from './Code';
 export * from './ColorPicker';
 export * from './ColorInput';
 export * from './ColorSwatch';
-// export * from './Combobox';
+export * from './Combobox';
 export * from './Container';
 export * from './CopyButton';
 export * from './Dialog';
