@@ -84,7 +84,7 @@ export * from './Select';
 export * from './SemiCircleProgress';
 export * from './SimpleGrid';
 export * from './Skeleton';
-export * from './Slider'; // <-- reorg children
+export * from './Slider';
 export * from './Space';
 export * from './Spoiler';
 export * from './Stack';
@@ -93,7 +93,7 @@ export * from './Switch';
 export * from './Table';
 export * from './TableOfContents';
 export * from './Tabs';
-// export * from './TagsInput';
+export * from './TagsInput';
 export * from './Text';
 export * from './Textarea';
 export * from './TextInput';

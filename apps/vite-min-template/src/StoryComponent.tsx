@@ -1,9 +1,9 @@
-import { Autocomplete } from "@mantine/core";
+import { TagsInput } from "@mantine/core";
 
 export default function StoryComponent() {
   return (
-    <div style={{ padding: '40px' }}>
-      <Autocomplete
+    <div style={{ 'padding': '40px' }}>
+      <TagsInput
         data={[
           'React',
           'Angular',
