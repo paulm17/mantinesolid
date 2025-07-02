@@ -1,11 +1,11 @@
-import { splitProps } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 import { factory, Factory, isElement, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';
 
 export interface ComboboxDropdownTargetProps {
   /** Target element */
-  children: React.ReactNode;
+  children: JSX.Element;
 
   /** Key of the prop that should be used to access element ref */
   refProp?: string;

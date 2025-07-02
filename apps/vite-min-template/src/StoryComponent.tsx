@@ -1,9 +1,23 @@
-import { NativeSelect } from "@mantine/core";
+import { Autocomplete } from "@mantine/core";
 
 export default function StoryComponent() {
   return (
     <div style={{ padding: '40px' }}>
-      <NativeSelect data={['React', 'Angular', 'Vue']} />
+      <Autocomplete
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+      />
     </div>
   )
 }
