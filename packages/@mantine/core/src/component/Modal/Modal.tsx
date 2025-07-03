@@ -1,4 +1,4 @@
-import { createEffect, JSX, splitProps } from 'solid-js';
+import { createEffect, createMemo, JSX, splitProps } from 'solid-js';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody } from './ModalBody';
@@ -76,7 +76,8 @@ const defaultProps: Partial<ModalProps> = {
 };
 
 export const Modal = factory<ModalFactory>(_props => {
-  const [local, others] = splitProps(_props, [
+  const props = useProps('Modal', defaultProps, _props);
+  const [local, others] = splitProps(props, [
     'title',
     'withOverlay',
     'overlayProps',
@@ -90,27 +91,59 @@ export const Modal = factory<ModalFactory>(_props => {
     'ref'
   ]);
 
-  const openedFn = () => typeof local.opened === 'function' ? local.opened() : local.opened;
+  // const openedFn = () => {
+  //   const result = typeof local.opened === 'function' ? local.opened() : local.opened;
+  //   console.log('Modal opened check:', { stackId: local.stackId, result });
+  //   return result;
+  // };
+
+  const openedFn = createMemo(() => (typeof local.opened === 'function' ? local.opened() : local.opened));
 
   const ctx = useModalStackContext();
-  const hasHeader = !!local.title || local.withCloseButton;
-  const stackProps =
-    ctx && local.stackId
-      ? {
-          closeOnEscape: ctx.currentId === local.stackId,
-          trapFocus: ctx.currentId === local.stackId,
-          zIndex: ctx.getZIndex(local.stackId),
-        }
-      : {};
+  const isStacked = createMemo(() => !!(ctx && local.stackId));
+  const isCurrent = createMemo(() => isStacked() && ctx?.currentId === local.stackId);
 
-  const overlayVisible =
-    local.withOverlay === false ? false : local.stackId && ctx ? ctx.currentId === local.stackId : openedFn();
+
+  const stackProps = createMemo(() => {
+  if (!isStacked()) {
+    return {};
+  }
+  return {
+    closeOnEscape: isCurrent(),
+    trapFocus: isCurrent(),
+    zIndex: ctx?.getZIndex(local.stackId!),
+  };
+});
+
+const hasHeader = () => !!local.title || local.withCloseButton;
+
+  const overlayVisible = createMemo(() =>
+    local.withOverlay === false ? false :
+    (local.stackId && ctx ? ctx.currentId === local.stackId : openedFn())
+  );
 
   createEffect(() => {
+    console.log('overlayVisible debug:', {
+    withOverlay: local.withOverlay,
+    stackId: local.stackId,
+    hasCtx: !!ctx,
+    currentId: ctx?.currentId,
+    comparison: ctx?.currentId === local.stackId,
+    fallback: openedFn(),
+    final: overlayVisible()
+  });
+  })
+
+  createEffect(() => {
+    console.log('createEffect triggered:', { stackId: local.stackId, opened: openedFn(), hasCtx: !!ctx });
     if (ctx && local.stackId) {
-      openedFn()
-        ? ctx.addModal(local.stackId, local.zIndex || getDefaultZIndex('modal'))
-        : ctx.removeModal(local.stackId);
+      if (openedFn()) {
+        console.log('Adding modal to stack:', local.stackId);
+        ctx.addModal(local.stackId, local.zIndex || getDefaultZIndex('modal'));
+      } else {
+        console.log('Removing modal from stack:', local.stackId);
+        ctx.removeModal(local.stackId);
+      }
     }
   });
 
@@ -125,16 +158,16 @@ export const Modal = factory<ModalFactory>(_props => {
     >
       {local.withOverlay && (
         <ModalOverlay
-          visible={overlayVisible}
+          visible={overlayVisible()}
           transitionProps={ctx && local.stackId ? { duration: 0 } : undefined}
           {...local.overlayProps}
         />
       )}
       <ModalContent
         radius={local.radius}
-        __hidden={ctx && local.stackId && openedFn() ? local.stackId !== ctx.currentId : false}
+        __hidden={!openedFn() || (!!(ctx && local.stackId) && ctx.currentId !== local.stackId)}
       >
-        {hasHeader && (
+        {hasHeader() && (
           <ModalHeader>
             {local.title && <ModalTitle>{local.title}</ModalTitle>}
             {local.withCloseButton && <ModalCloseButton {...local.closeButtonProps} />}

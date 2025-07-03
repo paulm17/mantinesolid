@@ -1,4 +1,4 @@
-import { ComponentProps, JSX, splitProps } from 'solid-js';
+import { ComponentProps, createEffect, JSX, splitProps } from 'solid-js';
 import { RemoveScroll } from 'solid-remove-scroll';
 import {
   Box,
@@ -108,12 +108,16 @@ export function ModalBase(props: ModalBaseProps) {
     'ref'
   ]);
 
-  const openedFn = () => typeof local.opened === 'function' ? local.opened() : local.opened;
+  const openedFn = () => {
+    const result = typeof local.opened === 'function' ? local.opened() : local.opened;
+    console.log('ModalBase opened check:', result);
+    return result;
+  };
 
   const [modalProps] = splitProps(useModal({
     id: local.id,
     transitionProps: local.transitionProps,
-    opened: openedFn(),
+    opened: openedFn,
     trapFocus: local.trapFocus,
     closeOnEscape: local.closeOnEscape,
     onClose: local.onClose,
@@ -126,6 +130,12 @@ export function ModalBase(props: ModalBaseProps) {
     'setTitleMounted',
     'setBodyMounted'
   ])
+
+  createEffect(() => {
+     console.log('ModalBase shouldLockScroll:', modalProps.shouldLockScroll());
+    console.log('ModalBase titleMounted:', modalProps.titleMounted());
+    console.log('ModalBase bodyMounted:', modalProps.bodyMounted());
+  })
 
   const { ...otherRemoveScrollProps } = local.removeScrollProps || {};
 
@@ -151,10 +161,10 @@ export function ModalBase(props: ModalBaseProps) {
           unstyled: local.unstyled,
         }}
       >
-        <RemoveScroll
+        {/* <RemoveScroll
           enabled={modalProps.shouldLockScroll() && local.lockScroll}
           {...otherRemoveScrollProps}
-        >
+        > */}
           <Box
             ref={local.ref}
             {...others}
@@ -167,7 +177,7 @@ export function ModalBase(props: ModalBaseProps) {
           >
             {local.children}
           </Box>
-        </RemoveScroll>
+        {/* </RemoveScroll> */}
       </ModalBaseProvider>
     </OptionalPortal>
   );

@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
 
 interface ModalStackReturnType<T extends string> {
   state: () => Record<T, boolean>;
@@ -6,7 +6,7 @@ interface ModalStackReturnType<T extends string> {
   close: (id: T) => void;
   toggle: (id: T) => void;
   closeAll: () => void;
-  register: (id: T) => { opened: boolean; onClose: () => void; stackId: T };
+  register: (id: T) => { opened: () => boolean; onClose: () => void; stackId: T };
 }
 
 export function useModalsStack<const T extends string>(modals: T[]): ModalStackReturnType<T> {
@@ -16,6 +16,11 @@ export function useModalsStack<const T extends string>(modals: T[]): ModalStackR
   );
 
   const [state, setState] = createSignal(initialState);
+
+  const openedMemos = modals.reduce((acc, modal) => {
+    acc[modal] = createMemo(() => state()[modal]);
+    return acc;
+  }, {} as Record<T, () => boolean>);
 
   const open = (modal: T) => {
     setState((current) => ({ ...current, [modal]: true }));
@@ -28,10 +33,10 @@ export function useModalsStack<const T extends string>(modals: T[]): ModalStackR
   const closeAll = () => setState(() => initialState);
 
   const register = (modal: T) => ({
-      opened: state()[modal],
-      onClose: () => close(modal),
-      stackId: modal,
-    });
+    opened: openedMemos[modal],
+    onClose: () => close(modal),
+    stackId: modal,
+  });
 
   return { state, open, close, closeAll, toggle, register };
 }

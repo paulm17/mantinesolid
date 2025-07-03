@@ -45,7 +45,7 @@ export * from './Container';
 export * from './CopyButton';
 export * from './Dialog';
 export * from './Divider';
-// export * from './Drawer';
+export * from './Drawer';
 export * from './Fieldset';
 export * from './FileButton';
 export * from './FileInput';

@@ -1,4 +1,4 @@
-import { createMemo, createSignal } from 'solid-js';
+import { createEffect, createSignal } from 'solid-js';
 import {
   NumberFormatBaseProps,
   FormatInputValueFunction,
@@ -498,7 +498,7 @@ export function useInternalValues(
   };
 
   // if value is switch from controlled to uncontrolled, use the internal state's value to format with new props
-  createMemo(() => {
+  createEffect(() => {
     const _value = isNil(value()) ? values().numAsString : value();
     const _valueIsNumericString = isNil(value()) ? true : valueIsNumericString;
     const newValues = getValues(_value, _valueIsNumericString);

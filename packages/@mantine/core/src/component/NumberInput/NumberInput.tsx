@@ -500,7 +500,6 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
   );
 
   return (
-    // @ts-ignore
     <InputBase
       component={NumericFormat}
       allowNegative={local.allowNegative}
