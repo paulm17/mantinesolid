@@ -181,7 +181,7 @@ export const ColorPicker = factory<ColorPickerFactory>(_props => {
 
   const [_value, setValue, controlled] = useUncontrolled({
     value: () => local.value,
-    defaultValue: local.defaultValue,
+    defaultValue: local.defaultValue!,
     finalValue: '#FFFFFF',
     onChange: local.onChange,
   });

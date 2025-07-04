@@ -1,4 +1,4 @@
-import { Component, splitProps } from 'solid-js';
+import { Component, createEffect, splitProps } from 'solid-js';
 import {
   Box,
   BoxProps,
@@ -47,6 +47,10 @@ export const PaginationDots = factory<PaginationDotsFactory>(_props => {
 
   const ctx = usePaginationContext();
   const Icon = local.icon!;
+
+  // createEffect(() => {
+  //   console.log('[PaginationDots] Icon component:', Icon);
+  // })
 
   return (
     <Box ref={local.ref}

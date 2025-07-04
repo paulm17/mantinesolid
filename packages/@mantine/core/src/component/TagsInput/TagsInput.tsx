@@ -216,15 +216,15 @@ export const TagsInput = factory<TagsInputFactory>(_props => {
   } = extractStyleProps(others);
 
   const [_value, setValue] = useUncontrolled({
-    value: local.value,
-    defaultValue: local.defaultValue,
+    value: () => local.value,
+    defaultValue: local.defaultValue!,
     finalValue: [],
     onChange: local.onChange,
   });
 
   const [_searchValue, setSearchValue] = useUncontrolled({
-    value: local.searchValue,
-    defaultValue: local.defaultSearchValue,
+    value: () => local.searchValue,
+    defaultValue: local.defaultSearchValue!,
     finalValue: '',
     onChange: local.onSearchChange,
   });
@@ -460,7 +460,7 @@ export const TagsInput = factory<TagsInputFactory>(_props => {
                     local.selectFirstOptionOnChange && combobox.selectFirstOption();
                   }}
                   onChange={(event) => {
-                    handleSearchChange(_value() != null ? optionsLockup()[_value()]?.label || '' : '');
+                    handleSearchChange(_value() != null ? optionsLockup()[_value()[0]!]?.label || '' : '');
                   }}
                   required={local.required && _value().length === 0}
                   disabled={local.disabled}

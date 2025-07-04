@@ -59,7 +59,7 @@ export function MenuSub(_props: MenuSubProps) {
   return (
     <SubMenuProvider
       value={{
-        opened,
+        opened: opened(),
         close: closeDropdown,
         open: openDropdown,
         focusFirstItem,
@@ -67,7 +67,7 @@ export function MenuSub(_props: MenuSubProps) {
         parentContext: ctx,
       }}
     >
-      <Popover opened={opened} {...others} withinPortal={false} id={id}>
+      <Popover opened={opened()} {...others} withinPortal={false} id={id}>
         {local.children}
       </Popover>
     </SubMenuProvider>

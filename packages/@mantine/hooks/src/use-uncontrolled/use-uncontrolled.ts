@@ -12,25 +12,25 @@ import {
  * @param props.defaultValue - Initial value of the state.
  * @param props.onChange - Callback fired when the value changes.
  * @returns ```typescript
- * [state: Accessor<T>, setState: Setter<T>]
+ * [state: Accessor<T>, setState: Setter<T>, controlled: boolean]
  * ```
  */
 function useUncontrolled<T>(props: {
   value?: Accessor<T | undefined>
-  onChange?: (value: T) => void
-}): Signal<T | undefined>
+  onChange?: (value: T, ...payload: any[]) => void
+}): [Accessor<T | undefined>, (value: T | undefined, ...payload: any[]) => void, boolean]
 function useUncontrolled<T>(props: {
   value?: Accessor<T | undefined>
   defaultValue: T
   finalValue: T
-  onChange?: (value: T) => void
-}): Signal<T>
+  onChange?: (value: T, ...payload: any[]) => void
+}): [Accessor<T>, (value: T, ...payload: any[]) => void, boolean]
 function useUncontrolled<T>(props: {
   value?: Accessor<T | undefined>
   defaultValue?: T
   finalValue?: T
-  onChange?: (value: T) => void
-}): Signal<T | undefined> {
+  onChange?: (value: T, ...payload: any[]) => void
+}): [Accessor<T | undefined>, (value: T | undefined, ...payload: any[]) => void, boolean] {
   const [uncontrolledSignal, setUncontrolledSignal] = createSignal(
     props.defaultValue !== undefined? props.defaultValue : props.finalValue,
   )
@@ -39,15 +39,12 @@ function useUncontrolled<T>(props: {
   const value = () =>
     isControlled() ? (props.value?.() as T) : uncontrolledSignal()
 
-  const setValue: Setter<T | undefined> = (next?: unknown) => {
+  const setValue: Setter<T | undefined> = (next?: unknown, ...payload: any[]) => {
     return untrack(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
       let nextValue: Exclude<T, Function>
       if (typeof next === 'function') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         nextValue = next(value()) as Exclude<T, Function>
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
         nextValue = next as Exclude<T, Function>
       }
 
@@ -55,13 +52,13 @@ function useUncontrolled<T>(props: {
         if (!isControlled()) {
           setUncontrolledSignal(nextValue)
         }
-        props.onChange?.(nextValue)
+        props.onChange?.(nextValue, ...payload)
       }
       return nextValue as never
     })
   }
 
-  return [value, setValue]
+  return [value, setValue, isControlled()]
 }
 
 export { useUncontrolled }

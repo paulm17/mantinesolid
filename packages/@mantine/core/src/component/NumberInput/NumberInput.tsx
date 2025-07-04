@@ -262,7 +262,7 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
   });
 
   const shouldUseStepInterval = () => local.stepHoldDelay !== undefined && local.stepHoldInterval !== undefined;
-  const [inputRef, setInputRef] = createSignal<HTMLInputElement | null>(null);
+  const [inputRef, setInputRef] = createSignal<HTMLInputElement | undefined>(undefined);
   let onStepTimeoutRef: number | null = null;
   let stepCountRef = 0;
 

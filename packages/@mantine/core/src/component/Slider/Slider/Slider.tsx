@@ -207,7 +207,7 @@ export const Slider = factory<SliderFactory>(_props => {
   const [hovered, setHovered] = createSignal(false);
   const [_value, setValue] = useUncontrolled({
     value: () => typeof local.value === 'number' ? clamp(local.value, local.min!, local.max!) : local.value,
-    defaultValue: typeof local.defaultValue === 'number' ? clamp(local.defaultValue, local.min!, local.max!) : local.defaultValue,
+    defaultValue: typeof local.defaultValue === 'number' ? clamp(local.defaultValue, local.min!, local.max!) : local.defaultValue!,
     finalValue: clamp(0, local.min!, local.max!),
     onChange: local.onChange,
   });

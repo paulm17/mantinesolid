@@ -196,7 +196,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>(_props => {
 
   const [_value, handleValueChange] = useUncontrolled({
     value: () => local.value,
-    defaultValue: local.defaultValue,
+    defaultValue: local.defaultValue!,
     finalValue: Array.isArray(local.data)
       ? (_data.find((item) => !item.disabled)?.value ?? (local.data[0] as any)?.value ?? null)
       : null,

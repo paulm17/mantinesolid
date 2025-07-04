@@ -169,7 +169,7 @@ export const Select = factory<SelectFactory>(_props => {
 
   const [_value, setValue, controlled] = useUncontrolled({
     value: () => local.value,
-    defaultValue: local.defaultValue,
+    defaultValue: local.defaultValue!,
     finalValue: null,
     onChange: local.onChange,
   });
@@ -181,8 +181,8 @@ export const Select = factory<SelectFactory>(_props => {
   const previousSelectedOption = usePrevious(selectedOption);
 
   const [search, setSearch] = useUncontrolled({
-    value: local.searchValue,
-    defaultValue: local.defaultSearchValue,
+    value: () => local.searchValue,
+    defaultValue: local.defaultSearchValue!,
     finalValue: selectedOption() ? selectedOption()!.label : '',
     onChange: local.onSearchChange,
   });
@@ -318,7 +318,7 @@ export const Select = factory<SelectFactory>(_props => {
               local.selectFirstOptionOnChange && combobox.selectFirstOption();
             }}
             onChange={(event) => {
-              handleSearchChange(_value() != null ? optionsLockup()[_value()]?.label || '' : '');
+              handleSearchChange(_value() != null ? optionsLockup()[_value()!]?.label || '' : '');
             }}
             onFocus={(event) => {
               local.searchable && combobox.openDropdown();
@@ -326,7 +326,7 @@ export const Select = factory<SelectFactory>(_props => {
             }}
             onBlur={(event) => {
               local.searchable && combobox.closeDropdown();
-              handleSearchChange(_value() != null ? optionsLockup()[_value()]?.label || '' : '');
+              handleSearchChange(_value() != null ? optionsLockup()[_value()!]?.label || '' : '');
               typeof local.onBlur === "function" &&  local.onBlur?.(event);
             }}
             onClick={(event) => {

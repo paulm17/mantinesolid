@@ -64,7 +64,7 @@ export function useVirtualizedCombobox(
 ): ComboboxStore {
   const [dropdownOpened, setDropdownOpened] = useUncontrolled({
     value: opened,
-    defaultValue: defaultOpened,
+    defaultValue: defaultOpened!,
     finalValue: false,
     onChange: onOpenedChange,
   });
@@ -76,21 +76,21 @@ export function useVirtualizedCombobox(
   let focusTargetTimeout = -1;
 
   const openDropdown = () => {
-    if (!dropdownOpened) {
+    if (!dropdownOpened()) {
       setDropdownOpened(true);
       onDropdownOpen?.();
     }
   };
 
   const closeDropdown = () => {
-    if (dropdownOpened) {
+    if (dropdownOpened()) {
       setDropdownOpened(false);
       onDropdownClose?.();
     }
   };
 
   const toggleDropdown = () => {
-    if (dropdownOpened) {
+    if (dropdownOpened()) {
       closeDropdown();
     } else {
       openDropdown();

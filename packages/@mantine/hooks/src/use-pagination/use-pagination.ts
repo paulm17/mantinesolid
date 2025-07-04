@@ -60,7 +60,7 @@ export function usePagination(props: PaginationParams) {
     if (pageNumber <= 0) {
       setActivePage(1);
     } else if (pageNumber > _total()) {
-      setActivePage(_total);
+      setActivePage(_total());
     } else {
       setActivePage(pageNumber);
     }

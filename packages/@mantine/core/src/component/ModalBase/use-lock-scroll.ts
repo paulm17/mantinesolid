@@ -10,7 +10,7 @@ export function useLockScroll({ opened, transitionDuration }: UseScrollLock) {
   const [shouldLockScroll, setShouldLockScroll] = createSignal(opened());
   let timeout:number = (-1);
   const reduceMotion = useReducedMotion();
-  const _transitionDuration = reduceMotion ? 0 : transitionDuration;
+  const _transitionDuration = reduceMotion() ? 0 : transitionDuration;
 
   createEffect(() => {
     if (opened()) {

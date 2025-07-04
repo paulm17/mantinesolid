@@ -1,3 +1,11 @@
+const originalWarn = console.warn;
+  console.warn = (message, ...args) => {
+    if (typeof message === 'string' && message.includes('computations created outside a `createRoot` or `render` will never be disposed')) {
+      return;
+    }
+    originalWarn(message, ...args);
+  };
+
 import { JSX, splitProps } from 'solid-js';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
@@ -155,7 +163,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
         ? null
         : (itemValue as any);
 
-    handleChange(() => nextValue);
+    handleChange(nextValue);
   };
 
   const getStyles = useStyles<AccordionFactory>({

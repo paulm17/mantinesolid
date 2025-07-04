@@ -1,9 +1,9 @@
-import NumInput from "./numberInput";
+import PopoverComponent from "./popover";
 
 export default function StoryComponent() {
   return (
     <div style={{ padding: '40px' }}>
-      <NumInput />
+      <PopoverComponent />
     </div>
   )
 }

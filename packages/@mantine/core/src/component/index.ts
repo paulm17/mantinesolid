@@ -16,7 +16,7 @@ export * from './InputBase';
 export * from './Flex';
 export * from './FloatingIndicator';
 
-// Regular components
+// // Regular components
 export * from './Accordion';
 export * from './Affix';
 export * from './Alert';
@@ -93,7 +93,7 @@ export * from './Switch';
 export * from './Table';
 export * from './TableOfContents';
 export * from './Tabs';
-export * from './TagsInput';
+export * from './TagsInput'; // Need to retest changed line: handleSearchChange(_value() != null ? optionsLockup()[_value()[0]!]?.label || '' : '');
 export * from './Text';
 export * from './Textarea';
 export * from './TextInput';

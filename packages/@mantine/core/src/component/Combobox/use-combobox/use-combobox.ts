@@ -116,7 +116,7 @@ export function useCombobox({
 }: UseComboboxOptions = {}): ComboboxStore {
   const [dropdownOpened, setDropdownOpened] = useUncontrolled({
     value: opened,
-    defaultValue: defaultOpened,
+    defaultValue: defaultOpened!,
     finalValue: false,
     onChange: onOpenedChange,
   });

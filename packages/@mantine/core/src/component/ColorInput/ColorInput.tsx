@@ -278,7 +278,7 @@ export const ColorInput = factory<ColorInputFactory>(__props => {
             unstyled={local.unstyled}
             rightSection={
               local.rightSection ||
-              (local.withEyeDropper && !local.disabled && !local.readOnly && eyeDropperSupported ? eyeDropper : null)
+              (local.withEyeDropper && !local.disabled && !local.readOnly && eyeDropperSupported() ? eyeDropper : null)
             }
           />
         </Popover.Target>

@@ -127,7 +127,7 @@ function getPopoverMiddlewares(
 export function usePopover(options: UsePopoverOptions) {
   const [_opened, setOpened] = useUncontrolled({
     value: options.opened,
-    defaultValue: options.defaultOpened,
+    defaultValue: options.defaultOpened!,
     finalValue: false,
     onChange: options.onChange,
   });
@@ -165,7 +165,7 @@ export function usePopover(options: UsePopoverOptions) {
   };
 
   useFloatingAutoUpdate({
-    opened: _opened,
+    opened: _opened(),
     position: options.position,
     positionDependencies: options.positionDependencies || [],
     floating: floatingWithRefs,
@@ -190,7 +190,7 @@ export function usePopover(options: UsePopoverOptions) {
   return {
     floating: () => floating,
     controlled: typeof options.opened() !== 'undefined',
-    opened: () => _opened,
+    opened: _opened,
     onClose,
     onToggle,
     setReference: setReferenceElement,

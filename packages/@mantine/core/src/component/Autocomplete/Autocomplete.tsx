@@ -120,8 +120,8 @@ export const Autocomplete = factory<AutocompleteFactory>(_props => {
   const optionsLockup = createMemo(() => getOptionsLockup(parsedData()));
 
   const [_value, setValue] = useUncontrolled({
-    value: local.value,
-    defaultValue: local.defaultValue,
+    value: () => local.value,
+    defaultValue: local.defaultValue!,
     finalValue: '',
     onChange: local.onChange,
   });

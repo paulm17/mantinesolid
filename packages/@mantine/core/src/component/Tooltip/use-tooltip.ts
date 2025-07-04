@@ -109,8 +109,8 @@ export function useTooltip(settings: UseTooltip) {
     }
   };
 
-  const [referenceElement, setReferenceElement] = createSignal<HTMLElement | null>(null);
-  const [floatingElement, setFloatingElement] = createSignal<HTMLElement | null>(null);
+  const [referenceElement, setReferenceElement] = createSignal<HTMLElement | undefined>(undefined);
+  const [floatingElement, setFloatingElement] = createSignal<HTMLElement | undefined>(undefined);
 
   const floating = useFloating({
     strategy: settings.strategy,

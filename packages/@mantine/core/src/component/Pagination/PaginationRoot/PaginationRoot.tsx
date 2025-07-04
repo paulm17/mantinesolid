@@ -154,7 +154,7 @@ export const PaginationRoot = factory<PaginationRootFactory>(_props => {
   });
 
   const pagination = usePagination({
-    page: () => local.value!,
+    page: local.value ? () => local.value! : undefined,
     initialPage: () => local.defaultValue!,
     onChange: local.onChange,
     total: () => local.total,
@@ -162,10 +162,18 @@ export const PaginationRoot = factory<PaginationRootFactory>(_props => {
     boundaries: () => local.boundaries!,
   });
 
-  createEffect(() => {
-    console.log('pagination active', pagination.active())
-    console.log('pagination range1', pagination.range())
-  })
+  // createEffect(() => {
+  //   console.log('[PaginationRoot] usePagination input values:', {
+  //     page: local.value,
+  //     total: local.total,
+  //     activePage: pagination.active()
+  //   });
+  // });
+
+  // createEffect(() => {
+  //   console.log('[PaginationRoot] active →', pagination.active());
+  //   console.log('[PaginationRoot] range  →', pagination.range());
+  // });
 
   const handleNextPage = createEventHandler(local.onNextPage, pagination.next);
   const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination.previous);
@@ -175,7 +183,7 @@ export const PaginationRoot = factory<PaginationRootFactory>(_props => {
   return (
     <PaginationProvider value={{
       total: () => local.total,
-      range: () => pagination.range(),
+      range: pagination.range,
       active: pagination.active,
       disabled: () => local.disabled,
       getItemProps: local.getItemProps,

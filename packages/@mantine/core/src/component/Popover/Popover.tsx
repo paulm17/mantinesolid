@@ -342,7 +342,7 @@ export function Popover(_props: PopoverProps) {
         y: () => popover.floating().y,
         arrowX: popover.floating()?.middlewareData?.arrow?.x,
         arrowY: popover.floating()?.middlewareData?.arrow?.y,
-        opened: popover.opened(),
+        opened: popover.opened,
         arrowRef: () => arrowRef,
         transitionProps: { ...local.transitionProps, onExited, onEntered },
         width: local.width,

@@ -84,7 +84,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>(_props => {
     varsResolver,
   });
 
-  const [innerRef, setInnerRef] = createSignal<HTMLDivElement | null>(null);
+  const [innerRef, setInnerRef] = createSignal<HTMLDivElement | undefined>(undefined);
   const { initialized, hidden } = useFloatingIndicator({
     target: () => local.target,
     parent: () => local.parent,

@@ -219,15 +219,15 @@ export const MultiSelect = factory<MultiSelectFactory>(_props => {
   } = extractStyleProps(others);
 
   const [_value, setValue] = useUncontrolled({
-    value: local.value,
-    defaultValue: local.defaultValue,
+    value: () => local.value,
+    defaultValue: local.defaultValue!,
     finalValue: [],
     onChange: local.onChange,
   });
 
   const [_searchValue, setSearchValue] = useUncontrolled({
-    value: local.searchValue,
-    defaultValue: local.defaultSearchValue,
+    value: () => local.searchValue,
+    defaultValue: local.defaultSearchValue!,
     finalValue: '',
     onChange: local.onSearchChange,
   });
@@ -260,9 +260,9 @@ export const MultiSelect = factory<MultiSelectFactory>(_props => {
       combobox.toggleDropdown();
     }
 
-    if (event.key === 'Backspace' && _searchValue().length === 0 && _value.length > 0) {
-      local.onRemove?.(_value[_value.length - 1]);
-      setValue(_value.slice(0, _value.length - 1));
+    if (event.key === 'Backspace' && _searchValue().length === 0 && _value().length > 0) {
+      local.onRemove?.(_value()[_value().length - 1]);
+      setValue(_value().slice(0, _value().length - 1));
     }
   };
 
