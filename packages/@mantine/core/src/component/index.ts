@@ -68,8 +68,8 @@ export * from './NativeSelect';
 export * from './NavLink';
 export * from './Notification';
 export * from './NumberFormatter';
-export * from './NumberInput'; // <-- does not refresh input on value change
-export * from './Pagination'; // <-- has rendering issues
+export * from './NumberInput';
+export * from './Pagination';
 export * from './PasswordInput';
 export * from './Pill';
 export * from './PillsInput';
@@ -93,7 +93,7 @@ export * from './Switch';
 export * from './Table';
 export * from './TableOfContents';
 export * from './Tabs';
-export * from './TagsInput'; // Need to retest changed line: handleSearchChange(_value() != null ? optionsLockup()[_value()[0]!]?.label || '' : '');
+export * from './TagsInput';
 export * from './Text';
 export * from './Textarea';
 export * from './TextInput';

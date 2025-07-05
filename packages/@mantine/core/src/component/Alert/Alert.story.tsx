@@ -1,9 +1,25 @@
 import { IconPhoto } from '@tabler/icons-solidjs';
-import { MantineThemeProvider } from '../../core';
+import { MantineProvider, MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
 
-export default { title: 'Alert' };
+export default {
+  title: 'Alert',
+  component: Alert,
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider
+        theme={{}}
+        withCssVariables={true}
+        withGlobalClasses={true}
+        defaultColorScheme="light"
+        forceColorScheme="light"
+      >
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Variants() {
   return (

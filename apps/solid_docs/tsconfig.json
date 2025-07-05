@@ -1,29 +1,18 @@
 {
-    // "extends": "@tsconfig/strictest/tsconfig.json",
     "compilerOptions": {
-        "declaration": true,
-        "declarationMap": true,
-        "emitDeclarationOnly": true,
-        "sourceMap": true,
-        "composite": true,
-
-        "lib": ["ESNext"],
         "target": "ESNext",
         "module": "ESNext",
-        "moduleDetection": "force",
-        "allowJs": true,
-
         "moduleResolution": "bundler",
-        "isolatedModules": true,
-        "allowImportingTsExtensions": true,
-        "verbatimModuleSyntax": true,
-        "forceConsistentCasingInFileNames": true,
-
+        "allowJs": true,
         "jsx": "preserve",
         "jsxImportSource": "solid-js",
-
-        "rootDir": ".",
-        "outDir": "dist"
+        "types": ["vite/client"]
     },
-    "include": [".storybook/**/*.ts", ".storybook/**/*.tsx", "stories/**/*.ts", "stories/**/*.tsx", "types/*.d.ts"]
+    "include": [
+        ".storybook/**/*.ts",
+        ".storybook/**/*.tsx",
+        "stories/**/*.ts",
+        "stories/**/*.tsx",
+        "stories/types/*.d.ts"
+    ]
 }
