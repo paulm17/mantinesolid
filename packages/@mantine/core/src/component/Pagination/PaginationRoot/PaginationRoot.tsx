@@ -162,19 +162,6 @@ export const PaginationRoot = factory<PaginationRootFactory>(_props => {
     boundaries: () => local.boundaries!,
   });
 
-  // createEffect(() => {
-  //   console.log('[PaginationRoot] usePagination input values:', {
-  //     page: local.value,
-  //     total: local.total,
-  //     activePage: pagination.active()
-  //   });
-  // });
-
-  // createEffect(() => {
-  //   console.log('[PaginationRoot] active →', pagination.active());
-  //   console.log('[PaginationRoot] range  →', pagination.range());
-  // });
-
   const handleNextPage = createEventHandler(local.onNextPage, pagination.next);
   const handlePreviousPage = createEventHandler(local.onPreviousPage, pagination.previous);
   const handleFirstPage = createEventHandler(local.onFirstPage, pagination.first);

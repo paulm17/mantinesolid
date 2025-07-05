@@ -51,14 +51,14 @@ export const PaginationControl = factory<PaginationControlFactory>(_props => {
   ]);
 
   const ctx = usePaginationContext();
-  const _disabled = local.disabled || ctx.disabled();
+  const _disabled = () => local.disabled || !!ctx.disabled();
 
   return (
     <UnstyledButton
       ref={local.ref}
-      disabled={_disabled}
-      mod={[{ active: local.active, disabled: _disabled, 'with-padding': local.withPadding }, local.mod]}
-      {...ctx.getStyles('control', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles, active: !_disabled })}
+      disabled={_disabled()}
+      mod={[{ active: local.active, disabled: _disabled(), 'with-padding': local.withPadding }, local.mod]}
+      {...ctx.getStyles('control', { className: local.className, style: local.style, classNames: local.classNames, styles: local.styles, active: !_disabled() })}
       {...others}
     />
   );

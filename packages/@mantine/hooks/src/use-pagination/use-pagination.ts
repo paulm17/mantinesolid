@@ -38,10 +38,6 @@ export function usePagination(props: PaginationParams) {
     'onChange',
   ]);
 
-  createEffect(() => {
-    console.log('use-pagination total', local.total);
-  })
-
   const siblings = createMemo(() => local.siblings?.() ?? 1);
   const boundaries = createMemo(() => local.boundaries?.() ?? 1);
   const initialPage = createMemo(() => local.initialPage?.() ?? 1);
@@ -54,8 +50,12 @@ export function usePagination(props: PaginationParams) {
     finalValue: initialPage(),
   });
 
+  // createEffect(() => {
+  //   console.log(`[usePagination Hook] Active page state is now: ${activePage()}`);
+  // });
+
   const setPage = (pageNumber: number) => {
-    console.log('setPage', pageNumber);
+    // console.log(`[usePagination Hook] setPage called with: ${pageNumber}`);
 
     if (pageNumber <= 0) {
       setActivePage(1);

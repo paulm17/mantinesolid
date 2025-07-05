@@ -1,4 +1,4 @@
-import { For, Match, Switch } from 'solid-js';
+import { Index } from 'solid-js';
 import { usePaginationContext } from '../Pagination.context';
 import { PaginationControl } from '../PaginationControl/PaginationControl';
 import { PaginationDots } from '../PaginationDots/PaginationDots';
@@ -10,30 +10,28 @@ export interface PaginationItemsProps {
 
 export function PaginationItems(props: PaginationItemsProps) {
   const ctx = usePaginationContext();
-
-  // Directly use the reactive 'range' from the context.
-  // Do not calculate a separate range here.
   const range = ctx.range;
 
   return (
-    <For each={range()}>
+    <Index each={range()}>
       {(page) => (
-        <Switch>
-          <Match when={page === 'dots'}>
+        // div forces index to re-render
+        <div>
+          {page() === 'dots' ? (
             <PaginationDots icon={props.dotsIcon} />
-          </Match>
-          <Match when={typeof page === 'number'}>
+          ) : (
             <PaginationControl
-              active={page === ctx.active()}
-              onClick={() => ctx.onChange(page as number)}
+              active={page() === ctx.active()}
+              onClick={() => ctx.onChange(page() as number)}
               disabled={ctx.disabled()}
+              {...ctx.getItemProps?.(page() as number)}
             >
-              {page}
+              {ctx.getItemProps?.(page() as number)?.children ?? page()}
             </PaginationControl>
-          </Match>
-        </Switch>
+          )}
+        </div>
       )}
-    </For>
+    </Index>
   );
 }
 
