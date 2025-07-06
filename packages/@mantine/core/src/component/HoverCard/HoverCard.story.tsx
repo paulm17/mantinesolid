@@ -1,9 +1,20 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Button } from '../Button';
 import { Switch } from '../Switch';
 import { Tooltip } from '../Tooltip';
 import { HoverCard } from './HoverCard';
+import { MantineProvider } from '../../core';
 
-export default { title: 'HoverCard' };
+export default {
+  title: 'HoverCard',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (
@@ -62,7 +73,7 @@ export function TargetWithTooltip() {
 export function WithSwitch() {
   return (
     <div style={{ 'padding': '40px' }}>
-      <HoverCard width={280} shadow="md">
+      <HoverCard width='280px' shadow="md">
         <HoverCard.Target refProp="rootRef" eventPropsWrapperName="wrapperProps">
           <Switch label="Switch label" />
         </HoverCard.Target>

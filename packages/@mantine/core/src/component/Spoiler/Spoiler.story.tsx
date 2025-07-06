@@ -1,8 +1,18 @@
-import { createEffect, createSignal, Index } from 'solid-js';
+import { createEffect, createSignal, Index, JSX } from 'solid-js';
 import { Accordion } from '../Accordion/Accordion';
 import { Spoiler } from './Spoiler';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Spoiler' };
+export default {
+  title: 'Spoiler',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function ContentChanges() {
   const [count, setCount] = createSignal(1);

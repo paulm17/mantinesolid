@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Divider } from './Divider';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Divider' };
+export default {
+  title: 'Divider',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

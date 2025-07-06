@@ -1,8 +1,18 @@
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-solidjs';
-import { ThemeIcon } from '@mantine/core';
+import { MantineProvider, ThemeIcon } from '@mantine/core';
 import { List } from './List';
+import { JSX } from 'solid-js/jsx-runtime';
 
-export default { title: 'List' };
+export default {
+  title: 'List',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

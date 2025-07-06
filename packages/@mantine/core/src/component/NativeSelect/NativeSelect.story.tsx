@@ -1,8 +1,18 @@
-import { rem } from '../../core';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider, rem } from '../../core';
 import { TextInput } from '../TextInput';
 import { NativeSelect } from './NativeSelect';
 
-export default { title: 'NativeSelect' };
+export default {
+  title: 'NativeSelect',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinDisabledFieldset() {
   return (

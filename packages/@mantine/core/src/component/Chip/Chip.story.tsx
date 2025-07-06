@@ -1,9 +1,19 @@
 import { IconCheck } from '@tabler/icons-solidjs';
 import { Tooltip } from '../Tooltip';
 import { Chip } from './Chip';
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Chip' };
+export default {
+  title: 'Chip',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithTooltip() {
   return (

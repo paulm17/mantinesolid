@@ -1,9 +1,18 @@
 import { useState } from 'react';
 import { IconPackage } from '@tabler/icons-solidjs';
 import { Tabs, TabsProps } from './Tabs';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
 export default {
   title: 'Tabs',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
 };
 
 const base = (

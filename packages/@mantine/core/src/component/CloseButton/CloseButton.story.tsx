@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { CloseButton } from './CloseButton';
+import { MantineProvider } from '../../core';
 
-export default { title: 'CloseButton' };
+export default {
+  title: 'CloseButton',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function SingleButton() {
   return (

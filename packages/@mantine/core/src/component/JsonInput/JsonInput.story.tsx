@@ -1,7 +1,17 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { JsonInput } from './JsonInput';
+import { MantineProvider } from '../../core';
 
-export default { title: 'JsonInput' };
+export default {
+  title: 'JsonInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

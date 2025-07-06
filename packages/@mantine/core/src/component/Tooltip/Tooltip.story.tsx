@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { Tooltip } from './Tooltip';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Tooltip' };
+export default {
+  title: 'Tooltip',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

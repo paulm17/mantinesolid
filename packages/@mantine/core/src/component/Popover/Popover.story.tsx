@@ -1,12 +1,22 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState } from 'react';
-import { Box, MantineThemeProvider } from '../../core';
+import { Box, MantineProvider, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
 import { Tooltip } from '../Tooltip';
 import { Popover } from './Popover';
+import { JSX } from 'solid-js/jsx-runtime';
 
-export default { title: 'Popover' };
+export default {
+  title: 'Popover',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const lorem =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, facilis rerum molestias voluptatem, quidem sunt, omnis iste ipsa corporis itaque optio. Amet fugiat explicabo, molestias exercitationem consequatur quis dicta unde?';

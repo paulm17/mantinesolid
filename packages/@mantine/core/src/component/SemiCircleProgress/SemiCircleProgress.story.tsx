@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { SemiCircleProgress } from './SemiCircleProgress';
+import { MantineProvider } from '../../core';
 
-export default { title: 'SemiCircleProgress' };
+export default {
+  title: 'SemiCircleProgress',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

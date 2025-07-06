@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Textarea } from './Textarea';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Textarea' };
+export default {
+  title: 'Textarea',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

@@ -1,8 +1,18 @@
 import { IconInfoCircle } from '@tabler/icons-solidjs';
-import { rem } from '../../core';
+import { MantineProvider, rem } from '../../core';
 import { Blockquote } from './Blockquote';
+import { JSX } from 'solid-js/jsx-runtime';
 
-export default { title: 'Blockquote' };
+export default {
+  title: 'Blockquote',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

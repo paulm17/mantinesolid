@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Anchor } from './Anchor';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Anchor' };
+export default {
+  title: 'Anchor',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

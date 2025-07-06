@@ -1,9 +1,19 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Pagination } from './Pagination';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Pagination' };
+export default {
+  title: 'Pagination',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function DynamicTotal() {
   const [total, setTotal] = createSignal(20);

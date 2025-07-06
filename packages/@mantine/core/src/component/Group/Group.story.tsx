@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Group } from './Group';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Group' };
+export default {
+  title: 'Group',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

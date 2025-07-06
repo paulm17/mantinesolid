@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { IconSearch, IconTable } from '@tabler/icons-solidjs';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
@@ -6,8 +6,18 @@ import { Input } from '../Input';
 import { Text } from '../Text';
 import { Tooltip } from '../Tooltip';
 import { Menu } from './Menu';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Menu' };
+export default {
+  title: 'Menu',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function DisabledFirstItem() {
   return (
@@ -174,7 +184,7 @@ export function WithUseDisclosure() {
 
   return (
     <div style={{ padding: '40px' }}>
-      <Menu opened={opened} onChange={() => handle.toggle()}>
+      <Menu opened={opened()} onChange={() => handle.toggle()}>
         <Menu.Target>
           <Button>UseDisclosureToggle controlled menu</Button>
         </Menu.Target>

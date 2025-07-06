@@ -1,9 +1,19 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { IconMoon } from '@tabler/icons-solidjs';
 import { Stack } from '../Stack';
 import { Rating } from './Rating';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Rating' };
+export default {
+  title: 'Rating',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function ReadOnlyWithDefaultValue() {
   return <Rating defaultValue={2} readOnly />;

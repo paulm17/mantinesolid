@@ -1,10 +1,20 @@
 import { IconBadge } from '@tabler/icons-solidjs';
-import { Box } from '../../core';
+import { Box, MantineProvider } from '../../core';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
 import { Switch } from './Switch';
+import { JSX } from 'solid-js/jsx-runtime';
 
-export default { title: 'Switch' };
+export default {
+  title: 'Switch',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinDisabledFieldset() {
   return (

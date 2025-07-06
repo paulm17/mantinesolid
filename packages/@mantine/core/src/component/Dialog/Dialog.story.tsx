@@ -1,8 +1,18 @@
-import { Button, Group, Text, TextInput } from '@mantine/core';
+import { Button, Group, MantineProvider, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Dialog } from './Dialog';
+import { JSX } from 'solid-js/jsx-runtime';
 
-export default { title: 'Dialog' };
+export default {
+  title: 'Dialog',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [opened, { toggle, close }] = useDisclosure(false);

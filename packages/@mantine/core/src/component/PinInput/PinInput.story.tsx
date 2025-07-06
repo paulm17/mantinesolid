@@ -1,9 +1,18 @@
-import { createSignal, For } from 'solid-js';
-import { DEFAULT_THEME, MantineSize } from '../../core';
+import { createSignal, For, JSX } from 'solid-js';
+import { DEFAULT_THEME, MantineProvider, MantineSize } from '../../core';
 import { Button } from '../Button';
 import { PinInput } from './PinInput';
 
-export default { title: 'PinInput' };
+export default {
+  title: 'PinInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [value, setValue] = createSignal('');

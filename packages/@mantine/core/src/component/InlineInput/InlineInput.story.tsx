@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { InlineInput, InlineInputProps } from './InlineInput';
+import { MantineProvider } from '../../core';
 
-export default { title: 'InlineInput' };
+export default {
+  title: 'InlineInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const defaultProps: InlineInputProps = {
   __staticSelector: 'InlineInput',

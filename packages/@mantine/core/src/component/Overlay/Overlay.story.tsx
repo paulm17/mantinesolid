@@ -1,7 +1,17 @@
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
 import { Overlay } from './Overlay';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Overlay' };
+export default {
+  title: 'Overlay',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus ratione expedita voluptatibus aperiam cum, consectetur, tenetur consequuntur error qui eum eligendi, ea illum! Sit, sint totam dicta rem deleniti perspiciatis!';
 const content = <For each={Array(20).fill(0)}>

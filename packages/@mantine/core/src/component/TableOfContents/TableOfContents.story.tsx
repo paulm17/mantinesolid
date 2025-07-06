@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { TableOfContents } from './TableOfContents';
+import { MantineProvider } from '../../core';
 
-export default { title: 'TableOfContents' };
+export default {
+  title: 'TableOfContents',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

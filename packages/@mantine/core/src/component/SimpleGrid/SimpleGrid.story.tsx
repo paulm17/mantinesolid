@@ -1,7 +1,18 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Button } from '../Button';
 import { SimpleGrid } from './SimpleGrid';
+import { MantineProvider } from '../../core';
 
-export default { title: 'SimpleGrid' };
+export default {
+  title: 'SimpleGrid',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (
@@ -10,7 +21,7 @@ export function Usage() {
         {Array(10)
           .fill(0)
           .map((_, index) => (
-            <Button key={index}>{index}</Button>
+            <Button>{index}</Button>
           ))}
       </SimpleGrid>
     </div>
@@ -29,7 +40,7 @@ export function ContainerQueries() {
         {Array(10)
           .fill(0)
           .map((_, index) => (
-            <Button key={index}>{index}</Button>
+            <Button>{index}</Button>
           ))}
       </SimpleGrid>
     </div>

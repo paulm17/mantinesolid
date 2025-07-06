@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Paper } from './Paper';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Paper' };
+export default {
+  title: 'Paper',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

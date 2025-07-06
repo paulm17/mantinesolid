@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Highlight } from './Highlight';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Highlight' };
+export default {
+  title: 'Highlight',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

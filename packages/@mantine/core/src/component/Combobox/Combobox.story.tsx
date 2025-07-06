@@ -7,8 +7,18 @@ import { Text } from '../Text';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
 import { useCombobox } from './use-combobox/use-combobox';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Combobox' };
+export default {
+  title: 'Combobox',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const largeOptionsList = (
   <For each={Array(100).fill(0)}>

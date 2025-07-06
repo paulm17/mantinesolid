@@ -5,16 +5,9 @@ import { For, JSX } from 'solid-js';
 
 export default {
   title: 'Alert',
-  component: Alert,
   decorators: [
     (Story: () => JSX.Element) => (
-      <MantineProvider
-        theme={{}}
-        withCssVariables={true}
-        withGlobalClasses={true}
-        defaultColorScheme="light"
-        forceColorScheme="light"
-      >
+      <MantineProvider>
         <Story />
       </MantineProvider>
     ),

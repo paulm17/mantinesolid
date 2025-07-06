@@ -1,5 +1,5 @@
-import { For } from 'solid-js';
-import { Box } from '../../core';
+import { For, JSX } from 'solid-js';
+import { Box, MantineProvider } from '../../core';
 import { Center } from '../Center';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
@@ -7,7 +7,16 @@ import { Text } from '../Text';
 import { Tooltip } from '../Tooltip';
 import { Avatar } from './Avatar';
 
-export default { title: 'Avatar' };
+export default {
+  title: 'Avatar',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

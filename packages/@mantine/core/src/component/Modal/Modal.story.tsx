@@ -8,8 +8,19 @@ import { Stack } from '../Stack';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
 import { useModalsStack } from './use-modals-stack';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Modal' };
+export default {
+  title: 'Modal',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const lorem =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum tenetur, atque animi ducimus tempora iste distinctio harum nostrum eos tempore voluptatem, voluptas dolorem eveniet fugiat pariatur! Repellendus minus nulla non?';
@@ -125,7 +136,7 @@ export function ConsistentHeaderHeight() {
         opened={opened}
         onClose={close}
         title="Toggle close button"
-        withCloseButton={withCloseButton}
+        withCloseButton={withCloseButton()}
         zIndex={73812}
       >
         <Button onClick={handlers.toggle}>Toggle close button</Button>

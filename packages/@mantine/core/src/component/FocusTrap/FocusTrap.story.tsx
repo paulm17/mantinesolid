@@ -1,7 +1,18 @@
 import { useDisclosure } from '@mantine/hooks';
 import { FocusTrap } from './FocusTrap';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'FocusTrap' };
+export default {
+  title: 'FocusTrap',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [active, handlers] = useDisclosure(false);
@@ -11,11 +22,13 @@ export function Usage() {
         Toggle
       </button>
       <FocusTrap active={active()}>
-        <div>
-          <input />
-          <input />
-          <input />
-        </div>
+        {(focusTrapProps) => (
+          <div {...focusTrapProps}>
+            <input />
+            <input />
+            <input />
+          </div>
+        )}
       </FocusTrap>
     </>
   );

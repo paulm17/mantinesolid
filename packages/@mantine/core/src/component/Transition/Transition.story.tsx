@@ -1,7 +1,17 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { Transition } from './Transition';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Transition' };
+export default {
+  title: 'Transition',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [mounted, setMounted] = createSignal(false);

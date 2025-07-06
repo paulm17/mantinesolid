@@ -1,9 +1,19 @@
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
 import { Checkbox } from '../Checkbox';
 import { Stack } from '../Stack';
 import { Radio } from './Radio';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Radio' };
+export default {
+  title: 'Radio',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

@@ -1,10 +1,19 @@
-import { createSignal } from 'solid-js';
-import { MantineThemeProvider } from '../../core';
+import { createSignal, JSX } from 'solid-js';
+import { MantineProvider, MantineThemeProvider } from '../../core';
 import { Stack } from '../Stack';
 import { Tooltip } from '../Tooltip';
 import { Checkbox } from './Checkbox';
 
-export default { title: 'Checkbox' };
+export default {
+  title: 'Checkbox',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinDisabledFieldset() {
   return (
@@ -33,19 +42,19 @@ export function BooleanError() {
       <Checkbox
         label="Boolean error"
         value="hello"
-        error={error}
+        error={error()}
         onChange={(event) => setError(event.currentTarget.checked)}
       />
       <Checkbox
         label="Boolean error"
         value="hello"
-        error={error}
+        error={error()}
         onChange={(event) => setError(event.currentTarget.checked)}
       />
       <Checkbox
         label="Boolean error"
         value="hello"
-        error={error}
+        error={error()}
         onChange={(event) => setError(event.currentTarget.checked)}
       />
       <p>Under checkboxes</p>
@@ -173,7 +182,7 @@ export function WithError() {
 
 export function Sizes() {
   return ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <Checkbox size={size} default-checked label={`Size ${size}`} mt="md" key={size} />
+    <Checkbox size={size} default-checked label={`Size ${size}`} mt="md" />
   ));
 }
 

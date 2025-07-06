@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { BackgroundImage } from './BackgroundImage';
+import { MantineProvider } from '../../core';
 
-export default { title: 'BackgroundImage' };
+export default {
+  title: 'BackgroundImage',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

@@ -1,13 +1,23 @@
 import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineThemeProvider } from '../../core';
+import { MantineProvider, MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Modal } from '../Modal';
 import { TextInput } from '../TextInput';
 import { SegmentedControl } from './SegmentedControl';
+import { JSX } from 'solid-js/jsx-runtime';
 
-export default { title: 'SegmentedControl' };
+export default {
+  title: 'SegmentedControl',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinModal() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -105,7 +115,7 @@ export function Disabled() {
 
 export function FocusRingAlways() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <MantineThemeProvider theme={{ focusRing: 'always' }} inherit>
         <SegmentedControl data={['React', 'Angular', 'Svelte', 'Vue']} />
       </MantineThemeProvider>
@@ -121,7 +131,7 @@ export function SelectedItemRemoved() {
     breakingThings === true ? ['1', '2', '3'].filter((elem) => elem !== '3') : ['1', '2', '3'];
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <SegmentedControl value={value} onChange={setValue} data={dataList} />
 
       <button type="button" onClick={() => setBreakingThings(!breakingThings)}>
@@ -137,7 +147,7 @@ export function Unselect() {
   const dataList = ['1', '2', '3'];
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <SegmentedControl value={value} onChange={setValue} data={dataList} mr={10} />
 
       <button type="button" onClick={() => setValue('')}>
@@ -149,13 +159,13 @@ export function Unselect() {
 
 export function NextToInput() {
   const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <Group key={size} gap={5}>
+    <Group gap={5}>
       <SegmentedControl data={['React', 'Angular']} size={size} />
       <TextInput placeholder="Input" size={size} />
     </Group>
   ));
 
   return (
-    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>{sizes}</div>
+    <div style={{ 'padding': '40px', display: 'flex', 'flex-direction': 'column', gap: '40px' }}>{sizes}</div>
   );
 }

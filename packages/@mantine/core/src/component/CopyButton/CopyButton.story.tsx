@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { CopyButton } from './CopyButton';
+import { MantineProvider } from '../../core';
 
-export default { title: 'CopyButton' };
+export default {
+  title: 'CopyButton',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

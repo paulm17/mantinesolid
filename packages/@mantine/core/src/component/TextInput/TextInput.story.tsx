@@ -1,4 +1,4 @@
-import { IconCalendar, IconPhone } from '@tabler/icons-react';
+import { IconCalendar, IconPhone } from '@tabler/icons-solidjs';
 import { Checkbox } from '../Checkbox';
 import { ColorInput } from '../ColorInput';
 import { Group } from '../Group';
@@ -11,8 +11,19 @@ import { RangeSlider } from '../Slider';
 import { Stack } from '../Stack';
 import { Switch } from '../Switch';
 import { TextInput } from './TextInput';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'TextInput' };
+export default {
+  title: 'TextInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (
@@ -125,7 +136,7 @@ export function HomepageCollage() {
           label="Appointment date"
           value="September 30, 2021"
           withAsterisk
-          leftSection={<IconCalendar size={24} stroke={1.5} color="var(--mantine-color-gray-5)" />}
+          leftSection={<IconCalendar size={24} stroke='1.5' color="var(--mantine-color-gray-5)" />}
           rightSection={<Input.ClearButton />}
           leftSectionWidth='36px'
           styles={{ input: { paddingLeft: 39.5 } }}

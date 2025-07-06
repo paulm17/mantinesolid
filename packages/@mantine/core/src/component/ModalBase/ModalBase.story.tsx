@@ -7,8 +7,19 @@ import { ModalBaseContent } from './ModalBaseContent';
 import { ModalBaseHeader } from './ModalBaseHeader';
 import { ModalBaseOverlay } from './ModalBaseOverlay';
 import { ModalBaseTitle } from './ModalBaseTitle';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'ModalBase' };
+export default {
+  title: 'ModalBase',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const lorem =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum tenetur, atque animi ducimus tempora iste distinctio harum nostrum eos tempore voluptatem, voluptas dolorem eveniet fugiat pariatur! Repellendus minus nulla non?';

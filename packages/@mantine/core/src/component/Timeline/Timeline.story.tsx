@@ -6,8 +6,19 @@ import {
 } from '@tabler/icons-solidjs';
 import { Text } from '../Text';
 import { Timeline } from './Timeline';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Timeline' };
+export default {
+  title: 'Timeline',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

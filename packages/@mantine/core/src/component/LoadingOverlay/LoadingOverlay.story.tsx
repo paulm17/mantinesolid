@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { LoadingOverlay } from './LoadingOverlay';
+import { MantineProvider } from '../../core';
 
-export default { title: 'LoadingOverlay' };
+export default {
+  title: 'LoadingOverlay',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

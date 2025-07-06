@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Skeleton } from './Skeleton';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Skeleton' };
+export default {
+  title: 'Skeleton',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

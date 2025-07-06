@@ -1,7 +1,17 @@
-import { Box } from '../../core';
+import { JSX } from 'solid-js';
+import { Box, MantineProvider } from '../../core';
 import { Affix } from './Affix';
 
-export default { title: 'Affix' };
+export default {
+  title: 'Affix',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

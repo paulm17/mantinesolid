@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { createSignal, JSX } from 'solid-js';
 import { IconPictureInPicture } from '@tabler/icons-solidjs';
 import { Accordion } from './Accordion';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Accordion' };
+export default {
+  title: 'Accordion',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
+};
 
 export const Variants = () => (
   <>
@@ -247,9 +257,9 @@ export const Multiple = () => (
 );
 
 export const ControlledSingle = () => {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = createSignal<string | null>(null);
   return (
-    <Accordion value={value} onChange={setValue} style={{ 'max-width': '400px' }} mx="auto">
+    <Accordion value={value()} onChange={setValue} style={{ 'max-width': '400px' }} mx="auto">
       <>
         <Accordion.Item value="customize">
           <Accordion.Control>Customization</Accordion.Control>
@@ -279,9 +289,9 @@ export const ControlledSingle = () => {
 };
 
 export const ControlledMultiple = () => {
-  const [value, setValue] = useState<string[]>([]);
+  const [value, setValue] = createSignal<string[]>([]);
   return (
-    <Accordion multiple value={value} onChange={setValue} style={{ 'max-width': '400px' }} mx="auto">
+    <Accordion multiple value={value()} onChange={setValue} style={{ 'max-width': '400px' }} mx="auto">
       <>
         <Accordion.Item value="customize">
           <Accordion.Control>Customization</Accordion.Control>

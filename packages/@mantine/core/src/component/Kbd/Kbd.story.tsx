@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Kbd } from './Kbd';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Kbd' };
+export default {
+  title: 'Kbd',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

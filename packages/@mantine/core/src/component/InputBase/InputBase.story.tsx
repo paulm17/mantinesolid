@@ -1,10 +1,21 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { InputBase } from './InputBase';
+import { MantineProvider } from '../../core';
 
-export default { title: 'InputBase' };
+export default {
+  title: 'InputBase',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinDisabledFieldset() {
   return (
-    <fieldset disabled style={{ padding: 40 }}>
+    <fieldset disabled style={{ 'padding': '40px' }}>
       <legend>Disabled fieldset</legend>
       <InputBase label="Disabled by fieldset" placeholder="Disabled by fieldset" />
       <InputBase label="Disabled by prop" placeholder="Disabled by prop" disabled mt="md" />
@@ -14,7 +25,7 @@ export function WithinDisabledFieldset() {
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <InputBase
         label="This is input base"
         error="test-error"
@@ -27,7 +38,7 @@ export function Usage() {
 
 export function WithoutAria() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <InputBase label="This is input base" placeholder="test-placeholder" withAria={false} />
     </div>
   );
@@ -35,7 +46,7 @@ export function WithoutAria() {
 
 export function Unstyled() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ 'padding': '40px' }}>
       <InputBase label="This is input base" placeholder="test-placeholder" unstyled />
     </div>
   );

@@ -1,9 +1,18 @@
 import { createTheme, MantineProvider } from '@mantine/core';
 import { defaultLoaders, Loader } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';
-import { splitProps } from 'solid-js';
+import { JSX, splitProps } from 'solid-js';
 
-export default { title: 'Loader' };
+export default {
+  title: 'Loader',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

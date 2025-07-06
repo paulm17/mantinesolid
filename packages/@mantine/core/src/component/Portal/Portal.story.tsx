@@ -1,12 +1,23 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Portal } from './Portal';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Portal' };
+export default {
+  title: 'Portal',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (
     <>
       <div id="portal-target" />
-      <Portal style={{ background: 'pink' }} className="class1 class2">
+      <Portal style={{ background: 'pink' }} class="class1 class2">
         <p>First</p>
       </Portal>
       <Portal style={{ background: 'pink' }}>

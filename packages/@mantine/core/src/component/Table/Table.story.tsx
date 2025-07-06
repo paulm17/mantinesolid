@@ -1,10 +1,20 @@
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
 import { Stack } from '../Stack';
 import { Text } from '../Text';
 import { Title } from '../Title';
 import { Table } from './Table';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Table' };
+export default {
+  title: 'Table',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const elements = [
   { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },

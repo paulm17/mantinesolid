@@ -2,9 +2,19 @@ import { IconChevronRight, IconHome2 } from '@tabler/icons-solidjs';
 import { useCounter } from '@mantine/hooks';
 import { Button } from '../Button';
 import { NavLink } from './NavLink';
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
+import { MantineProvider } from '../../core';
 
-export default { title: 'NavLink' };
+export default {
+  title: 'NavLink',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function SingleButton() {
   return (

@@ -1,8 +1,17 @@
-import { For } from 'solid-js';
-import { DEFAULT_THEME } from '../../core';
+import { For, JSX } from 'solid-js';
+import { DEFAULT_THEME, MantineProvider } from '../../core';
 import { ThemeIcon, ThemeIconProps } from './ThemeIcon';
 
-export default { title: 'ThemeIcon' };
+export default {
+  title: 'ThemeIcon',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 function Colors({ index, ...others }: ThemeIconProps & { index?: number }) {
   const colors = Object.keys(DEFAULT_THEME.colors);

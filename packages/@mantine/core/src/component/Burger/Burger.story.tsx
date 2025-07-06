@@ -1,7 +1,17 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { Burger } from './Burger';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Burger' };
+export default {
+  title: 'Burger',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [opened, setOpened] = createSignal(false);

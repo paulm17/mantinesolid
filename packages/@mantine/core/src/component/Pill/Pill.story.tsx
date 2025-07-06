@@ -1,7 +1,18 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Input } from '../Input';
 import { Pill } from './Pill';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Pill' };
+export default {
+  title: 'Pill',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function SinglePill() {
   return (

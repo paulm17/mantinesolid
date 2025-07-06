@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { Button } from '../Button';
 import { Select } from './Select';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Select' };
+export default {
+  title: 'Select',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

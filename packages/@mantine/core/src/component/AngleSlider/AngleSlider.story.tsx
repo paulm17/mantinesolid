@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { AngleSlider } from './AngleSlider';
+import { MantineProvider } from '../../core';
 
-export default { title: 'AngleSlider' };
+export default {
+  title: 'AngleSlider',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

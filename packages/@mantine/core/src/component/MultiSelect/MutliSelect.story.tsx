@@ -3,9 +3,19 @@ import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
 import { MultiSelect } from './MultiSelect';
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
+import { MantineProvider } from '../../core';
 
-export default { title: 'MultiSelect' };
+export default {
+  title: 'MultiSelect',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

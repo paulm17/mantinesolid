@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { RangeSlider } from './RangeSlider/RangeSlider';
 import { Slider } from './Slider/Slider';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Slider' };
+export default {
+  title: 'Slider',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const marks = [
   { value: 20, label: '20%' },

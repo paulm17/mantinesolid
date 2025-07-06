@@ -1,8 +1,18 @@
-import { MantineThemeProvider } from '../../core';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider, MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
 import { Grid } from './Grid';
 
-export default { title: 'Grid' };
+export default {
+  title: 'Grid',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

@@ -1,11 +1,20 @@
-import { For } from 'solid-js';
-import { Box } from '../../core';
+import { For, JSX } from 'solid-js';
+import { Box, MantineProvider } from '../../core';
 import { Avatar } from '../Avatar';
 import { Group } from '../Group';
 import { Text } from '../Text';
 import { Indicator } from './Indicator';
 
-export default { title: 'Indicator' };
+export default {
+  title: 'Indicator',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const positions = ['top', 'middle', 'bottom'] as const;
 const placements = ['start', 'center', 'end'] as const;

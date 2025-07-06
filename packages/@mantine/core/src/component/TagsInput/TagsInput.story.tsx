@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { Button } from '../Button';
 import { TagsInput } from './TagsInput';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'TagsInput' };
+export default {
+  title: 'TagsInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

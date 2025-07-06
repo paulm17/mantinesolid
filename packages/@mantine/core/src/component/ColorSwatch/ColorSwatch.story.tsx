@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { ColorSwatch } from './ColorSwatch';
+import { MantineProvider } from '../../core';
 
-export default { title: 'ColorSwatch' };
+export default {
+  title: 'ColorSwatch',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

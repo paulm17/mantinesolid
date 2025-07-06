@@ -1,10 +1,20 @@
-import { Index } from 'solid-js';
+import { Index, JSX } from 'solid-js';
 import { Group } from '../Group';
 import { Pill } from '../Pill';
 import { TextInput } from '../TextInput';
 import { PillsInput } from './PillsInput';
+import { MantineProvider } from '../../core';
 
-export default { title: 'PillsInput' };
+export default {
+  title: 'PillsInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const getPills = (props: any) => (
   <>

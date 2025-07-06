@@ -1,9 +1,19 @@
 import { IconStarFilled } from '@tabler/icons-solidjs';
 import { Group } from '../Group';
 import { Badge } from './Badge';
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Badge' };
+export default {
+  title: 'Badge',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

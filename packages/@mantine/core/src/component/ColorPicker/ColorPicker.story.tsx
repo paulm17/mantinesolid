@@ -1,9 +1,19 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { ColorPicker } from './ColorPicker';
 import { HueSlider } from './HueSlider/HueSlider';
+import { MantineProvider } from '../../core';
 
-export default { title: 'ColorPicker' };
+export default {
+  title: 'ColorPicker',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function SeparateAlphaSlider() {
   const [value, onChange] = createSignal(1);

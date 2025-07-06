@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { AspectRatio } from './AspectRatio';
+import { MantineProvider } from '../../core';
 
-export default { title: 'AspectRatio' };
+export default {
+  title: 'AspectRatio',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const WithProps = AspectRatio.withProps({ ratio: 112 / 9 });
 

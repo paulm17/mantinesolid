@@ -1,7 +1,18 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Button } from '../Button';
 import { Flex } from './Flex';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Flex' };
+export default {
+  title: 'Flex',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

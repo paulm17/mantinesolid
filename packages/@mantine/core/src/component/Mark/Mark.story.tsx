@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Mark } from './Mark';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Mark' };
+export default {
+  title: 'Mark',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

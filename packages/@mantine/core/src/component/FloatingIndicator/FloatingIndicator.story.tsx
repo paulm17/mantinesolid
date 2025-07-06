@@ -2,9 +2,19 @@ import { useDisclosure, useInterval } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Modal } from '../Modal';
 import { FloatingIndicator } from './FloatingIndicator';
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, JSX } from 'solid-js';
+import { MantineProvider } from '../../core';
 
-export default { title: 'FloatingIndicator' };
+export default {
+  title: 'FloatingIndicator',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinModal() {
   const [opened, { open, close }] = useDisclosure(false);

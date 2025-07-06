@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { PasswordInput } from './PasswordInput';
+import { MantineProvider } from '../../core';
 
-export default { title: 'PasswordInput' };
+export default {
+  title: 'PasswordInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

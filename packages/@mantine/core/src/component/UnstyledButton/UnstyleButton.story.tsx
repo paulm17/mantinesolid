@@ -1,7 +1,17 @@
-import { MantineThemeProvider } from '../../core';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider, MantineThemeProvider } from '../../core';
 import { UnstyledButton } from './UnstyledButton';
 
-export default { title: 'UnstyledButton' };
+export default {
+  title: 'UnstyledButton',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

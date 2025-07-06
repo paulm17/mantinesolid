@@ -1,7 +1,18 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { TextInput } from '../TextInput';
 import { Fieldset } from './Fieldset';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Fieldset' };
+export default {
+  title: 'Fieldset',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

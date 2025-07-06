@@ -1,11 +1,21 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { useForm } from '@mantine/form';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
+import { MantineProvider } from '../../core';
 
-export default { title: 'NumberInput' };
+export default {
+  title: 'NumberInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [value, setValue] = createSignal<number | string>('133');

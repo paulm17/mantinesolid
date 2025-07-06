@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { RingProgress } from './RingProgress';
+import { MantineProvider } from '../../core';
 
-export default { title: 'RingProgress' };
+export default {
+  title: 'RingProgress',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function ColorsIndex() {
   return (

@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { FileInput } from './FileInput';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'FileInput' };
+export default {
+  title: 'FileInput',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [value, setValue] = useState<File | null>(null);

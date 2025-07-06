@@ -6,8 +6,19 @@ import {
   IconX,
 } from '@tabler/icons-solidjs';
 import { Notification } from './Notification';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Notification' };
+export default {
+  title: 'Notification',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function SingleNotification() {
   return (

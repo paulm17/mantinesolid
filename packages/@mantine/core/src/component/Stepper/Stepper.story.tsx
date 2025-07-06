@@ -1,10 +1,20 @@
 
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Stepper } from './Stepper';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Stepper' };
+export default {
+  title: 'Stepper',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [active, setActive] = createSignal(1);

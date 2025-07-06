@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { Button } from '../Button';
 import { Autocomplete } from './Autocomplete';
+import { JSX } from 'solid-js/jsx-runtime';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Autocomplete' };
+export default {
+  title: 'Autocomplete',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const options = [
   { value: 're', label: 'React' },

@@ -1,6 +1,17 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Input } from './Input';
+import { MantineProvider } from '../../core';
 
-export default { title: 'Input' };
+export default {
+  title: 'Input',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function WithinDisabledFieldset() {
   return (
@@ -40,7 +51,6 @@ export function Sizes() {
     <Input
       placeholder={`Input ${size}`}
       size={size}
-      key={size}
       leftSection={size}
       rightSection={size}
       mt="md"
@@ -93,7 +103,7 @@ export function WithSections() {
 
 export function Multiline() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
-    <div style={{ 'padding': '40px', 'display': 'flex' }} key={size}>
+    <div style={{ 'padding': '40px', 'display': 'flex' }}>
       <Input defaultValue="default input" size={size} />
       <Input
         size={size}

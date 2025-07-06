@@ -1,9 +1,18 @@
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-solidjs';
-import { DEFAULT_THEME, rem } from '../../core';
+import { DEFAULT_THEME, MantineProvider, rem } from '../../core';
 import { Button, ButtonProps } from './Button';
-import { createSignal, For } from 'solid-js';
+import { createSignal, For, JSX } from 'solid-js';
 
-export default { title: 'Button' };
+export default {
+  title: 'Button',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 // export function RenderRoot() {
 //   return <Button renderRoot={(props) => <a {...props} href="#" />}>Some content</Button>;

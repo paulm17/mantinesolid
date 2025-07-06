@@ -1,11 +1,20 @@
-import { createSignal, Index } from 'solid-js';
-import { Box } from '../../core';
+import { createSignal, Index, JSX } from 'solid-js';
+import { Box, MantineProvider } from '../../core';
 import { Code } from '../Code';
 import { Paper } from '../Paper';
 import { Stack } from '../Stack';
 import { ScrollArea } from './ScrollArea';
 
-export default { title: 'ScrollArea' };
+export default {
+  title: 'ScrollArea',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 const arr = Array(10).fill(0);
 

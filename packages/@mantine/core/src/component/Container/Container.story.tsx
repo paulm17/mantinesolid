@@ -1,4 +1,5 @@
-import { createTheme, MantineThemeProvider, rem } from '../../core';
+import { JSX } from 'solid-js/jsx-runtime';
+import { createTheme, MantineProvider, MantineThemeProvider, rem } from '../../core';
 import { Container } from './Container';
 
 const CONTAINER_SIZES: Record<string, string> = {
@@ -24,7 +25,16 @@ const theme = createTheme({
   },
 });
 
-export default { title: 'Container' };
+export default {
+  title: 'Container',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   return (

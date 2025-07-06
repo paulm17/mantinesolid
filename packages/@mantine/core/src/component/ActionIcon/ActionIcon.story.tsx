@@ -1,9 +1,18 @@
-import { For } from 'solid-js';
+import { For, JSX } from 'solid-js';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-solidjs';
-import { DEFAULT_THEME, MantineThemeProvider, rem } from '../../core';
+import { DEFAULT_THEME, MantineProvider, MantineThemeProvider, rem } from '../../core';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
-export default { title: 'ActionIcon' };
+export default {
+  title: 'ActionIcon',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
+};
 
 function Colors({ index, ...others }: ActionIconProps & { index?: number }) {
   const colors = Object.keys(DEFAULT_THEME.colors);
