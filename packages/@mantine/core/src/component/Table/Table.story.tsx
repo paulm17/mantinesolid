@@ -7,15 +7,9 @@ import { MantineProvider } from '../../core';
 
 export default {
   title: 'Table',
-  decorators: [
-    (Story: () => JSX.Element) => (
-      <MantineProvider>
-        <Story />
-      </MantineProvider>
-    ),
-  ],
 };
 
+// Data for the table rows
 const elements = [
   { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
   { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
@@ -24,20 +18,36 @@ const elements = [
   { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
 ];
 
-const rows = <For each={elements}>
-  {(element) => (
-    <Table.Tr>
-      <Table.Td>{element.position}</Table.Td>
-      <Table.Td>{element.name}</Table.Td>
-      <Table.Td>{element.symbol}</Table.Td>
-      <Table.Td>{element.mass}</Table.Td>
-    </Table.Tr>
-  )}
-</For>;
+/**
+ * Reusable component for rendering table rows.
+ * By wrapping the <For> loop in a component, we ensure it's executed
+ * within a reactive scope every time it's used.
+ */
+const TableRows = () => (
+  <For each={elements}>
+    {(element) => (
+      <Table.Tr>
+        <Table.Td>{element.position}</Table.Td>
+        <Table.Td>{element.name}</Table.Td>
+        <Table.Td>{element.symbol}</Table.Td>
+        <Table.Td>{element.mass}</Table.Td>
+      </Table.Tr>
+    )}
+  </For>
+);
+
+// Base component for all stories, providing padding and the Mantine theme.
+const StoryWrapper = (props: { children: JSX.Element }) => (
+  <MantineProvider>
+    <div style={{ padding: '40px' }}>
+      {props.children}
+    </div>
+  </MantineProvider>
+);
 
 export function Usage() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table>
         <Table.Thead>
           <Table.Tr>
@@ -47,51 +57,39 @@ export function Usage() {
             <Table.Th>Atomic mass</Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody><TableRows /></Table.Tbody>
         <Table.Caption>Test caption</Table.Caption>
       </Table>
-    </div>
+    </StoryWrapper>
   );
 }
 
 export function VerticalVariant() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table variant="vertical" layout="fixed" withTableBorder>
         <Table.Tbody>
           <Table.Tr>
             <Table.Th w={160}>Epic name</Table.Th>
             <Table.Td>7.x migration</Table.Td>
           </Table.Tr>
-
           <Table.Tr>
             <Table.Th>Status</Table.Th>
             <Table.Td>Open</Table.Td>
           </Table.Tr>
-
           <Table.Tr>
             <Table.Th>Total issues</Table.Th>
             <Table.Td>135</Table.Td>
           </Table.Tr>
-
-          <Table.Tr>
-            <Table.Th>Total story points</Table.Th>
-            <Table.Td>874</Table.Td>
-          </Table.Tr>
-
-          <Table.Tr>
-            <Table.Th>Last updated at</Table.Th>
-            <Table.Td>September 26, 2024 17:41:26</Table.Td>
-          </Table.Tr>
         </Table.Tbody>
       </Table>
-    </div>
+    </StoryWrapper>
   );
 }
 
 export function Unstyled() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table withColumnBorders withRowBorders withTableBorder borderColor="cyan" unstyled>
         <Table.Thead>
           <Table.Tr>
@@ -101,16 +99,16 @@ export function Unstyled() {
             <Table.Th>Atomic mass</Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody><TableRows /></Table.Tbody>
         <Table.Caption>Test caption</Table.Caption>
       </Table>
-    </div>
+    </StoryWrapper>
   );
 }
 
 export function WithScrollContainer() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table.ScrollContainer minWidth={'500px'}>
         <Table>
           <Table.Thead>
@@ -121,17 +119,17 @@ export function WithScrollContainer() {
               <Table.Th>Atomic mass</Table.Th>
             </Table.Tr>
           </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
+          <Table.Tbody><TableRows /></Table.Tbody>
           <Table.Caption>Test caption</Table.Caption>
         </Table>
       </Table.ScrollContainer>
-    </div>
+    </StoryWrapper>
   );
 }
 
 export function FixedLayout() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table layout="fixed" verticalSpacing={20} horizontalSpacing="xl" fz="xl">
         <Table.Thead>
           <Table.Tr>
@@ -141,15 +139,15 @@ export function FixedLayout() {
             <Table.Th w={200}>Atomic mass</Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody><TableRows /></Table.Tbody>
       </Table>
-    </div>
+    </StoryWrapper>
   );
 }
 
 export function Striped() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table striped="even">
         <Table.Thead>
           <Table.Tr>
@@ -159,15 +157,15 @@ export function Striped() {
             <Table.Th>Atomic mass</Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody><TableRows /></Table.Tbody>
       </Table>
-    </div>
+    </StoryWrapper>
   );
 }
 
 export function HighlightOnHover() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table highlightOnHover highlightOnHoverColor="red">
         <Table.Thead>
           <Table.Tr>
@@ -177,9 +175,9 @@ export function HighlightOnHover() {
             <Table.Th>Atomic mass</Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody><TableRows /></Table.Tbody>
       </Table>
-    </div>
+    </StoryWrapper>
   );
 }
 
@@ -187,7 +185,7 @@ const nums = [2214411234, 9983812411, 1234567890, 9948811128, 9933771777];
 
 export function TabularNums() {
   return (
-    <div style={{ 'padding': '40px' }}>
+    <StoryWrapper>
       <Table tabularNums>
         <Table.Thead>
           <Table.Tr>
@@ -206,123 +204,6 @@ export function TabularNums() {
           </For>
         </Table.Tbody>
       </Table>
-    </div>
-  );
-}
-
-export function NestedTable() {
-  return (
-    <Stack gap="xl">
-      <Stack gap="xs">
-        <Title order={1}>Mantine sandbox</Title>
-        <Text>Vite + TS + React</Text>
-      </Stack>
-
-      <Stack gap="xs">
-        <Title order={2}>Nested tables w/ default style (bug)</Title>
-        <Text>Nested table heading row does not have bottom border and has incorrect striping</Text>
-        <Table withTableBorder striped="odd">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Position</Table.Th>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Symbol</Table.Th>
-              <Table.Th>Mass</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            <For each={elements}>
-              {(element) => (
-                <Table.Tr>
-                  <Table.Td>{element.position}</Table.Td>
-                  <Table.Td>{element.name}</Table.Td>
-                  <Table.Td>{element.symbol}</Table.Td>
-                  <Table.Td>{element.mass}</Table.Td>
-                </Table.Tr>
-              )}
-            </For>
-            <Table.Tr>
-              <Table.Td colSpan={4} p="sm">
-                <Table withTableBorder striped="odd">
-                  <Table.Thead>
-                    <Table.Tr>
-                      <Table.Th>Position</Table.Th>
-                      <Table.Th>Name</Table.Th>
-                      <Table.Th>Symbol</Table.Th>
-                      <Table.Th>Mass</Table.Th>
-                    </Table.Tr>
-                  </Table.Thead>
-                  <Table.Tbody>
-                    <For each={elements}>
-                      {(element) => (
-                        <Table.Tr>
-                          <Table.Td>{element.position}</Table.Td>
-                          <Table.Td>{element.name}</Table.Td>
-                          <Table.Td>{element.symbol}</Table.Td>
-                          <Table.Td>{element.mass}</Table.Td>
-                        </Table.Tr>
-                      )}
-                    </For>
-                  </Table.Tbody>
-                </Table>
-              </Table.Td>
-            </Table.Tr>
-          </Table.Tbody>
-        </Table>
-      </Stack>
-
-      <Stack gap="xs">
-        <Title order={2}>Nested tables w/ custom style (fix)</Title>
-        <Text>Nested table heading row has bottom border and correct striping</Text>
-        <Table withTableBorder className="custom-table-style" striped="odd">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Position</Table.Th>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Symbol</Table.Th>
-              <Table.Th>Mass</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            <For each={elements}>
-              {(element) => (
-                <Table.Tr>
-                  <Table.Td>{element.position}</Table.Td>
-                  <Table.Td>{element.name}</Table.Td>
-                  <Table.Td>{element.symbol}</Table.Td>
-                  <Table.Td>{element.mass}</Table.Td>
-                </Table.Tr>
-              )}
-            </For>
-            <Table.Tr>
-              <Table.Td colSpan={4} p="sm">
-                <Table withTableBorder striped="odd">
-                  <Table.Thead>
-                    <Table.Tr>
-                      <Table.Th>Position</Table.Th>
-                      <Table.Th>Name</Table.Th>
-                      <Table.Th>Symbol</Table.Th>
-                      <Table.Th>Mass</Table.Th>
-                    </Table.Tr>
-                  </Table.Thead>
-                  <Table.Tbody>
-                    <For each={elements}>
-                      {(element) => (
-                        <Table.Tr>
-                          <Table.Td>{element.position}</Table.Td>
-                          <Table.Td>{element.name}</Table.Td>
-                          <Table.Td>{element.symbol}</Table.Td>
-                          <Table.Td>{element.mass}</Table.Td>
-                        </Table.Tr>
-                      )}
-                    </For>
-                  </Table.Tbody>
-                </Table>
-              </Table.Td>
-            </Table.Tr>
-          </Table.Tbody>
-        </Table>
-      </Stack>
-    </Stack>
+    </StoryWrapper>
   );
 }

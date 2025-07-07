@@ -1,10 +1,20 @@
-import { useForm } from '@mantine/form';
+// import { useForm } from '@mantine/form';
+import { MantineProvider } from '../../../core';
 import { CheckboxGroup } from '../CheckboxGroup/CheckboxGroup';
 import { CheckboxIndicator } from '../CheckboxIndicator/CheckboxIndicator';
 import { CheckboxCard } from './CheckboxCard';
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 
-export default { title: 'CheckboxCard' };
+export default {
+  title: 'CheckboxCard',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [checked, setChecked] = createSignal(false);
@@ -48,21 +58,21 @@ export function WithinGroup() {
   );
 }
 
-export function WithUseForm() {
-  const form = useForm({ mode: 'uncontrolled', initialValues: { checkbox: true } });
+// export function WithUseForm() {
+//   const form = useForm({ mode: 'uncontrolled', initialValues: { checkbox: true } });
 
-  return (
-    <div style={{ 'padding': '40px' }}>
-      <CheckboxCard
-        p="md"
-        {...form.getInputProps('checkbox', { type: 'checkbox' })}
-        key={form.key('checkbox')}
-      >
-        <CheckboxIndicator />
-        Some label
-      </CheckboxCard>
+//   return (
+//     <div style={{ 'padding': '40px' }}>
+//       <CheckboxCard
+//         p="md"
+//         {...form.getInputProps('checkbox', { type: 'checkbox' })}
+//         key={form.key('checkbox')}
+//       >
+//         <CheckboxIndicator />
+//         Some label
+//       </CheckboxCard>
 
-      {JSON.stringify(form.values)}
-    </div>
-  );
-}
+//       {JSON.stringify(form.values)}
+//     </div>
+//   );
+// }

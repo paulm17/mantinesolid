@@ -1,5 +1,5 @@
 import { createSignal, JSX } from 'solid-js';
-import { useForm } from '@mantine/form';
+// import { useForm } from '@mantine/form';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
@@ -238,39 +238,39 @@ export function Disabled() {
   );
 }
 
-export function FormValidateOnBlur() {
-  const form = useForm({
-    validateInputOnBlur: true,
-    validate: {
-      age: (value: any) => {
-        if (typeof value === 'string' && value === '') {
-          return 'Required';
-        }
-        if (typeof value === 'number' && value < 18) {
-          return 'Error';
-        }
-        return null;
-      },
-      name: (value: any) => (value.length < 2 ? 'Error' : null),
-    },
-    initialValues: {
-      name: '',
-      age: '' as string | number,
-    },
-  });
+// export function FormValidateOnBlur() {
+//   const form = useForm({
+//     validateInputOnBlur: true,
+//     validate: {
+//       age: (value: any) => {
+//         if (typeof value === 'string' && value === '') {
+//           return 'Required';
+//         }
+//         if (typeof value === 'number' && value < 18) {
+//           return 'Error';
+//         }
+//         return null;
+//       },
+//       name: (value: any) => (value.length < 2 ? 'Error' : null),
+//     },
+//     initialValues: {
+//       name: '',
+//       age: '' as string | number,
+//     },
+//   });
 
-  return (
-    <div style={{ 'padding': '40px', 'max-width': '340px' }}>
-      <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
-        <NumberInput label="Age" required {...form.getInputProps('age')} />
-        <TextInput label="Name" {...form.getInputProps('name')} />
-        <Group justify="flex-end" mt="xl">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </div>
-  );
-}
+//   return (
+//     <div style={{ 'padding': '40px', 'max-width': '340px' }}>
+//       <form onSubmit={form.onSubmit((values: any) => console.log(values))}>
+//         <NumberInput label="Age" required {...form.getInputProps('age')} />
+//         <TextInput label="Name" {...form.getInputProps('name')} />
+//         <Group justify="flex-end" mt="xl">
+//           <Button type="submit">Submit</Button>
+//         </Group>
+//       </form>
+//     </div>
+//   );
+// }
 
 export function ExternalOnChange() {
   const [value, setValue] = createSignal(0);

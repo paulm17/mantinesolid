@@ -41,9 +41,6 @@
   },
   "license": "MIT",
   "description": "Remove scroll for a Solid Component",
-  "peerDependencies": {
-    "solid-js": "^1.9.6"
-  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@eslint/js": "^9.23.0",

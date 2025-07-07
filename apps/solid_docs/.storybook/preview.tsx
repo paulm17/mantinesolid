@@ -1,4 +1,6 @@
+import { JSX } from 'solid-js';
 import type { Preview } from 'storybook-solidjs-vite';
+import { MantineProvider } from '@mantine/core';
 
 const preview: Preview = {
   tags: ['autodocs'],
@@ -11,10 +13,14 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    docs: {
-      codePanel: true,
-    },
   },
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
 };
 
 export default preview;

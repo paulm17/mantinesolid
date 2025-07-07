@@ -1,8 +1,18 @@
-import { createSignal } from 'solid-js';
+import { createSignal, JSX } from 'solid-js';
 import { Checkbox } from '../Checkbox';
 import { CheckboxIndicator } from './CheckboxIndicator';
+import { MantineProvider } from '../../../core';
 
-export default { title: 'CheckboxIndicator' };
+export default {
+  title: 'CheckboxIndicator',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+};
 
 export function Usage() {
   const [checked, setChecked] = createSignal(false);
@@ -30,7 +40,6 @@ export function Sizes() {
   const sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
   const indicators = sizes.map((size) => (
     <CheckboxIndicator
-      key={size}
       size={size}
       checked={checked()}
       onClick={() => setChecked((c) => !c)}
@@ -38,7 +47,7 @@ export function Sizes() {
   ));
 
   const checkboxes = sizes.map((size) => (
-    <Checkbox key={size} size={size} checked={checked()} onChange={() => setChecked((c) => !c)} />
+    <Checkbox size={size} checked={checked()} onChange={() => setChecked((c) => !c)} />
   ));
 
   return (

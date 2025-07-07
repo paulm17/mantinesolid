@@ -133,7 +133,9 @@ export function tableElement<Factory extends FactoryPayload>(
         {...getDataAttributes(ctx, options)}
         {...ctx.getStyles(element, { className: props.className, classNames: props.classNames, style: props.style, styles: props.styles, props })}
         {...props.others}
-      />
+      >
+        {props.children}
+      </Box>
     );
   });
 

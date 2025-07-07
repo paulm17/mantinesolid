@@ -2,7 +2,7 @@ import './baseline.css';
 import './global.css';
 import './default-css-variables.css';
 
-import { JSX } from 'solid-js';
+import { JSX, mergeProps } from 'solid-js';
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext, MantineStylesTransform } from './Mantine.context';
 import { MantineClasses } from './MantineClasses';
@@ -62,21 +62,29 @@ export interface MantineProviderProps {
   env?: 'default' | 'test';
 }
 
-export function MantineProvider(props: MantineProviderProps) {
-  const getRootElement = () => document.documentElement;
-  const cssVariablesSelector = ':root';
-  const deduplicateCssVariables = true;
+export function MantineProvider(_props: MantineProviderProps) {
+  const props = mergeProps({
+    withCssVariables: true,
+    withGlobalClasses: true,
+    deduplicateCssVariables: true,
+    withStaticClasses: true,
+    classNamesPrefix: 'mantine',
+    colorSchemeManager: localStorageColorSchemeManager(),
+    defaultColorScheme: 'light' as const,
+    cssVariablesSelector: ':root',
+    getRootElement: () => document.documentElement,
+  }, _props);
 
   const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
-    defaultColorScheme: 'light',
+    defaultColorScheme: props.defaultColorScheme,
     forceColorScheme: props.forceColorScheme,
-    manager: localStorageColorSchemeManager(),
-    getRootElement,
+    manager: props.colorSchemeManager,
+    getRootElement: props.getRootElement,
   });
 
   useRespectReduceMotion({
     respectReducedMotion: props.theme?.respectReducedMotion || false,
-    getRootElement,
+    getRootElement: props.getRootElement,
   });
 
   return (
@@ -85,12 +93,12 @@ export function MantineProvider(props: MantineProviderProps) {
         colorScheme,
         setColorScheme,
         clearColorScheme,
-        getRootElement,
-        classNamesPrefix: 'mantine',
+        getRootElement: props.getRootElement,
+        classNamesPrefix: props.classNamesPrefix,
         getStyleNonce: props.getStyleNonce,
         cssVariablesResolver: props.cssVariablesResolver,
-        cssVariablesSelector,
-        withStaticClasses: true,
+        cssVariablesSelector: props.cssVariablesSelector,
+        withStaticClasses: props.withStaticClasses,
         stylesTransform: props.stylesTransform,
         env: props.env,
       }}
@@ -98,8 +106,8 @@ export function MantineProvider(props: MantineProviderProps) {
       <MantineThemeProvider theme={props.theme}>
         {props.withCssVariables && (
           <MantineCssVariables
-            cssVariablesSelector={cssVariablesSelector}
-            deduplicateCssVariables={deduplicateCssVariables}
+            cssVariablesSelector={props.cssVariablesSelector}
+            deduplicateCssVariables={props.deduplicateCssVariables}
           />
         )}
         {props.withGlobalClasses && <MantineClasses />}

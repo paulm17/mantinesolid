@@ -3,38 +3,34 @@ import { mergeConfig } from 'vite';
 import type { StorybookConfig } from 'storybook-solidjs-vite';
 
 export default <StorybookConfig>{
-    framework: 'storybook-solidjs-vite',
-    addons: [
-        '@storybook/addon-onboarding',
-        '@storybook/addon-docs',
-        '@storybook/addon-a11y',
-        '@storybook/addon-links',
-        {
-            name: '@storybook/addon-vitest',
-            options: {
-                cli: false,
-            },
-        },
-    ],
-    stories: [
-        '../../../packages/@mantine/core/src/component/**/*.story.@(ts|tsx)',
-    ],
-    async viteFinal(config) {
-        return mergeConfig(config, {
-            define: {
-                'process.env': {},
-            },
-        });
+  framework: 'storybook-solidjs-vite',
+  addons: [
+    '@storybook/addon-onboarding',
+    '@storybook/addon-a11y',
+    '@storybook/addon-links',
+    {
+      name: '@storybook/addon-vitest',
+      options: {
+        cli: false,
+      },
     },
-    docs: {
-        autodocs: true,
-    },
-    typescript: {
-        reactDocgen: 'react-docgen-typescript',
-        reactDocgenTypescriptOptions: {
-            shouldExtractLiteralValuesFromEnum: true,
-            // 👇 Default prop filter, which excludes props from node_modules
-            propFilter: (prop: any) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
-        },
-    },
+  ],
+  stories: [
+    '../../../packages/@mantine/core/src/component/**/*.story.@(ts|tsx)',
+    '../../../packages/@mantine/carousel/src/*.story.@(ts|tsx)',
+  ],
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      define: {
+        'process.env': {},
+      },
+      dedupe: [
+        'solid-js',
+        'solid-js/web',
+        'solid-js/store',
+        'solid-js/h',
+        'solid-js/html',
+      ],
+    });
+  }
 };

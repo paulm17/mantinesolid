@@ -126,7 +126,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "signale": "^1.4.0",
     "simple-git": "^3.27.0",
-    "solid-js": "^1.9.7",
+    "solid-js": "1.9.7",
     "stylelint": "^16.2.1",
     "stylelint-config-standard-scss": "^13.0.0",
     "syncpack": "^13.0.0",

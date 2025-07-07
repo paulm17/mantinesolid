@@ -1,0 +1,9 @@
+to build node-sass
+
+brew install python
+brew install python-setuptools
+
+> open -e ~/.zprofile
+add export PATH="$(brew --prefix python)/libexec/bin:$PATH"
+
+source ~/.zprofile # or restart terminal
