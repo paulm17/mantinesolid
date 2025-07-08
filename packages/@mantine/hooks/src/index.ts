@@ -42,7 +42,7 @@ export { useWindowEvent } from './use-window-event/use-window-event';
 // export { useWindowScroll } from './use-window-scroll/use-window-scroll';
 // export { useIntersection } from './use-intersection/use-intersection';
 // export { useHash } from './use-hash/use-hash';
-// export { useHotkeys, getHotkeyHandler } from './use-hotkeys/use-hotkeys';
+export { useHotkeys, getHotkeyHandler } from './use-hotkeys/use-hotkeys';
 // export { useFullscreen } from './use-fullscreen/use-fullscreen';
 // export { useLogger } from './use-logger/use-logger';
 // export { useHover } from './use-hover/use-hover';
@@ -78,7 +78,7 @@ export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 
 export type { UseMovePosition } from './use-move/use-move';
 // export type { OS } from './use-os/use-os';
-// export type { HotkeyItem, HotkeyItemOptions } from './use-hotkeys/use-hotkeys';
+export type { HotkeyItem, HotkeyItemOptions } from './use-hotkeys/use-hotkeys';
 // export type { UseListStateHandlers } from './use-list-state/use-list-state';
 // export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper';
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';

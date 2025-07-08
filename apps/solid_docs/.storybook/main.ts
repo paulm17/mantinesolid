@@ -18,19 +18,22 @@ export default <StorybookConfig>{
   stories: [
     '../../../packages/@mantine/core/src/component/**/*.story.@(ts|tsx)',
     '../../../packages/@mantine/carousel/src/*.story.@(ts|tsx)',
+    '../../../packages/@mantine/form/src/stories/*.story.@(ts|tsx)',
+    '../../../packages/@mantine/modals/src/*.story.@(ts|tsx)',
+    '../../../packages/@mantine/notifications/src/*.story.@(ts|tsx)',
   ],
   async viteFinal(config) {
     return mergeConfig(config, {
       define: {
         'process.env': {},
       },
-      dedupe: [
-        'solid-js',
-        'solid-js/web',
-        'solid-js/store',
-        'solid-js/h',
-        'solid-js/html',
-      ],
+      // dedupe: [
+      //   'solid-js',
+      //   'solid-js/web',
+      //   'solid-js/store',
+      //   'solid-js/h',
+      //   'solid-js/html',
+      // ],
     });
   }
 };

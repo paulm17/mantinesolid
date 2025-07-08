@@ -34,12 +34,7 @@
     "type": "git",
     "directory": "packages/{{package}}"
   },
-  "peerDependencies": {
-    "@mantine/core": ">=7.0.0",
-    "@mantine/hooks": ">=7.0.0"
-  },
   "devDependencies": {
-    "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*"
   }
