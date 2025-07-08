@@ -3,7 +3,7 @@ import { useModalBaseContext } from './ModalBase.context';
 export function useModalContentProps() {
   const ctx = useModalBaseContext();
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     const shouldTrigger =
       (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
     shouldTrigger && event.key === 'Escape' && ctx.closeOnEscape && ctx.onClose();

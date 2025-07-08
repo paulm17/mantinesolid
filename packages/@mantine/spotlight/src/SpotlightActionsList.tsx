@@ -1,4 +1,3 @@
-import { useEffect, useId } from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
@@ -11,7 +10,8 @@ import {
 import { useSpotlightContext } from './Spotlight.context';
 import { spotlightActions } from './spotlight.store';
 import classes from './Spotlight.module.css';
-import { splitProps } from 'solid-js';
+import { createEffect, splitProps } from 'solid-js';
+import { useId } from '@mantine/hooks';
 
 export type SpotlightActionsListStylesNames = 'actionsList' | 'actionsListInner';
 
@@ -45,7 +45,7 @@ export const SpotlightActionsList = factory<SpotlightActionsListFactory>(_props 
   const generatedId = `mantine-${useId().replace(/:/g, '')}`;
   const listId = local.id || generatedId;
 
-  useEffect(() => {
+  createEffect(() => {
     spotlightActions.setListId(listId, ctx.store);
     return () => spotlightActions.setListId('', ctx.store);
   }, []);

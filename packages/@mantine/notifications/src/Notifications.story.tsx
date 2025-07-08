@@ -1,11 +1,21 @@
-import { Button, Group } from '@mantine/core';
+import { JSX } from 'solid-js';
+import { Button, Group, MantineProvider } from '@mantine/core';
 import { showNotification } from './notifications.store';
 
-export default { title: 'Notifications' };
+export default {
+  title: 'Notifications',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
+};
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Group>
         <Button
           onClick={() =>

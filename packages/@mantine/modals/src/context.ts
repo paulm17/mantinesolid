@@ -1,4 +1,4 @@
-import { createContext, JSX } from 'solid-js';
+import { Component, createContext, JSX } from 'solid-js';
 import { ModalProps } from '@mantine/core';
 import type { ConfirmModalProps } from './ConfirmModal';
 
@@ -42,11 +42,11 @@ export interface ModalsContextProps {
 export interface MantineModalsOverride {}
 
 export type MantineModalsOverwritten = MantineModalsOverride extends {
-  modals: Record<string, React.FC<ContextModalProps<any>>>;
+  modals: Record<string, Component<ContextModalProps<any>>>;
 }
   ? MantineModalsOverride
   : {
-      modals: Record<string, React.FC<ContextModalProps<any>>>;
+      modals: Record<string, Component<ContextModalProps<any>>>;
     };
 
 export type MantineModals = MantineModalsOverwritten['modals'];

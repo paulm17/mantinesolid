@@ -1,8 +1,18 @@
-import { Button, Group } from '@mantine/core';
+import { JSX } from 'solid-js';
+import { Button, Group, MantineProvider } from '@mantine/core';
 import { NavigationProgress } from './NavigationProgress';
 import { nprogress } from './nprogress.store';
 
-export default { title: 'NavigationProgress' };
+export default {
+  title: 'NavigationProgress',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
+};
 
 export function Usage() {
   return (

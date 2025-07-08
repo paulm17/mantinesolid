@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { IconPackage } from '@tabler/icons-solidjs';
 import { Tabs, TabsProps } from './Tabs';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'Tabs',
@@ -170,9 +170,9 @@ export const AllowDeactivation = () => (
 );
 
 export const Controlled = () => {
-  const [tab, setTab] = useState<string | null>('react');
+  const [tab, setTab] = createSignal<string | null>('react');
   return (
-    <Wrapper value={tab} onChange={setTab} allowTabDeactivation>
+    <Wrapper value={tab()} onChange={setTab} allowTabDeactivation>
       {base}
     </Wrapper>
   );
@@ -314,9 +314,9 @@ export const Unstyled = () => (
 );
 
 export const DynamicTabs = () => {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = createSignal(1);
   const list = Array(count)
-    .fill(0)
+    .fill(() => 0)
     .map((_, index) => index.toString());
   const tabs = list.map((item) => (
     <Tabs.Tab value={item}>
@@ -333,10 +333,10 @@ export const DynamicTabs = () => {
     <Tabs>
       <Tabs.List>{tabs}</Tabs.List>
       {panels}
-      <button type="button" onClick={() => setCount(count + 1)}>
+      <button type="button" onClick={() => setCount(count() + 1)}>
         Add
       </button>
-      <button type="button" onClick={() => setCount(count - 1)}>
+      <button type="button" onClick={() => setCount(count() - 1)}>
         Remove
       </button>
     </Tabs>

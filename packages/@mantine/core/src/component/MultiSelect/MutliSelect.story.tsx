@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
 import { MultiSelect } from './MultiSelect';
-import { For, JSX } from 'solid-js';
+import { createSignal, For, JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {
@@ -193,11 +192,11 @@ export function Unstyled() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<string[]>(['React']);
+  const [value, setValue] = createSignal<string[]>(['React']);
   return (
     <div style={{ padding: '40px', 'max-width': '400px' }}>
       <MultiSelect
-        value={value}
+        value={value()}
         onChange={setValue}
         label="Test"
         placeholder="Test autocomplete"

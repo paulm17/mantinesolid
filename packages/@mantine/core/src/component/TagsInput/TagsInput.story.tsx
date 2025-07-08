@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { Button } from '../Button';
 import { TagsInput } from './TagsInput';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'TagsInput',
@@ -97,11 +97,11 @@ export function Unstyled() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<string[]>(['React']);
+  const [value, setValue] = createSignal<string[]>(['React']);
   return (
     <div style={{ 'padding': '40px', 'max-width': '400px' }}>
       <TagsInput
-        value={value}
+        value={value()}
         onChange={setValue}
         label="Test"
         placeholder="Test autocomplete"

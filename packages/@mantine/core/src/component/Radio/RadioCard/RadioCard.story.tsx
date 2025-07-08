@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createSignal } from 'solid-js';
 import { RadioGroup } from '../RadioGroup/RadioGroup';
 import { RadioIndicator } from '../RadioIndicator/RadioIndicator';
 import { RadioCard } from './RadioCard';
@@ -6,10 +6,10 @@ import { RadioCard } from './RadioCard';
 export default { title: 'RadioCard' };
 
 export function Usage() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = createSignal(false);
   return (
     <div style={{ 'padding': '40px' }}>
-      <RadioCard p="md" checked={checked} onClick={() => setChecked((c) => !c)}>
+      <RadioCard p="md" checked={checked()} onClick={() => setChecked((c) => !c)}>
         <RadioIndicator />
         Some label
       </RadioCard>
@@ -18,11 +18,11 @@ export function Usage() {
 }
 
 export function WithinGroup() {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = createSignal<string | null>(null);
 
   return (
     <div style={{ 'padding': '40px' }}>
-      <RadioGroup value={value} onChange={setValue} name="test-name">
+      <RadioGroup value={value()} onChange={setValue} name="test-name">
         <RadioCard value="1">
           <RadioIndicator />
           Option 1

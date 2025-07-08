@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { useState } from 'react';
+import { createSignal } from 'solid-js';
 import { Box, MantineProvider, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
 import { Tooltip } from '../Tooltip';
@@ -129,12 +129,12 @@ export function WithArrowRadius() {
 }
 
 export function Controlled() {
-  const [opened, setState] = useState(false);
+  const [opened, setState] = createSignal(false);
 
   return (
     <div style={{ padding: '100px', display: 'flex', 'align-items': 'center', 'justify-content': 'center' }}>
       <Popover
-        opened={opened}
+        opened={opened()}
         onChange={setState}
         middlewares={{ shift: false, flip: false }}
         position="bottom"
@@ -162,11 +162,11 @@ export function Controlled() {
 }
 
 export function KeepMounted() {
-  const [opened, setState] = useState(false);
+  const [opened, setState] = createSignal(false);
 
   return (
     <div style={{ padding: '100px', display: 'flex', 'align-items': 'center', 'justify-content': 'center' }}>
-      <Popover opened={opened} onChange={setState} keepMounted>
+      <Popover opened={opened()} onChange={setState} keepMounted>
         <Popover.Target>
           <button type="button" onClick={() => setState((c) => !c)}>
             Toggle popover
@@ -184,11 +184,11 @@ export function KeepMounted() {
 }
 
 export function SameWidth() {
-  const [opened, setState] = useState(false);
+  const [opened, setState] = createSignal(false);
 
   return (
     <div style={{ padding: '40px' }}>
-      <Popover opened={opened} width="target" onChange={setState}>
+      <Popover opened={opened()} width="target" onChange={setState}>
         <Popover.Target>
           <button type="button" onClick={() => setState((c) => !c)}>
             Toggle popover
@@ -260,12 +260,12 @@ export function Inline() {
 }
 
 export function Size() {
-  const [opened, setState] = useState(false);
+  const [opened, setState] = createSignal(false);
 
   return (
     <div style={{ padding: '40px' }}>
       <Popover
-        opened={opened}
+        opened={opened()}
         middlewares={{ shift: true, flip: true, size: true }}
         onChange={setState}
       >
@@ -284,15 +284,15 @@ export function Size() {
 }
 
 export function PopoverEvents() {
-  const [opened, setState] = useState(false);
-  const [toggle1, setToggle1] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
+  const [opened, setState] = createSignal(false);
+  const [toggle1, setToggle1] = createSignal(false);
+  const [toggle2, setToggle2] = createSignal(false);
 
   return (
     <div style={{ padding: '100px', display: 'flex', 'align-items': 'center', 'justify-content': 'center' }}>
       <Group>
         <Popover
-          opened={opened}
+          opened={opened()}
           onChange={setState}
           onOpen={() => setToggle1(true)}
           onClose={() => setToggle1(false)}
@@ -309,7 +309,7 @@ export function PopoverEvents() {
                 Toggle controlled popover
               </button>
               <br />
-              <div>Controlled State: {toggle1 ? 'Open' : 'Closed'}</div>
+              <div>Controlled State: {toggle1() ? 'Open' : 'Closed'}</div>
             </Box>
           </Popover.Target>
 
@@ -324,7 +324,7 @@ export function PopoverEvents() {
             <Box>
               <button type="button">Toggle uncontrolled popover</button>
               <br />
-              <div>Uncontrolled State: {toggle2 ? 'Open' : 'Closed'}</div>
+              <div>Uncontrolled State: {toggle2() ? 'Open' : 'Closed'}</div>
             </Box>
           </Popover.Target>
 
@@ -370,7 +370,7 @@ export function WithOverlay() {
 }
 
 export function ReferenceHidden() {
-  const [opened, setState] = useState(true);
+  const [opened, setState] = createSignal(true);
   return (
     <div
       style={{ width: '400px', height: '200px', margin: '100px', border: '1px solid', overflow: 'auto' }}
@@ -379,7 +379,7 @@ export function ReferenceHidden() {
       <div style={{ padding: '40px', width: '1000px', height: '1000px' }}>
         <Popover position="top" withArrow opened hideDetached={false}>
           <Popover.Target>
-            <button type="button" style={{ display: opened ? 'block' : 'none' }}>
+            <button type="button" style={{ display: opened() ? 'block' : 'none' }}>
               Toggle popover
             </button>
           </Popover.Target>

@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { Button } from '../Button';
 import { Select } from './Select';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'Select',
@@ -169,12 +169,12 @@ export function Clearable() {
 }
 
 export function DataChangesOverTime() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = createSignal<any[]>([]);
   return (
     <div style={{ padding: '40px' }}>
       <Select
         value="1"
-        data={data}
+        data={data()}
         placeholder="Select something"
         defaultValue="First"
         searchable
@@ -221,17 +221,17 @@ export function SearchControlledValue() {
 }
 
 export function ControlledSearchAndValue() {
-  const [value, setValue] = useState<string | null>('Angular');
-  const [searchValue, setSearchValue] = useState('');
+  const [value, setValue] = createSignal<string | null>('Angular');
+  const [searchValue, setSearchValue] = createSignal('');
 
   return (
     <div style={{ padding: '40px' }}>
       <Select
         searchable
-        searchValue={searchValue}
+        searchValue={searchValue()}
         onSearchChange={setSearchValue}
         data={['React', 'Angular', 'Svelte']}
-        value={value}
+        value={value()}
         onChange={setValue}
       />
     </div>
@@ -259,11 +259,11 @@ export function ReadOnly() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<string | null>('React');
+  const [value, setValue] = createSignal<string | null>('React');
   return (
     <div style={{ padding: '40px' }}>
       <Select
-        value={value}
+        value={value()}
         onChange={setValue}
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"

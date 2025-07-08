@@ -1,4 +1,4 @@
-import { children, createEffect, createSignal, Index, JSX, onCleanup, onMount, splitProps } from 'solid-js';
+import { createSignal, Index, JSX, onCleanup, onMount, splitProps } from 'solid-js';
 import type { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
 import createEmblaCarousel from 'embla-carousel-solid';
 import {

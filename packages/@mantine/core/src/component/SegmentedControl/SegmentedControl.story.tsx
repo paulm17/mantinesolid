@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineProvider, MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
@@ -7,6 +6,7 @@ import { Modal } from '../Modal';
 import { TextInput } from '../TextInput';
 import { SegmentedControl } from './SegmentedControl';
 import { JSX } from 'solid-js/jsx-runtime';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'SegmentedControl',
@@ -124,15 +124,15 @@ export function FocusRingAlways() {
 }
 
 export function SelectedItemRemoved() {
-  const [value, setValue] = useState('');
-  const [breakingThings, setBreakingThings] = useState(false);
+  const [value, setValue] = createSignal('');
+  const [breakingThings, setBreakingThings] = createSignal(false);
 
   const dataList =
-    breakingThings === true ? ['1', '2', '3'].filter((elem) => elem !== '3') : ['1', '2', '3'];
+    breakingThings() === true ? ['1', '2', '3'].filter((elem) => elem !== '3') : ['1', '2', '3'];
 
   return (
     <div style={{ 'padding': '40px' }}>
-      <SegmentedControl value={value} onChange={setValue} data={dataList} />
+      <SegmentedControl value={value()} onChange={setValue} data={dataList} />
 
       <button type="button" onClick={() => setBreakingThings(!breakingThings)}>
         Click here to break things
@@ -142,13 +142,13 @@ export function SelectedItemRemoved() {
 }
 
 export function Unselect() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = createSignal('');
 
   const dataList = ['1', '2', '3'];
 
   return (
     <div style={{ 'padding': '40px' }}>
-      <SegmentedControl value={value} onChange={setValue} data={dataList} mr={10} />
+      <SegmentedControl value={value()} onChange={setValue} data={dataList} mr={10} />
 
       <button type="button" onClick={() => setValue('')}>
         Unselect

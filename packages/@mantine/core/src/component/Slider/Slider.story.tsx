@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { RangeSlider } from './RangeSlider/RangeSlider';
 import { Slider } from './Slider/Slider';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'Slider',
@@ -102,7 +102,7 @@ export function Range() {
 }
 
 export function DynamicDisabled() {
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = createSignal(false);
   return (
     <div style={{ 'padding': '40px', 'max-width': '400px' }}>
       <button type="button" onClick={() => setDisabled((d) => !d)}>
@@ -112,7 +112,7 @@ export function DynamicDisabled() {
         size="md"
         onChange={(val) => console.log('change', val)}
         onChangeEnd={(val) => console.log('end', val)}
-        disabled={disabled}
+        disabled={disabled()}
       />
     </div>
   );

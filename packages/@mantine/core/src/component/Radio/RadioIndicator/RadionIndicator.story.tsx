@@ -1,39 +1,39 @@
-import { useState } from 'react';
+import { createSignal } from 'solid-js';
 import { Radio } from '../Radio';
 import { RadioIndicator } from './RadioIndicator';
 
 export default { title: 'RadioIndicator' };
 
 export function Usage() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = createSignal(false);
   return (
     <div style={{ 'padding': '40px' }}>
-      <RadioIndicator checked={checked} onClick={() => setChecked((c) => !c)} />
-      <RadioIndicator checked={checked} onClick={() => setChecked((c) => !c)} variant="outline" />
+      <RadioIndicator checked={checked()} onClick={() => setChecked((c) => !c)} />
+      <RadioIndicator checked={checked()} onClick={() => setChecked((c) => !c)} variant="outline" />
       <RadioIndicator
-        checked={checked}
+        checked={checked()}
         onClick={() => setChecked((c) => !c)}
         variant="outline"
         disabled
       />
-      <RadioIndicator checked={checked} onClick={() => setChecked((c) => !c)} disabled />
+      <RadioIndicator checked={checked()} onClick={() => setChecked((c) => !c)} disabled />
     </div>
   );
 }
 
 export function Sizes() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = createSignal(false);
   const sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
   const indicators = sizes.map((size) => (
     <RadioIndicator
       size={size}
-      checked={checked}
+      checked={checked()}
       onClick={() => setChecked((c) => !c)}
     />
   ));
 
   const checkboxes = sizes.map((size) => (
-    <Radio size={size} checked={checked} onChange={() => setChecked((c) => !c)} />
+    <Radio size={size} checked={checked()} onChange={() => setChecked((c) => !c)} />
   ));
 
   return (

@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { Tooltip } from './Tooltip';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'Tooltip',
@@ -111,10 +111,10 @@ export const TooltipGroup = () => (
 );
 
 export const Controlled = () => {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = createSignal(false);
   return (
     <div style={{ padding: '40px' }}>
-      <Tooltip label="Tooltip 1" opened={opened}>
+      <Tooltip label="Tooltip 1" opened={opened()}>
         <button
           type="button"
           onMouseEnter={() => setOpened(true)}
@@ -123,7 +123,7 @@ export const Controlled = () => {
           Hover to open both tooltips
         </button>
       </Tooltip>
-      <Tooltip label="Tooltip 2" opened={opened}>
+      <Tooltip label="Tooltip 2" opened={opened()}>
         <button type="button">Button 2</button>
       </Tooltip>
     </div>
@@ -141,7 +141,7 @@ export const Floating = () => (
 );
 
 export const Unmount = () => {
-  const [mounted, setMounted] = useState(true);
+  const [mounted, setMounted] = createSignal(true);
   return (
     <div>
       <button type="button" onClick={() => setMounted((c) => !c)}>
@@ -150,7 +150,7 @@ export const Unmount = () => {
       <Tooltip opened label="Tooltip">
         <button
           type="button"
-          style={{ width: '200px', height: '200px', display: mounted ? 'block' : 'none' }}
+          style={{ width: '200px', height: '200px', display: mounted() ? 'block' : 'none' }}
         >
           target
         </button>

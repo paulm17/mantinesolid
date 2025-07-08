@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { Button } from '../Button';
 import { Autocomplete } from './Autocomplete';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
+import { createSignal } from 'solid-js';
 
 export default {
   title: 'Autocomplete',
@@ -89,11 +89,11 @@ export function Unstyled() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<string>('React');
+  const [value, setValue] = createSignal<string>('React');
   return (
     <div style={{ 'padding': '40px', 'max-width': '400px' }}>
       <Autocomplete
-        value={value}
+        value={value()}
         onChange={setValue}
         label="Test"
         placeholder="Test autocomplete"

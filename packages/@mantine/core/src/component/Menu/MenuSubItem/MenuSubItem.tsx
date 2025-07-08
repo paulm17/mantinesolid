@@ -1,5 +1,4 @@
 import { JSX, splitProps } from 'solid-js';
-import { useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -78,7 +77,7 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>(_props => {
   const subCtx = useSubMenuContext();
   const theme = useMantineTheme();
   const { dir } = useDirection();
-  const itemRef = useRef<HTMLButtonElement>(null);
+  const itemRef: HTMLButtonElement | null = null;
   const _others: any = others;
 
   const colors = local.color ? theme.variantColorResolver({ color: local.color, theme, variant: 'light' }) : undefined;

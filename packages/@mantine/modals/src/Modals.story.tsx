@@ -1,3 +1,4 @@
+import { createSignal, JSX } from 'solid-js';
 import { Button, Group, MantineProvider, Modal, Text } from '@mantine/core';
 import {
   closeAllModals,
@@ -9,7 +10,6 @@ import {
   openModal,
   useModals,
 } from './index';
-import { createSignal, JSX } from 'solid-js';
 
 export default {
   title: 'Modals manager',

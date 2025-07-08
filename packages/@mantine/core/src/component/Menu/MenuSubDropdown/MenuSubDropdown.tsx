@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -46,7 +45,7 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>(_props => {
     'ref'
   ])
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperRef: HTMLDivElement | null = null;
   const ctx = useMenuContext();
   const subCtx = useSubMenuContext();
 

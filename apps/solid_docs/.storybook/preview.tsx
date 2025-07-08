@@ -2,8 +2,9 @@ import { JSX } from 'solid-js';
 import type { Preview } from 'storybook-solidjs-vite';
 import { MantineProvider } from '@mantine/core';
 
+// import '@mantine/core/styles.css';
+
 const preview: Preview = {
-  tags: ['autodocs'],
   parameters: {
     // automatically create action args for all props that start with "on"
     actions: { argTypesRegex: '^on.*' },

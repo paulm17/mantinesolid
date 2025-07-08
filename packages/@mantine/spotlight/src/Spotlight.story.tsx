@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { JSX } from 'solid-js';
 import { IconSearch } from '@tabler/icons-solidjs';
-import { Button } from '@mantine/core';
+import { Button, MantineProvider } from '@mantine/core';
 import { Spotlight, SpotlightActionData } from './Spotlight';
 import { createSpotlight } from './spotlight.store';
 import { createMemo, createSignal, For } from 'solid-js';
 
 const [store, actions] = createSpotlight();
 
-export default { title: 'Spotlight' };
+export default {
+  title: 'Spotlight',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
+};
 
 const actionsData: SpotlightActionData[] = Array(100)
   .fill(0)
