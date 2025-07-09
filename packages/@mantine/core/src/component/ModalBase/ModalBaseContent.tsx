@@ -54,10 +54,10 @@ export function ModalBaseContent(props: _ModalBaseContentProps) {
             {...local.innerProps}
             class={cx({ [classes.inner]: !ctx.unstyled }, local.innerProps.class)}
           >
-            {/* <FocusTrap active={ctx.opened() && ctx.trapFocus} innerRef={local.ref}>
-              {(focusTrapProps) => ( */}
+            <FocusTrap active={ctx.opened() && ctx.trapFocus!} innerRef={local.ref}>
+              {(focusTrapProps) => (
                 <Paper
-                  // {...focusTrapProps}
+                  {...focusTrapProps}
                   {...others}
                   // component="section"
                   role="dialog"
@@ -71,8 +71,8 @@ export function ModalBaseContent(props: _ModalBaseContentProps) {
                 >
                   {others.children}
                 </Paper>
-              {/* )}
-            </FocusTrap> */}
+              )}
+            </FocusTrap>
           </div>
         )}
       </Transition>
