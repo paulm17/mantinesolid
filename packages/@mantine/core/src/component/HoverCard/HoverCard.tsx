@@ -6,6 +6,7 @@ import { PopoverCssVariables } from '../Popover/Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
+import { splitProps } from 'solid-js';
 
 export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
   variant?: string;
@@ -38,19 +39,23 @@ const defaultProps: Partial<HoverCardProps> = {
   initiallyOpened: false,
 };
 
-export function HoverCard(props: HoverCardProps) {
-  const { children, onOpen, onClose, openDelay, closeDelay, initiallyOpened, ...others } = useProps(
-    'HoverCard',
-    defaultProps,
-    props
-  );
-  const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
-  const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay, closeDelay });
+export function HoverCard(_props: HoverCardProps) {
+  const props = useProps('HoverCard', defaultProps, _props);
+  const [local, others] = splitProps(props, [
+    'children',
+    'onOpen',
+    'onClose',
+    'openDelay',
+    'closeDelay',
+    'initiallyOpened'
+  ]);
+  const [opened, { open, close }] = useDisclosure(local.initiallyOpened, { onClose: local.onClose, onOpen: local.onOpen });
+  const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay: local.openDelay, closeDelay: local.closeDelay });
 
   return (
     <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>
-      <Popover {...others} opened={opened()} __staticSelector="HoverCard">
-        {children}
+      <Popover {...others} opened={opened()} keepMounted __staticSelector="HoverCard">
+        {local.children}
       </Popover>
     </HoverCardContextProvider>
   );

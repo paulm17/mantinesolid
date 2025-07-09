@@ -61,7 +61,7 @@
     "vitest": "^3.0.9"
   },
   "dependencies": {
-    "solid-prevent-scroll": "^0.1.10"
+    "solid-prevent-scroll": "0.1.10"
   },
   "browser": {},
   "typesVersions": {}

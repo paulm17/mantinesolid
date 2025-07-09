@@ -2,6 +2,7 @@ import { JSX, splitProps } from 'solid-js';
 import { factory, Factory, isElement, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';
+import { useMergedRef } from '@mantine/hooks';
 
 export interface ComboboxDropdownTargetProps {
   /** Target element */
@@ -37,8 +38,12 @@ export const ComboboxDropdownTarget = factory<ComboboxDropdownTargetFactory>(_pr
   }
 
   return (
-    <Popover.Target ref={local.ref} refProp={local.refProp}>
-      {local.children}
+    <Popover.Target>
+      {(popoverProps) => (
+        <div ref={useMergedRef(local.ref, popoverProps.ref) as (el: HTMLDivElement) => void}>
+          {local.children}
+        </div>
+      )}
     </Popover.Target>
   );
 });

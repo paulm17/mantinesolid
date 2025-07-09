@@ -19,7 +19,7 @@ export default {
 export function Usage() {
   return (
     <div style={{ 'padding': '40px' }}>
-      <HoverCard>
+      <HoverCard keepMounted closeDelay={5000}>
         <HoverCard.Target>
           <Button>Hover to reveal</Button>
         </HoverCard.Target>
@@ -73,7 +73,7 @@ export function TargetWithTooltip() {
 export function WithSwitch() {
   return (
     <div style={{ 'padding': '40px' }}>
-      <HoverCard width='280px' shadow="md">
+      <HoverCard width='280px' shadow="md" closeDelay={5000}>
         <HoverCard.Target refProp="rootRef" eventPropsWrapperName="wrapperProps">
           <Switch label="Switch label" />
         </HoverCard.Target>

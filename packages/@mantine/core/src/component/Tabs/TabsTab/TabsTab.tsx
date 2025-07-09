@@ -70,9 +70,9 @@ export const TabsTab = factory<TabsTabFactory>(_props => {
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const ctx = useTabsContext();
-  const active = local.value === ctx.value;
+  const active = () => local.value === ctx.value();
   const activateTab = (event: MouseEvent & { currentTarget: HTMLButtonElement; target: Element }) => {
-    ctx.onChange(ctx.allowTabDeactivation ? (local.value === ctx.value ? null : local.value) : local.value);
+    ctx.onChange(ctx.allowTabDeactivation ? (local.value === ctx.value() ? null : local.value) : local.value);
     typeof local.onClick === "function" && local.onClick?.(event);
   };
 
@@ -87,7 +87,7 @@ export const TabsTab = factory<TabsTabFactory>(_props => {
       variant={ctx.variant}
       mod={[
         {
-          active,
+          active: active(),
           disabled: local.disabled,
           orientation: ctx.orientation,
           inverted: ctx.inverted,
@@ -98,8 +98,8 @@ export const TabsTab = factory<TabsTabFactory>(_props => {
       ref={local.ref}
       role="tab"
       id={ctx.getTabId(local.value)}
-      aria-selected={active}
-      tabIndex={local.tabIndex !== undefined ? local.tabIndex : active || ctx.value === null ? 0 : -1}
+      aria-selected={active()}
+      tabIndex={local.tabIndex !== undefined ? local.tabIndex : active() || ctx.value === null ? 0 : -1}
       aria-controls={ctx.getPanelId(local.value)}
       onClick={activateTab}
       __vars={{ '--tabs-color': local.color ? getThemeColor(local.color, theme) : undefined }}

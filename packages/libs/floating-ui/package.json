@@ -65,8 +65,8 @@
     "vitest": "^3.0.9"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.1",
-    "@floating-ui/utils": "^0.2.8"
+    "@floating-ui/dom": "1.7.1",
+    "@floating-ui/utils": "0.2.8"
   },
   "browser": {},
   "typesVersions": {}

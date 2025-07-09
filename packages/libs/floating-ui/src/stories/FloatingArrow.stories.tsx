@@ -1,4 +1,4 @@
-import { createSignal, createEffect, onCleanup } from 'solid-js';
+import { createSignal, createEffect, onCleanup, For } from 'solid-js';
 import { render } from 'solid-js/web';
 import { offset, arrow, autoUpdate, flip, shift } from '@floating-ui/dom';
 import FloatingArrow from '../components/floating-arrow';
@@ -267,7 +267,9 @@ export const WithBorder = () => {
       <div
         ref={setFloatingEl}
         style={{
-          ...floating.floatingStyles,
+          position: floating.strategy,
+          top: `${floating.y ?? 0}px`,
+          left: `${floating.x ?? 0}px`,
           'background-color': 'white',
           color: '#333',
           padding: '12px 16px',
@@ -330,7 +332,9 @@ export const RoundedTip = () => {
       <div
         ref={setFloatingEl}
         style={{
-          ...floating.floatingStyles,
+          position: floating.strategy,
+          top: `${floating.y ?? 0}px`,
+          left: `${floating.x ?? 0}px`,
           'background-color': '#f8f9fa',
           color: '#333',
           padding: '12px 16px',
@@ -472,7 +476,9 @@ export const Interactive = () => {
         <div
           ref={setFloatingEl}
           style={{
-            ...floating.floatingStyles,
+            position: floating.strategy,
+            top: `${floating.y ?? 0}px`,
+            left: `${floating.x ?? 0}px`,
             'background-color': fill(),
             color: fill() === '#ffffff' || fill() === '#fff' ? '#333' : 'white',
             padding: '12px 16px',
@@ -510,63 +516,67 @@ export const MultipleArrows = () => {
 
   return (
     <div style={{ padding: '100px', display: 'grid', 'grid-template-columns': '1fr 1fr', gap: '100px' }}>
-      {examples.map((example, index) => {
-        const [referenceEl, setReferenceEl] = createSignal<HTMLElement>();
-        const [floatingEl, setFloatingEl] = createSignal<HTMLElement>();
-        const [arrowEl, setArrowEl] = createSignal<SVGSVGElement>();
+      <For each={examples}>
+        {(example) => {
+          const [referenceEl, setReferenceEl] = createSignal<HTMLElement>();
+          const [floatingEl, setFloatingEl] = createSignal<HTMLElement>();
+          const [arrowEl, setArrowEl] = createSignal<SVGSVGElement>();
 
-        const floating = useFloating({
-          placement: example.placement,
-          open: true,
-          elements: () => ({
-            reference: referenceEl(),
-            floating: floatingEl()
-          }),
-          middleware: () => [
-            offset(10),
-            ...(arrowEl() ? [arrow({ element: arrowEl()! })] : [])
-          ],
-          whileElementsMounted: autoUpdate
-        });
+          const floating = useFloating({
+            placement: example.placement,
+            open: true,
+            elements: () => ({
+              reference: referenceEl(),
+              floating: floatingEl()
+            }),
+            middleware: () => [
+              offset(10),
+              ...(arrowEl() ? [arrow({ element: arrowEl()! })] : [])
+            ],
+            whileElementsMounted: autoUpdate
+          });
 
-        return (
-          <div>
-            <div
-              ref={setReferenceEl}
-              style={{
-                padding: '15px',
-                'background-color': '#f8f9fa',
-                border: '2px solid #dee2e6',
-                'border-radius': '4px',
-                'text-align': 'center',
-                'font-weight': 'bold'
-              }}
-            >
-              {example.label}
+          return (
+            <div>
+              <div
+                ref={setReferenceEl}
+                style={{
+                  padding: '15px',
+                  'background-color': '#f8f9fa',
+                  border: '2px solid #dee2e6',
+                  'border-radius': '4px',
+                  'text-align': 'center',
+                  'font-weight': 'bold'
+                }}
+              >
+                {example.label}
+              </div>
+
+              <div
+                ref={setFloatingEl}
+                style={{
+                  position: floating.strategy,
+                  top: `${floating.y ?? 0}px`,
+                  left: `${floating.x ?? 0}px`,
+                  'background-color': example.color,
+                  color: 'white',
+                  padding: '10px 15px',
+                  'border-radius': '4px',
+                  'font-size': '13px',
+                  'z-index': '1000'
+                }}
+              >
+                {example.placement} tooltip
+                <FloatingArrow
+                  ref={setArrowEl}
+                  context={floating.context}
+                  fill={example.color}
+                />
+              </div>
             </div>
-
-            <div
-              ref={setFloatingEl}
-              style={{
-                ...floating.floatingStyles,
-                'background-color': example.color,
-                color: 'white',
-                padding: '10px 15px',
-                'border-radius': '4px',
-                'font-size': '13px',
-                'z-index': '1000'
-              }}
-            >
-              {example.placement} tooltip
-              <FloatingArrow
-                ref={setArrowEl}
-                context={floating.context}
-                fill={example.color}
-              />
-            </div>
-          </div>
-        );
-      })}
+          );
+        }}
+      </For>
     </div>
   );
 };

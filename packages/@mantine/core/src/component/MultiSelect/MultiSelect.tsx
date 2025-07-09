@@ -296,7 +296,6 @@ export const MultiSelect = factory<MultiSelectFactory>(_props => {
   const clearButton = (
     <Combobox.ClearButton
       {...local.clearButtonProps}
-      ref={undefined as any}
       onClear={() => {
         setValue([]);
         handleSearchChange('');

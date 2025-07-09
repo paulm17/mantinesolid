@@ -1,4 +1,3 @@
-// src/components/SolidPortal.tsx
 import { JSX, mergeProps, splitProps, createSignal, onMount, onCleanup, Show } from "solid-js";
 import { Portal as CreatePortal } from "solid-js/web";
 
@@ -74,9 +73,8 @@ export function Portal(p: PortalProps): JSX.Element | null {
     if (!local.target && !local.reuseTargetNode && node()) document.body.removeChild(node()!);
   });
 
-  // directly return JSX.Element (not a function) :contentReference[oaicite:4]{index=4}
   return (
-    <Show when={mounted() && node()} fallback={null}>                        {/* conditional rendering :contentReference[oaicite:5]{index=5} */}
+    <Show when={mounted() && node()} fallback={null}>
       <CreatePortal mount={node()!}>{local.children}</CreatePortal>
     </Show>
   );

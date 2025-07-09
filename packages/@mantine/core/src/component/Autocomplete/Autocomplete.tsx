@@ -156,7 +156,6 @@ export const Autocomplete = factory<AutocompleteFactory>(_props => {
   const clearButton = (
     <Combobox.ClearButton
       {...local.clearButtonProps}
-      ref={undefined as any}
       onClear={() => {
         handleValueChange('');
         local.onClear?.();

@@ -82,12 +82,16 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>(_props => {
   const mergedProps = mergeProps(targetProps, others);
 
   return (
-    <Popover.Target ref={useMergedRef(local.ref, ctx.store.targetRef)}>
-    <Dynamic
-      component={() => local.children}
-      {...mergedProps}
-    />
-  </Popover.Target>
+    <Popover.Target>
+      {(popoverProps) => (
+        <div ref={useMergedRef(popoverProps.ref, ctx.store.targetRef, local.ref) as (el: HTMLDivElement) => void}>
+          <Dynamic
+            component={() => local.children}
+            {...mergedProps}
+          />
+        </div>
+      )}
+    </Popover.Target>
   );
 });
 

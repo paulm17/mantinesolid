@@ -15,6 +15,7 @@ const fallbackStories = [
   '../../../packages/@mantine/notifications/src/*.story.@(ts|tsx)',
   '../../../packages/@mantine/nprogress/src/*.story.@(ts|tsx)',
   '../../../packages/@mantine/spotlight/src/*.story.@(ts|tsx)',
+  '../../../packages/libs/floating-ui/src/stories/*.stories.@(ts|tsx)'
 ];
 
 let storiesPath: string[] = [];
@@ -64,7 +65,6 @@ export default <StorybookConfig>{
   framework: 'storybook-solidjs-vite',
   stories: storiesPath,
   addons: [
-    '@storybook/addon-onboarding',
     '@storybook/addon-a11y',
     '@storybook/addon-links',
     {

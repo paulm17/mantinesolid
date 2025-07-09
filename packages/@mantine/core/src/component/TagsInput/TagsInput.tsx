@@ -365,7 +365,6 @@ export const TagsInput = factory<TagsInputFactory>(_props => {
   const clearButton = (
     <Combobox.ClearButton
       {...local.clearButtonProps}
-      ref={undefined as any}
       onClear={() => {
         setValue([]);
         handleSearchChange('');

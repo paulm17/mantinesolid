@@ -203,11 +203,11 @@ export const Tooltip = factory<TooltipFactory>(_props => {
     varsResolver,
   });
 
-  if (!isElement(local.children)) {
-    throw new Error(
-      '[@mantine/core] Tooltip component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
-    );
-  }
+  // if (!isElement(local.children)) {
+  //   throw new Error(
+  //     '[@mantine/core] Tooltip component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
+  //   );
+  // }
 
   const targetRef = useMergedRef(tooltip.reference, getRefProp(local.children), local.ref);
   const transition = getTransitionProps(local.transitionProps, { duration: 100, transition: 'fade' });

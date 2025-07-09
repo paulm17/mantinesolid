@@ -252,7 +252,6 @@ export const Select = factory<SelectFactory>(_props => {
   const clearButton = (
     <Combobox.ClearButton
       {...local.clearButtonProps}
-      ref={undefined as any}
       onClear={() => {
         setValue(null, null);
         handleSearchChange('');

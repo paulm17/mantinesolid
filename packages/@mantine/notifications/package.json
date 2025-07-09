@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@mantine/store": "8.0.0",
-    "solid-transition-group": "^0.3.0"
+    "solid-transition-group": "0.3.0"
   },
   "devDependencies": {
     "@mantine/core": "workspace:*",

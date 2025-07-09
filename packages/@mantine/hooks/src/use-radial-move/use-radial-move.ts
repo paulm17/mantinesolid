@@ -75,6 +75,11 @@ export function useRadialMove<T extends HTMLElement = any>(
       if (done) onChangeEnd?.(newValue);
     };
 
+    let onMouseMove: (e: MouseEvent) => void;
+    let onMouseUp: (e: MouseEvent) => void;
+    let onTouchMove: (e: TouchEvent) => void;
+    let onTouchEnd: (e: TouchEvent) => void;
+
     const begin = () => {
       onScrubStart?.();
       setActive(true);
@@ -94,18 +99,18 @@ export function useRadialMove<T extends HTMLElement = any>(
     };
 
     const onMouseDown = (e: MouseEvent) => { begin(); update(e.clientX, e.clientY); };
-    const onMouseMove = (e: MouseEvent) => update(e.clientX, e.clientY);
-    const onMouseUp   = (e: MouseEvent) => update(e.clientX, e.clientY, true); end();
+    onMouseMove = (e: MouseEvent) => update(e.clientX, e.clientY);
+    onMouseUp = (e: MouseEvent) => { update(e.clientX, e.clientY, true); end(); };
 
-    const onTouchStart= (e: TouchEvent) => {
+    const onTouchStart = (e: TouchEvent) => {
       e.preventDefault(); begin();
       update(e.touches[0].clientX, e.touches[0].clientY);
     };
-    const onTouchMove = (e: TouchEvent) => {
+    onTouchMove = (e: TouchEvent) => {
       e.preventDefault();
       update(e.touches[0].clientX, e.touches[0].clientY);
     };
-    const onTouchEnd  = (e: TouchEvent) => {
+    onTouchEnd = (e: TouchEvent) => {
       update(e.changedTouches[0].clientX, e.changedTouches[0].clientY, true);
       end();
     };

@@ -12,10 +12,8 @@ export interface HoverCardDropdownProps extends PopoverDropdownProps {
 const defaultProps: Partial<HoverCardDropdownProps> = {};
 
 export function HoverCardDropdown(_props: HoverCardDropdownProps) {
-  // merge defaultProps first, then incoming props
   const props = useProps('HoverCardDropdown', defaultProps, _props);
 
-  // split off the bits we need locally; `others` will contain the rest
   const [local, others] = splitProps(props, [
     'onMouseEnter',
     'onMouseLeave',
@@ -25,7 +23,7 @@ export function HoverCardDropdown(_props: HoverCardDropdownProps) {
   const ctx = useHoverCardContext();
 
   const handleMouseEnter = createEventHandler<any>((local.onMouseEnter as any), ctx.openDropdown);
-  const handleMouseLeave = createEventHandler<any>((local.onMouseLeave! as any), ctx.closeDropdown);
+  const handleMouseLeave = createEventHandler<any>((local.onMouseLeave as any), ctx.closeDropdown);
 
   return (
     <Popover.Dropdown

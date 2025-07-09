@@ -51,7 +51,7 @@ Floating
 FocusTrap
 Grid
 Highlight
-HoverCard
+HoverCard <-- fail -->. TargetWithTooltip does not work.
 Image
 Indicator
 JsonInput
@@ -66,7 +66,7 @@ NativeSelect
 NavLink
 Notification
 NumberFormatter
-NumberInput
+NumberInput <-- fail / still does not update input -->
 Pagination
 PasswordInput
 Pill

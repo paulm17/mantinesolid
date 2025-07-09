@@ -2,7 +2,7 @@ import { IconPackage } from '@tabler/icons-solidjs';
 import { Tabs, TabsProps } from './Tabs';
 import { JSX } from 'solid-js/jsx-runtime';
 import { MantineProvider } from '../../core';
-import { createSignal } from 'solid-js';
+import { createSignal, Index } from 'solid-js';
 
 export default {
   title: 'Tabs',
@@ -15,7 +15,478 @@ export default {
   ],
 };
 
-const base = (
+const Wrapper = (props: TabsProps) => <Tabs maw={500} mx="auto" mt={40} {...props} />;
+
+export function Horizontal() {
+  return (
+    <div style={{ 'padding': '40px' }}>
+      <Tabs defaultValue="react" orientation="horizontal">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Tabs>
+    </div>
+  );
+}
+
+export function DefaultVariant() {
+  return (
+    <div>
+      <Wrapper defaultValue="react">{
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      }</Wrapper>
+
+      <Wrapper defaultValue="react" inverted>
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper color="orange" defaultValue="react" orientation="vertical">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper color="orange" defaultValue="react" orientation="vertical" placement="right">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+    </div>
+  );
+}
+
+export function OutlineVariant() {
+  return (
+    <div>
+      <Wrapper variant="outline" defaultValue="react">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper variant="outline" defaultValue="react" inverted>
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper variant="outline" defaultValue="react" orientation="vertical">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper variant="outline" defaultValue="react" orientation="vertical" placement="right">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+    </div>
+  );
+}
+
+export function PillsVariant() {
+  return (
+    <div>
+      <Wrapper variant="pills" color="lime.4" defaultValue="react" autoContrast>
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper variant="pills" color="green.9" defaultValue="react" inverted>
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper variant="pills" color="green.9" defaultValue="react" orientation="vertical">
+        <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+
+      <Wrapper
+        variant="pills"
+        color="green.9"
+        defaultValue="react"
+        orientation="vertical"
+        placement="right"
+      >
+       <>
+          <Tabs.List>
+            <Tabs.Tab
+              value="react"
+              leftSection={<IconPackage size={16} />}
+              rightSection={<IconPackage size={16} />}
+            >
+              React
+            </Tabs.Tab>
+            <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+            <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+            <Tabs.Tab value="ds" disabled>
+              Disabled
+            </Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="react" pr="sm">
+            React Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="sv" pr="sm">
+            Svelte Panel
+          </Tabs.Panel>
+          <Tabs.Panel value="ng" pr="sm">
+            Angular Panel
+          </Tabs.Panel>
+        </>
+      </Wrapper>
+    </div>
+  );
+}
+
+export const NoLoop = () => (
+  <Wrapper defaultValue="react" loop={false}>
+    <>
+      <Tabs.List>
+        <Tabs.Tab
+          value="react"
+          leftSection={<IconPackage size={16} />}
+          rightSection={<IconPackage size={16} />}
+        >
+          React
+        </Tabs.Tab>
+        <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+        <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+        <Tabs.Tab value="ds" disabled>
+          Disabled
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="react" pr="sm">
+        React Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="sv" pr="sm">
+        Svelte Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="ng" pr="sm">
+        Angular Panel
+      </Tabs.Panel>
+    </>
+  </Wrapper>
+);
+
+export const NoKeyboardActivation = () => (
+  <Wrapper defaultValue="react" activateTabWithKeyboard={false}>
+    <>
+      <Tabs.List>
+        <Tabs.Tab
+          value="react"
+          leftSection={<IconPackage size={16} />}
+          rightSection={<IconPackage size={16} />}
+        >
+          React
+        </Tabs.Tab>
+        <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+        <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+        <Tabs.Tab value="ds" disabled>
+          Disabled
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="react" pr="sm">
+        React Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="sv" pr="sm">
+        Svelte Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="ng" pr="sm">
+        Angular Panel
+      </Tabs.Panel>
+    </>
+  </Wrapper>
+);
+
+export const NoDefaultValue = () => <Wrapper defaultValue={null}>
   <>
     <Tabs.List>
       <Tabs.Tab
@@ -42,130 +513,36 @@ const base = (
       Angular Panel
     </Tabs.Panel>
   </>
-);
-
-const verticalBase = (
-  <>
-    <Tabs.List>
-      <Tabs.Tab value="react">React</Tabs.Tab>
-      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
-      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
-      <Tabs.Tab value="ds" disabled>
-        Disabled
-      </Tabs.Tab>
-    </Tabs.List>
-
-    <Tabs.Panel value="react" pl="sm" bg="red.0">
-      React Panel
-    </Tabs.Panel>
-    <Tabs.Panel value="sv" pl="sm">
-      Svelte Panel
-    </Tabs.Panel>
-    <Tabs.Panel value="ng" pl="sm">
-      Angular Panel
-    </Tabs.Panel>
-  </>
-);
-
-const Wrapper = (props: TabsProps) => <Tabs maw={500} mx="auto" mt={40} {...props} />;
-
-export function Horizontal() {
-  return (
-    <div style={{ 'padding': '40px' }}>
-      <Tabs defaultValue="react" orientation="horizontal">
-        {base}
-      </Tabs>
-    </div>
-  );
-}
-
-export function DefaultVariant() {
-  return (
-    <div>
-      <Wrapper defaultValue="react">{base}</Wrapper>
-
-      <Wrapper defaultValue="react" inverted>
-        {base}
-      </Wrapper>
-
-      <Wrapper color="orange" defaultValue="react" orientation="vertical">
-        {base}
-      </Wrapper>
-
-      <Wrapper color="orange" defaultValue="react" orientation="vertical" placement="right">
-        {base}
-      </Wrapper>
-    </div>
-  );
-}
-
-export function OutlineVariant() {
-  return (
-    <div>
-      <Wrapper variant="outline" defaultValue="react">
-        {base}
-      </Wrapper>
-
-      <Wrapper variant="outline" defaultValue="react" inverted>
-        {base}
-      </Wrapper>
-
-      <Wrapper variant="outline" defaultValue="react" orientation="vertical">
-        {base}
-      </Wrapper>
-
-      <Wrapper variant="outline" defaultValue="react" orientation="vertical" placement="right">
-        {base}
-      </Wrapper>
-    </div>
-  );
-}
-
-export function PillsVariant() {
-  return (
-    <div>
-      <Wrapper variant="pills" color="lime.4" defaultValue="react" autoContrast>
-        {base}
-      </Wrapper>
-
-      <Wrapper variant="pills" color="green.9" defaultValue="react" inverted>
-        {base}
-      </Wrapper>
-
-      <Wrapper variant="pills" color="green.9" defaultValue="react" orientation="vertical">
-        {base}
-      </Wrapper>
-
-      <Wrapper
-        variant="pills"
-        color="green.9"
-        defaultValue="react"
-        orientation="vertical"
-        placement="right"
-      >
-        {base}
-      </Wrapper>
-    </div>
-  );
-}
-
-export const NoLoop = () => (
-  <Wrapper defaultValue="react" loop={false}>
-    {base}
-  </Wrapper>
-);
-
-export const NoKeyboardActivation = () => (
-  <Wrapper defaultValue="react" activateTabWithKeyboard={false}>
-    {base}
-  </Wrapper>
-);
-
-export const NoDefaultValue = () => <Wrapper defaultValue={null}>{base}</Wrapper>;
+</Wrapper>;
 
 export const AllowDeactivation = () => (
   <Wrapper defaultValue="react" allowTabDeactivation>
-    {base}
+   <>
+      <Tabs.List>
+        <Tabs.Tab
+          value="react"
+          leftSection={<IconPackage size={16} />}
+          rightSection={<IconPackage size={16} />}
+        >
+          React
+        </Tabs.Tab>
+        <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+        <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+        <Tabs.Tab value="ds" disabled>
+          Disabled
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="react" pr="sm">
+        React Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="sv" pr="sm">
+        Svelte Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="ng" pr="sm">
+        Angular Panel
+      </Tabs.Panel>
+    </>
   </Wrapper>
 );
 
@@ -173,7 +550,32 @@ export const Controlled = () => {
   const [tab, setTab] = createSignal<string | null>('react');
   return (
     <Wrapper value={tab()} onChange={setTab} allowTabDeactivation>
-      {base}
+      <>
+        <Tabs.List>
+          <Tabs.Tab
+            value="react"
+            leftSection={<IconPackage size={16} />}
+            rightSection={<IconPackage size={16} />}
+          >
+            React
+          </Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pr="sm">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pr="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pr="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
   );
 };
@@ -200,15 +602,90 @@ export const Grow = () => (
 export const Variants = () => (
   <div style={{ 'max-width': '500px', 'padding': '40px' }}>
     <Wrapper defaultValue="react" variant="default" mt={10} mb={50} radius="md">
-      {base}
+      <>
+        <Tabs.List>
+          <Tabs.Tab
+            value="react"
+            leftSection={<IconPackage size={16} />}
+            rightSection={<IconPackage size={16} />}
+          >
+            React
+          </Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pr="sm">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pr="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pr="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
 
     <Wrapper defaultValue="react" variant="outline" mt={10} mb={50} radius="md">
-      {base}
+      <>
+        <Tabs.List>
+          <Tabs.Tab
+            value="react"
+            leftSection={<IconPackage size={16} />}
+            rightSection={<IconPackage size={16} />}
+          >
+            React
+          </Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pr="sm">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pr="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pr="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
 
     <Wrapper defaultValue="react" variant="pills" mt={10} radius="md">
-      {base}
+      <>
+        <Tabs.List>
+          <Tabs.Tab
+            value="react"
+            leftSection={<IconPackage size={16} />}
+            rightSection={<IconPackage size={16} />}
+          >
+            React
+          </Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pr="sm">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pr="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pr="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
   </div>
 );
@@ -223,7 +700,26 @@ export const VerticalVariants = () => (
       mb={50}
       radius="md"
     >
-      {verticalBase}
+      <>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pl="sm" bg="red.0">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pl="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pl="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
 
     <Wrapper
@@ -234,11 +730,49 @@ export const VerticalVariants = () => (
       mb={50}
       radius="md"
     >
-      {verticalBase}
+      <>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pl="sm" bg="red.0">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pl="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pl="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
 
     <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10} radius="md">
-      {verticalBase}
+      <>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pl="sm" bg="red.0">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pl="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pl="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
   </div>
 );
@@ -254,7 +788,26 @@ export const VerticalPlacement = () => (
       radius="md"
       placement="right"
     >
-      {verticalBase}
+      <>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pl="sm" bg="red.0">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pl="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pl="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
 
     <Wrapper
@@ -266,7 +819,26 @@ export const VerticalPlacement = () => (
       radius="md"
       placement="right"
     >
-      {verticalBase}
+      <>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pl="sm" bg="red.0">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pl="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pl="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
 
     <Wrapper
@@ -277,7 +849,26 @@ export const VerticalPlacement = () => (
       radius="md"
       placement="right"
     >
-      {verticalBase}
+      <>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="react" pl="sm" bg="red.0">
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pl="sm">
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pl="sm">
+          Angular Panel
+        </Tabs.Panel>
+      </>
     </Wrapper>
   </div>
 );
@@ -309,30 +900,59 @@ export const WithIcon = () => (
 
 export const Unstyled = () => (
   <Wrapper defaultValue="react" unstyled>
-    {base}
+    <>
+      <Tabs.List>
+        <Tabs.Tab
+          value="react"
+          leftSection={<IconPackage size={16} />}
+          rightSection={<IconPackage size={16} />}
+        >
+          React
+        </Tabs.Tab>
+        <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+        <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+        <Tabs.Tab value="ds" disabled>
+          Disabled
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="react" pr="sm">
+        React Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="sv" pr="sm">
+        Svelte Panel
+      </Tabs.Panel>
+      <Tabs.Panel value="ng" pr="sm">
+        Angular Panel
+      </Tabs.Panel>
+    </>
   </Wrapper>
 );
 
 export const DynamicTabs = () => {
   const [count, setCount] = createSignal(1);
-  const list = Array(count)
-    .fill(() => 0)
-    .map((_, index) => index.toString());
-  const tabs = list.map((item) => (
-    <Tabs.Tab value={item}>
-      Tab {item}
-    </Tabs.Tab>
-  ));
-  const panels = list.map((item) => (
-    <Tabs.Panel value={item}>
-      Panel {item}
-    </Tabs.Panel>
-  ));
+  const list = () => Array(count())
+    .fill(0)
+    .map((_, index) => index);
 
   return (
     <Tabs>
-      <Tabs.List>{tabs}</Tabs.List>
-      {panels}
+      <Tabs.List>
+        <Index each={list()}>
+          {(item) => (
+            <Tabs.Tab value={item().toString()}>
+              Tab {item()}
+            </Tabs.Tab>
+          )}
+        </Index>
+      </Tabs.List>
+      <Index each={list()}>
+        {(item) => (
+          <Tabs.Panel value={item().toString()}>
+            Panel {item()}
+          </Tabs.Panel>
+        )}
+      </Index>
       <button type="button" onClick={() => setCount(count() + 1)}>
         Add
       </button>

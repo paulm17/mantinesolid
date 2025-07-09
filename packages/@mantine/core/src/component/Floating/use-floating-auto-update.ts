@@ -1,9 +1,9 @@
-import { createSignal, createEffect, onCleanup } from 'solid-js';
+import { createSignal, createEffect, onCleanup, Accessor } from 'solid-js';
 import { autoUpdate } from '@floating-ui/solid';
 import { FloatingPosition } from './types';
 
 interface Payload {
-  opened: boolean;
+  opened: Accessor<boolean>;
   floating: {
     update: () => void;
     refs: {
@@ -28,8 +28,9 @@ export function useFloatingAutoUpdate({
     const refEl = floating.refs.reference();
     const floatEl = floating.refs.floating();
 
+    // needed for debugging!
     // console.log('=== Floating UI Debug ===');
-    // console.log('Opened:', opened);
+    // console.log('Opened:', opened());
     // console.log('Reference element:', refEl);
     // console.log('Floating element:', floatEl);
     // console.log('Reference rect:', refEl?.getBoundingClientRect());
@@ -40,7 +41,7 @@ export function useFloatingAutoUpdate({
     delayedUpdate();
     position;
 
-    if (opened && refEl instanceof HTMLElement && floatEl instanceof HTMLElement) {
+    if (opened() && refEl instanceof HTMLElement && floatEl instanceof HTMLElement) {
       const cleanup = autoUpdate(refEl, floatEl, floating.update);
       onCleanup(cleanup);
     }

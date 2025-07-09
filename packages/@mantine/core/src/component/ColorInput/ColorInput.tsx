@@ -242,45 +242,49 @@ export const ColorInput = factory<ColorInputFactory>(__props => {
         }
       >
         <Popover.Target>
-          <Input<'input'>
-            auto-complete="off"
-            {...others}
-            {...local.inputProps}
-            classNames={resolvedClassNames}
-            styles={resolvedStyles}
-            disabled={local.disabled}
-            ref={local.ref}
-            __staticSelector="ColorInput"
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            onClick={handleInputClick}
-            spell-check={false}
-            value={_value()}
-            onChange={(event) => {
-              const inputValue = event.currentTarget.value;
-              setValue(inputValue);
-              if (isColorValid(inputValue)) {
-                local.onChangeEnd?.(convertHsvaTo(local.format!, parseColor(inputValue)));
+          {(popoverProps) => (
+            <div ref={popoverProps.ref}>
+            <Input<'input'>
+              auto-complete="off"
+              {...others}
+              {...local.inputProps}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              disabled={local.disabled}
+              ref={local.ref}
+              __staticSelector="ColorInput"
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+              onClick={handleInputClick}
+              spell-check={false}
+              value={_value()}
+              onChange={(event) => {
+                const inputValue = event.currentTarget.value;
+                setValue(inputValue);
+                if (isColorValid(inputValue)) {
+                  local.onChangeEnd?.(convertHsvaTo(local.format!, parseColor(inputValue)));
+                }
+              }}
+              leftSection={
+                local.leftSection ||
+                (local.withPreview ? (
+                  <ColorSwatch
+                    color={isColorValid(_value()) ? _value() : '#fff'}
+                    size="var(--ci-preview-size)"
+                    {...getStyles('colorPreview')}
+                  />
+                ) : null)
               }
-            }}
-            leftSection={
-              local.leftSection ||
-              (local.withPreview ? (
-                <ColorSwatch
-                  color={isColorValid(_value()) ? _value() : '#fff'}
-                  size="var(--ci-preview-size)"
-                  {...getStyles('colorPreview')}
-                />
-              ) : null)
-            }
-            readOnly={local.disallowInput || local.readOnly}
-            pointer={local.disallowInput}
-            unstyled={local.unstyled}
-            rightSection={
-              local.rightSection ||
-              (local.withEyeDropper && !local.disabled && !local.readOnly && eyeDropperSupported() ? eyeDropper : null)
-            }
-          />
+              readOnly={local.disallowInput || local.readOnly}
+              pointer={local.disallowInput}
+              unstyled={local.unstyled}
+              rightSection={
+                local.rightSection ||
+                (local.withEyeDropper && !local.disabled && !local.readOnly && eyeDropperSupported() ? eyeDropper : null)
+              }
+            />
+            </div>
+          )}
         </Popover.Target>
         <Popover.Dropdown
           onMouseDown={(event) => event.preventDefault()}

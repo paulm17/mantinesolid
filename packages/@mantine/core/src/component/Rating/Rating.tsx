@@ -263,50 +263,6 @@ export const Rating = factory<RatingFactory>(_props => {
     }
   };
 
-  const items = Array(_count).fill(0);
-  const content = <Index each={items}>
-    {(_, index) => {
-      const integerValue = index + 1;
-      const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
-      const isGroupActive = createMemo(() => !local.readOnly && Math.ceil(hovered()) === integerValue);
-
-      return (
-        <div
-          data-active={isGroupActive() ? true : undefined}
-          {...getStyles('symbolGroup')}
-        >
-          <Index each={fractionItems}>
-            {(_, fractionIndex) => {
-              const fractionValue = createMemo(() => decimalUnit * (index === 0 ? fractionIndex : fractionIndex + 1));
-              const symbolValue = createMemo(() => roundValueTo(integerValue - 1 + fractionValue(), decimalUnit));
-
-              return (
-                <RatingItem
-                  getSymbolLabel={local.getSymbolLabel}
-                  emptyIcon={local.emptySymbol}
-                  fullIcon={local.fullSymbol}
-                  full={
-                    local.highlightSelectedOnly ? symbolValue() === finalValue() : symbolValue() <= finalValue()
-                  }
-                  active={symbolValue() === finalValue()}
-                  checked={symbolValue() === stableValueRounded()}
-                  readOnly={local.readOnly}
-                  fractionValue={fractionValue()}
-                  value={symbolValue()}
-                  name={_name}
-                  onChange={handleChange}
-                  onBlur={handleItemBlur}
-                  onInputChange={handleInputChange}
-                  id={`${_id}-${index}-${fractionIndex}`}
-                />
-              )
-            }}
-          </Index>
-        </div>
-      )
-    }}
-  </Index>
-
   return (
     <RatingProvider value={{ getStyles }}>
       <Box
@@ -322,7 +278,48 @@ export const Rating = factory<RatingFactory>(_props => {
         id={_id}
         {...others}
       >
-        {content}
+        <Index each={Array(_count).fill(0)}>
+          {(_, index) => {
+            const integerValue = index + 1;
+            const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
+            const isGroupActive = createMemo(() => !local.readOnly && Math.ceil(hovered()) === integerValue);
+
+            return (
+              <div
+                data-active={isGroupActive() ? true : undefined}
+                {...getStyles('symbolGroup')}
+              >
+                <Index each={fractionItems}>
+                  {(_, fractionIndex) => {
+                    const fractionValue = createMemo(() => decimalUnit * (index === 0 ? fractionIndex : fractionIndex + 1));
+                    const symbolValue = createMemo(() => roundValueTo(integerValue - 1 + fractionValue(), decimalUnit));
+
+                    return (
+                      <RatingItem
+                        getSymbolLabel={local.getSymbolLabel}
+                        emptyIcon={local.emptySymbol}
+                        fullIcon={local.fullSymbol}
+                        full={
+                          local.highlightSelectedOnly ? symbolValue() === finalValue() : symbolValue() <= finalValue()
+                        }
+                        active={symbolValue() === finalValue()}
+                        checked={symbolValue() === stableValueRounded()}
+                        readOnly={local.readOnly}
+                        fractionValue={fractionValue()}
+                        value={symbolValue()}
+                        name={_name}
+                        onChange={handleChange}
+                        onBlur={handleItemBlur}
+                        onInputChange={handleInputChange}
+                        id={`${_id}-${index}-${fractionIndex}`}
+                      />
+                    )
+                  }}
+                </Index>
+              </div>
+            )
+          }}
+        </Index>
       </Box>
     </RatingProvider>
   );

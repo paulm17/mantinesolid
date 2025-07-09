@@ -1,9 +1,10 @@
+import { Accessor } from 'solid-js';
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { TabsFactory } from './Tabs';
 
 export interface TabsContextValue {
   id: string;
-  value: string | null;
+  value: Accessor<string | null>;
   orientation: 'horizontal' | 'vertical' | undefined;
   loop: boolean | undefined;
   activateTabWithKeyboard: boolean | undefined;

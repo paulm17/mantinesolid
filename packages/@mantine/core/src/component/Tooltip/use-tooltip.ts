@@ -145,7 +145,7 @@ export function useTooltip(settings: UseTooltip) {
   ]);
 
   useFloatingAutoUpdate({
-    opened: opened ?? false,
+    opened: () => opened ?? false,
     position: settings.position,
     positionDependencies: settings.positionDependencies || [],
     floating: {

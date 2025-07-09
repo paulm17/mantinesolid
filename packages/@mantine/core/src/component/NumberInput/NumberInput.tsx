@@ -499,9 +499,98 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
     </div>
   );
 
+  const NumericFormatWrapper = (props: any) => {
+    // Log all props to see what's being passed
+    console.log('NumericFormatWrapper props:', Object.keys(props));
+    console.log('NumericFormatWrapper value prop:', props.value);
+    console.log('NumericFormatWrapper ref:', props.ref);
+
+    // Create a reactive effect to track value changes
+    createEffect(() => {
+      console.log('NumericFormatWrapper - value changed to:', props.value);
+    });
+
+    const handleChange = (e: any) => {
+      console.log('NumericFormat onChange captured:', {
+        value: e.target.value,
+        hasOnChange: !!props.onChange,
+        originalEvent: e
+      });
+      props.onChange?.(e);
+    };
+
+    const handleInput = (e: any) => {
+      console.log('NumericFormat onInput captured:', {
+        value: e.target.value,
+        hasOnInput: !!props.onInput,
+        originalEvent: e
+      });
+      props.onInput?.(e);
+    };
+
+    const handleValueChange = (values: any, sourceInfo: any) => {
+      console.log('NumericFormat onValueChange captured:', {
+        values,
+        sourceInfo,
+        hasOnValueChange: !!props.onValueChange
+      });
+      props.onValueChange?.(values, sourceInfo);
+    };
+
+    const handleBlur = (e: any) => {
+      console.log('NumericFormat onBlur captured:', {
+        value: e.target.value,
+        hasOnBlur: !!props.onBlur
+      });
+      props.onBlur?.(e);
+    };
+
+    const handleFocus = (e: any) => {
+      console.log('NumericFormat onFocus captured:', {
+        value: e.target.value,
+        hasOnFocus: !!props.onFocus
+      });
+      props.onFocus?.(e);
+    };
+
+    const handleKeyDown = (e: any) => {
+      console.log('NumericFormat onKeyDown captured:', {
+        key: e.key,
+        value: e.target.value,
+        hasOnKeyDown: !!props.onKeyDown
+      });
+      props.onKeyDown?.(e);
+    };
+
+    // Split props to avoid overriding our handlers
+    const [handlers, otherProps] = splitProps(props, [
+      'onChange',
+      'onInput',
+      'onValueChange',
+      'onBlur',
+      'onFocus',
+      'onKeyDown'
+    ]);
+
+    console.log('NumericFormatWrapper handlers:', Object.keys(handlers));
+    console.log('NumericFormatWrapper otherProps:', Object.keys(otherProps));
+
+    return (
+      <NumericFormat
+        {...otherProps}
+        onChange={handleChange}
+        onInput={handleInput}
+        onValueChange={handleValueChange}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
+      />
+    );
+  };
+
   return (
     <InputBase
-      component={NumericFormat}
+      component={NumericFormatWrapper}
       allowNegative={local.allowNegative}
       className={cx(classes.root, local.className)}
       size={local.size}
@@ -525,7 +614,7 @@ export const NumberInput = factory<NumberInputFactory>(_props => {
       rightSectionWidth={local.rightSectionWidth ?? `var(--ni-right-section-width-${local.size || 'sm'})`}
       allowLeadingZeros={local.allowLeadingZeros}
       onBlur={handleBlur}
-      isAllowed={(val) => {
+      isAllowed={(val: any) => {
         if (local.clampBehavior === 'strict') {
           if (local.isAllowed) {
             return local.isAllowed(val) && isInRange(val.floatValue, local.min, local.max);

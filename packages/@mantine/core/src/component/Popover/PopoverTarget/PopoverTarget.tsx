@@ -7,7 +7,10 @@ import { splitProps } from 'solid-js';
 
 export interface PopoverTargetProps {
   /** Target element */
-  children: JSX.Element;
+  children: JSX.Element | ((props: {
+    ref: (element: HTMLElement) => void;
+    [key: string]: any;
+  }) => JSX.Element);
 
   /** Key of the prop that should be used to access element ref */
   refProp?: string;
@@ -44,7 +47,8 @@ export const PopoverTarget = factory<PopoverTargetFactory>(_props => {
 
   const ctx = usePopoverContext();
   const isOpened = () => ctx.opened();
-  const targetRef = useMergedRef(ctx.reference, getRefProp(local.children), local.ref);
+
+  const wrapperTargetRef = useMergedRef(ctx.reference, getRefProp(local.children), local.ref);
 
   const accessibleProps = ctx.withRoles
     ? {
@@ -55,16 +59,25 @@ export const PopoverTarget = factory<PopoverTargetFactory>(_props => {
       }
     : {};
 
+  // now we can have renderProps for hovercardtarget
+  if (typeof local.children === 'function') {
+    const combinedRef = useMergedRef(ctx.reference, local.ref);
+    return local.children({
+      ref: combinedRef as (element: HTMLElement) => void,
+      ...accessibleProps,
+      ...ctx.targetProps,
+      ...others,
+      onClick: !ctx.controlled ? ctx.onToggle : undefined,
+    });
+  }
+
   return (
     <span
       {...others}
       {...accessibleProps}
       {...ctx.targetProps}
-      class={clsx(
-        (ctx.targetProps as any).class,
-        (others as any).class,
-      )}
-      {...{ [local.refProp!]: targetRef }}
+      class={clsx((ctx.targetProps as any).class, (others as any).class)}
+      {...{ [local.refProp!]: wrapperTargetRef }}
       onClick={!ctx.controlled ? ctx.onToggle : undefined}
     >
       {local.children}

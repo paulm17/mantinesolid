@@ -178,7 +178,7 @@ export const Tabs = factory<TabsFactory>(_props => {
     <TabsProvider
       value={{
         placement: local.placement,
-        value: currentTab(),
+        value: currentTab,
         orientation: local.orientation,
         id: uid,
         loop: local.loop,

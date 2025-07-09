@@ -4,7 +4,7 @@ import { Input, InputClearButtonProps } from '../../Input';
 
 export interface ComboboxClearButtonProps extends InputClearButtonProps, ElementProps<'button'> {
   onClear: () => void;
-  ref: HTMLButtonElement;
+  ref?: HTMLButtonElement | ((el: HTMLButtonElement) => void);
 }
 
 export function ComboboxClearButton(props: ComboboxClearButtonProps) {

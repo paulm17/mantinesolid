@@ -1,21 +1,19 @@
-import { Show, splitProps, type Component, type JSX, type Ref as SolidRef } from 'solid-js';
+import { type Component, type JSX, splitProps, type Ref as SolidRef } from 'solid-js';
 import { useFocusTrap, useMergedRef } from '@mantine/hooks';
 
 export interface FocusTrapProps {
+  // 1. The type of `children` is now a function that receives an object with a ref
   children: (props: { ref: SolidRef<any> }) => JSX.Element;
-  active?: boolean;
+  active: boolean;
   innerRef?: SolidRef<any>;
 }
 
 export const FocusTrap: Component<FocusTrapProps> = (props) => {
   const [local] = splitProps(props, ['children', 'active', 'innerRef']);
 
-  const focusTrapRef = useFocusTrap(() => local.active ?? false);
+  const focusTrapRef = useFocusTrap(() => local.active);
   const combinedRef = useMergedRef(focusTrapRef, local.innerRef as any);
 
-  return (
-    <Show when={local.active}>
-      {local.children({ ref: combinedRef })}
-    </Show>
-  );
+  // 2. We call the children function, passing it an object containing the ref
+  return local.children({ ref: combinedRef });
 };

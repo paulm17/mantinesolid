@@ -1,3 +1,4 @@
+import { createEffect, createMemo, JSX, splitProps } from 'solid-js';
 import { useFocusReturn, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -17,7 +18,6 @@ import { Transition } from '../../Transition';
 import type { PopoverStylesNames } from '../Popover';
 import { usePopoverContext } from '../Popover.context';
 import classes from '../Popover.module.css';
-import { createEffect, createMemo, JSX, splitProps } from 'solid-js';
 
 export interface PopoverDropdownProps
   extends BoxProps,
@@ -90,10 +90,10 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>(_props => {
         }
       >
         {(transitionStyles) => (
-          <FocusTrap active={isOpened()} innerRef={mergedRef}>
-            {(focusTrapProps) => (
+          // <FocusTrap active={isOpened()} innerRef={mergedRef}>
+          //   {(focusTrapProps) => (
               <Box
-                {...focusTrapProps}
+                // {...focusTrapProps}
                 {...accessibleProps}
                 {...others}
                 variant={local.variant}
@@ -150,8 +150,8 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>(_props => {
                 />
               </Box>
             )}
-          </FocusTrap>
-         )}
+          {/* </FocusTrap>
+         )} */}
       </Transition>
     </OptionalPortal>
   );

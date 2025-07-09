@@ -179,7 +179,6 @@ export const Checkbox = factory<CheckboxFactory>(_props => {
     ? {
         checked: ctx.value().includes(rest.value as string),
         onChange: (event: Event) => {
-          console.log('onChanged!!');
           ctx.onChange(event as any);
           if (typeof local.onChange === 'function') {
             local.onChange(event as any);
