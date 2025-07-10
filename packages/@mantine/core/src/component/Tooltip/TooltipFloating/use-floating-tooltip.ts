@@ -18,7 +18,7 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
   const [floatingElement, setFloatingElement] = createSignal<HTMLElement | null>(null);
   const [referenceElement, setReferenceElement] = createSignal<any>(null);
 
-  const { x, y, placement, update } = useFloating({
+  const floatingHook = useFloating({
     placement: position,
     // The `elements` option now takes signals
     elements: {
@@ -35,11 +35,11 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
   });
 
   const horizontalOffset = createMemo(() =>
-    placement.includes('right') ? offset : placement.includes('left') ? offset * -1 : 0
+    floatingHook.placement.includes('right') ? offset : floatingHook.placement.includes('left') ? offset * -1 : 0
   );
 
   const verticalOffset = createMemo(() =>
-    placement.includes('bottom') ? offset : placement.includes('top') ? offset * -1 : 0
+    floatingHook.placement.includes('bottom') ? offset : floatingHook.placement.includes('top') ? offset * -1 : 0
   );
 
   const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
@@ -71,22 +71,22 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
       // Listen for scroll events on all overflow ancestors
       const parents = getOverflowAncestors(floating);
       parents.forEach((parent) => {
-        parent.addEventListener('scroll', update);
+        parent.addEventListener('scroll', floatingHook.update);
       });
 
       // `onCleanup` handles the removal of event listeners
       onCleanup(() => {
         boundary.removeEventListener('mousemove', handleMouseMove);
         parents.forEach((parent) => {
-          parent.removeEventListener('scroll', update);
+          parent.removeEventListener('scroll', floatingHook.update);
         });
       });
     }
   });
 
   return {
-    x,
-    y,
+    x: floatingHook.x,
+    y: floatingHook.y,
     opened,
     setOpened,
     boundaryRef: (el: T) => (boundaryRef = el),

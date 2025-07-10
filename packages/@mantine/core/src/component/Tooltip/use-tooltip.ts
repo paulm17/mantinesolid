@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, createMemo } from 'solid-js';
 import {
   arrow,
   flip,
@@ -13,6 +13,7 @@ import {
   useInteractions,
   useRole,
   type Middleware,
+  autoUpdate,
 } from '@floating-ui/solid';
 import { useId } from '@mantine/hooks';
 import {
@@ -97,12 +98,16 @@ function getTooltipMiddlewares(settings: UseTooltip) {
 export function useTooltip(settings: UseTooltip) {
   const [uncontrolledOpened, setUncontrolledOpened] = createSignal(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
-  const opened = controlled ? settings.opened : uncontrolledOpened();
   const withinGroup = useTooltipGroupContext();
   const uid = useId();
 
+  // Normalize `opened` to ALWAYS be an accessor, fixing the "not callable" error.
+  const opened = createMemo<boolean>(() => (typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened() || false));
+
   const onChange = (_opened: boolean) => {
-    setUncontrolledOpened(_opened);
+    if (!controlled) {
+      setUncontrolledOpened(_opened);
+    }
 
     if (_opened) {
       setCurrentId(uid);
@@ -122,11 +127,12 @@ export function useTooltip(settings: UseTooltip) {
       reference: referenceElement(),
       floating: floatingElement(),
     }),
+    whileElementsMounted: autoUpdate,
   });
 
   const { delay: groupDelay, currentId, setCurrentId } = useDelayGroup(() => floating.context, { id: uid });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
+  const interactions = useInteractions([
     useHover(() => floating.context, () => ({
       enabled: settings.events?.hover,
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
@@ -134,18 +140,18 @@ export function useTooltip(settings: UseTooltip) {
     }))(),
 
     useFocus(floating.context, {
-      enabled: settings.events?.focus
+      enabled: settings.events?.focus,
     })(),
 
     useRole(floating.context, { role: 'tooltip' }),
 
     useDismiss(() => floating.context, {
-      enabled: typeof settings.opened === 'undefined'
+      enabled: !controlled,
     }),
   ]);
 
   useFloatingAutoUpdate({
-    opened: () => opened ?? false,
+    opened,
     position: settings.position,
     positionDependencies: settings.positionDependencies || [],
     floating: {
@@ -161,7 +167,8 @@ export function useTooltip(settings: UseTooltip) {
     settings.onPositionChange?.(floating.placement);
   });
 
-  const isGroupPhase = opened && currentId && currentId !== uid;
+  // Correctly call the accessors to get their boolean/string values.
+  const isGroupPhase = opened() && currentId && currentId !== uid;
 
   return {
     get x() { return floating.x; },
@@ -170,8 +177,8 @@ export function useTooltip(settings: UseTooltip) {
     get arrowY() { return floating.middlewareData.arrow?.y ?? null; },
     reference: setReferenceElement,
     floating: setFloatingElement,
-    getFloatingProps,
-    getReferenceProps,
+    getFloatingProps: interactions.getFloatingProps,
+    getReferenceProps: interactions.getReferenceProps,
     isGroupPhase,
     opened,
     get placement() { return floating.placement; },

@@ -93,7 +93,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
     varsResolver,
   });
 
-  const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip({
+  const floating = useFloatingTooltip({
     offset: local.offset!,
     position: local.position!,
     defaultOpened: local.defaultOpened!,
@@ -105,19 +105,22 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
   //   );
   // }
 
-  const targetRef = useMergedRef(boundaryRef, getRefProp(local.children), local.ref);
+  const targetRef = useMergedRef(floating.boundaryRef, getRefProp(local.children), local.ref);
   const _childrenProps = (local.children as any).props as any;
 
   const onMouseEnter = (event: MouseEvent) => {
+    console.log('mouseenter called');
     _childrenProps.onMouseEnter?.(event);
-    handleMouseMove(event);
-    setOpened(true);
+    floating.handleMouseMove(event);
+    floating.setOpened(true);
   };
 
   const onMouseLeave = (event: MouseEvent) => {
     _childrenProps.onMouseLeave?.(event);
-    setOpened(false);
+    floating.setOpened(false);
   };
+
+  console.log('opened:', floating.opened(), 'disabled:', local.disabled);
 
   const isSvgChild = targetRef?.parentElement?.tagName === 'svg' ? 'g' : 'span';
 
@@ -130,13 +133,13 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
             style: {
               ...getStyleObject(local.style, theme),
               zIndex: local.zIndex as JSX.CSSProperties['z-index'],
-              display: !local.disabled && opened() ? 'block' : 'none',
-              top: `${(y && Math.round(y)) ?? ''}`,
-              left: `${(x && Math.round(x)) ?? ''}`,
+              display: !local.disabled && floating.opened() ? 'block' : 'none',
+              top: `${(floating.y && Math.round(floating.y)) ?? ''}`,
+              left: `${(floating.x && Math.round(floating.x)) ?? ''}`,
             },
           })}
           variant={local.variant}
-          ref={floating}
+          ref={(el) => floating.floating(el)}
           mod={{ multiline: local.multiline }}
         >
           {local.label}

@@ -51,7 +51,7 @@ Floating
 FocusTrap
 Grid
 Highlight
-HoverCard <-- fail -->. TargetWithTooltip does not work.
+HoverCard <-- fail -->. TargetWithTooltip does not work. Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.
 Image
 Indicator
 JsonInput
@@ -98,7 +98,7 @@ TextInput
 ThemeIcon
 Timeline
 Title
-Tooltip
+Tooltip <-- fail --> Does not fully work.  Some stories don't work right
 Transition
 Tree
 TypographyStylesProvider
