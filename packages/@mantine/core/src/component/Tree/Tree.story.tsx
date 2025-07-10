@@ -3,7 +3,7 @@ import { Button } from '../Button';
 import { Group } from '../Group';
 import { Tree, TreeNodeData } from './Tree';
 import { useTree } from './use-tree';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

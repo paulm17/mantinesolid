@@ -1,7 +1,7 @@
 import { IconInfoCircle } from '@tabler/icons-solidjs';
 import { MantineProvider, rem } from '../../core';
 import { Blockquote } from './Blockquote';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 
 export default {
   title: 'Blockquote',

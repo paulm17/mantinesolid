@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { TextInput } from '../TextInput';
 import { Fieldset } from './Fieldset';
 import { MantineProvider } from '../../core';

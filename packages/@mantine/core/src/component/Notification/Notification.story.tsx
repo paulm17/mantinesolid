@@ -6,7 +6,7 @@ import {
   IconX,
 } from '@tabler/icons-solidjs';
 import { Notification } from './Notification';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

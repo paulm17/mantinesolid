@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/solid';
 
 export type PopoverWidth = 'target' | JSX.CSSProperties['width'] | null;

@@ -1,6 +1,6 @@
 import { RangeSlider } from './RangeSlider/RangeSlider';
 import { Slider } from './Slider/Slider';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 import { createSignal } from 'solid-js';
 

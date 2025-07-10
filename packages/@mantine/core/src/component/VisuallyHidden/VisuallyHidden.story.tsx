@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { ActionIcon } from '../ActionIcon';
 import { VisuallyHidden } from './VisuallyHidden';
 import { MantineProvider } from '../../core';

@@ -5,7 +5,7 @@ import { Box, MantineProvider, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
 import { Tooltip } from '../Tooltip';
 import { Popover } from './Popover';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 
 export default {
   title: 'Popover',

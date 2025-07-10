@@ -3,7 +3,7 @@ import { Box, MantineProvider } from '../../core';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
 import { Switch } from './Switch';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 
 export default {
   title: 'Switch',

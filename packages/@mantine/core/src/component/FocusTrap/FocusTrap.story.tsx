@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 import { FocusTrap } from './FocusTrap';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

@@ -4,7 +4,7 @@ import { useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
 import { Tabs } from '../Tabs';
 import { Drawer } from './Drawer';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

@@ -8,7 +8,7 @@ import { Stack } from '../Stack';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
 import { useModalsStack } from './use-modals-stack';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

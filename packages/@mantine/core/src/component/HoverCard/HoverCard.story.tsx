@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { Button } from '../Button';
 import { Switch } from '../Switch';
 import { Tooltip } from '../Tooltip';

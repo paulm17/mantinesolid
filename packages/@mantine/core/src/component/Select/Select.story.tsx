@@ -1,6 +1,6 @@
 import { Button } from '../Button';
 import { Select } from './Select';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 import { createSignal } from 'solid-js';
 

@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { SemiCircleProgress } from './SemiCircleProgress';
 import { MantineProvider } from '../../core';
 

@@ -7,7 +7,7 @@ import { ModalBaseContent } from './ModalBaseContent';
 import { ModalBaseHeader } from './ModalBaseHeader';
 import { ModalBaseOverlay } from './ModalBaseOverlay';
 import { ModalBaseTitle } from './ModalBaseTitle';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

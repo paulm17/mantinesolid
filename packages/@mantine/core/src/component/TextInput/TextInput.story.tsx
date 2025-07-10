@@ -11,7 +11,7 @@ import { RangeSlider } from '../Slider';
 import { Stack } from '../Stack';
 import { Switch } from '../Switch';
 import { TextInput } from './TextInput';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

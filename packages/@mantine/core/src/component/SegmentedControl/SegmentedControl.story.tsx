@@ -5,7 +5,7 @@ import { Group } from '../Group';
 import { Modal } from '../Modal';
 import { TextInput } from '../TextInput';
 import { SegmentedControl } from './SegmentedControl';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { createSignal } from 'solid-js';
 
 export default {

@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider, rem } from '../../core';
 import { TextInput } from '../TextInput';
 import { NativeSelect } from './NativeSelect';

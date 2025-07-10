@@ -1,6 +1,6 @@
 import { IconPackage } from '@tabler/icons-solidjs';
 import { Tabs, TabsProps } from './Tabs';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 import { createSignal, Index } from 'solid-js';
 

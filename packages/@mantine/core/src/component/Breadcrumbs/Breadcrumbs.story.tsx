@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { Anchor } from '../Anchor';
 import { Breadcrumbs } from './Breadcrumbs';
 import { MantineProvider } from '../../core';

@@ -2,7 +2,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { AppShell } from './AppShell';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

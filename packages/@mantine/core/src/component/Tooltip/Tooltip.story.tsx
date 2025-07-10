@@ -1,5 +1,5 @@
 import { Tooltip } from './Tooltip';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 import { createSignal } from 'solid-js';
 

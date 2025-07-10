@@ -6,7 +6,7 @@ import {
 } from '@tabler/icons-solidjs';
 import { Text } from '../Text';
 import { Timeline } from './Timeline';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { MantineProvider } from '../../core';
 
 export default {

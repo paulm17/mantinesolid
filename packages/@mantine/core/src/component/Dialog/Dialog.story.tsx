@@ -1,7 +1,7 @@
 import { Button, Group, MantineProvider, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Dialog } from './Dialog';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 
 export default {
   title: 'Dialog',
