@@ -23,6 +23,12 @@ export interface InputBaseProps
 
   /** Determines whether `aria-` and other accessibility attributes should be added to the input, `true` by default */
   withAria?: boolean;
+
+  /** Event handler for the focus capture phase */
+  onFocusCapture?: (event: FocusEvent) => void;
+
+  /** Event handler for the blur capture phase */
+  onBlurCapture?: (event: FocusEvent) => void;
 }
 
 export type InputBaseFactory = PolymorphicFactory<{
