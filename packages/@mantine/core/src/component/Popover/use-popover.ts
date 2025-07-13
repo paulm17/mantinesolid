@@ -10,7 +10,7 @@ import {
   size,
   useFloating,
   UseFloatingReturn,
-} from '@floating-ui/solid';
+} from '@empoleon/solid-floating-ui';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   FloatingAxesOffsets,

@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import { Code, Indicator } from '@mantine/core';
 import { Month, MonthProps } from './Month';
+import { createSignal, For } from 'solid-js';
 
 export default { title: 'Month' };
 
 function Wrapper(props: Partial<MonthProps>) {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: '40px' }}>
       <Code>{dayjs(props.month || '2022-04-01').format('MMMM YYYY')}</Code>
       <Month month="2022-04-01" mt="xl" {...props} />
     </div>
@@ -23,11 +23,11 @@ export function CustomWeekendDays() {
 }
 
 export function Selected() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = createSignal<string | null>(null);
   return (
     <Wrapper
       getDayProps={(date) => ({
-        selected: dayjs(date).isSame(selected, 'date'),
+        selected: dayjs(date).isSame(selected(), 'date'),
         onClick: () => setSelected(date),
       })}
     />
@@ -93,10 +93,13 @@ export function Unstyled() {
 }
 
 export function Sizes() {
-  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
-    <Wrapper size={size} key={size} />
-  ));
-  return sizes;
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
+  return (
+    <For each={sizes}>
+      {(size) => <Wrapper size={size} />}
+    </For>
+  );
 }
 
 export function withWeekNumbers() {

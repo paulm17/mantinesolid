@@ -1,6 +1,5 @@
 import { For } from 'solid-js';
 import { Day } from './Day';
-import { MantineSize } from '@mantine/core';
 
 export default { title: 'Day' };
 
@@ -56,7 +55,7 @@ export function Range() {
 }
 
 export function Sizes() {
- const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
  return (
    <div style={{ padding: '40px' }}>

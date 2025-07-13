@@ -32,7 +32,7 @@ import {
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
 import { getMaxTime, getMinTime } from './get-min-max-time/get-min-max-time';
 import classes from './DateTimePicker.module.css';
-import { JSX } from 'solid-js/jsx-runtime';
+import { JSX } from 'solid-js';
 import { createEffect, createSignal, splitProps } from 'solid-js';
 
 export type DateTimePickerStylesNames =

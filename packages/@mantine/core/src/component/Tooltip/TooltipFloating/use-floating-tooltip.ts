@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onCleanup, createMemo } from 'solid-js';
-import { getOverflowAncestors, shift, useFloating } from '@floating-ui/solid';
+import { getOverflowAncestors, shift, useFloating } from '@empoleon/solid-floating-ui';
 import { FloatingPosition } from '../../Floating';
 
 interface UseFloatingTooltip {

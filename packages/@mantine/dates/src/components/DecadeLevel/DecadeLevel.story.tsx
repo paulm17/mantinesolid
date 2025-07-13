@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { DecadeLevel } from './DecadeLevel';
 import { createSignal, For } from 'solid-js';
-import { MantineSize } from '@mantine/core';
 
 export default { title: 'DecadeLevel' };
 
@@ -46,7 +45,7 @@ export function WithSelection() {
 }
 
 export function Sizes() {
-  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
   return (
     <div style={{ padding: '40px' }}>

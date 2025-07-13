@@ -1,8 +1,17 @@
-import { createSignal, For } from 'solid-js';
-import { Button, Group } from '@mantine/core';
+import { For, JSX } from 'solid-js';
+import { Button, Group, MantineProvider } from '@mantine/core';
 import { Dropzone } from './index';
 
-export default { title: 'Dropzone' };
+export default {
+  title: 'Dropzone',
+  decorators: [
+    (Story: () => JSX.Element) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ]
+};
 
 export function Usage() {
   return (
@@ -55,7 +64,7 @@ export function FullScreen() {
           )}
         </For>
       </div>
-      <Dropzone fullScreen onDrop={(files) => console.log('accepted files', files)}>
+      <Dropzone full-screen onDrop={(files) => console.log('accepted files', files)}>
         <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
           <div>
             <div>Drag and drop files</div>

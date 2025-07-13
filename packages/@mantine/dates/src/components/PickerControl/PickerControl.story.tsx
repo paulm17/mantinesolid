@@ -1,6 +1,5 @@
 import { For } from 'solid-js';
 import { PickerControl } from './PickerControl';
-import { MantineSize } from '@mantine/core';
 
 export default { title: 'PickerControl' };
 
@@ -38,7 +37,7 @@ export function Range() {
 }
 
 export function Sizes() {
- const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
  return (
    <div style={{ padding: '40px' }}>

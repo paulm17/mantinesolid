@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Button, MantineSize } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { YearPickerInput } from './YearPickerInput';
 import { For } from 'solid-js';
 
@@ -105,7 +105,7 @@ export function Clearable() {
 }
 
 export function Sizes() {
- const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
  return (
    <div style={{ padding: '40px' }}>

@@ -1,7 +1,6 @@
 import { createSignal, For } from 'solid-js';
 import { DatesRangeValue, DateStringValue } from '../../types';
 import { YearPicker } from './YearPicker';
-import { MantineSize } from '@mantine/core';
 
 export default { title: 'YearPicker' };
 
@@ -94,7 +93,7 @@ export function ControlledMultiple() {
 }
 
 export function Sizes() {
- const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
  return (
    <div style={{ padding: '40px' }}>

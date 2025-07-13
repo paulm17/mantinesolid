@@ -1,5 +1,5 @@
 import { splitProps, JSX } from 'solid-js';
-import { NumericFormat } from 'solid-number-format';
+import { NumericFormat } from '@empoleon/solid-number-format';
 import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../core';
 
 export interface NumberFormatterProps extends JSX.HTMLAttributes<HTMLSpanElement> {

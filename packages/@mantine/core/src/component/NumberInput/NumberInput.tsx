@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { NumberFormatValues, NumericFormat, OnValueChange } from 'solid-number-format';
+import { NumberFormatValues, NumericFormat, OnValueChange } from '@empoleon/solid-number-format';
 import { clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -93,7 +93,7 @@ export interface NumberInputProps
   /** Called when value changes */
   onChange?: (value: number | string) => void;
 
-  /** Called when value changes with `solid-number-format` payload */
+  /** Called when value changes with `@empoleon/solid-number-format` payload */
   onValueChange?: OnValueChange;
 
   /** Determines whether leading zeros are allowed. If set to `false`, leading zeros are removed when the input value becomes a valid number. `true` by default */

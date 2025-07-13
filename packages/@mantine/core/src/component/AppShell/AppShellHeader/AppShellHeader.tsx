@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { RemoveScroll } from 'solid-remove-scroll';
+import { RemoveScroll } from '@empoleon/solid-remove-scroll';
 import {
   Box,
   BoxProps,

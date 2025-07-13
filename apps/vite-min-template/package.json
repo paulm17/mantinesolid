@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@floating-ui/solid": "workspace:*",
+    "@empoleon/solid-tiptap": "^1.0.0",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
     "@tailwindcss/vite": "^4.1.11",
@@ -19,7 +19,7 @@
     "postcss": "^8.5.3",
     "postcss-preset-mantine": "1.17.0",
     "postcss-simple-vars": "^7.0.1",
-    "solid-devtools": "^0.34.0",
+    "solid-devtools": "0.34.0",
     "typescript": "^5.8.2",
     "vite": "^6.3.5",
     "vite-plugin-solid": "^2.11.6"

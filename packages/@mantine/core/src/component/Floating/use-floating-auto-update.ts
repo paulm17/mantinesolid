@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onCleanup, Accessor } from 'solid-js';
-import { autoUpdate } from '@floating-ui/solid';
+import { autoUpdate } from '@empoleon/solid-floating-ui';
 import { FloatingPosition } from './types';
 
 interface Payload {

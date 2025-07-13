@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Group, MantineSize } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { DateInput } from '../DateInput';
 import { MonthPickerInput } from './MonthPickerInput';
 import { For } from 'solid-js';
@@ -94,7 +94,7 @@ export function Clearable() {
 }
 
 export function Sizes() {
- const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
  return (
    <div style={{ padding: '40px' }}>

@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { MonthsList } from './MonthsList';
 import { createSignal, For } from 'solid-js';
-import { MantineSize } from '@mantine/core';
 
 export default { title: 'MonthsList' };
 
@@ -70,7 +69,7 @@ export function WithRange() {
 }
 
 export function Sizes() {
- const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+ const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
  return (
    <div style={{ padding: '40px' }}>

@@ -1,6 +1,5 @@
 import { For } from 'solid-js';
 import { MonthLevelGroup } from './MonthLevelGroup';
-import { MantineSize } from '@mantine/core';
 
 export default { title: 'MonthLevelGroup' };
 
@@ -20,7 +19,7 @@ export function Usage() {
 }
 
 export function Sizes() {
-  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[];
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
   return (
     <div style={{ padding: '40px' }}>

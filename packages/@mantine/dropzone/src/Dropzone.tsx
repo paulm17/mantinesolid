@@ -6,7 +6,7 @@ import {
   FileRejection,
   FileWithPath,
   useDropzone,
-} from 'solid-dropzone';
+} from '@empoleon/solid-dropzone';
 import {
   Box,
   BoxProps,
@@ -123,7 +123,7 @@ export interface DropzoneProps
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
-  getFilesFromEvent?: (event: DropEvent) => Promise<Array<File | DataTransferItem>>;
+  getFilesFromEvent?: (event: DropEvent) => Promise<FileWithPath[]>;
 
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
@@ -249,7 +249,7 @@ export const Dropzone = factory<DropzoneFactory>(_props => {
     varsResolver,
   });
 
-  const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
+  const dropzone = useDropzone({
     onDrop: local.onDropAny,
     onDropAccepted: local.onDrop,
     onDropRejected: local.onReject,
@@ -274,20 +274,20 @@ export const Dropzone = factory<DropzoneFactory>(_props => {
     ...(local.getFilesFromEvent ? { getFilesFromEvent: local.getFilesFromEvent } : null),
   });
 
-  assignRef(local.openRef, open);
+  assignRef(local.openRef, dropzone.open);
 
-  const isIdle = !isDragAccept && !isDragReject;
+  const isIdle = !dropzone.isDragAccept() && !dropzone.isDragReject();
 
   return (
-    <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
+    <DropzoneProvider value={{ accept: dropzone.isDragAccept(), reject: dropzone.isDragReject(), idle: isIdle }}>
       <Box
-        {...getRootProps()}
+        {...dropzone.getRootProps()}
         {...getStyles('root', { focusable: true })}
         {...others}
         mod={[
           {
-            accept: isDragAccept,
-            reject: isDragReject,
+            accept: dropzone.isDragAccept(),
+            reject: dropzone.isDragReject(),
             idle: isIdle,
             disabled: local.disabled,
             loading: local.loading,
@@ -302,7 +302,7 @@ export const Dropzone = factory<DropzoneFactory>(_props => {
           unstyled={local.unstyled}
           loaderProps={local.loaderProps}
         />
-        <input {...getInputProps(local.inputProps)} name={name} />
+        <input {...dropzone.getInputProps(local.inputProps)} name={local.name} />
         <div
           {...getStyles('inner')}
           ref={local.ref}

@@ -46,13 +46,14 @@
     "@mantine/hooks": "workspace:*"
   },
   "dependencies": {
+    "@empoleon/solid-floating-ui": "0.0.2-0",
+    "@empoleon/solid-number-format": "0.0.2-0",
+    "@empoleon/solid-remove-scroll": "0.0.4-0",
     "@solid-primitives/presence": "0.1.1",
     "@solid-primitives/refs": "1.1.1",
     "@solid-primitives/resize-observer": "2.1.1",
     "@solid-primitives/utils": "6.3.1",
     "clsx": "2.1.1",
-    "solid-number-format": "workspace:*",
-    "solid-remove-scroll": "workspace:*",
     "solid-textarea-autosize": "0.0.5",
     "solid-transition-group": "0.3.0",
     "type-fest": "4.27.0"

@@ -1,5 +1,5 @@
 import { JSX } from 'solid-js';
-import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/solid';
+import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@empoleon/solid-floating-ui';
 import { BoxProps, ElementProps, MantineColor, MantineRadius, StylesApiProps } from '../../core';
 import { FloatingPosition } from '../Floating';
 import { PortalProps } from '../Portal';

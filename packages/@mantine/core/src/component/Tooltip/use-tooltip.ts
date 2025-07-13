@@ -14,7 +14,7 @@ import {
   useRole,
   type Middleware,
   autoUpdate,
-} from '@floating-ui/solid';
+} from '@empoleon/solid-floating-ui';
 import { useId } from '@mantine/hooks';
 import {
   FloatingAxesOffsets,

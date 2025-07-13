@@ -98,7 +98,17 @@ TextInput
 ThemeIcon
 Timeline
 Title
-Tooltip <-- fail --> Does not fully work.  Some stories don't work right
+Tooltip <-- fail --> Does not fully work.  Some stories don't work right.  Tooltip needs fixing.  Keeps on invoking React for tiptap
 Transition
 Tree
 TypographyStylesProvider
+
+Adjacent
+Carousel
+Dropzone
+Form
+Modals Manager
+Notifications
+NavigationProgress
+Spotlight
+Tiptap <-- fail --> Tooltip for Color Popup.  Tooltip needs fixing.  Keeps on invoking React

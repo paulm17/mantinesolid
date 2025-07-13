@@ -2,6 +2,7 @@ Hooks copied over:
 
 use-click-outside
 use-counter
+use-input-state
 use-move
 use-mounted
 use-resize-observer

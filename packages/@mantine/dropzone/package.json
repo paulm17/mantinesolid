@@ -44,7 +44,7 @@
     "directory": "packages/@mantine/dropzone"
   },
   "dependencies": {
-    "solid-dropzone": "15.2.0"
+    "@empoleon/solid-dropzone": "^1.0.1"
   },
   "devDependencies": {
     "@mantine/core": "workspace:*",
