@@ -89,10 +89,6 @@ export function Transition(props: TransitionProps) {
     );
   }
 
-  // createEffect(() => {
-  //   console.log('styles', mkStyles('entered', duration))
-  // })
-
   return (
     <SolidTransition
       appear
@@ -118,10 +114,9 @@ export function Transition(props: TransitionProps) {
       }}
       onAfterExit={el => el instanceof HTMLElement && Object.assign(el.style, mkStyles('exited', exitDuration))}
     >
-      {/* <Show when={local.mounted || local.keepMounted} fallback={null}> */}
-        {/* {local.children(local.mounted ? mkStyles('entered', duration) : { display: 'block' })} */}
-        {local.children({display:'block'})}
-      {/* </Show> */}
+      <Show when={local.mounted || local.keepMounted} fallback={null}>
+        {local.children(local.mounted ? mkStyles('entered', duration) : { display: 'none' })}
+      </Show>
     </SolidTransition>
   );
 }

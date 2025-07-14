@@ -145,13 +145,14 @@ export function useTooltip(settings: UseTooltip) {
     }))(),
 
     useFocus(floating.context, {
-      enabled: settings.events?.focus && !controlled, // FIX: Disable internal focus when controlled
+      enabled: settings.events?.focus,
+      visibleOnly: true
     })(),
 
     useRole(floating.context, { role: 'tooltip' }),
 
     useDismiss(() => floating.context, {
-      enabled: !controlled,
+      enabled: typeof settings.opened === 'undefined',
     }),
   ]);
 
