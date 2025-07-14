@@ -97,12 +97,12 @@ function getTooltipMiddlewares(settings: UseTooltip) {
 
 export function useTooltip(settings: UseTooltip) {
   const [uncontrolledOpened, setUncontrolledOpened] = createSignal(settings.defaultOpened);
-  const controlled = typeof settings.opened === 'boolean';
+  const controlled = typeof settings.opened === 'function';
   const withinGroup = useTooltipGroupContext();
   const uid = useId();
 
   // Normalize `opened` to ALWAYS be an accessor, fixing the "not callable" error.
-  const opened = createMemo<boolean>(() => (typeof settings.opened === 'function' ? settings.opened() : settings.opened ?? (uncontrolledOpened() || false)));
+  const opened = createMemo<boolean>(() => settings.opened ? settings.opened() : uncontrolledOpened() || false);
 
   console.log('use-tooltip - settings.defaultOpened:', settings.defaultOpened);
   console.log('use-tooltip - uncontrolledOpened():', uncontrolledOpened());
@@ -145,7 +145,7 @@ export function useTooltip(settings: UseTooltip) {
     }))(),
 
     useFocus(floating.context, {
-      enabled: settings.events?.focus,
+      enabled: settings.events?.focus && !controlled, // FIX: Disable internal focus when controlled
     })(),
 
     useRole(floating.context, { role: 'tooltip' }),

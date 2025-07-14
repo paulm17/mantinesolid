@@ -1,4 +1,4 @@
-import { Accessor, createEffect, createMemo, createSignal, JSX, splitProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, JSX, splitProps } from 'solid-js';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -42,7 +42,7 @@ export interface TooltipProps extends TooltipBaseProps {
   closeDelay?: number;
 
   /** Controlled opened state */
-  opened?: Accessor<boolean>;
+  opened?: boolean;
 
   /** Uncontrolled tooltip initial opened state */
   defaultOpened?: boolean;
@@ -177,7 +177,7 @@ export const Tooltip = factory<TooltipFactory>(_props => {
     closeDelay: local.closeDelay,
     openDelay: local.openDelay,
     onPositionChange: local.onPositionChange,
-    opened: local.opened,
+    opened: local.opened === undefined ? undefined : () => !!local.opened,
     defaultOpened: local.defaultOpened,
     events: local.events,
     arrowRef: () => arrowRef(),
