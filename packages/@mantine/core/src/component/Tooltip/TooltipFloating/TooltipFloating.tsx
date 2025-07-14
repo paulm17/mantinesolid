@@ -1,4 +1,4 @@
-import { JSX, splitProps } from 'solid-js';
+import { createEffect, createMemo, createSignal, JSX, splitProps } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -105,24 +105,32 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
   //   );
   // }
 
-  const targetRef = useMergedRef(floating.boundaryRef, getRefProp(local.children), local.ref);
-  const _childrenProps = (local.children as any).props as any;
+  const [wrapperElement, setWrapperElement] = createSignal<HTMLElement | null>(null);
+  const targetRef = useMergedRef(
+    setWrapperElement,
+    floating.boundaryRef,
+    getRefProp(local.children),
+    local.ref
+  );
+
+  const componentType = createMemo(() => {
+    const parent = wrapperElement()?.parentElement;
+    return parent?.tagName.toLowerCase() === 'svg' ? 'g' : 'span';
+  });
 
   const onMouseEnter = (event: MouseEvent) => {
-    console.log('mouseenter called');
-    _childrenProps.onMouseEnter?.(event);
     floating.handleMouseMove(event);
     floating.setOpened(true);
   };
 
   const onMouseLeave = (event: MouseEvent) => {
-    _childrenProps.onMouseLeave?.(event);
     floating.setOpened(false);
   };
 
-  console.log('opened:', floating.opened(), 'disabled:', local.disabled);
-
-  const isSvgChild = targetRef?.parentElement?.tagName === 'svg' ? 'g' : 'span';
+  const coords = createMemo(() => ({
+    top: `${(floating.y && Math.round(floating.y)) ?? ''}px`,
+    left: `${(floating.x && Math.round(floating.x)) ?? ''}px`,
+  }));
 
   return (
     <>
@@ -134,8 +142,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
               ...getStyleObject(local.style, theme),
               zIndex: local.zIndex as JSX.CSSProperties['z-index'],
               display: !local.disabled && floating.opened() ? 'block' : 'none',
-              top: `${(floating.y && Math.round(floating.y)) ?? ''}`,
-              left: `${(floating.x && Math.round(floating.x)) ?? ''}`,
+              ...coords()
             },
           })}
           variant={local.variant}
@@ -147,8 +154,9 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
       </OptionalPortal>
 
       <Dynamic
-        component={isSvgChild ? 'g' : 'span'}
-        ref={targetRef}
+        // Use the new reactive memo here
+        component={componentType()}
+        ref={targetRef!}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >

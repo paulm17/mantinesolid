@@ -177,7 +177,7 @@ export const Tooltip = factory<TooltipFactory>(_props => {
     closeDelay: local.closeDelay,
     openDelay: local.openDelay,
     onPositionChange: local.onPositionChange,
-    opened: local.opened,
+    opened: () => local.opened!,
     defaultOpened: local.defaultOpened,
     events: local.events,
     arrowRef: () => arrowRef(),
@@ -217,16 +217,25 @@ export const Tooltip = factory<TooltipFactory>(_props => {
     left: `${tooltip.x ?? 0}px`,
   }));
 
+  createEffect(() => {
+    console.log('Tooltip render - tooltip.opened:', tooltip.opened());
+    console.log('Tooltip render - tooltip.ref:', tooltip.floating);
+    console.log('Tooltip render - local.disabled:', local.disabled);
+    console.log('Tooltip render - mounted condition:', !local.disabled && !!tooltip.opened());
+  })
+
   return (
     <>
       <OptionalPortal {...local.portalProps} withinPortal={local.withinPortal}>
         <Transition
           {...transition}
           keepMounted={local.keepMounted}
-          mounted={!local.disabled && !!tooltip.opened}
+          mounted={!local.disabled && !!tooltip.opened()}
           duration={tooltip.isGroupPhase ? 10 : transition.duration}
         >
           {(transitionStyles) => (
+            <>
+            {console.log("transitionStyles", transitionStyles)}
             <Box
               {...others}
               data-fixed={local.floatingStrategy === 'fixed' || undefined}
@@ -239,7 +248,7 @@ export const Tooltip = factory<TooltipFactory>(_props => {
                   ...getStyles('tooltip').style,
                   ...transitionStyles,
                   ['z-index']: local.zIndex as JSX.CSSProperties['z-index'],
-                  ...coords()
+                  ...coords(),
                 },
               })}
             >
@@ -258,6 +267,8 @@ export const Tooltip = factory<TooltipFactory>(_props => {
                 {...getStyles('arrow')}
               />
             </Box>
+            </>
+
           )}
         </Transition>
       </OptionalPortal>

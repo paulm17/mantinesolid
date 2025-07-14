@@ -1,3 +1,11 @@
+const originalWarn = console.warn;
+  console.warn = (message, ...args) => {
+    if (typeof message === 'string' && message.includes('computations created outside a `createRoot` or `render` will never be disposed')) {
+      return;
+    }
+    originalWarn(message, ...args);
+  };
+
 import { splitProps, JSX } from 'solid-js';
 import {
   Box,

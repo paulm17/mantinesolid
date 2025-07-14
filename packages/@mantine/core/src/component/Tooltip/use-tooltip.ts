@@ -1,4 +1,4 @@
-import { createEffect, createSignal, createMemo } from 'solid-js';
+import { createEffect, createSignal, createMemo, Accessor } from 'solid-js';
 import {
   arrow,
   flip,
@@ -30,7 +30,7 @@ interface UseTooltip {
   closeDelay?: number;
   openDelay?: number;
   onPositionChange?: (position: FloatingPosition) => void;
-  opened?: boolean;
+  opened?: Accessor<boolean>;
   defaultOpened?: boolean;
   offset: number | FloatingAxesOffsets;
   arrowRef?: () => HTMLDivElement | undefined;
@@ -104,6 +104,11 @@ export function useTooltip(settings: UseTooltip) {
   // Normalize `opened` to ALWAYS be an accessor, fixing the "not callable" error.
   const opened = createMemo<boolean>(() => (typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened() || false));
 
+  console.log('use-tooltip - settings.defaultOpened:', settings.defaultOpened);
+  console.log('use-tooltip - uncontrolledOpened():', uncontrolledOpened());
+  console.log('use-tooltip - opened():', opened());
+  console.log('use-tooltip - controlled:', controlled);
+
   const onChange = (_opened: boolean) => {
     if (!controlled) {
       setUncontrolledOpened(_opened);
@@ -120,7 +125,7 @@ export function useTooltip(settings: UseTooltip) {
   const floating = useFloating({
     strategy: settings.strategy,
     placement: settings.position,
-    open: opened,
+    open: () => opened(),
     onOpenChange: onChange,
     middleware: () => getTooltipMiddlewares(settings),
     elements: () => ({

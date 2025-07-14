@@ -14,17 +14,19 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
   defaultOpened,
 }: UseFloatingTooltip) {
   const [opened, setOpened] = createSignal(defaultOpened || false);
-  let boundaryRef: T;
+  const [boundaryRef, setBoundaryRef] = createSignal<T | null>(null);
   const [floatingElement, setFloatingElement] = createSignal<HTMLElement | null>(null);
   const [referenceElement, setReferenceElement] = createSignal<any>(null);
+
+  const elements = createMemo(() => ({
+    reference: referenceElement(),
+    floating: floatingElement(),
+  }));
 
   const floatingHook = useFloating({
     placement: position,
     // The `elements` option now takes signals
-    elements: {
-      reference: referenceElement(),
-      floating: floatingElement(),
-    },
+    elements,
     middleware: [
       shift({
         crossAxis: true,
@@ -61,8 +63,18 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
   };
 
   createEffect(() => {
+    const ref = referenceElement();
+    const floating = floatingElement();
+
+    if (ref && floating) {
+      // Trigger floating hook update when elements change
+      floatingHook.update();
+    }
+  });
+
+  createEffect(() => {
     // We run the effect when the boundary and floating elements are available
-    const boundary = boundaryRef;
+    const boundary = boundaryRef();
     const floating = floatingElement();
 
     if (boundary && floating) {
@@ -85,11 +97,11 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
   });
 
   return {
-    x: floatingHook.x,
-    y: floatingHook.y,
+    get x() { return floatingHook.x; },
+    get y() { return floatingHook.y; },
     opened,
     setOpened,
-    boundaryRef: (el: T) => (boundaryRef = el),
+    boundaryRef: setBoundaryRef,
     floating: setFloatingElement,
     handleMouseMove,
   };

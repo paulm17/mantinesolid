@@ -1,4 +1,4 @@
-import { JSX, splitProps, Show } from 'solid-js';
+import { JSX, splitProps, Show, createEffect } from 'solid-js';
 import { Transition as SolidTransition } from 'solid-transition-group';
 import { useMantineEnv } from '../../core';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
@@ -52,20 +52,46 @@ export function Transition(props: TransitionProps) {
   ) {
     const from = mkStyles(fromState, dur);
     const to = mkStyles(toState, dur);
+    const onAnimationEnd = () => {
+      // After exiting, apply the final hidden styles which should include display: 'none'
+      if (toState === 'exiting') {
+        Object.assign(el.style, mkStyles('exited', dur));
+      }
+      cb?.();
+    };
+
+    // Before entering, ensure the element is visible
+    if (toState === 'entering') {
+      el.style.display = ''; // Reset display to default
+    }
+
     Object.assign(el.style, from);
-    void el.offsetHeight;
-    Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
-    if (cb) setTimeout(cb, dur);
+    requestAnimationFrame(() => {
+      Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
+    });
+
+    setTimeout(onAnimationEnd, dur);
   }
 
   // No-animation fallback
+  // if (env === 'test' || (duration === 0 && exitDuration === 0)) {
+  //   return local.mounted
+  //     ? <>{local.children({})}</>
+  //     : local.keepMounted
+  //       ? local.children({ display: 'block' })
+  //       : null;
+  // }
   if (env === 'test' || (duration === 0 && exitDuration === 0)) {
-    return local.mounted
-      ? <>{local.children({})}</>
-      : local.keepMounted
-        ? local.children({ display: 'none' })
-        : null;
+    return (
+      <Show when={local.mounted || local.keepMounted} fallback={null}>
+        {local.children(local.mounted ? {} : { display: 'none' })}
+      </Show>
+    );
   }
+
+  // createEffect(() => {
+  //   console.log('styles', mkStyles('entered', duration))
+  // })
 
   return (
     <SolidTransition
@@ -92,9 +118,10 @@ export function Transition(props: TransitionProps) {
       }}
       onAfterExit={el => el instanceof HTMLElement && Object.assign(el.style, mkStyles('exited', exitDuration))}
     >
-      <Show when={local.mounted || local.keepMounted} fallback={null}>
-        {local.children(local.mounted ? mkStyles('entered', duration) : { display: 'none' })}
-      </Show>
+      {/* <Show when={local.mounted || local.keepMounted} fallback={null}> */}
+        {/* {local.children(local.mounted ? mkStyles('entered', duration) : { display: 'block' })} */}
+        {local.children({display:'block'})}
+      {/* </Show> */}
     </SolidTransition>
   );
 }
