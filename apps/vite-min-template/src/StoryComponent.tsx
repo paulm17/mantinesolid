@@ -1,7 +1,7 @@
-import { TipTapExmple } from './tiptap';
+import App from './poc';
 
 export default function StoryComponent() {
   return (
-    <TipTapExmple />
+    <App />
   );
 }

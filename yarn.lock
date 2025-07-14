@@ -1585,10 +1585,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@empoleon/solid-number-format@npm:0.0.2-0":
-  version: 0.0.2-0
-  resolution: "@empoleon/solid-number-format@npm:0.0.2-0"
-  checksum: 10c0/f283b768972ebcfc25bcf41b282005b36bc0627fe08b32619acfd2c7ad1cf662062a4668b11d34e01a9e887fd978a78a91082915b4d47433db5872b214b92218
+"@empoleon/solid-number-format@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@empoleon/solid-number-format@npm:0.0.3"
+  checksum: 10c0/6c91669549aa7b82a3a39e5355adf308aec5a919fd9e2b5b69841747d77240c2c4e825eb3b91b2d27d8c08d82615bffa9fdad4288229c4ba34389e1fcd743078
   languageName: node
   linkType: hard
 
@@ -3145,7 +3145,7 @@ __metadata:
   resolution: "@mantine/core@workspace:packages/@mantine/core"
   dependencies:
     "@empoleon/solid-floating-ui": "npm:0.0.2-0"
-    "@empoleon/solid-number-format": "npm:0.0.2-0"
+    "@empoleon/solid-number-format": "npm:^0.0.3"
     "@empoleon/solid-remove-scroll": "npm:0.0.4-0"
     "@mantine/hooks": "workspace:*"
     "@solid-primitives/presence": "npm:0.1.1"

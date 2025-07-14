@@ -13,7 +13,6 @@ const config: StorybookConfig = {
     '../packages/@mantine/nprogress/src/*.story.@(ts|tsx)',
     '../packages/@mantine/spotlight/src/*.story.@(ts|tsx)',
     '../packages/@mantine/tiptap/src/*.story.@(ts|tsx)',
-    '../packages/libs/floating-ui/src/stories/*.stories.@(ts|tsx)'
   ],
   addons: [
     '@storybook/addon-links',
