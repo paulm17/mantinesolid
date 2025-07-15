@@ -73,6 +73,22 @@ export function Transition(props: TransitionProps) {
   //   setTimeout(onAnimationEnd, dur);
   // }
 
+  // this works
+  // function animate(
+  //   el: HTMLElement,
+  //   fromState: Parameters<typeof getTransitionStyles>[0]['state'],
+  //   toState: Parameters<typeof getTransitionStyles>[0]['state'],
+  //   dur: number,
+  //   cb?: () => void
+  // ) {
+  //   const from = mkStyles(fromState, dur);
+  //   const to = mkStyles(toState, dur);
+  //   Object.assign(el.style, from);
+  //   void el.offsetHeight;
+  //   Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
+  //   if (cb) setTimeout(cb, dur);
+  // }
+
   function animate(
     el: HTMLElement,
     fromState: Parameters<typeof getTransitionStyles>[0]['state'],
@@ -82,10 +98,31 @@ export function Transition(props: TransitionProps) {
   ) {
     const from = mkStyles(fromState, dur);
     const to = mkStyles(toState, dur);
+
+    const onAnimationEnd = () => {
+      // After exiting, apply the final hidden styles which should include display: 'none'
+      if (toState === 'exiting') {
+        Object.assign(el.style, mkStyles('exited', dur));
+      }
+      cb?.();
+    };
+
+    // Before entering, ensure the element is visible
+    if (toState === 'entering') {
+      el.style.display = ''; // Reset display to default
+    }
+
+    // Apply initial styles
     Object.assign(el.style, from);
+
+    // Force reflow to ensure initial styles are applied
     void el.offsetHeight;
+
+    // Apply transition and final styles
     Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
-    if (cb) setTimeout(cb, dur);
+
+    // Set up callback for when animation completes
+    setTimeout(onAnimationEnd, dur);
   }
 
   // No-animation fallback
