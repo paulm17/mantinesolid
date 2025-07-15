@@ -29,13 +29,13 @@ export function useFloatingAutoUpdate({
     const floatEl = floating.refs.floating();
 
     // needed for debugging!
-    console.log('=== Floating UI Debug ===');
-    console.log('Opened:', opened());
-    console.log('Reference element:', refEl);
-    console.log('Floating element:', floatEl);
-    console.log('Reference rect:', refEl?.getBoundingClientRect());
-    console.log('Floating rect:', floatEl?.getBoundingClientRect());
-    console.log('========================');
+    // console.log('=== Floating UI Debug ===');
+    // console.log('Opened:', opened());
+    // console.log('Reference element:', refEl);
+    // console.log('Floating element:', floatEl);
+    // console.log('Reference rect:', refEl?.getBoundingClientRect());
+    // console.log('Floating rect:', floatEl?.getBoundingClientRect());
+    // console.log('========================');
 
     // Include delayedUpdate and position in dependencies
     delayedUpdate();

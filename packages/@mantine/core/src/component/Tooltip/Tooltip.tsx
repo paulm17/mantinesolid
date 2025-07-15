@@ -31,7 +31,7 @@ import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
 import classes from './Tooltip.module.css';
 
-export interface TooltipProps extends TooltipBaseProps {
+export interface TooltipProps extends Omit<TooltipBaseProps, 'children'> {
   /** Called when tooltip position changes */
   onPositionChange?: (position: FloatingPosition) => void;
 
@@ -82,6 +82,8 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
   floatingStrategy?: FloatingStrategy;
+
+  children: (props: Record<string, any>) => JSX.Element;
 }
 
 export type TooltipFactory = Factory<{
@@ -183,7 +185,7 @@ export const Tooltip = factory<TooltipFactory>(_props => {
     arrowRef: () => arrowRef(),
     arrowOffset: local.arrowOffset,
     offset: typeof local.offset === 'number' ? local.offset! + (local.withArrow ? local.arrowSize! / 2 : 0) : local.offset!,
-    positionDependencies: [...local.positionDependencies!, local.children],
+    positionDependencies: [...local.positionDependencies!, props.children],
     inline: local.inline,
     strategy: local.floatingStrategy,
     middlewares: local.middlewares,
@@ -209,7 +211,7 @@ export const Tooltip = factory<TooltipFactory>(_props => {
   //   );
   // }
 
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(local.children), local.ref);
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(props.children), local.ref);
   const transition = getTransitionProps(local.transitionProps, { duration: 100, transition: 'fade' });
 
   const coords = createMemo(() => ({
@@ -268,22 +270,17 @@ export const Tooltip = factory<TooltipFactory>(_props => {
               />
             </Box>
             </>
-
           )}
         </Transition>
       </OptionalPortal>
 
-      <span
-        {...tooltip.getReferenceProps({
-          onclick: local.onClick as any,
-          onmouseenter: local.onMouseEnter as any,
-          onmouseleave: local.onMouseLeave as any,
+      {typeof props.children === 'function'
+      ? props.children({
+          ref: targetRef,
           class: local.className,
-        })}
-        ref={targetRef}
-      >
-        {local.children}
-      </span>
+          ...tooltip.getReferenceProps(local as any),
+        })
+      : props.children}
     </>
   );
 });

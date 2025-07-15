@@ -43,6 +43,36 @@ export function Transition(props: TransitionProps) {
   const mkStyles = (state: Parameters<typeof getTransitionStyles>[0]['state'], dur: number) =>
     getTransitionStyles({ transition: local.transition ?? 'fade', state, duration: dur, timingFunction });
 
+  // function animate(
+  //   el: HTMLElement,
+  //   fromState: Parameters<typeof getTransitionStyles>[0]['state'],
+  //   toState: Parameters<typeof getTransitionStyles>[0]['state'],
+  //   dur: number,
+  //   cb?: () => void
+  // ) {
+  //   const from = mkStyles(fromState, dur);
+  //   const to = mkStyles(toState, dur);
+  //   const onAnimationEnd = () => {
+  //     // After exiting, apply the final hidden styles which should include display: 'none'
+  //     if (toState === 'exiting') {
+  //       Object.assign(el.style, mkStyles('exited', dur));
+  //     }
+  //     cb?.();
+  //   };
+
+  //   // Before entering, ensure the element is visible
+  //   if (toState === 'entering') {
+  //     el.style.display = ''; // Reset display to default
+  //   }
+
+  //   Object.assign(el.style, from);
+  //   requestAnimationFrame(() => {
+  //     Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
+  //   });
+
+  //   setTimeout(onAnimationEnd, dur);
+  // }
+
   function animate(
     el: HTMLElement,
     fromState: Parameters<typeof getTransitionStyles>[0]['state'],
@@ -52,35 +82,13 @@ export function Transition(props: TransitionProps) {
   ) {
     const from = mkStyles(fromState, dur);
     const to = mkStyles(toState, dur);
-    const onAnimationEnd = () => {
-      // After exiting, apply the final hidden styles which should include display: 'none'
-      if (toState === 'exiting') {
-        Object.assign(el.style, mkStyles('exited', dur));
-      }
-      cb?.();
-    };
-
-    // Before entering, ensure the element is visible
-    if (toState === 'entering') {
-      el.style.display = ''; // Reset display to default
-    }
-
     Object.assign(el.style, from);
-    requestAnimationFrame(() => {
-      Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
-    });
-
-    setTimeout(onAnimationEnd, dur);
+    void el.offsetHeight;
+    Object.assign(el.style, { transition: `all ${dur}ms ${timingFunction}`, ...to });
+    if (cb) setTimeout(cb, dur);
   }
 
   // No-animation fallback
-  // if (env === 'test' || (duration === 0 && exitDuration === 0)) {
-  //   return local.mounted
-  //     ? <>{local.children({})}</>
-  //     : local.keepMounted
-  //       ? local.children({ display: 'block' })
-  //       : null;
-  // }
   if (env === 'test' || (duration === 0 && exitDuration === 0)) {
     return (
       <Show when={local.mounted || local.keepMounted} fallback={null}>

@@ -19,7 +19,7 @@ export default {
 export function Usage() {
   return (
     <div style={{ 'padding': '40px' }}>
-      <HoverCard keepMounted closeDelay={5000}>
+      <HoverCard>
         <HoverCard.Target>
           <Button>Hover to reveal</Button>
         </HoverCard.Target>

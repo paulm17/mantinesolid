@@ -26,7 +26,7 @@ export function Usage() {
         color="cyan"
         radius="md"
       >
-        <button type="button">target</button>
+        {(props) => <button type="button" {...props}>target</button>}
       </Tooltip>
     </div>
   );
@@ -44,7 +44,7 @@ export function Unstyled() {
         radius="md"
         unstyled
       >
-        <button type="button">target</button>
+        {(props) => <button type="button" {...props}>target</button>}
       </Tooltip>
     </div>
   );
@@ -62,7 +62,7 @@ export function Multiline() {
         radius="md"
         multiline
       >
-        <button type="button">target</button>
+        {(props) => <button type="button" {...props}>target</button>}
       </Tooltip>
     </div>
   );
@@ -99,13 +99,13 @@ export function MultilineWithJsx() {
 export const TooltipGroup = () => (
   <Tooltip.Group openDelay={500}>
     <Tooltip label="Tooltip 1">
-      <button type="button">Button 1</button>
+      {(props) => <button type="button" {...props}>Button 1</button>}
     </Tooltip>
     <Tooltip label="Tooltip 2">
-      <button type="button">Button 2</button>
+      {(props) => <button type="button" {...props}>Button 2</button>}
     </Tooltip>
     <Tooltip label="Tooltip 3">
-      <button type="button">Button 3</button>
+      {(props) => <button type="button" {...props}>Button 3</button>}
     </Tooltip>
   </Tooltip.Group>
 );
@@ -115,16 +115,19 @@ export const Controlled = () => {
   return (
     <div style={{ padding: '40px' }}>
       <Tooltip label="Tooltip 1" opened={opened()}>
-        <button
-          type="button"
-          onMouseEnter={() => setOpened(true)}
-          onMouseLeave={() => setOpened(false)}
-        >
-          Hover to open both tooltips
-        </button>
+        {(props) =>
+          <button
+            type="button"
+            onMouseEnter={() => setOpened(true)}
+            onMouseLeave={() => setOpened(false)}
+            {...props}
+          >
+            Hover to open both tooltips
+          </button>
+        }
       </Tooltip>
       <Tooltip label="Tooltip 2" opened={opened()}>
-        <button type="button">Button 2</button>
+        {(props) => <button type="button" {...props}>Button 2</button>}
       </Tooltip>
     </div>
   );
@@ -148,12 +151,15 @@ export const Unmount = () => {
         Toggle
       </button>
       <Tooltip opened label="Tooltip">
-        <button
-          type="button"
-          style={{ width: '200px', height: '200px', display: mounted() ? 'block' : 'none' }}
-        >
-          target
-        </button>
+        {(props) => (
+          <button
+            type="button"
+            style={{ width: '200px', height: '200px', display: mounted() ? 'block' : 'none' }}
+            {...props}
+          >
+            target
+          </button>
+        )}
       </Tooltip>
     </div>
   );
@@ -161,7 +167,7 @@ export const Unmount = () => {
 
 export const HexColor = () => (
   <Tooltip label="Tooltip 2" color="#F0F">
-    <button type="button">Button 2</button>
+    {(props) => <button type="button" {...props}>Button 2</button>}
   </Tooltip>
 );
 
@@ -170,7 +176,7 @@ export const WithArrow = () => (
     withArrow
     label="Tooltip button with arrow Tooltip button with arrow Tooltip button with arrow"
   >
-    <button type="button">Tooltip button with arrow</button>
+    {(props) => <button type="button" {...props}>Tooltip button with arrow</button>}
   </Tooltip>
 );
 
@@ -188,7 +194,7 @@ export const TooltipAndArrowWithBorder = () => (
         arrow: { border: '4px solid green' },
       }}
     >
-      <button type="button">target</button>
+      {(props) => <button type="button" {...props}>target</button>}
     </Tooltip>
   </div>
 );
@@ -199,7 +205,7 @@ export const WithArrowRadius = () => (
     label="Tooltip button with arrow Tooltip button with arrow Tooltip button with arrow"
     arrowRadius={4}
   >
-    <button type="button">Tooltip button with arrow radius</button>
+    {(props) => <button type="button" {...props}>Tooltip button with arrow radius</button>}
   </Tooltip>
 );
 
@@ -212,7 +218,7 @@ export function Inline() {
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam
           magni quas neque{' '}
           <Tooltip label="Inline tooltip" inline>
-            <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+            {(props) => <span style={{ background: 'pink' }} {...props}>aliquid laboriosam dolorum</span>}
           </Tooltip>
           , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt,
           animi dicta.
@@ -224,7 +230,7 @@ export function Inline() {
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam
           magni quas neque{' '}
           <Tooltip label="Inline tooltip" middlewares={{ inline: true }}>
-            <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+            {(props) => <span style={{ background: 'pink' }} {...props}>aliquid laboriosam dolorum</span>}
           </Tooltip>
           , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt,
           animi dicta.
@@ -246,7 +252,7 @@ export function DefaultOpened() {
         radius="md"
         defaultOpened
       >
-        <button type="button">target</button>
+        {(props) => <button type="button" {...props}>target</button>}
       </Tooltip>
     </div>
   );
@@ -263,7 +269,7 @@ export function Fixed() {
         opened
         floatingStrategy="fixed"
       >
-        <button type="button">target</button>
+        {(props) => <button type="button" {...props}>target</button>}
       </Tooltip>
     </div>
   );
