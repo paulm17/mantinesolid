@@ -3,6 +3,9 @@ Hooks copied over:
 use-click-outside
 use-counter
 use-input-state
+use-mouse
 use-move
 use-mounted
+use-network
 use-resize-observer
+use-toggle
