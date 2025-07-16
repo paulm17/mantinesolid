@@ -82,14 +82,14 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
 
       // Listen for scroll events on all overflow ancestors
       const parents = getOverflowAncestors(floating);
-      parents.forEach((parent) => {
+      parents.forEach((parent: any) => {
         parent.addEventListener('scroll', floatingHook.update);
       });
 
       // `onCleanup` handles the removal of event listeners
       onCleanup(() => {
         boundary.removeEventListener('mousemove', handleMouseMove);
-        parents.forEach((parent) => {
+        parents.forEach((parent: any) => {
           parent.removeEventListener('scroll', floatingHook.update);
         });
       });

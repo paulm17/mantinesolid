@@ -49,9 +49,11 @@ export function TargetWithTooltip() {
     <div style={{ 'padding': '40px' }}>
       <HoverCard>
         <Tooltip label="Tooltip first">
-          <HoverCard.Target>
-            <Button>Tooltip first</Button>
-          </HoverCard.Target>
+          {(props) => (
+            <HoverCard.Target>
+              <Button {...props}>Tooltip first</Button>
+            </HoverCard.Target>
+          )}
         </Tooltip>
 
         <HoverCard.Dropdown>Dropdown</HoverCard.Dropdown>
@@ -60,7 +62,7 @@ export function TargetWithTooltip() {
       <HoverCard>
         <HoverCard.Target>
           <Tooltip label="Tooltip last">
-            <Button ml="xl">Tooltip last</Button>
+            {(props) => <Button ml="xl" {...props}>Tooltip last</Button>}
           </Tooltip>
         </HoverCard.Target>
 

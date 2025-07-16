@@ -1,5 +1,4 @@
 import { createEffect, createMemo, createSignal, JSX, splitProps } from 'solid-js';
-import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -10,7 +9,6 @@ import {
   getRadius,
   getRefProp,
   getThemeColor,
-  isElement,
   useDirection,
   useProps,
   useStyles,

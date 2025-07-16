@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, JSX, splitProps } from 'solid-js';
+import { createMemo, createSignal, JSX, splitProps } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -12,6 +12,7 @@ import {
   getStyleObject,
   getThemeColor,
   isElement,
+  StylesApiProps,
   useMantineTheme,
   useProps,
   useStyles,
@@ -21,7 +22,9 @@ import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from '../To
 import { useFloatingTooltip } from './use-floating-tooltip';
 import classes from '../Tooltip.module.css';
 
-export interface TooltipFloatingProps extends TooltipBaseProps {
+export interface TooltipFloatingProps
+  extends Omit<TooltipBaseProps, 'styles' | 'classNames' | 'vars' | 'unstyled'>,
+    StylesApiProps<TooltipFloatingFactory> {
   /** Offset from mouse in px, `10` by default */
   offset?: number;
   /** Uncontrolled tooltip initial opened state */
@@ -154,7 +157,6 @@ export const TooltipFloating = factory<TooltipFloatingFactory>(_props => {
       </OptionalPortal>
 
       <Dynamic
-        // Use the new reactive memo here
         component={componentType()}
         ref={targetRef!}
         onMouseEnter={onMouseEnter}

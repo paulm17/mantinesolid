@@ -46,7 +46,7 @@
     "@mantine/hooks": "workspace:*"
   },
   "dependencies": {
-    "@empoleon/solid-floating-ui": "0.0.2-0",
+    "@empoleon/solid-floating-ui": "^0.0.4",
     "@empoleon/solid-number-format": "^0.0.3",
     "@empoleon/solid-remove-scroll": "0.0.4-0",
     "@solid-primitives/presence": "0.1.1",

@@ -24,9 +24,9 @@ export function TooltipGroup(props: TooltipGroupProps) {
 
   return (
     <TooltipGroupProvider value>
-      {/* <FloatingDelayGroup delay={{ open: openDelay, close: closeDelay }}> */}
+      <FloatingDelayGroup delay={{ open: openDelay, close: closeDelay }}>
         {children}
-      {/* </FloatingDelayGroup> */}
+      </FloatingDelayGroup>
     </TooltipGroupProvider>
   );
 }
